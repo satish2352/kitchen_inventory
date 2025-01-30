@@ -1,0 +1,45 @@
+/* Shopping List Row */
+
+
+
+
+/* Location and Grid Buttons */
+.btn-white {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 8px 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Border Box */
+.border-box {
+    border-radius: 15px;
+    margin-top: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* Grid Header */
+.grid-header {
+    background-color: #D83636;
+    color: white;
+    padding: 15px 0;
+    font-family: "Jost", serif;
+}
+
+/* Table Header */
+table {
+    margin-bottom: 0 !important;
+}
+
+.table-header {
+    background-color: aqua;
+    color: #000;
+    font-weight: bold;
+}
+
+/* Striped Rows */
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 255, 0.1);
+    /* Light blue striping */
+}

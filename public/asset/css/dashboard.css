@@ -1,0 +1,337 @@
+ .drawer {
+     position: fixed;
+     top: 0;
+     left: -300px;
+     width: 300px;
+     height: 100%;
+     background-color: #fff;
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+     transition: left 0.3s ease;
+     z-index: 1050;
+ }
+
+ .drawer.open {
+     left: 0;
+ }
+
+ .backdrop {
+     position: fixed;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     background-color: rgba(0, 0, 0, 0.5);
+     visibility: hidden;
+     opacity: 0;
+     transition: opacity 0.3s ease;
+     z-index: 1040;
+ }
+
+ .backdrop.show {
+     visibility: visible;
+     opacity: 1;
+ }
+
+ .drawer-header {
+     padding: 15px;
+     border-bottom: 1px solid #dee2e6;
+ }
+
+ .toggle-drawer {
+     font-size: 28px;
+ }
+
+ .drawer-header img {
+     width: 50px;
+     height: 50px;
+     border-radius: 50%;
+     object-fit: cover;
+     margin-right: 10px;
+ }
+
+ .drawer-header h5 {
+     margin: 0;
+ }
+
+ .drawer-header span {
+     font-size: 0.8rem;
+ }
+
+ .drawer-nav a {
+     display: flex;
+     align-items: center;
+     padding: 15px;
+     color: #67707F;
+     text-decoration: none;
+     font-family: "Poppins", serif;
+ }
+
+ /* .drawer-nav a:hover {
+     background-color: #e9ecef;
+ } */
+
+ .drawer-nav a i {
+     margin-right: 10px;
+ }
+
+ .location {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     padding: 7px 15px;
+     background-color: #E9E9E9;
+     border-radius: 50px;
+     font-size: 12px;
+ }
+
+ .location i {
+     margin-right: 5px;
+     color: #000;
+     font-size: 14px;
+ }
+
+ .person {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     padding: 7px 15px;
+     background-color: #fff;
+     border-radius: 10px;
+     font-size: 12px;
+ }
+
+ .person i {
+     margin-right: 5px;
+     color: #000;
+     font-size: 14px;
+ }
+
+
+ /* body css  */
+ /* Gradient Background Box */
+ .gradient-box {
+     background: linear-gradient(to right, #a80403, #f88383);
+     color: #fff;
+     border-radius: 10px;
+ }
+
+ .dgraph {
+     color: #fff;
+     font-size: 12px;
+     opacity: 50%;
+ }
+
+ /* Arrow Icon with Gray Background */
+ .arrow-icon {
+     width: 50px;
+     height: 50px;
+     background-color: #ffffffb8;
+     color: #a80403;
+     font-size: 1.4rem;
+     cursor: pointer;
+     transition: background-color 0.3s ease, transform 0.2s ease;
+ }
+
+ .arrow-icon:hover {
+     background-color: #d6d6d6;
+     transform: scale(1.1);
+ }
+
+ /* service box css */
+
+ /* Icon Box Styling */
+ .icon-box {
+     background-color: #fff;
+     border-radius: 10px;
+     transition: transform 0.2s ease, box-shadow 0.3s ease;
+     color: #D83636;
+     min-height: 150px;
+     padding: 8px;
+ }
+
+ .icon-box:hover {
+     transform: scale(1.05);
+     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+ }
+
+ /* Circle Icon Styling */
+ .icon-circle {
+     width: 60px;
+     height: 60px;
+     background-color: #f6cfcf;
+     color: #D83636;
+     border-radius: 50%;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     font-size: 1.5rem;
+     margin: 0 auto;
+ }
+
+ /* Divider Styling */
+ .icon-divider {
+     width: 50%;
+     height: 1px;
+     background-color: #D83636;
+     margin: 0.5rem auto;
+ }
+
+
+ /* User Request Box */
+ .ur-user {
+     font-size: 22px;
+     font-weight: 500;
+     font-family: "Jost", serif;
+ }
+
+ .act-user {
+     font-size: 19px;
+     font-weight: 500;
+     font-family: "Jost", serif;
+ }
+
+ .user-request-box {
+     background-color: #ffffff;
+     border-radius: 10px;
+ }
+
+ /* Status Badge */
+ .status-badge {
+     padding: 4px 8px;
+     background-color: #a1dab0;
+     border-radius: 50px;
+     font-size: 0.675rem;
+     color: #206A34;
+ }
+
+ /* Edit Button */
+ .btn-edit {
+     background-color: #fbeded;
+     border-radius: 4px;
+     font-size: 0.6rem;
+     transition: background-color 0.2s ease, transform 0.2s ease;
+     color: #D83636;
+ }
+
+ .btn-light:hover {
+     background-color: #e2e6ea;
+     transform: scale(1.05);
+ }
+
+ .btn-edit i {
+     font-size: 1.1rem;
+ }
+
+
+ /* ////////////////////////////////  */
+ /* inner page approve user css  */
+ .inner-top {
+     background-color: #F88888;
+ }
+
+ /* Popup Container */
+ .popup-container {
+     position: fixed;
+     bottom: 0;
+     left: 0;
+     width: 100%;
+     background-color: rgba(0, 0, 0, 0.5);
+     z-index: 1050;
+     display: none;
+     justify-content: center;
+     align-items: flex-end;
+     top: 0;
+ }
+
+ /* Popup Content */
+ .popup-content {
+     background-color: #ffffff;
+     width: 96%;
+     border-radius: 12px 12px 0 0;
+     padding: 20px;
+     box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+ }
+
+ .popup-content p {
+     font-weight: 300;
+ }
+
+ /* Popup Title */
+ .popup-title {
+     margin: 0;
+     font-size: 1.2rem;
+     text-align: center;
+     font-family: "Jost", serif;
+ }
+
+ /* Close Button (optional) */
+ .popup-close {
+     position: absolute;
+     top: 10px;
+     right: 20px;
+     cursor: pointer;
+     font-size: 1.5rem;
+     color: #333;
+ }
+
+ /* Confirmation Popup Container */
+ .confirm-popup-container {
+     position: fixed;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     background-color: rgba(0, 0, 0, 0.5);
+     z-index: 1051;
+     display: none;
+     justify-content: center;
+     align-items: center;
+ }
+
+ /* Confirmation Popup Content */
+ .confirm-popup-content {
+     background-color: #fff;
+     padding-top: 20px;
+     width: 90%;
+     max-width: 400px;
+     border-radius: 8px;
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+     text-align: center;
+ }
+
+ /* Confirmation Popup Title */
+ .confirm-popup-title {
+     font-family: "Jost", serif;
+     margin-bottom: 10px;
+ }
+
+ /* Confirmation Popup Text */
+ .confirm-popup-text {
+     font-size: 1rem;
+     margin-bottom: 20px;
+ }
+
+ .confrm {
+     border-top: 1px solid #DDDDDD;
+ }
+
+ .confrm .btn {
+     color: var(--primary-color);
+     width: 100%;
+     padding: 10px;
+ }
+
+ .confrm .br {
+     border-right: 1px solid #DDDDDD;
+     border-radius: 0px;
+ }
+
+ .service-box .col-4 {
+     padding-left: 5px;
+     padding-right: 5px;
+ }
+
+ .btn-select {
+     background-color: var(--primary-color);
+     color: #fff;
+ }
