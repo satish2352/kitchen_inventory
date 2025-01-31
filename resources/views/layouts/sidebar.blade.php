@@ -26,27 +26,27 @@
           <a href="dashboard.html" class="active"
              ><i class="bi bi-house-door-fill"></i> Dashboard</a
              >
-          <a href="approve-users.html"
+          <a href="{{ route('approve-users') }}"
              ><i class="bi bi-person-plus-fill"></i> Approve Users</a
              >
-          <a href="submit-shopping-list.html"
+          <a href="{{ route('submit-shopping-list') }}"
              ><i class="bi bi-share-fill"></i> Shopping List</a
              >
-          <a href="activity.html"><i class="bi bi-book"></i> Activity</a>
-          <a href="users.html"><i class="bi bi-person"></i> Manage User</a>
-          <a href="locations.html"
+          <a href="{{ route('activity') }}"><i class="bi bi-book"></i> Activity</a>
+          <a href="{{ route('users') }}"><i class="bi bi-person"></i> Manage User</a>
+          <a href="{{ route('location') }}"
              ><i class="bi bi-geo-alt-fill"></i>Manage Location</a
              >
-          <a href="category.html"
+          <a href="{{ route('category') }}"
              ><i class="bi bi-tag-fill"></i> Manage Category</a
              >
-          <a href="manage-units.html"
+          <a href="{{ route('manage-units') }}"
              ><i class="bi bi-kanban"></i> Manage Units</a
              >
-          <a href="kitchen-inventory.html"
+          <a href="{{ route('kitchen-inventory') }}"
              ><i class="bi bi-bag-plus-fill"></i>Add kitchen Inventory</a
              >
-          <a href="master-inventory.html"
+          <a href="{{ route('master-inventory') }}"
              ><i class="bi bi-card-checklist"></i> Master Inventory</a
              >
           <a href="submit-shopping-list.html"

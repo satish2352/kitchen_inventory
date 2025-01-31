@@ -16,6 +16,50 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', ['as' => '/', 'uses' => 'App\Http\Controllers\LoginController@index']);
 
+// Route::get('/approve-users', function () {
+//     return view('approve-users');
+// });
+
+Route::get('/approve-users', function () {
+    return view('approve-users');
+})->name('approve-users');
+
+Route::get('/submit-shopping-list', function () {
+    return view('submit-shopping-list');
+})->name('submit-shopping-list');
+
+Route::get('/activity', function () {
+    return view('activity');
+})->name('activity');
+
+Route::get('/users', function () {
+    return view('users');
+})->name('users');
+
+Route::get('/location', function () {
+    return view('location');
+})->name('location');
+
+Route::get('/category', function () {
+    return view('category');
+})->name('category');
+
+Route::get('/manage-units', function () {
+    return view('manage-units');
+})->name('manage-units');
+
+Route::get('/kitchen-inventory', function () {
+    return view('kitchen-inventory');
+})->name('kitchen-inventory');
+
+Route::get('/master-inventory', function () {
+    return view('master-inventory');
+})->name('master-inventory');
+
+// Route::get('/submit-shopping-list', function () {
+//     return view('submit-shopping-list');
+// })->name('submit-shopping-list');
+
 // Route::get('/', ['as' => '/', 'uses' => 'App\Http\Controllers\LoginController@index']);
 Route::post('/submitLogin', ['as' => 'submitLogin', 'uses' => 'App\Http\Controllers\LoginController@submitLogin']);
 Route::group(['middleware' => ['admin']], function () {
