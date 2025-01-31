@@ -6,17 +6,18 @@ use DB;
 use Illuminate\Support\Carbon;
 use Session;
 use App\Models\{
-	Locations
+	Locations,
+	Category,
+	Unit
 };
 use Illuminate\Support\Facades\Mail;
 
-class LocationRepository
+class CategoryRepository
 {
-    public function getLocationList() {
-        $data_location = Locations::select('id','location',
-								'role'
+    public function getCategoryList() {
+        $data_location = Category::select('id','category_name','created_at'
 							)
-							->orderBy('location', 'asc')
+							->orderBy('category_name', 'asc')
 							->get();
 							
 		return $data_location;
@@ -29,15 +30,14 @@ class LocationRepository
 			->select('id')->get();
 	}
 
-    public function editLocation($reuest)
+    public function editCategory($reuest)
 	{
 
 		// $data_district = [];
 
-		$data_users_data = Locations::where('locations.id', '=', $reuest->locationId)
+		$data_users_data = Category::where('id', '=', $reuest->locationId)
 			->select(
-				'locations.location',
-				'role','id'
+				'category_name','id'
 			)->get()
 			->toArray();
 						
@@ -45,25 +45,23 @@ class LocationRepository
 		return $data_location;
 	}
 
-    public function addLocationInsert($request)
+    public function addCategory($request)
 	{
 		$data =array();
-		$location_data = new Locations();
-		$location_data->location = $request['location'];
-		$location_data->role = $request['role'];
+		$location_data = new Category();
+		$location_data->category_name = $request['category_name'];
 		$location_data->save();
-		$last_insert_id = $location_data->location_id;
+		$last_insert_id = $location_data->id;
 
         return $last_insert_id;
 
 	}
 
-    public function updateLocation($request)
+    public function updateCategory($request)
 	{
-		$user_data = Locations::where('id',$request['edit_id']) 
+		$user_data = Category::where('id',$request['edit_id']) 
 						->update([
-							'location' => $request['location'],
-							'role' => $request['role']
+							'category_name' => $request['category_name']
 						]);
 		// dd($user_data);
 		return $request->edit_id;
@@ -86,11 +84,11 @@ class LocationRepository
     //     }
     // }
 
-    public function deleteLocation($id)
+    public function deleteCategory($id)
     {
         $all_data=[];
 
-        $student_data = Locations::find($id);
+        $student_data = Category::find($id);
 
                 // Delete the record from the database
                 $is_deleted = $student_data->is_deleted == 1 ? 0 : 1;

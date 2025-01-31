@@ -39,9 +39,14 @@
           </button>
         </div>
       </div>
+
+
+
+      
       <!-- user requestion section  -->
       <div class="user-request">
         <div class="container-fluid px-3">
+        @foreach ($locations_data as $item)
           <!-- User Request Box -->
           <div class="user-request-box p-3 shadow rounded mb-3">
             <!-- Top Row -->
@@ -49,59 +54,20 @@
               <!-- Left Section -->
               <div>
                 <div class="d-flex align-items-center">
-                  <span class="act-user me-2">BB Dollins</span>
+                  <span class="act-user me-2">{{ $item->location }}</span>
                 </div>
-                <p class="mb-1">18 N Dollins</p>
+                <p class="mb-1">{{ $item->role }}</p>
               </div>
 
               <!-- Right Section -->
               <div>
-                <button class="btn btn-edit text-center shadow-sm edit-btn">
+                <button class="btn btn-edit text-center shadow-sm edit-btn" data-id="{{ $item->id }}">
                   <i class="bi bi-pencil-square"></i> <br />Edit
                 </button>
               </div>
             </div>
           </div>
-          <!-- User Request Box -->
-          <div class="user-request-box p-3 shadow rounded mb-3">
-            <!-- Top Row -->
-            <div class="d-flex justify-content-between align-items-center">
-              <!-- Left Section -->
-              <div>
-                <div class="d-flex align-items-center">
-                  <span class="act-user me-2">BB Dollins</span>
-                </div>
-                <p class="mb-1">18 N Dollins</p>
-              </div>
-
-              <!-- Right Section -->
-              <div>
-                <button class="btn btn-edit text-center shadow-sm edit-btn">
-                  <i class="bi bi-pencil-square"></i> <br />Edit
-                </button>
-              </div>
-            </div>
-          </div>
-          <!-- User Request Box -->
-          <div class="user-request-box p-3 shadow rounded mb-3">
-            <!-- Top Row -->
-            <div class="d-flex justify-content-between align-items-center">
-              <!-- Left Section -->
-              <div>
-                <div class="d-flex align-items-center">
-                  <span class="act-user me-2">BB Dollins</span>
-                </div>
-                <p class="mb-1">18 N Dollins</p>
-              </div>
-
-              <!-- Right Section -->
-              <div>
-                <button class="btn btn-edit text-center shadow-sm edit-btn">
-                  <i class="bi bi-pencil-square"></i> <br />Edit
-                </button>
-              </div>
-            </div>
-          </div>
+          @endforeach
         </div>
       </div>
           <!-- add popup -->
@@ -119,7 +85,7 @@
                   <div class="row mb-3">
                     <label class="col-6 form-label">Location Name:</label>
                     <div class="col-6">
-                      <input type="text" class="form-control" placeholder="Enter Location Name" name="location_name"/>
+                      <input type="text" class="form-control" placeholder="Enter Location Name" name="location"/>
                     </div>
                   </div>
 
@@ -155,6 +121,10 @@
       <!-- edit popup  -->
       <div id="editPopup" class="popup-container">
         <div class="popup-content">
+        <form class="forms-sample" id="frm_register" name="frm_register" method="post" role="form"
+          action="{{ route('update-locations') }}" enctype="multipart/form-data">
+          <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
+
           <!-- Popup Title -->
           <h4 class="popup-title">Edit Location</h4>
           <hr />
@@ -163,17 +133,20 @@
           <div class="row mb-3">
             <label class="col-6 form-label">Select Location:</label>
             <div class="col-6">
-              <select class="form-select">
+            <input type="text" class="form-control" placeholder="Enter Location Name" name="location" id="edit-location"/>
+            <input type="hidden" class="form-control" placeholder="Enter Location Name" name="edit_id" id="edit-location-id"/>
+
+              <!-- <select class="form-select" id="edit-location">
                 <option>New York</option>
                 <option>Los Angeles</option>
                 <option>Chicago</option>
-              </select>
+              </select> -->
             </div>
           </div>
           <div class="row mb-3">
             <label class="form-label col-6">Select Role:</label>
             <div class="col-6">
-              <select class="form-select">
+              <select class="form-select" name="role" id="edit-role">
                 <option>Admin</option>
                 <option>Editor</option>
                 <option>Viewer</option>
@@ -183,13 +156,14 @@
 
           <hr />
           <div class="d-flex justify-content-around">
-            <button class="btn btn-outline-danger btn-delete btn-lg w-100 me-2">
+            <a  class="btn btn-outline-danger btn-delete btn-lg w-100 me-2">
               <i class="bi bi-trash"></i> Delete
-            </button>
+            </a>
             <button class="btn btn-danger btn-lg w-100">
               <i class="bi bi-arrow-repeat"></i> Update
             </button>
           </div>
+          </form>  
         </div>
       </div>
 
@@ -208,4 +182,37 @@
         </div>
       </div>
     </div>
+
+    <form method="POST" action="{{ url('/delete-locations') }}" id="deleteform">
+            @csrf
+            <input type="hidden" name="delete_id" id="delete_id" value="">
+        </form>
+        <script>
  @extends('layouts.footer')
+ // Perform Action on Confirm Delete
+      confirmDeleteButton.addEventListener("click", () => {
+        confirmPopup.style.display = "none";
+                $("#delete_id").val($("#edit-location-id").val());
+                $("#deleteform").submit();
+        alert("User deleted successfully!");
+        // Add delete logic here
+      });
+
+      // Open Popup
+      editButton.addEventListener("click", () => {
+        popup.style.display = "flex";
+      });
+    
+      // Close Popup when clicking outside
+      popup.addEventListener("click", (e) => {
+        if (e.target === popup) {
+          popup.style.display = "none";
+        }
+      });
+    
+      // Show Confirmation Popup
+      deleteButton.addEventListener("click", () => {
+        popup.style.display = "none"; // Close the bottom popup
+        confirmPopup.style.display = "flex"; // Show the confirmation popup
+      });
+      </script>

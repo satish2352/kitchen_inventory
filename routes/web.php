@@ -36,17 +36,17 @@ Route::get('/users', function () {
     return view('users');
 })->name('users');
 
-Route::get('/location', function () {
-    return view('location');
-})->name('location');
+// Route::get('/location', function () {
+//     return view('location');
+// })->name('location');
 
-Route::get('/category', function () {
-    return view('category');
-})->name('category');
+// Route::get('/category', function () {
+//     return view('category');
+// })->name('category');
 
-Route::get('/manage-units', function () {
-    return view('manage-units');
-})->name('manage-units');
+// Route::get('/manage-units', function () {
+//     return view('manage-units');
+// })->name('manage-units');
 
 Route::get('/kitchen-inventory', function () {
     return view('kitchen-inventory');
@@ -75,5 +75,20 @@ Route::group(['middleware' => ['admin']], function () {
 
     Route::get('/list-locations', ['as' => 'list-locations', 'uses' => 'App\Http\Controllers\SuperAdmin\LocationController@index']);
     Route::post('/add-locations', ['as' => 'add-locations', 'uses' => 'App\Http\Controllers\SuperAdmin\LocationController@AddLocation']);
+    Route::get('/edit-locations', ['as' => 'edit-locations', 'uses' => 'App\Http\Controllers\SuperAdmin\LocationController@editLocation']);
     Route::post('/update-locations', ['as' => 'update-locations', 'uses' => 'App\Http\Controllers\SuperAdmin\LocationController@updateLocation']);
+    Route::post('/delete-locations', ['as' => 'delete-locations', 'uses' => 'App\Http\Controllers\SuperAdmin\LocationController@deleteLocation']);
+
+    Route::get('/list-category', ['as' => 'list-category', 'uses' => 'App\Http\Controllers\SuperAdmin\CategoryController@index']);
+    Route::post('/add-category', ['as' => 'add-category', 'uses' => 'App\Http\Controllers\SuperAdmin\CategoryController@AddCategory']);
+    Route::get('/edit-category', ['as' => 'edit-category', 'uses' => 'App\Http\Controllers\SuperAdmin\CategoryController@editCategory']);
+    Route::post('/update-category', ['as' => 'update-category', 'uses' => 'App\Http\Controllers\SuperAdmin\CategoryController@updateCategory']);
+    Route::post('/delete-category', ['as' => 'delete-category', 'uses' => 'App\Http\Controllers\SuperAdmin\CategoryController@deleteCategory']);
+
+    Route::get('/list-units', ['as' => 'list-units', 'uses' => 'App\Http\Controllers\SuperAdmin\UnitController@index']);
+    Route::post('/add-units', ['as' => 'add-units', 'uses' => 'App\Http\Controllers\SuperAdmin\UnitController@AddUnit']);
+    Route::get('/edit-units', ['as' => 'edit-units', 'uses' => 'App\Http\Controllers\SuperAdmin\UnitController@editUnit']);
+    Route::post('/update-units', ['as' => 'update-units', 'uses' => 'App\Http\Controllers\SuperAdmin\UnitController@updateUnit']);
+    Route::post('/delete-units', ['as' => 'delete-units', 'uses' => 'App\Http\Controllers\SuperAdmin\UnitController@deleteUnit']);
+
 });

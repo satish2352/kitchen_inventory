@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Services\SuperAdmin;
 
-use App\Http\Repository\SuperAdmin\LocationRepository;
+use App\Http\Repository\SuperAdmin\UnitRepository;
 
 
 use App\Models\
@@ -10,7 +10,7 @@ use Carbon\Carbon;
 use Config;
 use Storage;
 
-class LocationServices
+class UnitServices
 {
 
 	protected $repo;
@@ -19,53 +19,53 @@ class LocationServices
      * TopicService constructor.
      */
     public function __construct() {
-        $this->repo = new LocationRepository();
+        $this->repo = new UnitRepository();
     }
 
     public function index() {
-        $data_location = $this->repo->getLocationList();
+        $data_location = $this->repo->getUnitList();
         // dd($data_location);
         return $data_location;
     }
 
-    public function addLocation($request){
+    public function addUnit($request){
         try {
 
-            $chk_dup = $this->repo->addLocationCheck($request);
-            if(sizeof($chk_dup)>0)
-            {
-                return ['status'=>'failed','msg'=>'The District name has already been taken.'];
-            }
-            else
-            {
-                $last_id = $this->repo->addLocationInsert($request);
+            // $chk_dup = $this->repo->addLocationCheck($request);
+            // if(sizeof($chk_dup)>0)
+            // {
+            //     return ['status'=>'failed','msg'=>'The District name has already been taken.'];
+            // }
+            // else
+            // {
+                $last_id = $this->repo->addUnit($request);
                 // dd($last_id);
                 if ($last_id) {
                     return ['status' => 'success', 'msg' => 'District Added Successfully.'];
                 } else {
                     return ['status' => 'error', 'msg' => 'District get Not Added.'];
                 }  
-            }
+            // }
 
         } catch (Exception $e) {
             return ['status' => 'error', 'msg' => $e->getMessage()];
             }      
     }
 
-    public function editLocation($request) {
-        $data_location = $this->repo->editLocation($request);
+    public function editUnit($request) {
+        $data_location = $this->repo->editUnit($request);
         // dd($data_location);
         return $data_location;
     }
 
-    public function updateLocation($request) {
-        $user_register_id = $this->repo->updateLocation($request);
+    public function updateUnit($request) {
+        $user_register_id = $this->repo->updateUnit($request);
         return ['status'=>'success','msg'=>'District Updated Successful.'];
     }
 
-    public function deleteLocation($id){
+    public function deleteUnit($id){
         try {
-            $delete = $this->repo->deleteLocation($id);
+            $delete = $this->repo->deleteUnit($id);
             if ($delete) {
                 return ['status' => 'success', 'msg' => 'District Deleted Successfully.'];
             } else {

@@ -37,10 +37,10 @@
           <a href="{{ route('list-locations') }}"
              ><i class="bi bi-geo-alt-fill"></i>Manage Location</a
              >
-          <a href="{{ route('category') }}"
+          <a href="{{ route('list-category') }}"
              ><i class="bi bi-tag-fill"></i> Manage Category</a
              >
-          <a href="{{ route('manage-units') }}"
+          <a href="{{ route('list-units') }}"
              ><i class="bi bi-kanban"></i> Manage Units</a
              >
           <a href="{{ route('kitchen-inventory') }}"

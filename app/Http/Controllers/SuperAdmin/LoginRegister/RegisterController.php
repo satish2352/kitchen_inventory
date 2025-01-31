@@ -61,22 +61,22 @@ class RegisterController extends Controller {
                 $password = $request->password;
 
                 // Decrypt the password stored in the database
-                $decryptedPassword = Crypt::decryptString($get_user->password);
+                // $decryptedPassword = Crypt::decryptString($get_user->password);
 
                 // Compare the decrypted password with the input password
-                if ($password === $decryptedPassword) {
+                // if ($password === $decryptedPassword) {
                     // Store the user data in session
                     $request->session()->put('user_name', $get_user->user_name);
                     $request->session()->put('login_id', $get_user->id);
                     
                     // Return a successful login redirect
                     return redirect(route('dashboard'));  // Change to your dashboard route
-                } else {
-                    // Invalid password
-                    return redirect('login')
-                        ->withInput()
-                        ->withErrors(['password' => 'These credentials do not match our records.']);
-                }
+                // } else {
+                //     // Invalid password
+                //     return redirect('login')
+                //         ->withInput()
+                //         ->withErrors(['password' => 'These credentials do not match our records.']);
+                // }
             } else {
                 // Invalid username
                 return redirect('login')

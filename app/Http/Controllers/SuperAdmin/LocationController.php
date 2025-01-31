@@ -21,9 +21,9 @@ class LocationController extends Controller {
 
     public function index()
     {
-        $locations = $this->service->index();
+        $locations_data = $this->service->index();
         // dd($projects);
-        return view('location',compact('locations'));
+        return view('location',compact('locations_data'));
     }
 
     public function addLocation(Request $request)
@@ -32,14 +32,14 @@ class LocationController extends Controller {
         try {
 
             $rules = [
-                'location_name' => 'required|unique:locations|regex:/^[a-zA-Z\s]+$/u|max:255',
+                'location' => 'required|unique:locations|regex:/^[a-zA-Z\s]+$/u|max:255',
                 'role' => 'required'
             ];
             $messages = [
-                'location_name.required' => 'Please  enter location name.',
-                'location_name.regex' => 'Please  enter text only.',
-                'location_name.max' => 'Please  enter text length upto 255 character only.',
-                'location_name.unique' => 'Title already exist.',
+                'location.required' => 'Please  enter location name.',
+                'location.regex' => 'Please  enter text only.',
+                'location.max' => 'Please  enter text length upto 255 character only.',
+                'location.unique' => 'Title already exist.',
 
                 'role.required' => 'Please Select Role.'
             ];
@@ -69,18 +69,19 @@ class LocationController extends Controller {
 
     public function editLocation(Request $request){
         $location_data = $this->service->editLocation($request);
-        return view('admin.pages.projects.edit-projects',compact('location_data','dynamic_district'));
+        // Log::info('This is an informational message.',$location_data);
+        return response()->json(['location_data' => $location_data]);
     }
 
     public function updateLocation(Request $request){
         $rules = [
-            'location_name' => 'required|regex:/^[a-zA-Z\s]+$/u|max:255',
+            'location' => 'required|regex:/^[a-zA-Z\s]+$/u|max:255',
             'role' => 'required'
         ];
         $messages = [
-            'location_name.required' => 'Please  enter location name.',
-            'location_name.regex' => 'Please  enter text only.',
-            'location_name.max' => 'Please  enter text length upto 255 character only.',
+            'location.required' => 'Please  enter location name.',
+            'location.regex' => 'Please  enter text only.',
+            'location.max' => 'Please  enter text length upto 255 character only.',
             'role.required' => 'Please Select Role.'
         ];
         try {

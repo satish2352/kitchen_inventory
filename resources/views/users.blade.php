@@ -11,11 +11,11 @@
               <i class="bi bi-arrow-90deg-left"></i>
             </button>
           </a>
-          <h5 class="sub-title">Activity</h5>
+          <h5 class="sub-title">Users</h5>
           <!-- person -->
-          <div class="person edit-btn">
+          <div class="person add-user">
             <i class="bi bi-person"></i>
-            <span>Amar Deep</span>
+            <span>Add User</span>
           </div>
         </div>
       </div>
@@ -41,140 +41,160 @@
         </div>
       </div>
       <!-- user requestion section  -->
-      <div class="user-request">
+      <div class="user-request pb-3">
         <div class="container-fluid px-3">
-          <!-- User Activity Box -->
+          <!-- User Request Box -->
           <div class="user-request-box p-3 shadow rounded mb-2">
             <!-- Top Row -->
             <div class="d-flex justify-content-between align-items-center">
               <!-- Left Section -->
-              <div class="bdr-left">
+              <div>
                 <div class="d-flex align-items-center">
-                  <span class="act-user me-2"
-                    >Jamar white deleted user: Jamer</span
-                  >
+                  <span class="ur-user me-2 jost-font">Autumn Kellar</span>
                 </div>
-                <p class="mb-1 activity-p">Sun April 27, 2024 | 5:45p.m.</p>
+                <p class="mb-1 fw-light">Ribanz@buffaloboss.com</p>
+                <p class="mb-1 fw-light">87900179854</p>
               </div>
+
+              <!-- Right Section -->
+              <div>
+                <button class="btn btn-edit text-center shadow-sm edit-btn">
+                  <i class="bi bi-pencil-square"></i> <br />Edit
+                </button>
+              </div>
+            </div>
+
+            <!-- Divider -->
+            <hr class="my-2" />
+
+            <!-- Last Active Section -->
+            <div class="text-center fw-light fs-sm">
+              Last active: Sun April 27, 2024 | 5:45 p.m.
             </div>
           </div>
           <div class="user-request-box p-3 shadow rounded mb-2">
             <!-- Top Row -->
             <div class="d-flex justify-content-between align-items-center">
               <!-- Left Section -->
-              <div class="bdr-left">
+              <div>
                 <div class="d-flex align-items-center">
-                  <span class="act-user me-2"
-                    >Jamar white deleted user: Jamer</span
-                  >
+                  <span class="ur-user me-2 jost-font">Autumn Kellar</span>
                 </div>
-                <p class="mb-1 activity-p">Sun April 27, 2024 | 5:45p.m.</p>
+                <p class="mb-1 fw-light">Ribanz@buffaloboss.com</p>
+                <p class="mb-1 fw-light">87900179854</p>
+              </div>
+
+              <!-- Right Section -->
+              <div>
+                <button class="btn btn-edit text-center shadow-sm">
+                  <i class="bi bi-pencil-square"></i> <br />Edit
+                </button>
               </div>
             </div>
-          </div>
-          <div class="user-request-box p-3 shadow rounded mb-2">
-            <!-- Top Row -->
-            <div class="d-flex justify-content-between align-items-center">
-              <!-- Left Section -->
-              <div class="bdr-left">
-                <div class="d-flex align-items-center">
-                  <span class="act-user me-2"
-                    >Jamar white deleted user: Jamer</span
-                  >
-                </div>
-                <p class="mb-1 activity-p">Sun April 27, 2024 | 5:45p.m.</p>
-              </div>
-            </div>
-          </div>
-          <div class="user-request-box p-3 shadow rounded mb-2">
-            <!-- Top Row -->
-            <div class="d-flex justify-content-between align-items-center">
-              <!-- Left Section -->
-              <div class="bdr-left">
-                <div class="d-flex align-items-center">
-                  <span class="act-user me-2"
-                    >Jamar white deleted user: Jamer</span
-                  >
-                </div>
-                <p class="mb-1 activity-p">Sun April 27, 2024 | 5:45p.m.</p>
-              </div>
-            </div>
-          </div>
-          <div class="user-request-box p-3 shadow rounded mb-2">
-            <!-- Top Row -->
-            <div class="d-flex justify-content-between align-items-center">
-              <!-- Left Section -->
-              <div class="bdr-left">
-                <div class="d-flex align-items-center">
-                  <span class="act-user me-2"
-                    >Jamar white deleted user: Jamer</span
-                  >
-                </div>
-                <p class="mb-1 activity-p">Sun April 27, 2024 | 5:45p.m.</p>
-              </div>
-            </div>
-          </div>
-          <div class="user-request-box p-3 shadow rounded mb-2">
-            <!-- Top Row -->
-            <div class="d-flex justify-content-between align-items-center">
-              <!-- Left Section -->
-              <div class="bdr-left">
-                <div class="d-flex align-items-center">
-                  <span class="act-user me-2"
-                    >Jamar white deleted user: Jamer</span
-                  >
-                </div>
-                <p class="mb-1 activity-p">Sun April 27, 2024 | 5:45p.m.</p>
-              </div>
+
+            <!-- Divider -->
+            <hr class="my-2" />
+
+            <!-- Last Active Section -->
+            <div class="text-center fw-light fs-sm">
+              Last active: Sun April 27, 2024 | 5:45 p.m.
             </div>
           </div>
         </div>
       </div>
+
       <!-- edit popup  -->
       <div id="editPopup" class="popup-container">
         <div class="popup-content">
           <!-- Popup Title -->
-          <h4 class="popup-title">Select User</h4>
+          <h4 class="popup-title">Edit User Details</h4>
           <hr />
-          <!-- User Activity Box -->
-          <div class="user-request-box p-3 shadow rounded mb-2 user-active">
-            <!-- Top Row -->
-            <div class="d-flex align-items-center">
-              <!-- Left Section -->
-              <div class="user-icon"></div>
-              <div class="bdr-left-clr">
-                <div class="d-flex align-items-center">
-                  <span class="act-user me-2">Jammar White</span>
-                </div>
-                <p class="mb-1 activity-p">Super Admin</p>
-              </div>
+
+          <!-- Select Options -->
+          <div class="row mb-3">
+            <label class="col-6 form-label">Select Location</label>
+            <div class="col-6">
+              <select class="form-select">
+                <option>New York</option>
+                <option>Los Angeles</option>
+                <option>Chicago</option>
+              </select>
             </div>
           </div>
-          <div class="user-request-box p-3 shadow rounded mb-2">
-            <!-- Top Row -->
-            <div class="d-flex align-items-center">
-              <!-- Left Section -->
-              <div class="user-icon"></div>
-              <div class="bdr-left-clr">
-                <div class="d-flex align-items-center">
-                  <span class="act-user me-2">Jammar White</span>
-                </div>
-                <p class="mb-1 activity-p">Super Admin</p>
-              </div>
+          <div class="row mb-3">
+            <label class="form-label col-6">Select Role</label>
+            <div class="col-6">
+              <select class="form-select">
+                <option>Admin</option>
+                <option>Editor</option>
+                <option>Viewer</option>
+              </select>
             </div>
           </div>
-          <div class="user-request-box p-3 shadow rounded mb-2">
-            <!-- Top Row -->
-            <div class="d-flex align-items-center">
-              <!-- Left Section -->
-              <div class="user-icon"></div>
-              <div class="bdr-left-clr">
-                <div class="d-flex align-items-center">
-                  <span class="act-user me-2">Jammar White</span>
-                </div>
-                <p class="mb-1 activity-p">Super Admin</p>
-              </div>
+          <div class="row mb-3">
+            <label class="form-label col-6">Enter Name</label>
+            <div class="col-6">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Name"
+              />
             </div>
+          </div>
+          <div class="row mb-3">
+            <label class="form-label col-6">Enter Phone</label>
+            <div class="col-6">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Phone"
+              />
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="form-label col-6">Enter mail</label>
+            <div class="col-6">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter mail"
+              />
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="form-label col-6">Enter password</label>
+            <div class="col-6">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter password"
+              />
+            </div>
+          </div>
+
+          <hr />
+          <div class="d-flex justify-content-around">
+            <button class="btn btn-outline-danger btn-delete btn-lg w-100 me-2">
+              <i class="bi bi-trash"></i> Delete
+            </button>
+            <button class="btn btn-danger btn-lg w-100">
+              <i class="bi bi-arrow-repeat"></i> Update
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Delete Confirmation Popup -->
+      <div id="confirmPopup" class="confirm-popup-container">
+        <div class="confirm-popup-content">
+          <h4 class="confirm-popup-title">Please Confirm</h4>
+          <p class="confirm-popup-text">
+            Are you sure to delete this user? <br />
+            this user wil not recover back
+          </p>
+          <div class="d-flex justify-content-around mt-4 confrm">
+            <button id="cancelDelete" class="btn br">NO</button>
+            <button id="confirmDelete" class="btn">YES</button>
           </div>
         </div>
       </div>
