@@ -52,6 +52,10 @@
           <a href="submit-shopping-list.html"
              ><i class="bi bi-cart3"></i> Submit Shopping list</a
              >
+
+             <a href="{{ route('logout') }}"
+             ><i class="bi bi-cart3"></i> Log Out</a
+             >
        </div>
     </div>
     <!-- Overlay -->
