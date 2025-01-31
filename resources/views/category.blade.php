@@ -12,11 +12,11 @@
             </button>
           </a>
           <h5 class="sub-title">Category</h5>
-          <a href="approve-users.html">
-            <button class="btn btn-light">
+          <!-- <a href="approve-users.html"> -->
+            <button class="btn btn-light add-btn">
               <i class="bi bi-plus-lg"></i>
             </button>
-          </a>
+          <!-- </a> -->
         </div>
       </div>
       <div class="filter">
@@ -108,6 +108,39 @@
           </div>
         </div>
       </div>
+
+    <!-- Add Popup -->
+     <div id="addPopup" class="popup-container">
+        <div class="popup-content">
+          <!-- Popup Title -->
+          <h4 class="popup-title">Add Category</h4>
+          <hr />
+
+          <!-- Select Options -->
+          <div class="row mb-3">
+            <label class="col-6 form-label">Category Name</label>
+            <div class="col-6">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Category Name"
+              />
+            </div>
+          </div>
+
+          <hr />
+          <div class="d-flex justify-content-around">
+            <button class="btn btn-secondary btn-lg w-100 me-2">
+              <i class="bi bi-x-circle"></i> Cancel
+            </button>
+            <button class="btn btn-success btn-lg w-100">
+              <i class="bi bi-plus-circle"></i> Add
+            </button>
+          </div>
+        </div>
+      </div>
+
+
       <!-- edit popup  -->
       <div id="editPopup" class="popup-container">
         <div class="popup-content">

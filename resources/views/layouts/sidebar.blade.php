@@ -34,7 +34,7 @@
              >
           <a href="{{ route('activity') }}"><i class="bi bi-book"></i> Activity</a>
           <a href="{{ route('users') }}"><i class="bi bi-person"></i> Manage User</a>
-          <a href="{{ route('location') }}"
+          <a href="{{ route('list-locations') }}"
              ><i class="bi bi-geo-alt-fill"></i>Manage Location</a
              >
           <a href="{{ route('category') }}"

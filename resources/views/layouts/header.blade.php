@@ -14,6 +14,7 @@
          rel="stylesheet"
          />
       <link rel="stylesheet" href="{{ asset('css/dashboard.css')}}" />
+      <link rel="stylesheet" href="{{ asset('css/shopping-list.css')}}" />
       <link rel="stylesheet" href="{{ asset('css/style.css')}}" />
    </head>
    <body>

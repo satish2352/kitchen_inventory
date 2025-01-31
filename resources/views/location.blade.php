@@ -13,7 +13,7 @@
           </a>
           <h5 class="sub-title">Locations</h5>
 
-          <button class="btn btn-light">
+          <button class="btn btn-light add-btn">
             <i class="bi bi-plus-lg"></i>
           </button>
         </div>
@@ -104,6 +104,54 @@
           </div>
         </div>
       </div>
+          <!-- add popup -->
+
+          <div id="addPopup" class="popup-container">
+            <div class="popup-content">
+              <form class="forms-sample" id="frm_register" name="frm_register" method="post" role="form"
+                  action="{{ route('add-locations') }}" enctype="multipart/form-data">
+                  <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
+                    <!-- Popup Title -->
+                    <h4 class="popup-title">Add Location</h4>
+                    <hr />
+
+                    <!-- Input Field for Location Name -->
+                  <div class="row mb-3">
+                    <label class="col-6 form-label">Location Name:</label>
+                    <div class="col-6">
+                      <input type="text" class="form-control" placeholder="Enter Location Name" name="location_name"/>
+                    </div>
+                  </div>
+
+                    <!-- Select Role -->
+                  <div class="row mb-3">
+                    <label class="form-label col-6">Select Role:</label>
+                    <div class="col-6">
+                      <select class="form-select" name="role">
+                        <option>Admin</option>
+                        <option>Editor</option>
+                        <option>Viewer</option>
+                      </select>
+                    </div>
+                  </div>
+              
+                  <hr />
+                <div class="d-flex justify-content-around">
+                  <button class="btn btn-secondary btn-lg w-100 me-2">
+                    <i class="bi bi-x-circle"></i> Cancel
+                  </button>
+                  <button class="btn btn-success btn-lg w-100">
+                    <i class="bi bi-plus-circle"></i> Add
+                  </button>
+                </div>
+              </form>  
+            </div>
+          </div>
+
+           <!-- close add popup -->
+
+
+
       <!-- edit popup  -->
       <div id="editPopup" class="popup-container">
         <div class="popup-content">

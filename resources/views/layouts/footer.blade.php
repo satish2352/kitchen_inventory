@@ -20,10 +20,17 @@
       const deleteButton = document.querySelector(".btn-delete");
       const editButton = document.querySelector(".edit-btn");
       const popup = document.getElementById("editPopup");
+      const addButton = document.querySelector(".add-btn");
+      const popupadd = document.getElementById("addPopup");
       const confirmPopup = document.getElementById("confirmPopup");
       const cancelDeleteButton = document.getElementById("cancelDelete");
       const confirmDeleteButton = document.getElementById("confirmDelete");
     
+      // Open Popup
+      addButton.addEventListener("click", () => {
+        popupadd.style.display = "flex";
+      });
+
       // Open Popup
       editButton.addEventListener("click", () => {
         popup.style.display = "flex";
