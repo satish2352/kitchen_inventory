@@ -17,28 +17,28 @@
  </script>
  <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", () => {
-      const deleteButton = document.querySelector(".btn-delete");
-      const editButton = document.querySelector(".edit-btn");
-      const popup = document.getElementById("editPopup");
-      const addButton = document.querySelector(".add-btn");
-      const popupadd = document.getElementById("addPopup");
-      const confirmPopup = document.getElementById("confirmPopup");
-      const cancelDeleteButton = document.getElementById("cancelDelete");
-      const confirmDeleteButton = document.getElementById("confirmDelete");
+      // const deleteButton = document.querySelector(".btn-delete");
+      // const editButton = document.querySelector(".edit-btn");
+      // const popup = document.getElementById("editPopup");
+      // const addButton = document.querySelector(".add-btn");
+      // const popupadd = document.getElementById("addPopup");
+      // const confirmPopup = document.getElementById("confirmPopup");
+      // const cancelDeleteButton = document.getElementById("cancelDelete");
+      // const confirmDeleteButton = document.getElementById("confirmDelete");
 
-      const editButtonCategory = document.querySelector(".edit-btn-category");
-      const popupcategory = document.getElementById("editPopupCategory");
-      const deleteButtonCategory = document.querySelector(".btn-delete-category");
-      const confirmPopupCategory = document.getElementById("confirmPopupCategory");
-      const confirmDeleteButtonCategory = document.getElementById("confirmDeleteCategory");
+      // const editButtonCategory = document.querySelector(".edit-btn-category");
+      // const popupcategory = document.getElementById("editPopupCategory");
+      // const deleteButtonCategory = document.querySelector(".btn-delete-category");
+      // const confirmPopupCategory = document.getElementById("confirmPopupCategory");
+      // const confirmDeleteButtonCategory = document.getElementById("confirmDeleteCategory");
 
 
 
     
-      // Open Popup
-      addButton.addEventListener("click", () => {
-        popupadd.style.display = "flex";
-      });
+      // // Open Popup
+      // addButton.addEventListener("click", () => {
+      //   popupadd.style.display = "flex";
+      // });
 
       // Open Popup
       // editButton.addEventListener("click", () => {
@@ -87,7 +87,7 @@
     });
  </script>
 
-<script>
+<!-- <script>
  $(document).ready(function() {
   // Open the popup when Edit button is clicked
   $('.edit-btn').on('click', function() {
@@ -126,7 +126,7 @@ document.getElementById('editPopup').style.display = "flex";
   //   }
   // });
 });
-</script> 
+</script>  -->
 
 
 

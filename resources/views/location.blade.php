@@ -2,6 +2,20 @@
 @include('layouts.sidebar')
 
 @yield('content')
+<style>
+  .error-text {
+  color: red;
+  font-size: 12px;
+}
+
+.is-invalid {
+  border-color: red;
+}
+
+.is-valid {
+  border-color: green;
+}
+</style>  
 <div class="main">
       <div class="inner-top container-fluid p-3">
         <!-- Top Bar -->
@@ -187,9 +201,26 @@
             @csrf
             <input type="hidden" name="delete_id" id="delete_id" value="">
         </form>
-        <script>
- @extends('layouts.footer')
- // Perform Action on Confirm Delete
+
+
+@extends('layouts.footer')
+        <script type="text/javascript">
+ document.addEventListener("DOMContentLoaded", () => {
+      const deleteButton = document.querySelector(".btn-delete");
+      const editButton = document.querySelector(".edit-btn");
+      const popup = document.getElementById("editPopup");
+      const addButton = document.querySelector(".add-btn");
+      const popupadd = document.getElementById("addPopup");
+      const confirmPopup = document.getElementById("confirmPopup");
+      const cancelDeleteButton = document.getElementById("cancelDelete");
+      const confirmDeleteButton = document.getElementById("confirmDelete");
+
+      // Open Popup
+      addButton.addEventListener("click", () => {
+        popupadd.style.display = "flex";
+      });
+
+      // Perform Action on Confirm Delete
       confirmDeleteButton.addEventListener("click", () => {
         confirmPopup.style.display = "none";
                 $("#delete_id").val($("#edit-location-id").val());
@@ -215,4 +246,101 @@
         popup.style.display = "none"; // Close the bottom popup
         confirmPopup.style.display = "flex"; // Show the confirmation popup
       });
+
+    });
       </script>
+
+<script>
+ $(document).ready(function() {
+  // Open the popup when Edit button is clicked
+  $('.edit-btn').on('click', function() {
+    var locationId = $(this).data('id'); // Get the location ID from the button
+    
+    // AJAX request to get location data
+    $.ajax({
+      url: '{{ route('edit-locations') }}', // Your route to fetch the location data
+      type: 'GET',
+      data: {
+                locationId: locationId
+            },
+      success: function(response) {
+        // console.log('responseresponseresponseresponse',response.location_data);
+        // alert('ppppppppppppppppppp');
+        // Populate the popup with the fetched data
+        $('#edit-location').val(response.location_data.location); // Set location value
+        $('#edit-role').val(response.location_data.role); // Set role value
+        $('#edit-location-id').val(response.location_data.id); // Set role value
+        
+        // Show the popup
+        $('#editPopup').show();
+
+// Add the CSS property for flex display
+document.getElementById('editPopup').style.display = "flex";
+      },
+      error: function() {
+        alert('Failed to load location data.');
+      }
+    });
+  });
+  // Close the popup if clicked outside (optional)
+  // $(document).on('click', function(event) {
+  //   if (!$(event.target).closest('#editPopup, .edit-btn').length) {
+  //     $('#editPopup').hide();
+  //   }
+  // });
+});
+</script>       
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    // Initialize validation for the add form
+    $("#frm_register").validate({
+      rules: {
+        location: {
+          required: true,
+          minlength: 3
+        }
+      },
+      messages: {
+        location: {
+          required: "Please enter the Location name",
+          minlength: "Category name must be at least 3 characters long"
+        }
+      },
+      errorElement: "span",
+      errorClass: "error-text",
+      highlight: function (element) {
+        $(element).addClass("is-invalid").removeClass("is-valid");
+      },
+      unhighlight: function (element) {
+        $(element).addClass("is-valid").removeClass("is-invalid");
+      }
+    });
+
+    // Initialize validation for the edit form
+    $("#editCategoryForm").validate({
+      rules: {
+        category_name: {
+          required: true,
+          minlength: 3
+        }
+      },
+      messages: {
+        category_name: {
+          required: "Please enter the category name",
+          minlength: "Category name must be at least 3 characters long"
+        }
+      },
+      errorElement: "span",
+      errorClass: "error-text",
+      highlight: function (element) {
+        $(element).addClass("is-invalid").removeClass("is-valid");
+      },
+      unhighlight: function (element) {
+        $(element).addClass("is-valid").removeClass("is-invalid");
+      }
+    });
+
+
+  });
+</script>

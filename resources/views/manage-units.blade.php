@@ -150,9 +150,12 @@
           <input type="hidden" class="form-control" placeholder="Enter Location Name" name="edit_id" id="edit-unit-id"/>
           <hr />
           <div class="d-flex justify-content-around">
-            <button class="btn btn-outline-danger btn-delete-unit btn-lg w-100 me-2">
+          <a  class="btn btn-outline-danger btn-delete-unit btn-lg w-100 me-2">
               <i class="bi bi-trash"></i> Delete
-            </button>
+            </a>
+            <!-- <button class="btn btn-outline-danger btn-delete-unit btn-lg w-100 me-2">
+              <i class="bi bi-trash"></i> Delete
+            </button> -->
             <button class="btn btn-danger btn-lg w-100">
               <i class="bi bi-arrow-repeat"></i> Update
             </button>
@@ -171,7 +174,7 @@
           </p>
           <div class="d-flex justify-content-around mt-4 confrm">
             <button id="cancelDelete" class="btn br">NO</button>
-            <button id="confirmDelete" class="btn">YES</button>
+            <button id="confirmDeleteUnit" class="btn">YES</button>
           </div>
         </div>
       </div>
@@ -185,16 +188,24 @@
 
  <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", () => {
+      const addButton = document.querySelector(".add-btn");
+      const popupadd = document.getElementById("addPopup");
       const editButtonUnit = document.querySelector(".edit-btn-unit");
       const popupunit = document.getElementById("editPopupUnit");
       const deleteButtonUnit = document.querySelector(".btn-delete-unit");
       const confirmPopupUnit = document.getElementById("confirmPopupUnit");
       const confirmDeleteUnit = document.getElementById("confirmDeleteUnit");
+      const cancelDeleteButton = document.getElementById("cancelDelete");
+
+      // // Open Popup
+      addButton.addEventListener("click", () => {
+        popupadd.style.display = "flex";
+      });
 
       // Open Popup
-      // editButtonUnit.addEventListener("click", () => {
-      //   popupunit.style.display = "flex";
-      // });
+      editButtonUnit.addEventListener("click", () => {
+        popupunit.style.display = "flex";
+      });
 
       deleteButtonUnit.addEventListener("click", () => {
         popupunit.style.display = "none"; // Close the bottom popup

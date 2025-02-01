@@ -17,6 +17,7 @@ class CategoryRepository
     public function getCategoryList() {
         $data_location = Category::select('id','category_name','created_at'
 							)
+							->where('is_deleted', '0')
 							->orderBy('category_name', 'asc')
 							->get();
 							

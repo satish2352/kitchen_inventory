@@ -17,6 +17,7 @@ class UnitRepository
     public function getUnitList() {
         $data_location = Unit::select('id','unit_name','created_at'
 							)
+							->where('is_deleted', '0')
 							->orderBy('unit_name', 'asc')
 							->get();
 							

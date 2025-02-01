@@ -6,18 +6,19 @@ use DB;
 use Illuminate\Support\Carbon;
 use Session;
 use App\Models\{
-	Locations
+	Locations,
+	Category,
+	Unit,
+	User
 };
 use Illuminate\Support\Facades\Mail;
 
-class LocationRepository
+class UserRepository
 {
-    public function getLocationList() {
-        $data_location = Locations::select('id','location',
-								'role'
-							)
+    public function getUsersList() {
+        $data_location = User::select('id','name','location','role','email','password','created_at','email')
 							->where('is_deleted', '0')
-							->orderBy('location', 'asc')
+							->orderBy('name', 'asc')
 							->get();
 							
 		return $data_location;
@@ -30,41 +31,48 @@ class LocationRepository
 			->select('id')->get();
 	}
 
-    public function editLocation($reuest)
+    public function editUser($reuest)
 	{
 
 		// $data_district = [];
 
-		$data_users_data = Locations::where('locations.id', '=', $reuest->locationId)
-			->select(
-				'locations.location',
-				'role','id'
-			)->get()
+		$data_users_data = User::where('users.id', '=', $reuest->locationId)
+			->select('users.*')->get()
 			->toArray();
 						
 		$data_location = $data_users_data[0];
+		// dd($data_location);
 		return $data_location;
 	}
 
-    public function addLocationInsert($request)
+    public function addUser($request)
 	{
+		// dd($request);
 		$data =array();
-		$location_data = new Locations();
-		$location_data->location = $request['location'];
-		$location_data->role = $request['role'];
-		$location_data->save();
-		$last_insert_id = $location_data->location_id;
-
+		$user_data = new User();
+		$user_data->name = $request['name'];
+		$user_data->location = $request['location'];
+		$user_data->role = $request['role'];
+		$user_data->phone = $request['phone'];
+		$user_data->email = $request['email'];
+		$user_data->password = $request['password'];
+		$user_data->save();
+		$last_insert_id = $user_data->id;
+// dd($user_data);
         return $last_insert_id;
 
 	}
 
-    public function updateLocation($request)
+    public function updateUser($request)
 	{
-		$user_data = Locations::where('id',$request['edit_id']) 
+		$user_data = User::where('id',$request['edit_id']) 
 						->update([
+							'name' => $request['name'],
 							'location' => $request['location'],
-							'role' => $request['role']
+							'role' => $request['role'],
+							'phone' => $request['phone'],
+							'email' => $request['email'],
+							'password' => $request['password'],
 						]);
 		// dd($user_data);
 		return $request->edit_id;
@@ -87,12 +95,12 @@ class LocationRepository
     //     }
     // }
 
-    public function deleteLocation($id)
+    public function deleteUser($id)
     {
         $all_data=[];
 
-        $student_data = Locations::find($id);
-
+        $student_data = User::find($id);
+// dd($student_data);
                 // Delete the record from the database
                 $is_deleted = $student_data->is_deleted == 1 ? 0 : 1;
                 $student_data->is_deleted = $is_deleted;

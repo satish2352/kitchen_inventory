@@ -117,7 +117,7 @@ class UnitController extends Controller {
                 $msg = $delete['msg'];
                 $status = $delete['status'];
                 if ($status == 'success') {
-                    return redirect('list-category')->with(compact('msg', 'status'));
+                    return redirect('list-units')->with(compact('msg', 'status'));
                 } else {
                     return redirect()->back()
                         ->withInput()

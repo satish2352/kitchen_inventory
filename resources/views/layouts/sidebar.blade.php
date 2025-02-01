@@ -33,7 +33,7 @@
              ><i class="bi bi-share-fill"></i> Shopping List</a
              >
           <a href="{{ route('activity') }}"><i class="bi bi-book"></i> Activity</a>
-          <a href="{{ route('users') }}"><i class="bi bi-person"></i> Manage User</a>
+          <a href="{{ route('list-users') }}"><i class="bi bi-person"></i> Manage User</a>
           <a href="{{ route('list-locations') }}"
              ><i class="bi bi-geo-alt-fill"></i>Manage Location</a
              >
@@ -46,7 +46,7 @@
           <a href="{{ route('kitchen-inventory') }}"
              ><i class="bi bi-bag-plus-fill"></i>Add kitchen Inventory</a
              >
-          <a href="{{ route('master-inventory') }}"
+          <a href="{{ route('list-items') }}"
              ><i class="bi bi-card-checklist"></i> Master Inventory</a
              >
           <a href="submit-shopping-list.html"

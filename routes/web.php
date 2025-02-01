@@ -32,9 +32,9 @@ Route::get('/activity', function () {
     return view('activity');
 })->name('activity');
 
-Route::get('/users', function () {
-    return view('users');
-})->name('users');
+// Route::get('/users', function () {
+//     return view('users');
+// })->name('users');
 
 // Route::get('/location', function () {
 //     return view('location');
@@ -52,9 +52,9 @@ Route::get('/kitchen-inventory', function () {
     return view('kitchen-inventory');
 })->name('kitchen-inventory');
 
-Route::get('/master-inventory', function () {
-    return view('master-inventory');
-})->name('master-inventory');
+// Route::get('/master-inventory', function () {
+//     return view('master-inventory');
+// })->name('master-inventory');
 
 // Route::get('/submit-shopping-list', function () {
 //     return view('submit-shopping-list');
@@ -90,5 +90,17 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('/edit-units', ['as' => 'edit-units', 'uses' => 'App\Http\Controllers\SuperAdmin\UnitController@editUnit']);
     Route::post('/update-units', ['as' => 'update-units', 'uses' => 'App\Http\Controllers\SuperAdmin\UnitController@updateUnit']);
     Route::post('/delete-units', ['as' => 'delete-units', 'uses' => 'App\Http\Controllers\SuperAdmin\UnitController@deleteUnit']);
+
+    Route::get('/list-users', ['as' => 'list-users', 'uses' => 'App\Http\Controllers\SuperAdmin\UserController@index']);
+    Route::post('/add-users', ['as' => 'add-users', 'uses' => 'App\Http\Controllers\SuperAdmin\UserController@addUser']);
+    Route::get('/edit-users', ['as' => 'edit-users', 'uses' => 'App\Http\Controllers\SuperAdmin\UserController@editUser']);
+    Route::post('/update-users', ['as' => 'update-users', 'uses' => 'App\Http\Controllers\SuperAdmin\UserController@updateUser']);
+    Route::post('/delete-users', ['as' => 'delete-users', 'uses' => 'App\Http\Controllers\SuperAdmin\UserController@deleteUser']);
+
+    Route::get('/list-items', ['as' => 'list-items', 'uses' => 'App\Http\Controllers\SuperAdmin\ItemsController@index']);
+    Route::post('/add-items', ['as' => 'add-items', 'uses' => 'App\Http\Controllers\SuperAdmin\ItemsController@addItem']);
+    Route::get('/edit-items', ['as' => 'edit-items', 'uses' => 'App\Http\Controllers\SuperAdmin\ItemsController@editItem']);
+    Route::post('/update-items', ['as' => 'update-items', 'uses' => 'App\Http\Controllers\SuperAdmin\ItemsController@updateItem']);
+    Route::post('/delete-items', ['as' => 'delete-items', 'uses' => 'App\Http\Controllers\SuperAdmin\ItemsController@deleteItem']);
 
 });

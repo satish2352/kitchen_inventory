@@ -2,6 +2,21 @@
 @include('layouts.sidebar')
 
 @yield('content')
+
+<style>
+  .error-text {
+  color: red;
+  font-size: 12px;
+}
+
+.is-invalid {
+  border-color: red;
+}
+
+.is-valid {
+  border-color: green;
+}
+</style>  
 <div class="main">
       <div class="inner-top container-fluid p-3">
         <!-- Top Bar -->
@@ -115,7 +130,7 @@
       <!-- edit popup  -->
       <div id="editPopupCategory" class="popup-container">
         <div class="popup-content">
-        <form class="forms-sample" id="frm_register" name="frm_register" method="post" role="form"
+        <form class="forms-sample" id="editCategoryForm" name="editCategoryForm" method="post" role="form"
           action="{{ route('update-category') }}" enctype="multipart/form-data">
           <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
           <!-- Popup Title -->
@@ -170,14 +185,84 @@
         </div>
       </div>
     </div>
-    <form method="POST" action="{{ url('/delete-locations') }}" id="deleteform">
+    <form method="POST" action="{{ url('/delete-category') }}" id="deleteform">
             @csrf
             <input type="hidden" name="delete_id" id="delete_id" value="">
         </form>
     
  @extends('layouts.footer')
 
+ <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", () => {
+      // const deleteButton = document.querySelector(".btn-delete");
+      // const editButton = document.querySelector(".edit-btn");
+      // const popup = document.getElementById("editPopup");
+      const addButton = document.querySelector(".add-btn");
+      const popupadd = document.getElementById("addPopup");
+      // const confirmPopup = document.getElementById("confirmPopup");
+      const cancelDeleteButton = document.getElementById("cancelDelete");
+      // const confirmDeleteButton = document.getElementById("confirmDelete");
 
+      const editButtonCategory = document.querySelector(".edit-btn-category");
+      const popupcategory = document.getElementById("editPopupCategory");
+      const deleteButtonCategory = document.querySelector(".btn-delete-category");
+      const confirmPopupCategory = document.getElementById("confirmPopupCategory");
+      const confirmDeleteButtonCategory = document.getElementById("confirmDeleteCategory");
+
+
+
+    
+      // // Open Popup
+      addButton.addEventListener("click", () => {
+        popupadd.style.display = "flex";
+      });
+
+      // Open Popup
+      // editButton.addEventListener("click", () => {
+      //   popup.style.display = "flex";
+      // });
+    
+      // Close Popup when clicking outside
+      // popup.addEventListener("click", (e) => {
+      //   if (e.target === popup) {
+      //     popup.style.display = "none";
+      //   }
+      // });
+    
+      // Show Confirmation Popup
+      // deleteButton.addEventListener("click", () => {
+      //   popup.style.display = "none"; // Close the bottom popup
+      //   confirmPopup.style.display = "flex"; // Show the confirmation popup
+      // });
+
+      deleteButtonCategory.addEventListener("click", () => {
+        popupcategory.style.display = "none"; // Close the bottom popup
+        confirmPopupCategory.style.display = "flex"; // Show the confirmation popup
+      });
+    
+      // Close Confirmation Popup on Cancel
+      cancelDeleteButton.addEventListener("click", () => {
+        confirmPopup.style.display = "none";
+      });
+    
+      // Perform Action on Confirm Delete
+      // confirmDeleteButton.addEventListener("click", () => {
+      //   confirmPopup.style.display = "none";
+      //           $("#delete_id").val($("#edit-location-id").val());
+      //           $("#deleteform").submit();
+      //   alert("User deleted successfully!");
+      //   // Add delete logic here
+      // });
+
+      confirmDeleteButtonCategory.addEventListener("click", () => {
+        confirmPopupCategory.style.display = "none";
+                $("#delete_id").val($("#edit-category-id").val());
+                $("#deleteform").submit();
+        alert("User deleted successfully!");
+        // Add delete logic here
+      });
+    });
+ </script>
  <script>
  $(document).ready(function() {
   // alert('kkkkkkkkkkkkkk');
@@ -219,3 +304,57 @@ document.getElementById('editPopupCategory').style.display = "flex";
   // });
 });
 </script> 
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    // Initialize validation for the add form
+    $("#frm_register").validate({
+      rules: {
+        category_name: {
+          required: true,
+          minlength: 3
+        }
+      },
+      messages: {
+        category_name: {
+          required: "Please enter the category name",
+          minlength: "Category name must be at least 3 characters long"
+        }
+      },
+      errorElement: "span",
+      errorClass: "error-text",
+      highlight: function (element) {
+        $(element).addClass("is-invalid").removeClass("is-valid");
+      },
+      unhighlight: function (element) {
+        $(element).addClass("is-valid").removeClass("is-invalid");
+      }
+    });
+
+    // Initialize validation for the edit form
+    $("#editCategoryForm").validate({
+      rules: {
+        category_name: {
+          required: true,
+          minlength: 3
+        }
+      },
+      messages: {
+        category_name: {
+          required: "Please enter the category name",
+          minlength: "Category name must be at least 3 characters long"
+        }
+      },
+      errorElement: "span",
+      errorClass: "error-text",
+      highlight: function (element) {
+        $(element).addClass("is-invalid").removeClass("is-valid");
+      },
+      unhighlight: function (element) {
+        $(element).addClass("is-valid").removeClass("is-invalid");
+      }
+    });
+
+
+  });
+</script>
