@@ -79,11 +79,11 @@
               <thead class="table-header">
                 <tr>
                   <th>Item</th>
-                  <th>Qty</th>
+                  <!-- <th>Qty</th> -->
                   <th>Unit</th>
-                  <th>IX</th>
+                  <!-- <th>IX</th> -->
                   <th>Price</th>
-                  <th>Total</th>
+                  <!-- <th>Total</th> -->
                 </tr>
               </thead>
               <!-- Table Body -->
@@ -93,13 +93,13 @@
               @foreach ($user_data as $item)
                 <tr>
                   <td>{{ $item->item_name }}</td>
-                  <td>
+                  <!-- <td>
                     <input type="text" name="quantity" class="form-control qty-input" />
-                  </td>
+                  </td> -->
                   <td>{{ $item->unit_name }}</td>
-                  <td>7</td>
-                  <td>{{ $item->price }}</td>
-                  <td>$123</td>
+                  <!-- <td>7</td> -->
+                  <td>${{ $item->price }}</td>
+                  <!-- <td>$123</td> -->
                 </tr>
                 @endforeach
 
@@ -211,7 +211,7 @@
               />
             </div>
           </div>
-          <div class="row mb-3">
+          <!-- <div class="row mb-3">
             <label class="form-label col-6">Quantity</label>
             <div class="col-6">
               <input
@@ -220,7 +220,7 @@
                 placeholder="Enter Quantity"
                 name="quantity"
               />
-            </div>
+            </div> -->
           </div>
           <div class="row mb-3">
             <label class="form-label col-6">Select Unit</label>

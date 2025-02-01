@@ -50,7 +50,7 @@ class ItemsController extends Controller {
             $rules = [
                 'item_name' => 'required|string|max:255',
                 'category' => 'required',
-                'quantity' => 'required',
+                // 'quantity' => 'required',
                 'unit' => 'required',
                 'price' => 'required'
             ];
@@ -62,7 +62,7 @@ class ItemsController extends Controller {
             'item_name.max' => 'First item_name should not exceed 255 characters.',
             
             'category.required' => 'Location is required.',
-            'quantity.required' => 'Role is required.',
+            // 'quantity.required' => 'Role is required.',
 
             'unit.required' => 'Contact Details are required.',
             

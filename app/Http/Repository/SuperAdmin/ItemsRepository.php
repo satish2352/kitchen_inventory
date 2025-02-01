@@ -19,7 +19,7 @@ class ItemsRepository
     public function getItemsList() {
         $data_location = Items::leftJoin('category', 'items.category', '=', 'category.id')
 								->leftJoin('units', 'items.unit', '=', 'units.id')
-		->select('items.id','items.category','item_name','quantity','unit','price','items.created_at','category.category_name','units.unit_name')
+		->select('items.id','items.category','item_name','unit','price','items.created_at','category.category_name','units.unit_name')
 							->where('items.is_deleted', '0')
 							->orderBy('item_name', 'asc')
 							->get();
@@ -55,7 +55,7 @@ class ItemsRepository
 		$user_data = new Items();
 		$user_data->item_name = $request['item_name'];
 		$user_data->category = $request['category'];
-		$user_data->quantity = $request['quantity'];
+		// $user_data->quantity = $request['quantity'];
 		$user_data->unit = $request['unit'];
 		$user_data->price = $request['price'];
 		$user_data->save();
