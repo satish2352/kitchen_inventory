@@ -2,6 +2,21 @@
 @include('layouts.sidebar')
 
 @yield('content')
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        @if(session('alert_status') && session('alert_msg'))
+            Swal.fire({
+                title: "{{ session('alert_status') == 'success' ? 'Success' : 'Error' }}",
+                text: "{{ session('alert_msg') }}",
+                icon: "{{ session('alert_status') }}",
+                confirmButtonColor: "#3085d6",
+                confirmButtonText: "OK"
+            });
+        @endif
+    });
+</script>
+
 <style>
   .error-text {
   color: red;
@@ -70,7 +85,7 @@
                 <div class="d-flex align-items-center">
                   <span class="act-user me-2">{{ $item->location }}</span>
                 </div>
-                <p class="mb-1">{{ $item->role }}</p>
+                <!-- <p class="mb-1">{{ $item->role }}</p> -->
               </div>
 
               <!-- Right Section -->
@@ -99,12 +114,12 @@
                   <div class="row mb-3">
                     <label class="col-6 form-label">Location Name:</label>
                     <div class="col-6">
-                      <input type="text" class="form-control" placeholder="Enter Location Name" name="location"/>
+                      <input type="text" class="form-control" placeholder="Enter Location Name" name="location" style="text-transform: capitalize;"/>
                     </div>
                   </div>
 
                     <!-- Select Role -->
-                  <div class="row mb-3">
+                  <!-- <div class="row mb-3">
                     <label class="form-label col-6">Select Role:</label>
                     <div class="col-6">
                       <select class="form-select" name="role">
@@ -113,7 +128,7 @@
                         <option>Viewer</option>
                       </select>
                     </div>
-                  </div>
+                  </div> -->
               
                   <hr />
                 <div class="d-flex justify-content-around">
@@ -135,7 +150,7 @@
       <!-- edit popup  -->
       <div id="editPopup" class="popup-container">
         <div class="popup-content">
-        <form class="forms-sample" id="frm_register" name="frm_register" method="post" role="form"
+        <form class="forms-sample" id="editLocationForm" name="editLocationForm" method="post" role="form"
           action="{{ route('update-locations') }}" enctype="multipart/form-data">
           <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
 
@@ -147,7 +162,7 @@
           <div class="row mb-3">
             <label class="col-6 form-label">Select Location:</label>
             <div class="col-6">
-            <input type="text" class="form-control" placeholder="Enter Location Name" name="location" id="edit-location"/>
+            <input type="text" class="form-control" placeholder="Enter Location Name" name="location" id="edit-location" style="text-transform: capitalize;"/>
             <input type="hidden" class="form-control" placeholder="Enter Location Name" name="edit_id" id="edit-location-id"/>
 
               <!-- <select class="form-select" id="edit-location">
@@ -158,7 +173,7 @@
             </div>
           </div>
           <div class="row mb-3">
-            <label class="form-label col-6">Select Role:</label>
+            <!-- <label class="form-label col-6">Select Role:</label>
             <div class="col-6">
               <select class="form-select" name="role" id="edit-role">
                 <option>Admin</option>
@@ -166,7 +181,7 @@
                 <option>Viewer</option>
               </select>
             </div>
-          </div>
+          </div> -->
 
           <hr />
           <div class="d-flex justify-content-around">
@@ -186,7 +201,7 @@
         <div class="confirm-popup-content">
           <h4 class="confirm-popup-title">Please Confirm</h4>
           <p class="confirm-popup-text">
-            Are you sure to delete this user? <br />
+            Are you sure to delete this Location? <br />
             this user wil not recover back
           </p>
           <div class="d-flex justify-content-around mt-4 confrm">
@@ -225,7 +240,7 @@
         confirmPopup.style.display = "none";
                 $("#delete_id").val($("#edit-location-id").val());
                 $("#deleteform").submit();
-        alert("User deleted successfully!");
+        alert("Location deleted successfully!");
         // Add delete logic here
       });
 
@@ -240,9 +255,17 @@
           popup.style.display = "none";
         }
       });
+
+      // Close Popup when clicking outside
+      popupadd.addEventListener("click", (e) => {
+        if (e.target === popupadd) {
+          popupadd.style.display = "none";
+        }
+      });
     
       // Show Confirmation Popup
       deleteButton.addEventListener("click", () => {
+        // alert('jjjjjjjjjjjjjj');
         popup.style.display = "none"; // Close the bottom popup
         confirmPopup.style.display = "flex"; // Show the confirmation popup
       });
@@ -268,7 +291,7 @@
         // alert('ppppppppppppppppppp');
         // Populate the popup with the fetched data
         $('#edit-location').val(response.location_data.location); // Set location value
-        $('#edit-role').val(response.location_data.role); // Set role value
+        // $('#edit-role').val(response.location_data.role); // Set role value
         $('#edit-location-id').val(response.location_data.id); // Set role value
         
         // Show the popup
@@ -304,7 +327,7 @@ document.getElementById('editPopup').style.display = "flex";
       messages: {
         location: {
           required: "Please enter the Location name",
-          minlength: "Category name must be at least 3 characters long"
+          minlength: "Location name must be at least 3 characters long"
         }
       },
       errorElement: "span",
@@ -318,17 +341,17 @@ document.getElementById('editPopup').style.display = "flex";
     });
 
     // Initialize validation for the edit form
-    $("#editCategoryForm").validate({
+    $("#editLocationForm").validate({
       rules: {
-        category_name: {
+        location: {
           required: true,
           minlength: 3
         }
       },
       messages: {
-        category_name: {
-          required: "Please enter the category name",
-          minlength: "Category name must be at least 3 characters long"
+        location: {
+          required: "Please enter the Location name",
+          minlength: "Location name must be at least 3 characters long"
         }
       },
       errorElement: "span",

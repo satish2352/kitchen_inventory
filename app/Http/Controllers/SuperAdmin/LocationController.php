@@ -33,7 +33,7 @@ class LocationController extends Controller {
 
             $rules = [
                 'location' => 'required|unique:locations|regex:/^[a-zA-Z\s]+$/u|max:255',
-                'role' => 'required'
+                // 'role' => 'required'
             ];
             $messages = [
                 'location.required' => 'Please  enter location name.',
@@ -41,7 +41,7 @@ class LocationController extends Controller {
                 'location.max' => 'Please  enter text length upto 255 character only.',
                 'location.unique' => 'Title already exist.',
 
-                'role.required' => 'Please Select Role.'
+                // 'role.required' => 'Please Select Role.'
             ];
 
             $validation = Validator::make($request->all(), $rules, $messages);
@@ -54,10 +54,13 @@ class LocationController extends Controller {
                 if ($add_role) {
                     $msg = $add_role['msg'];
                     $status = $add_role['status'];
+
+                    session()->flash('alert_status', $status);
+                    session()->flash('alert_msg', $msg);
                     if ($status == 'success') {
-                        return redirect('list-locations')->with(compact('msg', 'status'));
+                        return redirect('list-locations');
                     } else {
-                        return redirect('list-locations')->withInput()->with(compact('msg', 'status'));
+                        return redirect('list-locations')->withInput();
                     }
                 }
 
@@ -76,13 +79,13 @@ class LocationController extends Controller {
     public function updateLocation(Request $request){
         $rules = [
             'location' => 'required|regex:/^[a-zA-Z\s]+$/u|max:255',
-            'role' => 'required'
+            // 'role' => 'required'
         ];
         $messages = [
             'location.required' => 'Please  enter location name.',
             'location.regex' => 'Please  enter text only.',
             'location.max' => 'Please  enter text length upto 255 character only.',
-            'role.required' => 'Please Select Role.'
+            // 'role.required' => 'Please Select Role.'
         ];
         try {
             $validation = Validator::make($request->all(),$rules, $messages);
@@ -98,11 +101,14 @@ class LocationController extends Controller {
                 
                     $msg = $register_user['msg'];
                     $status = $register_user['status'];
+
+                    session()->flash('alert_status', $status);
+                    session()->flash('alert_msg', $msg);
                     if($status=='success') {
-                        return redirect('list-locations')->with(compact('msg','status'));
+                        return redirect('list-locations');
                     }
                     else {
-                        return redirect('list-locations')->withInput()->with(compact('msg','status'));
+                        return redirect('list-locations')->withInput();
                     }
                 }  
             }
@@ -121,16 +127,22 @@ class LocationController extends Controller {
             if ($delete) {
                 $msg = $delete['msg'];
                 $status = $delete['status'];
+                session()->flash('alert_status', $status);
+                session()->flash('alert_msg', $msg);
                 if ($status == 'success') {
-                    return redirect('list-locations')->with(compact('msg', 'status'));
+                    
+                    return redirect('list-locations');
                 } else {
                     return redirect()->back()
-                        ->withInput()
-                        ->with(compact('msg', 'status'));
+                        ->withInput();
                 }
             }
         } catch (\Exception $e) {
-            return $e;
+            // return $e;
+            session()->flash('alert_status', 'error');
+            session()->flash('alert_msg', $e->getMessage());
+    
+            return redirect()->back();
         }
     }
 

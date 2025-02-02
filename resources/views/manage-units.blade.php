@@ -2,6 +2,20 @@
 @include('layouts.sidebar')
 
 @yield('content')
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        @if(session('alert_status') && session('alert_msg'))
+            Swal.fire({
+                title: "{{ session('alert_status') == 'success' ? 'Success' : 'Error' }}",
+                text: "{{ session('alert_msg') }}",
+                icon: "{{ session('alert_status') }}",
+                confirmButtonColor: "#3085d6",
+                confirmButtonText: "OK"
+            });
+        @endif
+    });
+</script>
 <div class="main">
       <div class="inner-top container-fluid p-3">
         <!-- Top Bar -->
@@ -97,7 +111,7 @@
                 class="form-control"
                 placeholder="Unit"
                 name="unit_name"
-                
+                style="text-transform: capitalize;"
               />
            <!-- <select class="form-select">
             <option value="1">1</option>
@@ -123,7 +137,7 @@
       <!-- edit popup  -->
       <div id="editPopupUnit" class="popup-container">
         <div class="popup-content">
-        <form class="forms-sample" id="frm_register" name="frm_register" method="post" role="form"
+        <form class="forms-sample" id="editUnitForm" name="editUnitForm" method="post" role="form"
           action="{{ route('update-units') }}" enctype="multipart/form-data">
           <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
           <!-- Popup Title -->
@@ -140,6 +154,7 @@
                 placeholder="Unit"
                 name="unit_name"
                 id="unit_id"
+                style="text-transform: capitalize;"
               />
            <!-- <select class="form-select">
             <option value="1">1</option>
@@ -169,8 +184,8 @@
         <div class="confirm-popup-content">
           <h4 class="confirm-popup-title">Please Confirm</h4>
           <p class="confirm-popup-text">
-            Are you sure to delete this user? <br />
-            this user wil not recover back
+            Are you sure to delete this unit? <br />
+            this unit wil not recover back
           </p>
           <div class="d-flex justify-content-around mt-4 confrm">
             <button id="cancelDelete" class="btn br">NO</button>
@@ -197,6 +212,20 @@
       const confirmDeleteUnit = document.getElementById("confirmDeleteUnit");
       const cancelDeleteButton = document.getElementById("cancelDelete");
 
+
+      // Close Popup when clicking outside
+      popupunit.addEventListener("click", (e) => {
+        if (e.target === popupunit) {
+          popupunit.style.display = "none";
+        }
+      });
+
+      popupadd.addEventListener("click", (e) => {
+        if (e.target === popupadd) {
+          popupadd.style.display = "none";
+        }
+      });
+
       // // Open Popup
       addButton.addEventListener("click", () => {
         popupadd.style.display = "flex";
@@ -221,7 +250,7 @@
         confirmPopupUnit.style.display = "none";
                 $("#delete_id").val($("#edit-unit-id").val());
                 $("#deleteform").submit();
-        alert("User deleted successfully!");
+        // alert("Unit deleted successfully!");
         // Add delete logic here
       });
     });
@@ -268,3 +297,57 @@ document.getElementById('editPopupUnit').style.display = "flex";
   // });
 });
 </script> 
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    // Initialize validation for the add form
+    $("#frm_register").validate({
+      rules: {
+        unit_name: {
+          required: true
+          // minlength: 3
+        }
+      },
+      messages: {
+        unit_name: {
+          required: "Please enter the unit name"
+          // minlength: "Category name must be at least 3 characters long"
+        }
+      },
+      errorElement: "span",
+      errorClass: "error-text",
+      highlight: function (element) {
+        $(element).addClass("is-invalid").removeClass("is-valid");
+      },
+      unhighlight: function (element) {
+        $(element).addClass("is-valid").removeClass("is-invalid");
+      }
+    });
+
+    // Initialize validation for the edit form
+    $("#editUnitForm").validate({
+      rules: {
+        unit_name: {
+          required: true
+          // minlength: 3
+        }
+      },
+      messages: {
+        unit_name: {
+          required: "Please enter the unit name"
+          // minlength: "Location name must be at least 3 characters long"
+        }
+      },
+      errorElement: "span",
+      errorClass: "error-text",
+      highlight: function (element) {
+        $(element).addClass("is-invalid").removeClass("is-valid");
+      },
+      unhighlight: function (element) {
+        $(element).addClass("is-valid").removeClass("is-invalid");
+      }
+    });
+
+
+  });
+</script>

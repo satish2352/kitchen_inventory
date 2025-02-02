@@ -3,6 +3,20 @@
 
 @yield('content')
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        @if(session('alert_status') && session('alert_msg'))
+            Swal.fire({
+                title: "{{ session('alert_status') == 'success' ? 'Success' : 'Error' }}",
+                text: "{{ session('alert_msg') }}",
+                icon: "{{ session('alert_status') }}",
+                confirmButtonColor: "#3085d6",
+                confirmButtonText: "OK"
+            });
+        @endif
+    });
+</script>
+
 <style>
   .error-text {
   color: red;
@@ -108,7 +122,7 @@
                 class="form-control"
                 placeholder="Category Name"
                 name="category_name"
-                
+                style="text-transform: capitalize;"
               />
             </div>
           </div>
@@ -146,7 +160,7 @@
                 class="form-control"
                 placeholder="Category Name"
                 name="category_name"
-                id="category_id"
+                id="category_id" style="text-transform: capitalize;"
               />
             <input type="hidden" class="form-control" placeholder="Enter Location Name" name="edit_id" id="edit-category-id"/>
 
@@ -175,8 +189,8 @@
         <div class="confirm-popup-content">
           <h4 class="confirm-popup-title">Please Confirm</h4>
           <p class="confirm-popup-text">
-            Are you sure to delete this user? <br />
-            this user wil not recover back
+            Are you sure to delete this Category? <br />
+            this Category wil not recover back
           </p>
           <div class="d-flex justify-content-around mt-4 confrm">
             <button id="cancelDelete" class="btn br">NO</button>
@@ -223,11 +237,17 @@
       // });
     
       // Close Popup when clicking outside
-      // popup.addEventListener("click", (e) => {
-      //   if (e.target === popup) {
-      //     popup.style.display = "none";
-      //   }
-      // });
+      popupcategory.addEventListener("click", (e) => {
+        if (e.target === popupcategory) {
+          popupcategory.style.display = "none";
+        }
+      });
+
+      popupadd.addEventListener("click", (e) => {
+        if (e.target === popupadd) {
+          popupadd.style.display = "none";
+        }
+      });
     
       // Show Confirmation Popup
       // deleteButton.addEventListener("click", () => {
@@ -258,7 +278,7 @@
         confirmPopupCategory.style.display = "none";
                 $("#delete_id").val($("#edit-category-id").val());
                 $("#deleteform").submit();
-        alert("User deleted successfully!");
+        // alert("Category deleted successfully!");
         // Add delete logic here
       });
     });

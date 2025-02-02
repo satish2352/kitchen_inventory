@@ -26,14 +26,14 @@ class LoginController extends Controller
     {
         // Define the validation rules
         $rules = [
-            'user_name' => 'required|exists:users_data,user_name', // Check if the user_name exists in the users_data table
+            'email' => 'required|exists:users_data,email', // Check if the user_name exists in the users_data table
             'password' => 'required',  // Make sure the password field is required
         ];
 
         // Define custom validation messages
         $messages = [   
-            'user_name.required' => 'Please Enter user_name.',
-            'user_name.exists' => 'The provided user_name does not exist.',
+            'email.required' => 'Please Enter email.',
+            'email.exists' => 'The provided email does not exist.',
             'password.required' => 'Please Enter Password.',
         ];
 
@@ -49,7 +49,7 @@ class LoginController extends Controller
 
         try {
             // Fetch user details from the database
-            $get_user = UsersData::where('user_name', $request['user_name'])->first();
+            $get_user = UsersData::where('email', $request['email'])->first();
             // dd($get_user['password']);
             if ($get_user) {
                 // The username exists, now verify the password
@@ -62,7 +62,7 @@ class LoginController extends Controller
                 // Compare the decrypted password with the input password
                 if ($password == $decryptedPassword) {
                     // Store the user data in session
-                    $request->session()->put('user_name', $get_user['user_name']);
+                    $request->session()->put('email', $get_user['email']);
                     $request->session()->put('login_id', $get_user['id']);
                     $request->session()->put('user_role', $get_user['user_role']);
                     $request->session()->put('location', $get_user['location']);

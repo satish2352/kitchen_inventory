@@ -2,6 +2,20 @@
 @include('layouts.sidebar')
 
 @yield('content')
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        @if(session('alert_status') && session('alert_msg'))
+            Swal.fire({
+                title: "{{ session('alert_status') == 'success' ? 'Success' : 'Error' }}",
+                text: "{{ session('alert_msg') }}",
+                icon: "{{ session('alert_status') }}",
+                confirmButtonColor: "#3085d6",
+                confirmButtonText: "OK"
+            });
+        @endif
+    });
+</script>
 <div class="main">
       <div class="inner-top container-fluid p-3">
         <!-- Top Bar -->
@@ -101,6 +115,7 @@
             <label class="col-6 form-label">Select Location</label>
             <div class="col-6">
               <select class="form-select" name="location">
+              <option value="">Select Location</option>
               @foreach ($locationsData as $locationItem)
                 <option value="{{ $locationItem['id'] }}">{{ $locationItem['location'] }}</option>
                 @endforeach
@@ -113,9 +128,10 @@
             <label class="form-label col-6">Select Role</label>
             <div class="col-6">
               <select class="form-select" name="role">
+              <option value="">Select Role</option>
+              <option value="Super Admin">Super Admin</option>
                 <option value="Admin">Admin</option>
-                <option value="Editor">Editor</option>
-                <option value="Viewer">Viewer</option>
+                <option value="Manager">Manager</option>
               </select>
             </div>
           </div>
@@ -127,6 +143,7 @@
                 class="form-control"
                 placeholder="Enter Name"
                 name="name"
+                style="text-transform: capitalize;"
               />
             </div>
           </div>
@@ -139,6 +156,10 @@
                 placeholder="Enter Phone"
                 name="phone"
               />
+              <span id="validation-message" class="red-text"></span>
+                <!-- @if ($errors->has('phone'))
+                    <span class="red-text"><?php echo $errors->first('phone', ':message'); ?></span>
+                @endif -->
             </div>
           </div>
           <div class="row mb-3">
@@ -151,6 +172,12 @@
                 name="email"
               />
             </div>
+            <!-- @error('email')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror -->
+            @if ($errors->has('email'))
+                <span class="red-text"><?php echo $errors->first('email', ':message'); ?></span>
+            @endif
           </div>
           <div class="row mb-3">
             <label class="form-label col-6">Enter password</label>
@@ -181,7 +208,7 @@
       <div id="editPopupUser" class="popup-container">
         <div class="popup-content">
 
-        <form class="forms-sample" id="frm_register" name="frm_register" method="post" role="form"
+        <form class="forms-sample" id="editUserForm" name="editUserForm" method="post" role="form"
           action="{{ route('update-users') }}" enctype="multipart/form-data">
           <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
           <!-- Popup Title -->
@@ -204,9 +231,9 @@
             <label class="form-label col-6">Select Role</label>
             <div class="col-6">
               <select class="form-select" name="role" id="role">
-                <option>Admin</option>
-                <option>Editor</option>
-                <option>Viewer</option>
+                <option value="Super Admin">Super Admin</option>
+                <option value="Admin">Admin</option>
+                <option value="Manager">Manager</option>
               </select>
             </div>
           </div>
@@ -218,6 +245,7 @@
                 class="form-control"
                 placeholder="Enter Name"
                 name="name" id="name"
+                style="text-transform: capitalize;"
               />
             </div>
           </div>
@@ -302,6 +330,19 @@
       const confirmDeleteUser = document.getElementById("confirmDeleteUser");
       const cancelDeleteButton = document.getElementById("cancelDelete");
 
+      // Close Popup when clicking outside
+      popupuser.addEventListener("click", (e) => {
+        if (e.target === popupuser) {
+          popupuser.style.display = "none";
+        }
+      });
+
+      popupadd.addEventListener("click", (e) => {
+        if (e.target === popupadd) {
+          popupadd.style.display = "none";
+        }
+      });
+
       // // Open Popup
       addButton.addEventListener("click", () => {
         popupadd.style.display = "flex";
@@ -326,7 +367,7 @@
         confirmPopupUser.style.display = "none";
                 $("#delete_id").val($("#edit-user-id").val());
                 $("#deleteform").submit();
-        alert("User deleted successfully!");
+        // alert("User deleted successfully!");
         // Add delete logic here
       });
     });
@@ -373,3 +414,186 @@ document.getElementById('editPopupUser').style.display = "flex";
   });
 });
 </script> 
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $.validator.addMethod("validPhone", function(value, element) {
+    return /^[6-9]\d{9}$/.test(value); // Ensures 10-digit mobile number starting with 6-9
+  }, "Please enter a valid 10-digit mobile number starting with 6-9.");
+
+    
+    // Initialize validation for the add form
+    $("#frm_register").validate({
+      rules: {
+        location: {
+          required: true
+          // minlength: 3
+        },
+        role: {
+          required: true
+          // minlength: 3
+        },
+        name: {
+          required: true
+          // minlength: 3
+        },
+        phone: {
+          required: true,
+          // number:true,
+          minlength: 10,
+          maxlength: 10,
+          validPhone: true
+          // pattern: /^[6-9]\d{9}$/
+          // minlength: 3
+        },
+        email: {
+          required: true,
+          email:true,
+          // minlength: 3
+        },
+        password: {
+          required: true
+          // minlength: 3
+        }
+        
+      },
+      messages: {
+        location: {
+          required: "Please select the location name"
+          // minlength: "Category name must be at least 3 characters long"
+        },
+        role: {
+          required: "Please select the role name"
+          // minlength: "Category name must be at least 3 characters long"
+        },
+        name: {
+          required: "Please enter user name"
+          // minlength: "Category name must be at least 3 characters long"
+        },
+        phone: {
+          required: "Please enter phone number",
+          // number:"Please enter valid mobile number",
+          minlength: "Phone number min length must be exactly 10 digits.",
+          maxlength: "Phone number max length must be exactly 10 digits.",
+          pattern: "Please enter a valid 10-digit mobile number starting with 6-9."
+          // minlength: "Category name must be at least 3 characters long"
+        },
+        email: {
+          required: "Please enter email ID",
+          required: "Please Enter valid email"
+          // minlength: "Category name must be at least 3 characters long"
+        },
+        password: {
+          required: "Please enter password"
+          // minlength: "Category name must be at least 3 characters long"
+        }
+      },
+      errorElement: "span",
+      errorClass: "error-text",
+      highlight: function (element) {
+        $(element).addClass("is-invalid").removeClass("is-valid");
+      },
+      unhighlight: function (element) {
+        $(element).addClass("is-valid").removeClass("is-invalid");
+      }
+    });
+
+    // Initialize validation for the edit form
+    // Initialize validation for the add form
+    $("#editUserForm").validate({
+      rules: {
+        location: {
+          required: true
+          // minlength: 3
+        },
+        role: {
+          required: true
+          // minlength: 3
+        },
+        name: {
+          required: true
+          // minlength: 3
+        },
+        phone: {
+          required: true,
+          // number:true,
+          minlength: 10,
+          maxlength: 10,
+          validPhone: true
+          // pattern: /^[6-9]\d{9}$/
+          // minlength: 3
+        },
+        email: {
+          required: true,
+          email:true,
+          // minlength: 3
+        },
+        password: {
+          required: true
+          // minlength: 3
+        }
+        
+      },
+      messages: {
+        location: {
+          required: "Please select the location name"
+          // minlength: "Category name must be at least 3 characters long"
+        },
+        role: {
+          required: "Please select the role name"
+          // minlength: "Category name must be at least 3 characters long"
+        },
+        name: {
+          required: "Please enter user name"
+          // minlength: "Category name must be at least 3 characters long"
+        },
+        phone: {
+          required: "Please enter phone number",
+          // number:"Please enter valid mobile number",
+          minlength: "Phone number min length must be exactly 10 digits.",
+          maxlength: "Phone number max length must be exactly 10 digits.",
+          pattern: "Please enter a valid 10-digit mobile number starting with 6-9."
+          // minlength: "Category name must be at least 3 characters long"
+        },
+        email: {
+          required: "Please enter email ID",
+          required: "Please Enter valid email"
+          // minlength: "Category name must be at least 3 characters long"
+        },
+        password: {
+          required: "Please enter password"
+          // minlength: "Category name must be at least 3 characters long"
+        }
+      },
+      errorElement: "span",
+      errorClass: "error-text",
+      highlight: function (element) {
+        $(element).addClass("is-invalid").removeClass("is-valid");
+      },
+      unhighlight: function (element) {
+        $(element).addClass("is-valid").removeClass("is-invalid");
+      }
+    });
+
+
+  });
+</script>
+
+<!-- <script>
+            function addvalidateMobileNumber(number) {
+                var mobileNumberPattern = /^\d*$/;
+                var validationMessage = document.getElementById("validation-message");
+
+                if (mobileNumberPattern.test(number)) {
+                    validationMessage.textContent = "";
+                } else {
+                    validationMessage.textContent = "Please enter only numbers.";
+                }
+            }
+
+            $.validator.addMethod("email", function(value, element) {
+                    // Regular expression for email validation
+                    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                    return this.optional(element) || emailRegex.test(value);
+                }, "Please enter a valid email address.");
+        </script> -->

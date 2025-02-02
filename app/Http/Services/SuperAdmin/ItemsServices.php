@@ -34,16 +34,16 @@ class ItemsServices
             // $chk_dup = $this->repo->addLocationCheck($request);
             // if(sizeof($chk_dup)>0)
             // {
-            //     return ['status'=>'failed','msg'=>'The District name has already been taken.'];
+            //     return ['status'=>'failed','msg'=>'The Item name has already been taken.'];
             // }
             // else
             // {
                 $last_id = $this->repo->addItem($request);
                 // dd($last_id);
                 if ($last_id) {
-                    return ['status' => 'success', 'msg' => 'District Added Successfully.'];
+                    return ['status' => 'success', 'msg' => 'Item Added Successfully.'];
                 } else {
-                    return ['status' => 'error', 'msg' => 'District get Not Added.'];
+                    return ['status' => 'error', 'msg' => 'Item get Not Added.'];
                 }  
             // }
 
@@ -52,24 +52,24 @@ class ItemsServices
             }      
     }
 
-    public function editUser($request) {
-        $data_location = $this->repo->editUser($request);
+    public function editItem($request) {
+        $data_location = $this->repo->editItem($request);
         // dd($data_location);
         return $data_location;
     }
 
-    public function updateUser($request) {
-        $user_register_id = $this->repo->updateUser($request);
-        return ['status'=>'success','msg'=>'District Updated Successful.'];
+    public function updateItem($request) {
+        $user_register_id = $this->repo->updateItem($request);
+        return ['status'=>'success','msg'=>'Item Updated Successful.'];
     }
 
-    public function deleteUser($id){
+    public function deleteItem($id){
         try {
-            $delete = $this->repo->deleteUser($id);
+            $delete = $this->repo->deleteItem($id);
             if ($delete) {
-                return ['status' => 'success', 'msg' => 'District Deleted Successfully.'];
+                return ['status' => 'success', 'msg' => 'Item Deleted Successfully.'];
             } else {
-                return ['status' => 'error', 'msg' => 'District Not Deleted.'];
+                return ['status' => 'error', 'msg' => 'Item Not Deleted.'];
             }  
         } catch (Exception $e) {
             return ['status' => 'error', 'msg' => $e->getMessage()];

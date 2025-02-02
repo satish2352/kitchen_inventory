@@ -13,8 +13,8 @@ use Illuminate\Support\Facades\Mail;
 class LocationRepository
 {
     public function getLocationList() {
-        $data_location = Locations::select('id','location',
-								'role'
+        $data_location = Locations::select('id','location'
+								// 'role'
 							)
 							->where('is_deleted', '0')
 							->orderBy('location', 'asc')
@@ -37,8 +37,7 @@ class LocationRepository
 
 		$data_users_data = Locations::where('locations.id', '=', $reuest->locationId)
 			->select(
-				'locations.location',
-				'role','id'
+				'locations.location','id'
 			)->get()
 			->toArray();
 						
@@ -50,10 +49,10 @@ class LocationRepository
 	{
 		$data =array();
 		$location_data = new Locations();
-		$location_data->location = $request['location'];
-		$location_data->role = $request['role'];
+		$location_data->location = ucwords(strtolower($request['location']));
+		// $location_data->role = $request['role'];
 		$location_data->save();
-		$last_insert_id = $location_data->location_id;
+		$last_insert_id = $location_data->id;
 
         return $last_insert_id;
 
@@ -63,8 +62,8 @@ class LocationRepository
 	{
 		$user_data = Locations::where('id',$request['edit_id']) 
 						->update([
-							'location' => $request['location'],
-							'role' => $request['role']
+							'location' => ucwords(strtolower($request['location']))
+							// 'role' => $request['role']
 						]);
 		// dd($user_data);
 		return $request->edit_id;

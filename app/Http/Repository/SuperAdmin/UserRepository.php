@@ -18,7 +18,7 @@ class UserRepository
     public function getUsersList() {
         $data_location = User::select('id','name','location','role','email','password','created_at','email')
 							->where('is_deleted', '0')
-							->orderBy('name', 'asc')
+							->orderBy('created_at', 'desc')
 							->get();
 							
 		return $data_location;
@@ -50,7 +50,7 @@ class UserRepository
 		// dd($request);
 		$data =array();
 		$user_data = new User();
-		$user_data->name = $request['name'];
+		$user_data->name = ucwords(strtolower($request['name']));
 		$user_data->location = $request['location'];
 		$user_data->role = $request['role'];
 		$user_data->phone = $request['phone'];
@@ -67,7 +67,7 @@ class UserRepository
 	{
 		$user_data = User::where('id',$request['edit_id']) 
 						->update([
-							'name' => $request['name'],
+							'name' => ucwords(strtolower($request['name'])),
 							'location' => $request['location'],
 							'role' => $request['role'],
 							'phone' => $request['phone'],

@@ -52,10 +52,14 @@ class UnitController extends Controller {
                 if ($add_role) {
                     $msg = $add_role['msg'];
                     $status = $add_role['status'];
+
+                    session()->flash('alert_status', $status);
+                    session()->flash('alert_msg', $msg);
+
                     if ($status == 'success') {
-                        return redirect('list-units')->with(compact('msg', 'status'));
+                        return redirect('list-units');
                     } else {
-                        return redirect('list-units')->withInput()->with(compact('msg', 'status'));
+                        return redirect('list-units')->withInput();
                     }
                 }
 
@@ -93,11 +97,14 @@ class UnitController extends Controller {
                 
                     $msg = $register_user['msg'];
                     $status = $register_user['status'];
+
+                    session()->flash('alert_status', $status);
+                    session()->flash('alert_msg', $msg);
                     if($status=='success') {
-                        return redirect('list-units')->with(compact('msg','status'));
+                        return redirect('list-units');
                     }
                     else {
-                        return redirect('list-units')->withInput()->with(compact('msg','status'));
+                        return redirect('list-units')->withInput();
                     }
                 }  
             }
@@ -116,6 +123,9 @@ class UnitController extends Controller {
             if ($delete) {
                 $msg = $delete['msg'];
                 $status = $delete['status'];
+
+                session()->flash('alert_status', $status);
+                session()->flash('alert_msg', $msg);
                 if ($status == 'success') {
                     return redirect('list-units')->with(compact('msg', 'status'));
                 } else {
@@ -125,7 +135,11 @@ class UnitController extends Controller {
                 }
             }
         } catch (\Exception $e) {
-            return $e;
+            // return $e;
+            session()->flash('alert_status', 'error');
+            session()->flash('alert_msg', $e->getMessage());
+    
+            return redirect()->back();
         }
     }
 
