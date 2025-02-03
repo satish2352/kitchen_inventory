@@ -6,7 +6,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Crypt;  // For decryption
-use App\Models\UsersData;
+use App\Models\ {
+    UsersData,
+    Locations
+};
 use Session;
 use Cookie;
 
@@ -65,10 +68,23 @@ class LoginController extends Controller
                     $request->session()->put('email', $get_user['email']);
                     $request->session()->put('login_id', $get_user['id']);
                     $request->session()->put('user_role', $get_user['user_role']);
-                    $request->session()->put('location', $get_user['location']);
-                    // dd($request->session()->get('login_id'));
+                    
+                    if(count(explode(",",$get_user['location']))  > 1 ) {
+                        $final_location  = Locations::whereIn('id',explode(",",$get_user['location']))->get()->toArray();
+                        $request->session()->put('location_for_user', $final_location);
+                    } else {
+                        
+                        $request->session()->put('location_selected', rtrim($get_user['location'],","));
+                        $final_location  = Locations::where('id',session('location_selected'))->first();
+                        $request->session()->put('location_selected_name', $final_location->location);
+                    }
+                   
+                    // dd(session('location_for_user'));
                     // Return a successful login redirect
                     // dd("dsdfasfsafgsa");
+
+                    
+
                     $request->session()->regenerate();
                     return redirect(route('/dashboard'));  // Change to your dashboard route
                    

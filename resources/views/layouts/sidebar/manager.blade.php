@@ -9,7 +9,7 @@
          <!-- Location -->
          <div class="location jost-font">
             <i class="bi bi-geo-alt"></i>
-            <span>Kaaba, Saudi Arabia</span>
+            <span>{{session('location_selected_name')}}</span>
          </div>
       </div>
    </div>

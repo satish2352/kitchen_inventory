@@ -112,5 +112,8 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('/get-shopping-list-manager', ['as' => 'get-shopping-list-manager', 'uses' => 'App\Http\Controllers\Manager\ShoppingListController@getShopppingListManager']);
     Route::post('/update-shopping-list-manager', ['as' => 'update-shopping-list-manager', 'uses' => 'App\Http\Controllers\Manager\ShoppingListController@updateShoppingListManager']);
 
+    
+    Route::post('/location_selected', ['as' => 'location_selected', 'uses' => 'App\Http\Controllers\Manager\ShoppingListController@getLocationSelected']);
+
    
 });
