@@ -139,4 +139,16 @@ class CategoryController extends Controller {
         }
     }
 
+    public function searchCategory(Request $request)
+{
+    $query = $request->input('query');
+    
+    // Modify the query to search users based on name, email, or phone
+    $category_data = Category::where('category_name', 'like', "%$query%")
+                     ->get();
+
+    // Return the user listing Blade with the search results (no full page reload)
+    return view('category-search-results', compact('category_data'))->render();
+}
+
 }

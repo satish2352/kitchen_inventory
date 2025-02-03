@@ -44,7 +44,7 @@ class UserController extends Controller {
 
             $rules = [
                 'name' => 'required|string|max:255',
-                'location' => 'required',
+                'location' => 'required|array',
                 'role' => 'required',
                 'phone' => 'required|string|max:15',
                 'email' => 'required|email|max:255',
@@ -58,6 +58,7 @@ class UserController extends Controller {
             'name.max' => 'First Name should not exceed 255 characters.',
             
             'location.required' => 'Location is required.',
+            'location.array' => 'Invalid location format.',
             'role.required' => 'Role is required.',
 
             'phone.required' => 'Contact Details are required.',
@@ -192,5 +193,20 @@ class UserController extends Controller {
             // return $e;
         }
     }
+
+    public function searchUser(Request $request)
+{
+    $query = $request->input('query');
+    
+    // Modify the query to search users based on name, email, or phone
+    $user_data = UsersData::where('name', 'like', "%$query%")
+                     ->orWhere('email', 'like', "%$query%")
+                     ->orWhere('phone', 'like', "%$query%")
+                     ->get();
+
+    // Return the user listing Blade with the search results (no full page reload)
+    return view('users-search-results', compact('user_data'))->render();
+}
+
 
 }

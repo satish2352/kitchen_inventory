@@ -15,6 +15,15 @@
       backdrop.classList.remove("show");
     });
  </script>
+ <script>
+  $(document).ready(function() {
+    $('#locationSelect').select2({
+      placeholder: "Select Location", // Optional placeholder
+      allowClear: true // Optional to allow clearing the selection
+    });
+  });
+</script>
+
  <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", () => {
       // const deleteButton = document.querySelector(".btn-delete");
@@ -127,7 +136,19 @@ document.getElementById('editPopup').style.display = "flex";
   // });
 });
 </script>  -->
-
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        @if(session('alert_status') && session('alert_msg'))
+            Swal.fire({
+                title: "{{ session('alert_status') == 'success' ? 'Success' : 'Error' }}",
+                text: "{{ session('alert_msg') }}",
+                icon: "{{ session('alert_status') }}",
+                confirmButtonColor: "#3085d6",
+                confirmButtonText: "OK"
+            });
+        @endif
+    });
+</script>
 
 
 </div>

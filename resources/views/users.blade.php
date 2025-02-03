@@ -3,19 +3,7 @@
 
 @yield('content')
 
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        @if(session('alert_status') && session('alert_msg'))
-            Swal.fire({
-                title: "{{ session('alert_status') == 'success' ? 'Success' : 'Error' }}",
-                text: "{{ session('alert_msg') }}",
-                icon: "{{ session('alert_status') }}",
-                confirmButtonColor: "#3085d6",
-                confirmButtonText: "OK"
-            });
-        @endif
-    });
-</script>
+
 <div class="main">
       <div class="inner-top container-fluid p-3">
         <!-- Top Bar -->
@@ -39,7 +27,7 @@
       <div class="filter">
         <div class="shopping-list-row d-flex align-items-center p-3">
           <!-- Search Input -->
-          <div class="input-group search-input">
+          <!-- <div class="input-group search-input">
             <input
               type="text"
               class="form-control"
@@ -49,7 +37,22 @@
             <button class="btn btn-srh" type="button">
               <i class="bi bi-search"></i>
             </button>
+          </div> -->
+
+          <!-- Search Input -->
+          <div class="input-group search-input">
+              <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Search..."
+                  aria-label="Search"
+                  id="search-query"
+              />
+              <button class="btn btn-srh" type="button">
+                  <i class="bi bi-search"></i>
+              </button>
           </div>
+
 
           <!-- Location Icon -->
           <button class="btn btn-white mx-2">
@@ -59,7 +62,7 @@
       </div>
       <!-- user requestion section  -->
       <div class="user-request pb-3">
-        <div class="container-fluid px-3">
+        <div class="container-fluid px-3" id="search-results">
 
 
         @foreach ($user_data as $item)
@@ -111,7 +114,7 @@
           <hr />
 
           <!-- Select Options -->
-          <div class="row mb-3">
+          <!-- <div class="row mb-3">
             <label class="col-6 form-label">Select Location</label>
             <div class="col-6">
               <select class="form-select" name="location">
@@ -119,19 +122,35 @@
               @foreach ($locationsData as $locationItem)
                 <option value="{{ $locationItem['id'] }}">{{ $locationItem['location'] }}</option>
                 @endforeach
-                <!-- <option>Los Angeles</option>
-                <option>Chicago</option> -->
               </select>
             </div>
-          </div>
+          </div> -->
+
+          <div class="row mb-3">
+    <label class="col-6 form-label">Select Location</label>
+    <div class="col-6">
+        @foreach ($locationsData as $locationItem)
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="location[]" value="{{ $locationItem['id'] }}" id="location_{{ $locationItem['id'] }}">
+                <label class="form-check-label" for="location_{{ $locationItem['id'] }}">
+                    {{ $locationItem['location'] }}
+                </label>
+            </div>
+        @endforeach
+    </div>
+</div>
+
+
+
+
           <div class="row mb-3">
             <label class="form-label col-6">Select Role</label>
             <div class="col-6">
               <select class="form-select" name="role">
               <option value="">Select Role</option>
-              <option value="Super Admin">Super Admin</option>
-                <option value="Admin">Admin</option>
-                <option value="Manager">Manager</option>
+              <option value="1">Super Admin</option>
+                <option value="2">Admin</option>
+                <option value="3">Manager</option>
               </select>
             </div>
           </div>
@@ -217,7 +236,7 @@
           <input type="hidden" class="form-control" placeholder="Enter Location Name" name="edit_id" id="edit-user-id"/>
 
           <!-- Select Options -->
-          <div class="row mb-3">
+          <!-- <div class="row mb-3">
             <label class="col-6 form-label">Select Location</label>
             <div class="col-6">
               <select class="form-select" name="location" id="location">
@@ -226,14 +245,31 @@
                 @endforeach
               </select>
             </div>
-          </div>
+          </div> -->
+
+          <!-- Select Options (with checkboxes) -->
+<div class="row mb-3">
+    <label class="col-6 form-label">Select Location</label>
+    <div class="col-6">
+        @foreach ($locationsData as $locationItem)
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="location[]" value="{{ $locationItem['id'] }}" 
+                    id="location{{ $locationItem['id'] }}">
+                <label class="form-check-label" for="location{{ $locationItem['id'] }}">
+                    {{ $locationItem['location'] }}
+                </label>
+            </div>
+        @endforeach
+    </div>
+</div>
+
           <div class="row mb-3">
             <label class="form-label col-6">Select Role</label>
             <div class="col-6">
               <select class="form-select" name="role" id="role">
-                <option value="Super Admin">Super Admin</option>
-                <option value="Admin">Admin</option>
-                <option value="Manager">Manager</option>
+                <option value="1">Super Admin</option>
+                <option value="2">Admin</option>
+                <option value="3">Manager</option>
               </select>
             </div>
           </div>
@@ -393,13 +429,18 @@
         // Populate the popup with the fetched data
         // $('#location').val(response.user_data.location); // Set location value
         $('#name').val(response.user_data.name); // Set location value
-        $('#role').val(response.user_data.role); // Set location value
+        $('#role').val(response.user_data.user_role); // Set location value
         $('#email').val(response.user_data.email); // Set location value
         $('#phone').val(response.user_data.phone); // Set location value
         $('#password').val(response.user_data.password); // Set location value
         $('#edit-user-id').val(response.user_data.id); // Set role value
         // Select the correct location
-        $('#location').val(response.user_data.location).change();
+        // $('#location').val(response.user_data.location).change();
+
+        var selectedLocations = response.user_data.location.split(','); // Split the comma-separated locations
+                selectedLocations.forEach(function(locationId) {
+                    $('#location' + locationId).prop('checked', true); // Check the corresponding checkboxes
+                });
         
         // Show the popup
         $('#editPopupUser').show();
@@ -421,6 +462,10 @@ document.getElementById('editPopupUser').style.display = "flex";
     return /^[6-9]\d{9}$/.test(value); // Ensures 10-digit mobile number starting with 6-9
   }, "Please enter a valid 10-digit mobile number starting with 6-9.");
 
+  // Add custom validation method
+$.validator.addMethod("passwordStrength", function(value, element) {
+    return this.optional(element) || /^(?=(?:[^a-zA-Z]*[a-zA-Z]){5,})(?=.*\d)(?=.*[@$!%*?&]).{6,}$/.test(value);
+}, "Password must contain at least 5 letters, 1 number, and 1 special character");
     
     // Initialize validation for the add form
     $("#frm_register").validate({
@@ -452,8 +497,9 @@ document.getElementById('editPopupUser').style.display = "flex";
           // minlength: 3
         },
         password: {
-          required: true
-          // minlength: 3
+            required: true,
+            minlength: 6,
+            passwordStrength: true
         }
         
       },
@@ -484,8 +530,9 @@ document.getElementById('editPopupUser').style.display = "flex";
           // minlength: "Category name must be at least 3 characters long"
         },
         password: {
-          required: "Please enter password"
-          // minlength: "Category name must be at least 3 characters long"
+            required: "Password is required",
+            minlength: "Password must be at least 6 characters long",
+            passwordStrength: "Password must contain at least 5 letters, 1 number, and 1 special character"
         }
       },
       errorElement: "span",
@@ -597,3 +644,32 @@ document.getElementById('editPopupUser').style.display = "flex";
                     return this.optional(element) || emailRegex.test(value);
                 }, "Please enter a valid email address.");
         </script> -->
+
+        <script>
+    $(document).ready(function() {
+      var originalData = $('#search-results').html();
+        // Bind keyup event to the search input
+        $('#search-query').on('keyup', function() {
+            var query = $(this).val().trim();  // Get the value entered in the search box
+
+            if (query.length > 0) {
+                $.ajax({
+                    url: "{{ route('users_search') }}",  // Define your search route here
+                    method: "GET",
+                    data: { query: query },
+                    success: function(response) {
+                        // Clear the previous results
+                        $('#search-results').html('');
+                        
+                        // Append the new search results
+                        $('#search-results').html(response);
+                    }
+                });
+            } else {
+                // Clear the results if input is empty
+                // $('#search-results').html('');
+                $('#search-results').html(originalData);
+            }
+        });
+    });
+</script>

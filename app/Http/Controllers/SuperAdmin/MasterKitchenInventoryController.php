@@ -10,7 +10,8 @@ use App\Models\ {
     Category,
     Unit,
     User,
-    Items
+    Items,
+    MasterKitchenInventory
 };
 use Validator;
 use session;
@@ -188,6 +189,44 @@ class MasterKitchenInventoryController extends Controller {
         return redirect()->back();
             // return $e;
         }
+    }
+
+    public function searchMasterKitchenInventory(Request $request)
+    {
+        $query = $request->input('query');
+        
+        // Modify the query to search users based on name, email, or phone
+        // $unit_data = Unit::where('unit_name', 'like', "%$query%")
+        //                     ->where('is_deleted', '0')
+        //                 ->get();
+
+    $user_data = MasterKitchenInventory::leftJoin('category', 'master_kitchen_inventory.category', '=', 'category.id')
+        ->leftJoin('units', 'master_kitchen_inventory.unit', '=', 'units.id')
+        ->select(
+            'master_kitchen_inventory.id',
+            'master_kitchen_inventory.category',
+            'master_kitchen_inventory.item_name',
+            'master_kitchen_inventory.unit',
+            'master_kitchen_inventory.price',
+            'master_kitchen_inventory.created_at',
+            'category.category_name',
+            'units.unit_name'
+        )
+        ->where('master_kitchen_inventory.is_deleted', '0')
+        ->when($query, function ($q) use ($query) {
+            $q->where(function ($subQuery) use ($query) {
+                $subQuery->where('master_kitchen_inventory.item_name', 'like', "%$query%")
+                    ->orWhere('category.category_name', 'like', "%$query%")
+                    ->orWhere('units.unit_name', 'like', "%$query%");
+            });
+        })
+        ->orderBy('category.category_name', 'asc') // Order by category name first
+        ->orderBy('master_kitchen_inventory.item_name', 'asc') // Then order by item name
+        ->get()
+        ->groupBy('category_name'); // Group items by category name
+
+        // Return the user listing Blade with the search results (no full page reload)
+        return view('master-kitchen-inventory-search-results', compact('user_data'))->render();
     }
 
 }

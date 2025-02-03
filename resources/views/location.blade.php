@@ -3,19 +3,7 @@
 
 @yield('content')
 
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        @if(session('alert_status') && session('alert_msg'))
-            Swal.fire({
-                title: "{{ session('alert_status') == 'success' ? 'Success' : 'Error' }}",
-                text: "{{ session('alert_msg') }}",
-                icon: "{{ session('alert_status') }}",
-                confirmButtonColor: "#3085d6",
-                confirmButtonText: "OK"
-            });
-        @endif
-    });
-</script>
+
 
 <style>
   .error-text {
@@ -50,7 +38,7 @@
       <div class="filter">
         <div class="shopping-list-row d-flex align-items-center p-3">
           <!-- Search Input -->
-          <div class="input-group search-input">
+          <!-- <div class="input-group search-input">
             <input
               type="text"
               class="form-control"
@@ -60,6 +48,20 @@
             <button class="btn btn-srh" type="button">
               <i class="bi bi-search"></i>
             </button>
+          </div> -->
+
+          <!-- Search Input -->
+          <div class="input-group search-input">
+              <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Search..."
+                  aria-label="Search"
+                  id="search-query"
+              />
+              <button class="btn btn-srh" type="button">
+                  <i class="bi bi-search"></i>
+              </button>
           </div>
 
           <!-- Location Icon -->
@@ -69,12 +71,10 @@
         </div>
       </div>
 
-
-
       
       <!-- user requestion section  -->
       <div class="user-request">
-        <div class="container-fluid px-3">
+        <div class="container-fluid px-3" id="search-results">
         @foreach ($locations_data as $item)
           <!-- User Request Box -->
           <div class="user-request-box p-3 shadow rounded mb-3">
@@ -366,4 +366,33 @@ document.getElementById('editPopup').style.display = "flex";
 
 
   });
+</script>
+
+<script>
+    $(document).ready(function() {
+      var originalData = $('#search-results').html();
+        // Bind keyup event to the search input
+        $('#search-query').on('keyup', function() {
+            var query = $(this).val().trim();  // Get the value entered in the search box
+
+            if (query.length > 0) {
+                $.ajax({
+                    url: "{{ route('search-locations') }}",  // Define your search route here
+                    method: "GET",
+                    data: { query: query },
+                    success: function(response) {
+                        // Clear the previous results
+                        $('#search-results').html('');
+                        
+                        // Append the new search results
+                        $('#search-results').html(response);
+                    }
+                });
+            } else {
+                // Clear the results if input is empty
+                // $('#search-results').html('');
+                $('#search-results').html(originalData);
+            }
+        });
+    });
 </script>

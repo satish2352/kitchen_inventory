@@ -146,4 +146,16 @@ class LocationController extends Controller {
         }
     }
 
+    public function searchLocation(Request $request)
+    {
+        $query = $request->input('query');
+        
+        // Modify the query to search users based on name, email, or phone
+        $locations_data = Locations::where('location', 'like', "%$query%")
+                        ->get();
+
+        // Return the user listing Blade with the search results (no full page reload)
+        return view('location-search-results', compact('locations_data'))->render();
+    }
+
 }

@@ -143,4 +143,17 @@ class UnitController extends Controller {
         }
     }
 
+    public function searchUnit(Request $request)
+    {
+        $query = $request->input('query');
+        
+        // Modify the query to search users based on name, email, or phone
+        $unit_data = Unit::where('unit_name', 'like', "%$query%")
+                            ->where('is_deleted', '0')
+                        ->get();
+
+        // Return the user listing Blade with the search results (no full page reload)
+        return view('unit-search-results', compact('unit_data'))->render();
+    }
+
 }

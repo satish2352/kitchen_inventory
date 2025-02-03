@@ -9,14 +9,15 @@ use App\Models\{
 	Locations,
 	Category,
 	Unit,
-	User
+	User,
+	UsersData
 };
 use Illuminate\Support\Facades\Mail;
 
 class UserRepository
 {
     public function getUsersList() {
-        $data_location = User::select('id','name','location','role','email','password','created_at','email')
+        $data_location = UsersData::select('id','name','location','user_role','email','password','created_at','email')
 							->where('is_deleted', '0')
 							->orderBy('created_at', 'desc')
 							->get();
@@ -36,8 +37,8 @@ class UserRepository
 
 		// $data_district = [];
 
-		$data_users_data = User::where('users.id', '=', $reuest->locationId)
-			->select('users.*')->get()
+		$data_users_data = UsersData::where('users_data.id', '=', $reuest->locationId)
+			->select('users_data.*')->get()
 			->toArray();
 						
 		$data_location = $data_users_data[0];
@@ -49,14 +50,27 @@ class UserRepository
 	{
 		// dd($request);
 		$data =array();
-		$user_data = new User();
+		$user_data = new UsersData();
 		$user_data->name = ucwords(strtolower($request['name']));
-		$user_data->location = $request['location'];
-		$user_data->role = $request['role'];
+		// $user_data->location = $request['location'];
+		$user_data->user_role = $request['role'];
 		$user_data->phone = $request['phone'];
 		$user_data->email = $request['email'];
 		$user_data->password = $request['password'];
+		// $user_data->save();
+
+		// dd(json_encode($request['location']));
+		// // Store selected locations as a JSON array
+		// if ($request->has('location')) {
+		// 	$user_data->location = json_encode($request['location']); // Store as JSON
+		// }
+
+		 // Save selected locations as a comma-separated string
+		 if ($request->has('location')) {
+			$user_data->location = implode(',', $request['location']); // Join values with commas
+		}
 		$user_data->save();
+		// dd($user_data);
 		$last_insert_id = $user_data->id;
 // dd($user_data);
         return $last_insert_id;
@@ -65,11 +79,13 @@ class UserRepository
 
     public function updateUser($request)
 	{
-		$user_data = User::where('id',$request['edit_id']) 
+
+		$locations = implode(',', $request['location']); // Implode the array into a string (e.g., "1,2,3")
+		$user_data = UsersData::where('id',$request['edit_id']) 
 						->update([
 							'name' => ucwords(strtolower($request['name'])),
-							'location' => $request['location'],
-							'role' => $request['role'],
+							'location' => $locations,
+							'user_role' => $request['role'],
 							'phone' => $request['phone'],
 							'email' => $request['email'],
 							'password' => $request['password'],
@@ -99,7 +115,7 @@ class UserRepository
     {
         $all_data=[];
 
-        $student_data = User::find($id);
+        $student_data = UsersData::find($id);
 // dd($student_data);
                 // Delete the record from the database
                 $is_deleted = $student_data->is_deleted == 1 ? 0 : 1;
