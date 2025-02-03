@@ -104,3 +104,13 @@ Route::group(['middleware' => ['admin']], function () {
     Route::post('/delete-items', ['as' => 'delete-items', 'uses' => 'App\Http\Controllers\SuperAdmin\MasterKitchenInventoryController@deleteItem']);
 
 });
+
+
+Route::group(['middleware' => ['admin']], function () {
+    Route::get('/logout', ['as' => 'logout', 'uses' => 'App\Http\Controllers\LoginController@logout']);
+    Route::get('/dashboard', ['as' => '/dashboard', 'uses' => 'App\Http\Controllers\DashboardController@index']);
+    Route::get('/get-shopping-list-manager', ['as' => 'get-shopping-list-manager', 'uses' => 'App\Http\Controllers\Manager\ShoppingListController@getShopppingListManager']);
+    Route::post('/update-shopping-list-manager', ['as' => 'update-shopping-list-manager', 'uses' => 'App\Http\Controllers\Manager\ShoppingListController@updateShoppingListManager']);
+
+   
+});
