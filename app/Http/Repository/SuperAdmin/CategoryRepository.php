@@ -50,7 +50,7 @@ class CategoryRepository
 	{
 		$data =array();
 		$location_data = new Category();
-		$location_data->category_name = $request['category_name'];
+		$location_data->category_name = ucwords(strtolower($request['category_name']));
 		$location_data->save();
 		$last_insert_id = $location_data->id;
 
@@ -62,7 +62,7 @@ class CategoryRepository
 	{
 		$user_data = Category::where('id',$request['edit_id']) 
 						->update([
-							'category_name' => $request['category_name']
+							'category_name' => ucwords(strtolower($request['category_name']))
 						]);
 		// dd($user_data);
 		return $request->edit_id;

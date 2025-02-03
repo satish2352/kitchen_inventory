@@ -9,7 +9,8 @@ use App\Models\ {
     Locations,
     Category,
     Unit,
-    User
+    User,
+    UsersData
 };
 use Validator;
 use session;
@@ -29,6 +30,7 @@ class UserController extends Controller {
         $locationsData = Locations::where('is_active', '1')
                             ->where('is_deleted', '0')
                             ->select('id','location')
+                            ->orderBy('location', 'asc')
                             ->get()
                             ->toArray();
         // dd($projects);
@@ -79,10 +81,12 @@ class UserController extends Controller {
                 if ($add_role) {
                     $msg = $add_role['msg'];
                     $status = $add_role['status'];
+                    session()->flash('alert_status', $status);
+                    session()->flash('alert_msg', $msg);
                     if ($status == 'success') {
-                        return redirect('list-users')->with(compact('msg', 'status'));
+                        return redirect('list-users');
                     } else {
-                        return redirect('list-users')->withInput()->with(compact('msg', 'status'));
+                        return redirect('list-users')->withInput();
                     }
                 }
 
@@ -141,16 +145,20 @@ class UserController extends Controller {
                 
                     $msg = $register_user['msg'];
                     $status = $register_user['status'];
+                    session()->flash('alert_status', $status);
+                    session()->flash('alert_msg', $msg);
                     if($status=='success') {
-                        return redirect('list-users')->with(compact('msg','status'));
+                        return redirect('list-users');
                     }
                     else {
-                        return redirect('list-users')->withInput()->with(compact('msg','status'));
+                        return redirect('list-users')->withInput();
                     }
                 }  
             }
 
         } catch (Exception $e) {
+            session()->flash('alert_status', $status);
+                    session()->flash('alert_msg', $msg);
             return redirect()->back()
                 ->withInput()
                 ->with(['msg' => $e->getMessage(), 'status' => 'error']);
@@ -165,8 +173,11 @@ class UserController extends Controller {
             if ($delete) {
                 $msg = $delete['msg'];
                 $status = $delete['status'];
+                
                 if ($status == 'success') {
-                    return redirect('list-users')->with(compact('msg', 'status'));
+                    session()->flash('alert_status', $status);
+                    session()->flash('alert_msg', $msg);
+                    return redirect('list-users');
                 } else {
                     return redirect()->back()
                         ->withInput()
@@ -174,7 +185,11 @@ class UserController extends Controller {
                 }
             }
         } catch (\Exception $e) {
-            return $e;
+            session()->flash('alert_status', 'error');
+        session()->flash('alert_msg', $e->getMessage());
+
+        return redirect()->back();
+            // return $e;
         }
     }
 

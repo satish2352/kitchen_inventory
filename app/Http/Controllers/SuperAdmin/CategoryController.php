@@ -51,10 +51,12 @@ class CategoryController extends Controller {
                 if ($add_role) {
                     $msg = $add_role['msg'];
                     $status = $add_role['status'];
+                    session()->flash('alert_status', $status);
+                    session()->flash('alert_msg', $msg);
                     if ($status == 'success') {
-                        return redirect('list-category')->with(compact('msg', 'status'));
+                        return redirect('list-category');
                     } else {
-                        return redirect('list-category')->withInput()->with(compact('msg', 'status'));
+                        return redirect('list-category')->withInput();
                     }
                 }
 
@@ -92,11 +94,13 @@ class CategoryController extends Controller {
                 
                     $msg = $register_user['msg'];
                     $status = $register_user['status'];
+                    session()->flash('alert_status', $status);
+                    session()->flash('alert_msg', $msg);
                     if($status=='success') {
-                        return redirect('list-category')->with(compact('msg','status'));
+                        return redirect('list-category');
                     }
                     else {
-                        return redirect('list-category')->withInput()->with(compact('msg','status'));
+                        return redirect('list-category')->withInput();
                     }
                 }  
             }
@@ -116,7 +120,10 @@ class CategoryController extends Controller {
                 $msg = $delete['msg'];
                 $status = $delete['status'];
                 if ($status == 'success') {
-                    return redirect('list-category')->with(compact('msg', 'status'));
+                    session()->flash('alert_status', $status);
+                    session()->flash('alert_msg', $msg);
+                    return redirect('list-category');
+                    // return redirect('list-category')->with(compact('msg', 'status'));
                 } else {
                     return redirect()->back()
                         ->withInput()
@@ -124,7 +131,11 @@ class CategoryController extends Controller {
                 }
             }
         } catch (\Exception $e) {
-            return $e;
+            // return $e;
+            session()->flash('alert_status', 'error');
+        session()->flash('alert_msg', $e->getMessage());
+
+        return redirect()->back();
         }
     }
 

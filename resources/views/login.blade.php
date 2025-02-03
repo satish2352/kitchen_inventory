@@ -26,8 +26,8 @@
 
         <div class="row">
             <div class="col-sm-12 col-md-12 mb-3">
-                <label for="exampleInputUsername" class="form-label">User Name</label>
-                <input type="text" class="form-control" name='user_name' value='{{ old('user_name') }}'
+                <label for="exampleInputUsername" class="form-label">Email</label>
+                <input type="text" class="form-control" name='email' value='{{ old('email') }}'
                     aria-describedby="usernameHelp">
             </div>
             @if ($errors->has('email'))

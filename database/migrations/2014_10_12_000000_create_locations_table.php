@@ -16,7 +16,7 @@ class CreateLocationsTable extends Migration
         Schema::create('locations', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('location');
-            $table->string('role');
+            // $table->string('role');
             $table->integer('is_active')->default(true);
             $table->integer('is_deleted')->default(false);
             $table->timestamps(); // Automatically includes created_at and updated_at

@@ -34,16 +34,16 @@ class CategoryServices
             // $chk_dup = $this->repo->addLocationCheck($request);
             // if(sizeof($chk_dup)>0)
             // {
-            //     return ['status'=>'failed','msg'=>'The District name has already been taken.'];
+            //     return ['status'=>'failed','msg'=>'The Category name has already been taken.'];
             // }
             // else
             // {
                 $last_id = $this->repo->addCategory($request);
                 // dd($last_id);
                 if ($last_id) {
-                    return ['status' => 'success', 'msg' => 'District Added Successfully.'];
+                    return ['status' => 'success', 'msg' => 'Category Added Successfully.'];
                 } else {
-                    return ['status' => 'error', 'msg' => 'District get Not Added.'];
+                    return ['status' => 'error', 'msg' => 'Category get Not Added.'];
                 }  
             // }
 
@@ -60,16 +60,16 @@ class CategoryServices
 
     public function updateCategory($request) {
         $user_register_id = $this->repo->updateCategory($request);
-        return ['status'=>'success','msg'=>'District Updated Successful.'];
+        return ['status'=>'success','msg'=>'Category Updated Successful.'];
     }
 
     public function deleteCategory($id){
         try {
             $delete = $this->repo->deleteCategory($id);
             if ($delete) {
-                return ['status' => 'success', 'msg' => 'District Deleted Successfully.'];
+                return ['status' => 'success', 'msg' => 'Category Deleted Successfully.'];
             } else {
-                return ['status' => 'error', 'msg' => 'District Not Deleted.'];
+                return ['status' => 'error', 'msg' => 'Category Not Deleted.'];
             }  
         } catch (Exception $e) {
             return ['status' => 'error', 'msg' => $e->getMessage()];

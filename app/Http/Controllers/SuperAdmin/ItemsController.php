@@ -79,10 +79,14 @@ class ItemsController extends Controller {
                 if ($add_role) {
                     $msg = $add_role['msg'];
                     $status = $add_role['status'];
+
+                     // Store SweetAlert data in session for flashing
+                session()->flash('alert_status', $status);
+                session()->flash('alert_msg', $msg);
                     if ($status == 'success') {
-                        return redirect('list-items')->with(compact('msg', 'status'));
+                        return redirect('list-items');
                     } else {
-                        return redirect('list-items')->withInput()->with(compact('msg', 'status'));
+                        return redirect('list-items')->withInput();
                     }
                 }
 
@@ -92,40 +96,33 @@ class ItemsController extends Controller {
         }
     }
 
-    public function editUser(Request $request){
-        $user_data = $this->service->editUser($request);
+    public function editItem(Request $request){
+        $user_data = $this->service->editItem($request);
         // Log::info('This is an informational message.',$user_data);
         return response()->json(['user_data' => $user_data]);
     }
 
-    public function updateUser(Request $request){
+    public function updateItem(Request $request){
         $rules = [
-            'name' => 'required|string|max:255',
-            'location' => 'required',
-            'role' => 'required',
-            'phone' => 'required|string|max:15',
-            'email' => 'required|email|max:255',
-            'password' => 'required',
+            'item_name' => 'required|string|max:255',
+            'category' => 'required',
+            // 'quantity' => 'required',
+            'unit' => 'required',
+            'price' => 'required'
         ];
         $messages = [
 
             // Custom validation messages
-        'name.required' => 'First Name is required.',
-        'name.string' => 'First Name must be a string.',
-        'name.max' => 'First Name should not exceed 255 characters.',
-        
-        'location.required' => 'Location is required.',
-        'role.required' => 'Role is required.',
+            'item_name.required' => 'First item_name is required.',
+            'item_name.string' => 'First item_name must be a string.',
+            'item_name.max' => 'First item_name should not exceed 255 characters.',
+            
+            'category.required' => 'Location is required.',
+            // 'quantity.required' => 'Role is required.',
 
-        'phone.required' => 'Contact Details are required.',
-        'phone.string' => 'Contact Details must be a string.',
-        'phone.max' => 'Contact Details should not exceed 15 characters.',
-        
-        'email.required' => 'Email is required.',
-        'email.email' => 'Email must be a valid email address.',
-        'email.max' => 'Email should not exceed 255 characters.',
-
-        'password.required' => 'Please  enter category_name name.',
+            'unit.required' => 'Contact Details are required.',
+            
+            'price.required' => 'Email is required.'
         ];
         try {
             $validation = Validator::make($request->all(),$rules, $messages);
@@ -134,18 +131,22 @@ class ItemsController extends Controller {
                     ->withInput()
                     ->withErrors($validation);
             } else {
-                $register_user = $this->service->updateUser($request);
+                $register_user = $this->service->updateItem($request);
 
                 if($register_user)
                 {
                 
                     $msg = $register_user['msg'];
                     $status = $register_user['status'];
+
+                     // Store SweetAlert data in session for flashing
+                session()->flash('alert_status', $status);
+                session()->flash('alert_msg', $msg);
                     if($status=='success') {
-                        return redirect('list-users')->with(compact('msg','status'));
+                        return redirect('list-items');
                     }
                     else {
-                        return redirect('list-users')->withInput()->with(compact('msg','status'));
+                        return redirect('list-items')->withInput();
                     }
                 }  
             }
@@ -158,23 +159,34 @@ class ItemsController extends Controller {
 
     }
 
-    public function deleteUser(Request $request){
+    public function deleteItem(Request $request){
         try {
             // dd($request);
-            $delete = $this->service->deleteUser($request->delete_id);
+            $delete = $this->service->deleteItem($request->delete_id);
             if ($delete) {
                 $msg = $delete['msg'];
                 $status = $delete['status'];
-                if ($status == 'success') {
-                    return redirect('list-users')->with(compact('msg', 'status'));
-                } else {
-                    return redirect()->back()
-                        ->withInput()
-                        ->with(compact('msg', 'status'));
-                }
+
+                 // Store SweetAlert data in session
+            session()->flash('alert_status', $status);
+            session()->flash('alert_msg', $msg);
+
+            return redirect('list-items');
+
+                // if ($status == 'success') {
+                //     return redirect('list-items')->with(compact('msg', 'status'));
+                // } else {
+                //     return redirect()->back()
+                //         ->withInput()
+                //         ->with(compact('msg', 'status'));
+                // }
             }
         } catch (\Exception $e) {
-            return $e;
+            session()->flash('alert_status', 'error');
+        session()->flash('alert_msg', $e->getMessage());
+
+        return redirect()->back();
+            // return $e;
         }
     }
 

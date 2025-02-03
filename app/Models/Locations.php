@@ -13,7 +13,7 @@ class Locations extends Model
 
     protected $fillable = [
         'location',
-        'role',
+        // 'role',
         'is_active',
         'is_deleted',
     ];
