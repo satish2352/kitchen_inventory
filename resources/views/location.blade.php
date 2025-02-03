@@ -62,59 +62,12 @@
                   <i class="bi bi-search"></i>
               </button>
           </div>
-
-          <!-- Location Icon -->
           <button class="btn btn-white mx-2">
             <i class="bi bi-geo-alt-fill"></i>
           </button>
         </div>
       </div>
-
-      
-      <!-- user requestion section  -->
-      <div class="user-request">
-        <div class="container-fluid px-3" id="search-results">
-        @foreach ($locations_data as $item)
-          <!-- User Request Box -->
-          <div class="user-request-box p-3 shadow rounded mb-3">
-            <!-- Top Row -->
-            <div class="d-flex justify-content-between align-items-center">
-              <!-- Left Section -->
-              <div>
-                <div class="d-flex align-items-center">
-                  <span class="act-user me-2">{{ $item->location }}</span>
-                </div>
-                <!-- <p class="mb-1">{{ $item->role }}</p> -->
-              </div>
-
-              <!-- Right Section -->
-              <div>
-                <button class="btn btn-edit text-center shadow-sm edit-btn" data-id="{{ $item->id }}">
-                  <i class="bi bi-pencil-square"></i> <br />Edit
-                </button>
-            </a>
-            <h5 class="sub-title">Locations</h5>
-            <button class="btn btn-light add-btn">
-                <i class="bi bi-plus-lg"></i>
-            </button>
-        </div>
     </div>
-    <div class="filter">
-        <div class="shopping-list-row d-flex align-items-center p-3">
-            <!-- Search Input -->
-            <div class="input-group search-input">
-                <input type="text" class="form-control" placeholder="Search..." aria-label="Search" />
-                <button class="btn btn-srh" type="button">
-                    <i class="bi bi-search"></i>
-                </button>
-            </div>
-            <!-- Location Icon -->
-            <button class="btn btn-white mx-2">
-                <i class="bi bi-geo-alt-fill"></i>
-            </button>
-        </div>
-    </div>
-
     <!-- user requestion section  -->
     <div class="user-request">
         <div class="container-fluid px-3">
@@ -443,5 +396,30 @@
 </script>
 
 <script>
-    
+    $(document).ready(function() {
+      var originalData = $('#search-results').html();
+        // Bind keyup event to the search input
+        $('#search-query').on('keyup', function() {
+            var query = $(this).val().trim();  // Get the value entered in the search box
+
+            if (query.length > 0) {
+                $.ajax({
+                    url: "{{ route('search-locations') }}",  // Define your search route here
+                    method: "GET",
+                    data: { query: query },
+                    success: function(response) {
+                        // Clear the previous results
+                        $('#search-results').html('');
+                        
+                        // Append the new search results
+                        $('#search-results').html(response);
+                    }
+                });
+            } else {
+                // Clear the results if input is empty
+                // $('#search-results').html('');
+                $('#search-results').html(originalData);
+            }
+        });
+    });
 </script>
