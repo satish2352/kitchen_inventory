@@ -3,6 +3,26 @@
 
 @yield('content')
 
+<style>
+  .select2{
+    width: 100% !important;
+  }
+  .select2-container--default .select2-selection--multiple {
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+  }
+
+  .select2-container--default .select2-selection--multiple:after {
+    content: "⌄"; 
+    font-family: FontAwesome;
+    font-size: 16px;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+</style>
 
 <div class="main">
       <div class="inner-top container-fluid p-3">
@@ -126,7 +146,7 @@
             </div>
           </div> -->
 
-          <div class="row mb-3">
+          <!-- <div class="row mb-3">
     <label class="col-6 form-label">Select Location</label>
     <div class="col-6">
         @foreach ($locationsData as $locationItem)
@@ -138,10 +158,21 @@
             </div>
         @endforeach
     </div>
-</div>
+</div> -->
 
 
-
+          <!-- Select Options -->
+          <div class="row mb-3">
+            <label class="col-6 form-label">Select Location</label>
+            <div class="col-6">
+              <select class="form-select select2" name="location[]" multiple >
+                <option value="">Select Location</option>
+                @foreach ($locationsData as $locationItem)
+                  <option value="{{ $locationItem['id'] }}">{{ $locationItem['location'] }}</option>
+                @endforeach
+              </select>
+            </div>
+          </div>
 
           <div class="row mb-3">
             <label class="form-label col-6">Select Role</label>
@@ -248,7 +279,7 @@
           </div> -->
 
           <!-- Select Options (with checkboxes) -->
-<div class="row mb-3">
+<!-- <div class="row mb-3">
     <label class="col-6 form-label">Select Location</label>
     <div class="col-6">
         @foreach ($locationsData as $locationItem)
@@ -261,7 +292,19 @@
             </div>
         @endforeach
     </div>
-</div>
+</div> -->
+
+          <div class="row mb-3">
+            <label class="col-6 form-label">Select Location</label>
+            <div class="col-6">
+              <select class="form-select select2" name="location[]" id="location" multiple>
+                <option value="">Select Location</option>
+                @foreach ($locationsData as $locationItem)
+                  <option value="{{ $locationItem['id'] }}">{{ $locationItem['location'] }}</option>
+                @endforeach
+              </select>
+            </div>
+          </div>
 
           <div class="row mb-3">
             <label class="form-label col-6">Select Role</label>
@@ -437,10 +480,15 @@
         // Select the correct location
         // $('#location').val(response.user_data.location).change();
 
-        var selectedLocations = response.user_data.location.split(','); // Split the comma-separated locations
-                selectedLocations.forEach(function(locationId) {
-                    $('#location' + locationId).prop('checked', true); // Check the corresponding checkboxes
-                });
+        // var selectedLocations = response.user_data.location.split(','); // Split the comma-separated locations
+        //         selectedLocations.forEach(function(locationId) {
+        //             $('#location' + locationId).prop('checked', true); // Check the corresponding checkboxes
+        //         });
+
+        // Auto-select multiple locations
+        var selectedLocations = response.user_data.location.split(','); // Convert comma-separated values into an array
+        $('#location').val(selectedLocations).change(); // Set selected values and trigger change event
+
         
         // Show the popup
         $('#editPopupUser').show();
@@ -658,11 +706,16 @@ $.validator.addMethod("passwordStrength", function(value, element) {
                     method: "GET",
                     data: { query: query },
                     success: function(response) {
+                      if(response.length > 0)
+                    {
                         // Clear the previous results
                         $('#search-results').html('');
                         
                         // Append the new search results
                         $('#search-results').html(response);
+                    }else{
+                        $('#search-results').html('No Data Found');
+                    }
                     }
                 });
             } else {
@@ -672,4 +725,9 @@ $.validator.addMethod("passwordStrength", function(value, element) {
             }
         });
     });
+</script>
+<script>
+  $(document).ready(function() {
+  $('.select2').select2();
+});
 </script>

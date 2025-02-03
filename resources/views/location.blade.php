@@ -27,30 +27,22 @@
               <i class="bi bi-arrow-90deg-left"></i>
             </button>
           </a>
-          <h5 class="sub-title">Locations</h5>
-
-          <button class="btn btn-light add-btn">
-            <i class="bi bi-plus-lg"></i>
-          </button>
-        </div>
-      </div>
-      <div class="filter">
-        <div class="shopping-list-row d-flex align-items-center p-3">
-          <!-- Search Input -->
-          <!-- <div class="input-group search-input">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Search..."
-              aria-label="Search"
-            />
-            <button class="btn btn-srh" type="button">
-              <i class="bi bi-search"></i>
+            <h5 class="sub-title">Locations</h5>
+            <button class="btn btn-light add-btn">
+                <i class="bi bi-plus-lg"></i>
             </button>
-          </div> -->
-
-          <!-- Search Input -->
-          <div class="input-group search-input">
+        </div>
+    </div>
+    <div class="filter">
+        <div class="shopping-list-row d-flex align-items-center p-3">
+            <!-- Search Input -->
+            <!-- <div class="input-group search-input">
+                <input type="text" class="form-control" placeholder="Search..." aria-label="Search" />
+                <button class="btn btn-srh" type="button">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div> -->
+            <div class="input-group search-input">
               <input
                   type="text"
                   class="form-control"
@@ -63,51 +55,6 @@
               </button>
           </div>
 
-          <!-- Location Icon -->
-          <button class="btn btn-white mx-2">
-            <i class="bi bi-geo-alt-fill"></i>
-          </button>
-        </div>
-      </div>
-
-      
-      <!-- user requestion section  -->
-      <div class="user-request">
-        <div class="container-fluid px-3" id="search-results">
-        @foreach ($locations_data as $item)
-          <!-- User Request Box -->
-          <div class="user-request-box p-3 shadow rounded mb-3">
-            <!-- Top Row -->
-            <div class="d-flex justify-content-between align-items-center">
-              <!-- Left Section -->
-              <div>
-                <div class="d-flex align-items-center">
-                  <span class="act-user me-2">{{ $item->location }}</span>
-                </div>
-                <!-- <p class="mb-1">{{ $item->role }}</p> -->
-              </div>
-
-              <!-- Right Section -->
-              <div>
-                <button class="btn btn-edit text-center shadow-sm edit-btn" data-id="{{ $item->id }}">
-                  <i class="bi bi-pencil-square"></i> <br />Edit
-                </button>
-            </a>
-            <h5 class="sub-title">Locations</h5>
-            <button class="btn btn-light add-btn">
-                <i class="bi bi-plus-lg"></i>
-            </button>
-        </div>
-    </div>
-    <div class="filter">
-        <div class="shopping-list-row d-flex align-items-center p-3">
-            <!-- Search Input -->
-            <div class="input-group search-input">
-                <input type="text" class="form-control" placeholder="Search..." aria-label="Search" />
-                <button class="btn btn-srh" type="button">
-                    <i class="bi bi-search"></i>
-                </button>
-            </div>
             <!-- Location Icon -->
             <button class="btn btn-white mx-2">
                 <i class="bi bi-geo-alt-fill"></i>
@@ -117,7 +64,7 @@
 
     <!-- user requestion section  -->
     <div class="user-request">
-        <div class="container-fluid px-3">
+        <div class="container-fluid px-3" id="search-results">
             @foreach ($locations_data as $item)
                 <!-- User Request Box -->
                 <div class="user-request-box p-3 shadow rounded mb-3">
@@ -414,32 +361,6 @@
 
     });
 
-    // Initialize validation for the edit form
-    $("#editLocationForm").validate({
-      rules: {
-        location: {
-          required: true,
-          minlength: 3
-        }
-      },
-      messages: {
-        location: {
-          required: "Please enter the Location name",
-          minlength: "Location name must be at least 3 characters long"
-        }
-      },
-      errorElement: "span",
-      errorClass: "error-text",
-      highlight: function (element) {
-        $(element).addClass("is-invalid").removeClass("is-valid");
-      },
-      unhighlight: function (element) {
-        $(element).addClass("is-valid").removeClass("is-invalid");
-      }
-    });
-
-
-  });
 </script>
 
 <script>
@@ -455,11 +376,16 @@
                     method: "GET",
                     data: { query: query },
                     success: function(response) {
+                        if(response.length > 0)
+                    {
                         // Clear the previous results
                         $('#search-results').html('');
                         
                         // Append the new search results
                         $('#search-results').html(response);
+                    }else{
+                        $('#search-results').html('No Data Found');
+                    }
                     }
                 });
             } else {

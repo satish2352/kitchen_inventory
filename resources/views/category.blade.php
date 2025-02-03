@@ -394,11 +394,16 @@ document.getElementById('editPopupCategory').style.display = "flex";
                     method: "GET",
                     data: { query: query },
                     success: function(response) {
+                      if(response.length > 0)
+                    {
                         // Clear the previous results
                         $('#search-results').html('');
                         
                         // Append the new search results
                         $('#search-results').html(response);
+                    }else{
+                        $('#search-results').html('No Data Found');
+                    }
                     }
                 });
             } else {
