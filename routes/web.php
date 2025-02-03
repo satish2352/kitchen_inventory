@@ -97,10 +97,10 @@ Route::group(['middleware' => ['admin']], function () {
     Route::post('/update-users', ['as' => 'update-users', 'uses' => 'App\Http\Controllers\SuperAdmin\UserController@updateUser']);
     Route::post('/delete-users', ['as' => 'delete-users', 'uses' => 'App\Http\Controllers\SuperAdmin\UserController@deleteUser']);
 
-    Route::get('/list-items', ['as' => 'list-items', 'uses' => 'App\Http\Controllers\SuperAdmin\ItemsController@index']);
-    Route::post('/add-items', ['as' => 'add-items', 'uses' => 'App\Http\Controllers\SuperAdmin\ItemsController@addItem']);
-    Route::get('/edit-items', ['as' => 'edit-items', 'uses' => 'App\Http\Controllers\SuperAdmin\ItemsController@editItem']);
-    Route::post('/update-items', ['as' => 'update-items', 'uses' => 'App\Http\Controllers\SuperAdmin\ItemsController@updateItem']);
-    Route::post('/delete-items', ['as' => 'delete-items', 'uses' => 'App\Http\Controllers\SuperAdmin\ItemsController@deleteItem']);
+    Route::get('/list-items', ['as' => 'list-items', 'uses' => 'App\Http\Controllers\SuperAdmin\MasterKitchenInventoryController@index']);
+    Route::post('/add-items', ['as' => 'add-items', 'uses' => 'App\Http\Controllers\SuperAdmin\MasterKitchenInventoryController@addItem']);
+    Route::get('/edit-items', ['as' => 'edit-items', 'uses' => 'App\Http\Controllers\SuperAdmin\MasterKitchenInventoryController@editItem']);
+    Route::post('/update-items', ['as' => 'update-items', 'uses' => 'App\Http\Controllers\SuperAdmin\MasterKitchenInventoryController@updateItem']);
+    Route::post('/delete-items', ['as' => 'delete-items', 'uses' => 'App\Http\Controllers\SuperAdmin\MasterKitchenInventoryController@deleteItem']);
 
 });
