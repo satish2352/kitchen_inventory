@@ -443,30 +443,5 @@
 </script>
 
 <script>
-    $(document).ready(function() {
-      var originalData = $('#search-results').html();
-        // Bind keyup event to the search input
-        $('#search-query').on('keyup', function() {
-            var query = $(this).val().trim();  // Get the value entered in the search box
-
-            if (query.length > 0) {
-                $.ajax({
-                    url: "{{ route('search-locations') }}",  // Define your search route here
-                    method: "GET",
-                    data: { query: query },
-                    success: function(response) {
-                        // Clear the previous results
-                        $('#search-results').html('');
-                        
-                        // Append the new search results
-                        $('#search-results').html(response);
-                    }
-                });
-            } else {
-                // Clear the results if input is empty
-                // $('#search-results').html('');
-                $('#search-results').html(originalData);
-            }
-        });
-    });
+    
 </script>
