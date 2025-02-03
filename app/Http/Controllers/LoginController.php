@@ -68,15 +68,16 @@ class LoginController extends Controller
                     $request->session()->put('email', $get_user['email']);
                     $request->session()->put('login_id', $get_user['id']);
                     $request->session()->put('user_role', $get_user['user_role']);
-                    
-                    if(count(explode(",",$get_user['location']))  > 1 ) {
-                        $final_location  = Locations::whereIn('id',explode(",",$get_user['location']))->get()->toArray();
-                        $request->session()->put('location_for_user', $final_location);
-                    } else {
-                        
-                        $request->session()->put('location_selected', rtrim($get_user['location'],","));
-                        $final_location  = Locations::where('id',session('location_selected'))->first();
-                        $request->session()->put('location_selected_name', $final_location->location);
+                    if($get_user['user_role'] != 1) {
+                        if(count(explode(",",$get_user['location']))  > 1 ) {
+                            $final_location  = Locations::whereIn('id',explode(",",$get_user['location']))->get()->toArray();
+                            $request->session()->put('location_for_user', $final_location);
+                        } else {
+                            
+                            $request->session()->put('location_selected', rtrim($get_user['location'],","));
+                            $final_location  = Locations::where('id',session('location_selected'))->first();
+                            $request->session()->put('location_selected_name', $final_location->location);
+                        }
                     }
                    
                     // dd(session('location_for_user'));
