@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Models\ {
-    Items
+    Items,
+    Locations
 };
 use Session;
 use Cookie;
@@ -71,7 +72,7 @@ class ShoppingListController extends Controller
                     $request->session()->put('user_name', $get_user['user_name']);
                     $request->session()->put('login_id', $get_user['id']);
                     $request->session()->put('user_role', $get_user['user_role']);
-                    $request->session()->put('location', $get_user['location']);
+                    $request->session()->put('location_for_user', $get_user['location']);
                     // dd($request->session()->get('login_id'));
                     // Return a successful login redirect
                     // dd("dsdfasfsafgsa");
@@ -96,6 +97,17 @@ class ShoppingListController extends Controller
             // If there's an exception, redirect to the feedback page with the error message
             return redirect('feedback-suggestions')->withInput()->with(['msg' => $e->getMessage(), 'status' => 'error']);
         }
+    }
+
+    
+
+    public function getLocationSelected(Request $request) 
+    {
+        $request->session()->put('location_selected', $request->location_selected);
+        $final_location  = Locations::where('id',session('location_selected'))->first();
+        $request->session()->put('location_selected_name', $final_location->location);
+        return \Redirect::back();
+
     }
 
 }
