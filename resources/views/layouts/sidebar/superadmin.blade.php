@@ -16,14 +16,14 @@
     <!-- Drawer -->
     <div id="drawer" class="drawer">
        <div class="drawer-header d-flex align-items-center">
-          <img src="img/user.png" alt="User" />
+          <img src="{{ asset('/img/user.png') }}" alt="User" />
           <div>
              <h5 class="inter-font">Jammar White</h5>
              <span class="jost-font">Super Admin</span>
           </div>
        </div>
        <div class="drawer-nav">
-          <a href="dashboard.html" class="active"
+          <a href="{{ route('/dashboard') }}" class="active"
              ><i class="bi bi-house-door-fill"></i> Dashboard</a
              >
           <a href="{{ route('approve-users') }}"

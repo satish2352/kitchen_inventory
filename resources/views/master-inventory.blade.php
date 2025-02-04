@@ -8,7 +8,7 @@
       <div class="inner-top container-fluid p-3">
         <!-- Top Bar -->
         <div class="d-flex justify-content-between align-items-center">
-          <a href="dashboard.html">
+          <a href="{{ route('/dashboard') }}">
             <button class="btn btn-light">
               <i class="bi bi-arrow-90deg-left"></i>
             </button>
@@ -212,6 +212,10 @@
 
           <hr />
           <div class="d-flex justify-content-around">
+          <a class="btn btn-secondary btn-lg w-100 me-2" id="closePopup">
+              <i class="bi bi-x-circle"></i> Cancel
+            </a>
+            
             <button class="btn btn-danger btn-lg w-100">
               <i class="bi bi-plus-lg"></i> ADD
             </button>

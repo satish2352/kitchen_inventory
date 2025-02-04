@@ -28,7 +28,7 @@
       <div class="inner-top container-fluid p-3">
         <!-- Top Bar -->
         <div class="d-flex justify-content-between align-items-center">
-          <a href="dashboard.html">
+          <a href="{{ route('/dashboard') }}">
             <button class="btn btn-light">
               <i class="bi bi-arrow-90deg-left"></i>
             </button>
@@ -93,10 +93,26 @@
               <!-- Left Section -->
               <div>
                 <div class="d-flex align-items-center">
-                  <span class="ur-user me-2 jost-font">{{ $item->name }}</span>
+                  <span class="ur-user me-2 jost-font">{{ $item->name }}
+                  @if($item->user_role == '1')
+                  (Super Admin)
+                  @elseif($item->user_role == '2')
+                  (Admin)
+                  @else
+                  (Manager)
+                  @endif
+
+                  </span>
                 </div>
-                <p class="mb-1 fw-light">{{ $item->email }}</p>
-                <p class="mb-1 fw-light">{{ $item->phone }}</p>
+                <p class="mb-1 fw-light"><b>Email :</b> {{ $item->email }}</p>
+                <p class="mb-1 fw-light"><b>Phone :</b> {{ $item->phone }}</p>
+                <p class="mb-1 fw-light"><b>Locations :</b>
+                @if(!empty($item->locations))
+                    {{ implode(', ', $item->locations) }}
+                @else
+                    N/A
+                @endif
+                </p>
               </div>
 
               <!-- Right Section -->
@@ -243,9 +259,14 @@
 
           <hr />
           <div class="d-flex justify-content-around">
-            <button class="btn btn-secondary btn-lg w-100 me-2">
+          <a class="btn btn-secondary btn-lg w-100 me-2" id="closePopup">
               <i class="bi bi-x-circle"></i> Cancel
-            </button>
+            </a>
+
+
+            <!-- <a  class="btn btn-outline-danger btn-delete-user btn-lg w-100 me-2">
+              <i class="bi bi-trash"></i> Delete
+            </a> -->
             <button class="btn btn-success btn-lg w-100">
               <i class="bi bi-plus-circle"></i> Add
             </button>
@@ -515,13 +536,15 @@ $.validator.addMethod("passwordStrength", function(value, element) {
     return this.optional(element) || /^(?=(?:[^a-zA-Z]*[a-zA-Z]){5,})(?=.*\d)(?=.*[@$!%*?&]).{6,}$/.test(value);
 }, "Password must contain at least 5 letters, 1 number, and 1 special character");
     
+
     // Initialize validation for the add form
     $("#frm_register").validate({
       rules: {
-        location: {
-          required: true
-          // minlength: 3
-        },
+       "location[]": {
+      required: function() {
+        return $("#frm_register select[name='location[]'] option:selected").length === 0;
+      }
+    },
         role: {
           required: true
           // minlength: 3
@@ -552,10 +575,9 @@ $.validator.addMethod("passwordStrength", function(value, element) {
         
       },
       messages: {
-        location: {
-          required: "Please select the location name"
-          // minlength: "Category name must be at least 3 characters long"
-        },
+        "location[]": {
+      required: "Please select at least one location."
+    },
         role: {
           required: "Please select the role name"
           // minlength: "Category name must be at least 3 characters long"

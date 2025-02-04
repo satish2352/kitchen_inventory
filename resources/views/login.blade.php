@@ -236,21 +236,22 @@ a {
     <form class="modal-content animate" method="post" action="{{ route('submitLogin') }}">
     @csrf
         <div class="mb-3">
-          <label for="username" class="form-label">Email</label>
+          <label for="username" class="form-label">Email ID</label>
                 <input type="text" class="form-control" name='email' value="{{ old('email') }}"
-                    aria-describedby="usernameHelp" placeholder="Enter your email">
+                    aria-describedby="usernameHelp" placeholder="Enter your email id">
                     @if ($errors->has('email'))
                 <span class="red-text"><?php echo $errors->first('email', ':message'); ?></span>
             @endif
         
         </div>
-        <div class="mb-3">
+        <div class="mb-3 position-relative"> <label for="password" class="form-label">Password</label> <div class="position-relative"> <input id="password" type="password" name="password" class="form-control pe-5" placeholder="Enter your password"> <i class="fas fa-eye position-absolute top-50 end-0 translate-middle-y me-3" id="togglePassword" style="cursor: pointer;"></i> </div> @if ($errors->has('password')) <span class="red-text"><?php echo $errors->first('password', ':message'); ?></span> @endif </div>
+        <!-- <div class="mb-3">
           <label for="password" class="form-label">Password</label>
           <input id="password" type="password" name='password' class="form-control" placeholder="Enter your password">
           @if ($errors->has('password'))
-            <span class="red-text"><?php echo $errors->first('password', ':message'); ?></span>
+            <span class="red-text"><?php //echo $errors->first('password', ':message'); ?></span>
         @endif
-        </div>
+        </div> -->
         <!-- <div class="mb-3 form-check">
           <input type="checkbox" class="form-check-input" id="remember-me">
           <label class="form-check-label" for="remember-me">Remember me</label>
@@ -312,3 +313,18 @@ a {
 </div>
 
 @extends('layouts.footer')
+<script> 
+document.addEventListener("DOMContentLoaded", function () {
+   document.getElementById('togglePassword').addEventListener('click', function () {
+     let passwordField = document.getElementById('password');
+      if (passwordField.type === 'password') { passwordField.type = 'text';
+         this.classList.remove('fa-eye');
+          this.classList.add('fa-eye-slash');
+ // Cross-line effect 
+ } else {
+   passwordField.type = 'password';
+    this.classList.remove('fa-eye-slash');
+     this.classList.add('fa-eye');
+     } });
+     }); 
+ </script>

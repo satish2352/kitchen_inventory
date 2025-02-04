@@ -150,6 +150,13 @@ document.getElementById('editPopup').style.display = "flex";
     });
 </script>
 
+<script>
+    document.getElementById("closePopup").addEventListener("click", function(event) {
+        event.preventDefault(); // Prevent default link behavior
+        document.getElementById("addPopup").style.display = "none"; // Hide the popup
+    });
+</script>
+
 
 </div>
 </body>

@@ -35,7 +35,7 @@ class LoginController extends Controller
 
         // Define custom validation messages
         $messages = [   
-            'email.required' => 'Please Enter email.',
+            'email.required' => 'Please Enter email id.',
             'email.exists' => 'The provided email does not exist.',
             'password.required' => 'Please Enter Password.',
         ];
