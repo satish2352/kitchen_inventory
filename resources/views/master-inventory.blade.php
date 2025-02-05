@@ -212,6 +212,10 @@
 
           <hr />
           <div class="d-flex justify-content-around">
+          <a class="btn btn-secondary btn-lg w-100 me-2" id="closePopup">
+              <i class="bi bi-x-circle"></i> Cancel
+            </a>
+            
             <button class="btn btn-danger btn-lg w-100">
               <i class="bi bi-plus-lg"></i> ADD
             </button>

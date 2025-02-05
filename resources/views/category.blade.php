@@ -131,9 +131,12 @@
 
           <hr />
           <div class="d-flex justify-content-around">
-            <button class="btn btn-secondary btn-lg w-100 me-2">
+            <!-- <button class="btn btn-secondary btn-lg w-100 me-2">
               <i class="bi bi-x-circle"></i> Cancel
-            </button>
+            </button> -->
+            <a class="btn btn-secondary btn-lg w-100 me-2" id="closePopup">
+              <i class="bi bi-x-circle"></i> Cancel
+            </a>
             <button class="btn btn-success btn-lg w-100">
               <i class="bi bi-plus-circle"></i> Add
             </button>
@@ -394,11 +397,16 @@ document.getElementById('editPopupCategory').style.display = "flex";
                     method: "GET",
                     data: { query: query },
                     success: function(response) {
+                      if(response.length > 0)
+                    {
                         // Clear the previous results
                         $('#search-results').html('');
                         
                         // Append the new search results
                         $('#search-results').html(response);
+                    }else{
+                        $('#search-results').html('No Data Found');
+                    }
                     }
                 });
             } else {

@@ -3,6 +3,26 @@
 
 @yield('content')
 
+<style>
+  .select2{
+    width: 100% !important;
+  }
+  .select2-container--default .select2-selection--multiple {
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+  }
+
+  .select2-container--default .select2-selection--multiple:after {
+    content: "⌄"; 
+    font-family: FontAwesome;
+    font-size: 16px;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+</style>
 
 <div class="main">
       <div class="inner-top container-fluid p-3">
@@ -73,10 +93,26 @@
               <!-- Left Section -->
               <div>
                 <div class="d-flex align-items-center">
-                  <span class="ur-user me-2 jost-font">{{ $item->name }}</span>
+                  <span class="ur-user me-2 jost-font">{{ $item->name }}
+                  @if($item->user_role == '1')
+                  (Super Admin)
+                  @elseif($item->user_role == '2')
+                  (Admin)
+                  @else
+                  (Manager)
+                  @endif
+
+                  </span>
                 </div>
-                <p class="mb-1 fw-light">{{ $item->email }}</p>
-                <p class="mb-1 fw-light">{{ $item->phone }}</p>
+                <p class="mb-1 fw-light"><b>Email :</b> {{ $item->email }}</p>
+                <p class="mb-1 fw-light"><b>Phone :</b> {{ $item->phone }}</p>
+                <p class="mb-1 fw-light"><b>Locations :</b>
+                @if(!empty($item->locations))
+                    {{ implode(', ', $item->locations) }}
+                @else
+                    N/A
+                @endif
+                </p>
               </div>
 
               <!-- Right Section -->
@@ -126,7 +162,7 @@
             </div>
           </div> -->
 
-          <div class="row mb-3">
+          <!-- <div class="row mb-3">
     <label class="col-6 form-label">Select Location</label>
     <div class="col-6">
         @foreach ($locationsData as $locationItem)
@@ -138,17 +174,28 @@
             </div>
         @endforeach
     </div>
-</div>
+</div> -->
 
 
-
+          <!-- Select Options -->
+          <div class="row mb-3">
+            <label class="col-6 form-label">Select Location</label>
+            <div class="col-6">
+              <select class="form-select select2" name="location[]" multiple >
+                <option value="">Select Location</option>
+                @foreach ($locationsData as $locationItem)
+                  <option value="{{ $locationItem['id'] }}">{{ $locationItem['location'] }}</option>
+                @endforeach
+              </select>
+            </div>
+          </div>
 
           <div class="row mb-3">
             <label class="form-label col-6">Select Role</label>
             <div class="col-6">
               <select class="form-select" name="role">
               <option value="">Select Role</option>
-              <option value="1">Super Admin</option>
+              {{-- <option value="1">Super Admin</option> --}}
                 <option value="2">Admin</option>
                 <option value="3">Manager</option>
               </select>
@@ -212,9 +259,14 @@
 
           <hr />
           <div class="d-flex justify-content-around">
-            <button class="btn btn-secondary btn-lg w-100 me-2">
+          <a class="btn btn-secondary btn-lg w-100 me-2" id="closePopup">
               <i class="bi bi-x-circle"></i> Cancel
-            </button>
+            </a>
+
+
+            <!-- <a  class="btn btn-outline-danger btn-delete-user btn-lg w-100 me-2">
+              <i class="bi bi-trash"></i> Delete
+            </a> -->
             <button class="btn btn-success btn-lg w-100">
               <i class="bi bi-plus-circle"></i> Add
             </button>
@@ -248,7 +300,7 @@
           </div> -->
 
           <!-- Select Options (with checkboxes) -->
-<div class="row mb-3">
+<!-- <div class="row mb-3">
     <label class="col-6 form-label">Select Location</label>
     <div class="col-6">
         @foreach ($locationsData as $locationItem)
@@ -261,7 +313,19 @@
             </div>
         @endforeach
     </div>
-</div>
+</div> -->
+
+          <div class="row mb-3">
+            <label class="col-6 form-label">Select Location</label>
+            <div class="col-6">
+              <select class="form-select select2" name="location[]" id="location" multiple>
+                <option value="">Select Location</option>
+                @foreach ($locationsData as $locationItem)
+                  <option value="{{ $locationItem['id'] }}">{{ $locationItem['location'] }}</option>
+                @endforeach
+              </select>
+            </div>
+          </div>
 
           <div class="row mb-3">
             <label class="form-label col-6">Select Role</label>
@@ -437,10 +501,15 @@
         // Select the correct location
         // $('#location').val(response.user_data.location).change();
 
-        var selectedLocations = response.user_data.location.split(','); // Split the comma-separated locations
-                selectedLocations.forEach(function(locationId) {
-                    $('#location' + locationId).prop('checked', true); // Check the corresponding checkboxes
-                });
+        // var selectedLocations = response.user_data.location.split(','); // Split the comma-separated locations
+        //         selectedLocations.forEach(function(locationId) {
+        //             $('#location' + locationId).prop('checked', true); // Check the corresponding checkboxes
+        //         });
+
+        // Auto-select multiple locations
+        var selectedLocations = response.user_data.location.split(','); // Convert comma-separated values into an array
+        $('#location').val(selectedLocations).change(); // Set selected values and trigger change event
+
         
         // Show the popup
         $('#editPopupUser').show();
@@ -467,13 +536,15 @@ $.validator.addMethod("passwordStrength", function(value, element) {
     return this.optional(element) || /^(?=(?:[^a-zA-Z]*[a-zA-Z]){5,})(?=.*\d)(?=.*[@$!%*?&]).{6,}$/.test(value);
 }, "Password must contain at least 5 letters, 1 number, and 1 special character");
     
+
     // Initialize validation for the add form
     $("#frm_register").validate({
       rules: {
-        location: {
-          required: true
-          // minlength: 3
-        },
+       "location[]": {
+      required: function() {
+        return $("#frm_register select[name='location[]'] option:selected").length === 0;
+      }
+    },
         role: {
           required: true
           // minlength: 3
@@ -504,10 +575,9 @@ $.validator.addMethod("passwordStrength", function(value, element) {
         
       },
       messages: {
-        location: {
-          required: "Please select the location name"
-          // minlength: "Category name must be at least 3 characters long"
-        },
+        "location[]": {
+      required: "Please select at least one location."
+    },
         role: {
           required: "Please select the role name"
           // minlength: "Category name must be at least 3 characters long"
@@ -658,11 +728,16 @@ $.validator.addMethod("passwordStrength", function(value, element) {
                     method: "GET",
                     data: { query: query },
                     success: function(response) {
+                      if(response.length > 0)
+                    {
                         // Clear the previous results
                         $('#search-results').html('');
                         
                         // Append the new search results
                         $('#search-results').html(response);
+                    }else{
+                        $('#search-results').html('No Data Found');
+                    }
                     }
                 });
             } else {
@@ -672,4 +747,9 @@ $.validator.addMethod("passwordStrength", function(value, element) {
             }
         });
     });
+</script>
+<script>
+  $(document).ready(function() {
+  $('.select2').select2();
+});
 </script>

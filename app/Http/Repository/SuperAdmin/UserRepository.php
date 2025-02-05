@@ -17,10 +17,18 @@ use Illuminate\Support\Facades\Mail;
 class UserRepository
 {
     public function getUsersList() {
-        $data_location = UsersData::select('id','name','location','user_role','email','password','created_at','email')
+        $data_location = UsersData::select('id','name','location','user_role','email','password','created_at','email','phone')
 							->where('is_deleted', '0')
 							->orderBy('created_at', 'desc')
 							->get();
+
+							  // Fetch locations for each user
+    $data_location->each(function ($user_data) {
+        $locationIds = explode(',', $user_data->location);
+        $user_data->locations = Locations::whereIn('id', $locationIds)->pluck('location')->toArray();
+    });
+// dd($data_location);
+    // return $users;
 							
 		return $data_location;
 	}

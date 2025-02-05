@@ -55,9 +55,9 @@
         <!-- Border Box -->
         <div class="border-box">
           <!-- Header Title -->
-          <div class="grid-header text-center">
+          <!-- <div class="grid-header text-center">
             <h6 class="m-0 text-white">Chicken/Proteins</h6>
-          </div>
+          </div> -->
 
           <!-- Table -->
           <div class="table-responsive">
@@ -124,9 +124,12 @@
 
           <hr />
           <div class="d-flex justify-content-around">
-            <button class="btn btn-secondary btn-lg w-100 me-2">
+            <!-- <button class="btn btn-secondary btn-lg w-100 me-2">
               <i class="bi bi-x-circle"></i> Cancel
-            </button>
+            </button> -->
+            <a class="btn btn-secondary btn-lg w-100 me-2" id="closePopup">
+              <i class="bi bi-x-circle"></i> Cancel
+            </a>
             <button class="btn btn-success btn-lg w-100">
               <i class="bi bi-plus-circle"></i> Add
             </button>
