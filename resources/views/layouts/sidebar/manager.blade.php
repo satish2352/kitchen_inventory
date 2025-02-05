@@ -23,7 +23,7 @@
          </div>
       </div>
       <div class="drawer-nav">
-         <a href="dashboard.html" class="active"
+         <a href="{{ route('/dashboard') }}" class="active"
             ><i class="bi bi-house-door-fill"></i> Dashboard</a
             >
          <a href="{{ route('get-shopping-list-manager') }}"
