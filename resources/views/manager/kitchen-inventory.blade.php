@@ -68,6 +68,7 @@
             @if(session()->get('location_selected_id') !='')
             <form action="{{ route('update-kitchen-inventory-by-manager') }}" method="POST">
             @csrf
+            @if (!empty($data_location_wise_inventory) && count($data_location_wise_inventory) > 0)
             @foreach ($data_location_wise_inventory as $category => $items)
             <!-- Border Box -->
             <div class="border-box mb-4" id="search-results">
@@ -85,6 +86,7 @@
                                 <th>Item</th>
                                 <th>Qty</th>
                                 <th>Unit</th>
+                                <th>Price</th>
                             </tr>
                         </thead>
                         <!-- Table Body -->
@@ -98,6 +100,7 @@
                                         <input type="text" name="quantity[]" class="form-control qty-input" value="{{ $item['quantity'] }}" placeholder="QTY" />
                                     </td>
                                     <td>{{ $item['unit_name'] }}</td>
+                                    <td>{{ $item['price'] }}</td>
                                 </tr>
                             @endforeach
                             <tr>
@@ -106,10 +109,19 @@
                 </div>
             </div>
             @endforeach
-            <!-- Submit Button -->
-        <div class="text-center mt-3">
-            <button type="submit" class="btn btn-primary">Submit Inventory</button>
+            <div class="text-center mt-3">
+            <button type="submit" class="btn btn-success">Submit Inventory</button>
         </div>
+        @else
+        <div class="border-box mb-4" id="search-results">
+                <!-- Header Title -->
+                <div class="grid-header text-center">
+                    <h6 class="m-0 text-white">Please Enter Inventory For This location</h6>
+                </div>
+            </div>  
+        @endif
+            <!-- Submit Button -->
+        
 
             </form>
            @else

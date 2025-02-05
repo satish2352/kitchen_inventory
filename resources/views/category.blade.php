@@ -270,7 +270,7 @@
     
       // Close Confirmation Popup on Cancel
       cancelDeleteButton.addEventListener("click", () => {
-        confirmPopup.style.display = "none";
+        confirmPopupCategory.style.display = "none";
       });
     
       // Perform Action on Confirm Delete

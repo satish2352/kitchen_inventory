@@ -269,8 +269,12 @@
         deleteButton.addEventListener("click", () => {
             popupLocation.style.display = "none"; // Close the bottom popup
             confirmPopup.style.display = 'flex'; // Show the confirmation popup
-
         });
+
+        // Close Confirmation Popup on Cancel
+      cancelDeleteButton.addEventListener("click", () => {
+        confirmPopup.style.display = "none";
+      });
 
     });
 </script>

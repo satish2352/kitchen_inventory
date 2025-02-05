@@ -249,7 +249,7 @@
     
       // // Close Confirmation Popup on Cancel
       cancelDeleteButton.addEventListener("click", () => {
-        confirmPopup.style.display = "none";
+        confirmPopupUnit.style.display = "none";
       });
 
       confirmDeleteUnit.addEventListener("click", () => {

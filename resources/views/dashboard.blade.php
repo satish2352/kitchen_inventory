@@ -37,7 +37,6 @@
                 <div class="icon-circle mb-3">
                    <i class="bi bi-person-add"></i>
                 </div>
-                {{ $return_data['users_count'] }}
                 <div class="icon-divider"></div>
                 <span class="mt-3">Approve Users</span>
              </div>
@@ -79,7 +78,6 @@
                 <div class="icon-circle mb-3">
                    <i class="bi bi-journal-bookmark-fill"></i>
                 </div>
-                {{ $return_data['master_inventory_count'] }}
                 <div class="icon-divider"></div>
                 <span class="mt-3">Master Inventory</span>
              </div>

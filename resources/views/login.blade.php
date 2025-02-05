@@ -342,7 +342,7 @@ $.validator.addMethod("passwordStrength", function(value, element) {
       messages: {
         email: {
           required: "Please enter email ID",
-          required: "Please Enter valid email"
+          required: "Please Enter valid email Id"
           // minlength: "Category name must be at least 3 characters long"
         },
         password: {

@@ -151,7 +151,7 @@
           action="{{ route('add-items') }}" enctype="multipart/form-data">
           <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
           <!-- Popup Title -->
-          <h4 class="popup-title">Add items</h4>
+          <h4 class="popup-title">Add Master Inventory</h4>
           <hr />
 
           <!-- Select Options -->
@@ -348,7 +348,7 @@
             this item wil not recover back
           </p>
           <div class="d-flex justify-content-around mt-4 confrm">
-            <button id="cancelDelete" class="btn br">NO</button>
+            <button id="cancelDeleteConfirm" class="btn br">NO</button>
             <button id="confirmDeleteItem" class="btn">YES</button>
           </div>
         </div>
@@ -448,7 +448,11 @@
         const addButton = document.querySelector(".add-btn");
         const popupadd = document.getElementById("addPopup");
         const confirmPopupDelete = document.getElementById("confirmPopupDelete");
-      const confirmDeleteItem = document.getElementById("confirmDeleteItem");
+      const cancelDeleteConfirm = document.getElementById("cancelDeleteConfirm");
+
+      cancelDeleteConfirm.addEventListener("click", () => {
+        popup.style.display = "flex";
+        });
 
       if (editButtons.length > 0) {
         editButtons.forEach(button => {

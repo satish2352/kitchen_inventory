@@ -188,7 +188,7 @@
             <label class="col-6 form-label">Select Location</label>
             <div class="col-6">
               <select class="form-select select2" name="location[]" multiple>
-                <option value="">Select Location</option>
+                <option value="" disabled>Select Location</option>
                 @foreach ($locationsData as $locationItem)
                   <option value="{{ $locationItem['id'] }}">{{ $locationItem['location'] }}</option>
                 @endforeach
@@ -437,6 +437,14 @@
       const confirmDeleteUser = document.getElementById("confirmDeleteUser");
       const cancelDeleteButton = document.getElementById("cancelDelete");
 
+      // Close Confirmation Popup on Cancel
+  if (cancelDeleteButton) {
+    cancelDeleteButton.addEventListener("click", (e) => {
+      e.preventDefault(); // Prevent default behavior
+      confirmPopupUser.style.display = "none"; // Hide popup
+    });
+  }
+
       // Close Popup when clicking outside
       popupuser.addEventListener("click", (e) => {
         if (e.target === popupuser) {
@@ -679,16 +687,16 @@ $.validator.addMethod("passwordStrength", function(value, element) {
           // minlength: "Category name must be at least 3 characters long"
         },
         phone: {
-          required: "Please enter phone number",
+          required: "Please enter mobbile number",
           // number:"Please enter valid mobile number",
-          minlength: "Phone number min length must be exactly 10 digits.",
-          maxlength: "Phone number max length must be exactly 10 digits.",
+          minlength: "Mobile number min length must be exactly 10 digits.",
+          maxlength: "Mobile number max length must be exactly 10 digits.",
           pattern: "Please enter a valid 10-digit mobile number starting with 6-9."
           // minlength: "Category name must be at least 3 characters long"
         },
         email: {
           required: "Please enter email ID",
-          required: "Please Enter valid email"
+          required: "Please Enter valid email Id"
           // minlength: "Category name must be at least 3 characters long"
         },
         password: {
