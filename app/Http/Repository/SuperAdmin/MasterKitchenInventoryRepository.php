@@ -21,15 +21,18 @@ class MasterKitchenInventoryRepository
 	public function getItemsList() {
 		$data_location = MasterKitchenInventory::leftJoin('category', 'master_kitchen_inventory.category', '=', 'category.id')
 			->leftJoin('units', 'master_kitchen_inventory.unit', '=', 'units.id')
+			->leftJoin('locations', 'master_kitchen_inventory.location_id', '=', 'locations.id')
 			->select(
 				'master_kitchen_inventory.id',
 				'master_kitchen_inventory.category',
 				'master_kitchen_inventory.item_name',
 				'master_kitchen_inventory.unit',
 				'master_kitchen_inventory.price',
+				'master_kitchen_inventory.quantity',
 				'master_kitchen_inventory.created_at',
 				'category.category_name',
-				'units.unit_name'
+				'units.unit_name',
+				'locations.location'
 			)
 			->where('master_kitchen_inventory.is_deleted', '0')
 			->orderBy('category.category_name', 'asc') // Order by category name first
@@ -81,6 +84,8 @@ class MasterKitchenInventoryRepository
 		$user_data->category = $request['category'];
 		$user_data->unit = $request['unit'];
 		$user_data->price = $request['price'];
+		$user_data->location_id = $request['location_id'];
+		$user_data->quantity = $request['quantity'];
 		$user_data->save();
 		$last_insert_id = $user_data->id;
 		// dd($user_data);
@@ -96,7 +101,9 @@ class MasterKitchenInventoryRepository
 							'item_name' => $request['item_name'],
 							'category' => $request['category'],
 							'unit' => $request['unit'],
-							'price' => $request['price']
+							'price' => $request['price'],
+							'location_id' => $request['location_id'],
+							'quantity' => $request['quantity'],
 						]);
 		// dd($user_data);
 		return $request->edit_id;

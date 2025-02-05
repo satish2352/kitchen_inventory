@@ -60,7 +60,7 @@ class ItemsServices
 
     public function updateItem($request) {
         $user_register_id = $this->repo->updateItem($request);
-        return ['status'=>'success','msg'=>'Item Updated Successful.'];
+        return ['status'=>'success','msg'=>'Item Updated Successfully.'];
     }
 
     public function deleteItem($id){

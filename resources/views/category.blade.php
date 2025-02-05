@@ -32,6 +32,7 @@
           <!-- <a href="approve-users.html"> -->
             <button class="btn btn-light add-btn">
               <i class="bi bi-plus-lg"></i>
+              <span>Add Category</span>
             </button>
           <!-- </a> -->
         </div>
@@ -88,7 +89,8 @@
                   <span class="act-user me-2">#{{ $loop->iteration }}</span>
                   <span class="act-user me-2">{{ $item->category_name }}</span>
                 </div>
-                <p class="mb-1 activity-p">{{ $item->created_at }}</p>
+                <p class="mb-1 activity-p">{{ $item->created_at->format('Y-m-d') }}
+                </p>
               </div>
 
               <!-- Right Section -->
@@ -124,6 +126,7 @@
                 class="form-control"
                 placeholder="Category Name"
                 name="category_name"
+                id="abc"
                 style="text-transform: capitalize;"
               />
             </div>
@@ -131,9 +134,6 @@
 
           <hr />
           <div class="d-flex justify-content-around">
-            <!-- <button class="btn btn-secondary btn-lg w-100 me-2">
-              <i class="bi bi-x-circle"></i> Cancel
-            </button> -->
             <a class="btn btn-secondary btn-lg w-100 me-2" id="closePopup">
               <i class="bi bi-x-circle"></i> Cancel
             </a>
@@ -250,7 +250,10 @@
 
       popupadd.addEventListener("click", (e) => {
         if (e.target === popupadd) {
+          // document.getElementById("abc").value = '';
+          document.getElementById("frm_register").reset();
           popupadd.style.display = "none";
+          
         }
       });
     

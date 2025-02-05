@@ -60,7 +60,7 @@ class UnitServices
 
     public function updateUnit($request) {
         $user_register_id = $this->repo->updateUnit($request);
-        return ['status'=>'success','msg'=>'Unit Updated Successful.'];
+        return ['status'=>'success','msg'=>'Unit Updated Successfully.'];
     }
 
     public function deleteUnit($id){

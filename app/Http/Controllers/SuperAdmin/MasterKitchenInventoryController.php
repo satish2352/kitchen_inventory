@@ -39,8 +39,15 @@ class MasterKitchenInventoryController extends Controller {
                             ->select('id','unit_name')
                             ->get()
                             ->toArray();
+
+        $locationsData = Locations::where('is_active', '1')
+                            ->where('is_deleted', '0')
+                            ->select('id','location')
+                            ->orderBy('location', 'asc')
+                            ->get()
+                            ->toArray();
         // dd($projects);
-        return view('master-inventory',compact('user_data','unitData','categoryData'));
+        return view('master-inventory',compact('user_data','unitData','categoryData','locationsData'));
     }
 
     public function addItem(Request $request)

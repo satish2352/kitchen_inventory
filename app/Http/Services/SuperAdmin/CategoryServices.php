@@ -60,7 +60,7 @@ class CategoryServices
 
     public function updateCategory($request) {
         $user_register_id = $this->repo->updateCategory($request);
-        return ['status'=>'success','msg'=>'Category Updated Successful.'];
+        return ['status'=>'success','msg'=>'Category Updated Successfully.'];
     }
 
     public function deleteCategory($id){

@@ -84,7 +84,11 @@ class LoginController extends Controller
                     // Return a successful login redirect
                     // dd("dsdfasfsafgsa");
 
-                    
+                    $msg = "Logged In Successfully";
+                    $status = "success";
+
+                    session()->flash('alert_status', $status);
+                    session()->flash('alert_msg', $msg);
 
                     $request->session()->regenerate();
                     return redirect(route('/dashboard'));  // Change to your dashboard route
@@ -94,7 +98,7 @@ class LoginController extends Controller
 
                     return redirect('/')
                         ->withInput()
-                        ->withErrors(['password' => 'These credentials do not match our records.']);
+                        ->withErrors(['password' => 'You Entered Wrong Password']);
                 }
             } else {
                 // Invalid username

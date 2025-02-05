@@ -30,6 +30,7 @@
             <h5 class="sub-title">Locations</h5>
             <button class="btn btn-light add-btn">
                 <i class="bi bi-plus-lg"></i>
+                <span>Add Location</span>
             </button>
         </div>
     </div>
@@ -106,6 +107,9 @@
                     <div class="col-6">
                         <input type="text" class="form-control" placeholder="Enter Location Name" name="location"
                             style="text-transform: capitalize;" />
+                    @if ($errors->has('location'))
+                        <span class="red-text"><?php echo $errors->first('location', ':message'); ?></span>
+                    @endif
                     </div>
                 </div>
 
@@ -130,7 +134,7 @@
                         <i class="bi bi-x-circle"></i> Cancel
                     </a>
                     <button class="btn btn-success btn-lg w-100">
-                        <i class="bi bi-plus-circle"></i> Add
+                        <i class="bi bi-plus-circle"></i> Submit
                     </button>
                 </div>
             </form>
@@ -142,7 +146,7 @@
 
 
     <!-- edit popup  -->
-    <div id="editPopup" class="popup-container">
+    <div id="editPopupLocation" class="popup-container">
         <div class="popup-content">
             <form class="forms-sample" id="editLocationForm" name="editLocationForm" method="post" role="form"
                 action="{{ route('update-locations') }}" enctype="multipart/form-data">
@@ -193,12 +197,15 @@
     </div>
 
     <!-- Delete Confirmation Popup -->
-    <div id="confirmPopup" class="confirm-popup-container">
+    
+</div>
+
+<div id="confirmPopup" class="confirm-popup-container" style="display:none">
         <div class="confirm-popup-content">
             <h4 class="confirm-popup-title">Please Confirm</h4>
             <p class="confirm-popup-text">
                 Are you sure to delete this Location? <br />
-                this user wil not recover back
+                this location wil not recover back
             </p>
             <div class="d-flex justify-content-around mt-4 confrm">
                 <button id="cancelDelete" class="btn br">NO</button>
@@ -206,7 +213,6 @@
             </div>
         </div>
     </div>
-</div>
 
 <form method="POST" action="{{ url('/delete-locations') }}" id="deleteform">
     @csrf
@@ -219,7 +225,7 @@
     document.addEventListener("DOMContentLoaded", () => {
         const deleteButton = document.querySelector(".btn-delete");
         const editButton = document.querySelector(".edit-btn");
-        const popup = document.getElementById("editPopup");
+        const popupLocation = document.getElementById("editPopupLocation");
         const addButton = document.querySelector(".add-btn");
         const popupadd = document.getElementById("addPopup");
         const confirmPopup = document.getElementById("confirmPopup");
@@ -236,19 +242,19 @@
             confirmPopup.style.display = "none";
             $("#delete_id").val($("#edit-location-id").val());
             $("#deleteform").submit();
-            alert("Location deleted successfully!");
+            // alert("Location deleted successfully!");
             // Add delete logic here
         });
 
         // Open Popup
         editButton.addEventListener("click", () => {
-            popup.style.display = "flex";
+            popupLocation.style.display = "flex";
         });
 
         // Close Popup when clicking outside
-        popup.addEventListener("click", (e) => {
-            if (e.target === popup) {
-                popup.style.display = "none";
+        popupLocation.addEventListener("click", (e) => {
+            if (e.target === popupLocation) {
+                popupLocation.style.display = "none";
             }
         });
 
@@ -261,9 +267,9 @@
 
         // Show Confirmation Popup
         deleteButton.addEventListener("click", () => {
-            // alert('jjjjjjjjjjjjjj');
-            popup.style.display = "none"; // Close the bottom popup
-            confirmPopup.style.display = "flex"; // Show the confirmation popup
+            popupLocation.style.display = "none"; // Close the bottom popup
+            confirmPopup.style.display = 'flex'; // Show the confirmation popup
+
         });
 
     });
@@ -292,10 +298,10 @@
                     $('#edit-location-id').val(response.location_data.id); // Set role value
 
                     // Show the popup
-                    $('#editPopup').show();
+                    $('#editPopupLocation').show();
 
                     // Add the CSS property for flex display
-                    document.getElementById('editPopup').style.display = "flex";
+                    document.getElementById('editPopupLocation').style.display = "flex";
                 },
                 error: function() {
                     alert('Failed to load location data.');

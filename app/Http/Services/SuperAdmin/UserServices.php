@@ -60,7 +60,7 @@ class UserServices
 
     public function updateUser($request) {
         $user_register_id = $this->repo->updateUser($request);
-        return ['status'=>'success','msg'=>'User Updated Successful.'];
+        return ['status'=>'success','msg'=>'User Updated Successfully.'];
     }
 
     public function deleteUser($id){

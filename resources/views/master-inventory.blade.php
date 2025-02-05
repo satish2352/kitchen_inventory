@@ -102,7 +102,7 @@
               <thead class="table-header">
                 <tr>
                   <th>Item</th>
-                  <!-- <th>Qty</th> -->
+                  <th>Qty</th>
                   <th>Unit</th>
                   <!-- <th>IX</th> -->
                   <th>Price</th>
@@ -119,6 +119,7 @@
                   <!-- <td>
                     <input type="text" name="quantity" class="form-control qty-input" />
                   </td> -->
+                  <td>{{ $item->quantity }}</td>
                   <td>{{ $item->unit_name }}</td>
                   <!-- <td>7</td> -->
                   <td>${{ $item->price }}</td>
@@ -155,6 +156,19 @@
 
           <!-- Select Options -->
           <div class="row mb-3">
+            <label class="col-6 form-label">Select Location</label>
+            <div class="col-6">
+              <select class="form-select select2" name="location_id">
+                <option value="">Select Location</option>
+                @foreach ($locationsData as $locationItem)
+                  <option value="{{ $locationItem['id'] }}">{{ $locationItem['location'] }}</option>
+                @endforeach
+              </select>
+            </div>
+          </div>
+          
+          <!-- Select Options -->
+          <div class="row mb-3">
             <label class="col-6 form-label">Select Category</label>
             <div class="col-6">
               <select class="form-select" name="category">
@@ -176,7 +190,7 @@
               />
             </div>
           </div>
-          <!-- <div class="row mb-3">
+          <div class="row mb-3">
             <label class="form-label col-6">Quantity</label>
             <div class="col-6">
               <input
@@ -186,7 +200,7 @@
                 name="quantity"
               />
             </div> 
-          </div>-->
+          </div>
           <div class="row mb-3">
             <label class="form-label col-6">Select Unit</label>
             <div class="col-6">
@@ -237,6 +251,18 @@
           <hr />
           <input type="hidden" class="form-control" placeholder="Enter Location Name" name="edit_id" id="edit-item-id"/>
 
+          <div class="row mb-3">
+            <label class="col-6 form-label">Select Location</label>
+            <div class="col-6">
+              <select class="form-select" name="location_id" id="location_id">
+                <option value="">Select Location</option>
+                @foreach ($locationsData as $locationItem)
+                  <option value="{{ $locationItem['id'] }}">{{ $locationItem['location'] }}</option>
+                @endforeach
+              </select>
+            </div>
+          </div>
+
           <!-- Select Options -->
           <div class="row mb-3">
             <label class="col-6 form-label">Select Category</label>
@@ -259,16 +285,17 @@
               />
             </div>
           </div>
-          <!-- <div class="row mb-3">
+          <div class="row mb-3">
             <label class="form-label col-6">Quantity</label>
             <div class="col-6">
               <input
                 type="text"
                 class="form-control"
                 placeholder="Enter Quantity"
+                name="quantity" id="quantity"
               />
             </div>
-          </div> -->
+          </div>
           <div class="row mb-3">
             <label class="form-label col-6">Select Unit</label>
             <div class="col-6">
@@ -526,6 +553,8 @@
         $('#item_name').val(response.user_data.item_name); // Set location value
         $('#unit').val(response.user_data.unit); // Set location value
         $('#price').val(response.user_data.price); // Set location value
+        $('#quantity').val(response.user_data.quantity); // Set quantity value
+        $('#location_id').val(response.user_data.location_id); // Set location value
         $('#edit-item-id').val(response.user_data.id);
         // Show the popup
         $('#editPopup').show();
@@ -547,11 +576,19 @@ document.getElementById('editPopup').style.display = "flex";
     // Initialize validation for the add form
     $("#frm_register").validate({
       rules: {
+        location_id: {
+          required: true
+          // minlength: 3
+        },
         category: {
           required: true
           // minlength: 3
         },
         unit: {
+          required: true
+          // minlength: 3
+        },
+        quantity: {
           required: true
           // minlength: 3
         },
@@ -568,12 +605,20 @@ document.getElementById('editPopup').style.display = "flex";
         
       },
       messages: {
+        location_id: {
+          required: "Please select the Location"
+          // minlength: "Category name must be at least 3 characters long"
+        },
         category: {
           required: "Please select the category name"
           // minlength: "Category name must be at least 3 characters long"
         },
         unit: {
           required: "Please select the unit"
+          // minlength: "Category name must be at least 3 characters long"
+        },
+        quantity: {
+          required: "Please select the Quantity"
           // minlength: "Category name must be at least 3 characters long"
         },
         item_name: {

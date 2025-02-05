@@ -7,7 +7,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Models\ {
     Items,
-    Locations
+    Locations,
+    LocationWiseInventory,
+    MasterKitchenInventory
 };
 use Session;
 use Cookie;
@@ -21,12 +23,48 @@ class ShoppingListController extends Controller
 
     public function getShopppingListManager(Request $request) 
     {
+        $sess_user_id = session()->get('login_id');
+        $location_selected_name = session()->get('location_selected_name');
+        $location_selected_id = session()->get('location_selected_id');
+
         $all_kitchen_inventory = Items::where('is_deleted', '0')
             ->select('*')
             ->get()
             ->toArray();
+        $data_location_wise_inventory=[];
+        if($location_selected_name !=''){
+            $data_location_wise_inventory = MasterKitchenInventory::leftJoin('category', 'master_kitchen_inventory.category', '=', 'category.id')
+			->leftJoin('units', 'master_kitchen_inventory.unit', '=', 'units.id')
+			->leftJoin('locations', 'master_kitchen_inventory.location_id', '=', 'locations.id')
+			->select(
+				'master_kitchen_inventory.id',
+				'master_kitchen_inventory.category',
+				'master_kitchen_inventory.item_name',
+				'master_kitchen_inventory.unit',
+				'master_kitchen_inventory.price',
+				'master_kitchen_inventory.quantity',
+				'master_kitchen_inventory.created_at',
+				'category.category_name',
+				'units.unit_name',
+				'locations.location'
+			)
+			->where('master_kitchen_inventory.location_id', $location_selected_id)
+			->where('master_kitchen_inventory.is_deleted', '0')
+			->orderBy('category.category_name', 'asc') // Order by category name first
+			->orderBy('master_kitchen_inventory.item_name', 'asc') // Then order by item name
+			->get()
+            // dd($data_location);
+			->groupBy('category_name');
+
+        }    
+        // $all_location_wise_inventory = LocationWiseInventory::leftJoin('master_kitchen_inventory', 'location_wise_inventory.inventory_id', '=', 'master_kitchen_inventory.id')
+        //     ->where('user_id', $sess_user_id)
+        //     ->where('location_wise_inventory.is_deleted', '0')
+        //     ->select('*')
+        //     ->get()
+        //     ->toArray();
         
-        return view('manager.kitchen-inventory', compact('all_kitchen_inventory'));
+        return view('manager.kitchen-inventory', compact('all_kitchen_inventory','data_location_wise_inventory'));
     }
 
     public function updateShoppingListManager(Request $request) 
@@ -106,8 +144,32 @@ class ShoppingListController extends Controller
         $request->session()->put('location_selected', $request->location_selected);
         $final_location  = Locations::where('id',session('location_selected'))->first();
         $request->session()->put('location_selected_name', $final_location->location);
+        $request->session()->put('location_selected_id', $final_location->id);
         return \Redirect::back();
 
     }
+
+    public function updateKitchenInventoryByManager(Request $request)
+{
+    // Ensure arrays are received
+    $inventoryIds = $request->input('master_inventory_id');
+    $quantities = $request->input('quantity');
+
+    // Loop through and update each inventory item
+    foreach ($inventoryIds as $index => $inventoryId) {
+        MasterKitchenInventory::where('id', $inventoryId)->update([
+            'quantity' => $quantities[$index]
+        ]);
+    }
+
+    $msg = "Kitchen Inventory Added Successfully";
+    $status = "success";
+
+    session()->flash('alert_status', $status);
+    session()->flash('alert_msg', $msg);
+    return \Redirect::back();
+    // return response()->json(['message' => 'Inventory updated successfully!'], 200);
+}
+
 
 }

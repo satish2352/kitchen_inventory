@@ -120,6 +120,9 @@ Route::group(['middleware' => ['admin']], function () {
 
     
     Route::post('/location_selected', ['as' => 'location_selected', 'uses' => 'App\Http\Controllers\Manager\ShoppingListController@getLocationSelected']);
+    // Route::get('/get-location-wise-inventory', ['as' => 'get-location-wise-inventory', 'uses' => 'App\Http\Controllers\Manager\ShoppingListController@getLocationWiseInventory']);
+    Route::get('/get-location-wise-inventory', ['as' => 'get-location-wise-inventory', 'uses' => 'App\Http\Controllers\Manager\ShoppingListController@getLocationWiseInventory']);
+    Route::post('/update-kitchen-inventory-by-manager', ['as' => 'update-kitchen-inventory-by-manager', 'uses' => 'App\Http\Controllers\Manager\ShoppingListController@updateKitchenInventoryByManager']);
 
    
 });

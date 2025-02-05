@@ -35,13 +35,19 @@
           </a>
           <h5 class="sub-title">Users</h5>
           <!-- person -->
-          <!-- <button class="btn btn-light add-btn">
+          <button class="btn btn-light add-btn">
             <i class="bi bi-plus-lg"></i>
-          </button> -->
-          <div class="person add-user add-btn">
+            <span>Add User</span>
+          </button>
+          <!-- <div class="person add-user add-btn">
             <i class="bi bi-person"></i>
             <span>Add User</span>
-          </div>
+          </div> -->
+          <!-- <button class="person add-user add-btn">
+              <i class="bi bi-person"></i>
+              <span>Add User</span>
+          </button> -->
+
         </div>
       </div>
       <div class="filter">
@@ -75,9 +81,9 @@
 
 
           <!-- Location Icon -->
-          <button class="btn btn-white mx-2">
+          <!-- <button class="btn btn-white mx-2">
             <i class="bi bi-geo-alt-fill"></i>
-          </button>
+          </button> -->
         </div>
       </div>
       <!-- user requestion section  -->
@@ -181,7 +187,7 @@
           <div class="row mb-3">
             <label class="col-6 form-label">Select Location</label>
             <div class="col-6">
-              <select class="form-select select2" name="location[]" multiple >
+              <select class="form-select select2" name="location[]" multiple>
                 <option value="">Select Location</option>
                 @foreach ($locationsData as $locationItem)
                   <option value="{{ $locationItem['id'] }}">{{ $locationItem['location'] }}</option>
@@ -195,31 +201,31 @@
             <div class="col-6">
               <select class="form-select" name="role">
               <option value="">Select Role</option>
-              {{-- <option value="1">Super Admin</option> --}}
+              <option value="1">Super Admin</option>
                 <option value="2">Admin</option>
                 <option value="3">Manager</option>
               </select>
             </div>
           </div>
           <div class="row mb-3">
-            <label class="form-label col-6">Enter Name</label>
+            <label class="form-label col-6">Enter User Name</label>
             <div class="col-6">
               <input
                 type="text"
                 class="form-control"
-                placeholder="Enter Name"
+                placeholder="Enter User Name"
                 name="name"
                 style="text-transform: capitalize;"
               />
             </div>
           </div>
           <div class="row mb-3">
-            <label class="form-label col-6">Enter Phone</label>
+            <label class="form-label col-6">Enter Mobile Number</label>
             <div class="col-6">
               <input
                 type="text"
                 class="form-control"
-                placeholder="Enter Phone"
+                placeholder="Enter Mobile Number"
                 name="phone"
               />
               <span id="validation-message" class="red-text"></span>
@@ -229,12 +235,12 @@
             </div>
           </div>
           <div class="row mb-3">
-            <label class="form-label col-6">Enter mail</label>
+            <label class="form-label col-6">Enter Email Id</label>
             <div class="col-6">
               <input
                 type="text"
                 class="form-control"
-                placeholder="Enter mail"
+                placeholder="Enter Email Id"
                 name="email"
               />
             </div>
@@ -268,7 +274,7 @@
               <i class="bi bi-trash"></i> Delete
             </a> -->
             <button class="btn btn-success btn-lg w-100">
-              <i class="bi bi-plus-circle"></i> Add
+              <i class="bi bi-plus-circle"></i> Submit
             </button>
           </div>
         </form>  
@@ -331,6 +337,7 @@
             <label class="form-label col-6">Select Role</label>
             <div class="col-6">
               <select class="form-select" name="role" id="role">
+                <option value="">Select Role</option>
                 <option value="1">Super Admin</option>
                 <option value="2">Admin</option>
                 <option value="3">Manager</option>
@@ -338,35 +345,35 @@
             </div>
           </div>
           <div class="row mb-3">
-            <label class="form-label col-6">Enter Name</label>
+            <label class="form-label col-6">Enter User Name</label>
             <div class="col-6">
               <input
                 type="text"
                 class="form-control"
-                placeholder="Enter Name"
+                placeholder="Enter User Name"
                 name="name" id="name"
                 style="text-transform: capitalize;"
               />
             </div>
           </div>
           <div class="row mb-3">
-            <label class="form-label col-6">Enter Phone</label>
+            <label class="form-label col-6">Enter Mobile Number</label>
             <div class="col-6">
               <input
                 type="text"
                 class="form-control"
-                placeholder="Enter Phone"
+                placeholder="Enter Mobile Number"
                 name="phone" id="phone"
               />
             </div>
           </div>
           <div class="row mb-3">
-            <label class="form-label col-6">Enter mail</label>
+            <label class="form-label col-6">Enter Email Id</label>
             <div class="col-6">
               <input
                 type="text"
                 class="form-control"
-                placeholder="Enter mail"
+                placeholder="Enter Email Id"
                 name="email" id="email"
               />
             </div>
@@ -612,7 +619,14 @@ $.validator.addMethod("passwordStrength", function(value, element) {
       },
       unhighlight: function (element) {
         $(element).addClass("is-valid").removeClass("is-invalid");
-      }
+      },
+      errorPlacement: function(error, element) {
+        if (element.attr("name") === "location[]") {
+            error.insertAfter(element.closest(".form-select")); // Places the error message below the select field
+        } else {
+            error.insertAfter(element);
+        }
+    }
     });
 
     // Initialize validation for the edit form

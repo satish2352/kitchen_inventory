@@ -7,10 +7,12 @@
              <i class="bi bi-list"></i>
           </div>
           <!-- Location -->
+          @if(session()->get('location_selected_id') !='')
           <div class="location jost-font">
              <i class="bi bi-geo-alt"></i>
-             <span>Kaaba, Saudi Arabia</span>
+             <span>{{session('location_selected_name')}}</span>
           </div>
+          @endif
        </div>
     </div>
     <!-- Drawer -->

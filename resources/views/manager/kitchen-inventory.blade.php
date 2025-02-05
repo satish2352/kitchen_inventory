@@ -63,11 +63,17 @@
                     </div>
                 </form>
             @endif
+
+
+            @if(session()->get('location_selected_id') !='')
+            <form action="{{ route('update-kitchen-inventory-by-manager') }}" method="POST">
+            @csrf
+            @foreach ($data_location_wise_inventory as $category => $items)
             <!-- Border Box -->
-            <div class="border-box mb-4">
+            <div class="border-box mb-4" id="search-results">
                 <!-- Header Title -->
                 <div class="grid-header text-center">
-                    <h6 class="m-0 text-white">Sauces</h6>
+                    <h6 class="m-0 text-white">{{ $category }}</h6>
                 </div>
 
                 <!-- Table -->
@@ -83,13 +89,15 @@
                         </thead>
                         <!-- Table Body -->
                         <tbody>
-                            @foreach ($all_kitchen_inventory as $kitchen_data)
+                            @foreach ($items as $item)
+                            <input type="hidden" class="form-control" name="master_inventory_id[]" id="master_inventory_id" value="{{ $item['id'] }}"/>
+
                                 <tr>
-                                    <td>{{ $kitchen_data['item_name'] }}</td>
+                                    <td>{{ $item['item_name'] }}</td>
                                     <td>
-                                        <input type="text" class="form-control qty-input" placeholder="QTY" />
+                                        <input type="text" name="quantity[]" class="form-control qty-input" value="{{ $item['quantity'] }}" placeholder="QTY" />
                                     </td>
-                                    <td>{{ $kitchen_data['unit'] }}</td>
+                                    <td>{{ $item['unit_name'] }}</td>
                                 </tr>
                             @endforeach
                             <tr>
@@ -97,6 +105,22 @@
                     </table>
                 </div>
             </div>
+            @endforeach
+            <!-- Submit Button -->
+        <div class="text-center mt-3">
+            <button type="submit" class="btn btn-primary">Submit Inventory</button>
+        </div>
+
+            </form>
+           @else
+           <div class="border-box mb-4" id="search-results">
+                <!-- Header Title -->
+                <div class="grid-header text-center">
+                    <h6 class="m-0 text-white">Please Select Location First</h6>
+                </div>
+            </div>    
+           @endif
+
         </div>
     </div>
     <!-- Delete Confirmation Popup -->
@@ -117,4 +141,60 @@
     });
 </script>
 
+<!-- <script>
+ $(document).ready(function() {
+  $('#location_selected').on('change', function() {
+    var locationId = $(this).val(); // Get the location ID from the button
+    // alert(locationId);
+    $.ajax({
+      url: '{{ route('get-location-wise-inventory') }}', // Your route to fetch the location data
+      type: 'GET',
+      data: {
+                locationId: locationId
+            },
+      success: function(response) {
+        var searchResultsContainer = $('#search-results');
+        searchResultsContainer.empty(); // Clear previous results
+
+        $.each(response, function(category, items) {
+                    var borderBox = `
+                        <div class="border-box">
+                            <div class="grid-header text-center">
+                                <h6 class="m-0 text-white">${category}</h6>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead class="table-header">
+                                        <tr>
+                                            <th>Item</th>
+                                            <th>Qty</th>
+                                            <th>Unit</th>
+                                            <th>Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>`;
+
+                    $.each(items, function(index, item) {
+                        borderBox += `
+                            <tr>
+                                <td>${item.item_name}</td>
+                                <td>
+                                    <input type="text" name="quantity" class="form-control qty-input" />
+                                </td>
+                                <td>${item.unit_name}</td>
+                                <td>$${item.price}</td>
+                            </tr>`;
+                    });
+
+                    borderBox += `</tbody></table></div></div>`;
+                    searchResultsContainer.append(borderBox);
+                });
+      },
+      error: function() {
+        alert('Failed to load location data.');
+      }
+    });
+  });
+});
+</script>  -->
 @extends('layouts.footer')

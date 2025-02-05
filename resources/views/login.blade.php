@@ -233,7 +233,7 @@ a {
     <div class="login-form">
       <h2>Login</h2>
       <!-- <form id="login-form"> -->
-    <form class="modal-content animate" method="post" action="{{ route('submitLogin') }}">
+    <form class="modal-content animate" id="frm_register" method="post" action="{{ route('submitLogin') }}">
     @csrf
         <div class="mb-3">
           <label for="username" class="form-label">Email ID</label>
@@ -245,22 +245,10 @@ a {
         
         </div>
         <div class="mb-3 position-relative"> <label for="password" class="form-label">Password</label> <div class="position-relative"> <input id="password" type="password" name="password" class="form-control pe-5" placeholder="Enter your password"> <i class="fas fa-eye position-absolute top-50 end-0 translate-middle-y me-3" id="togglePassword" style="cursor: pointer;"></i> </div> @if ($errors->has('password')) <span class="red-text"><?php echo $errors->first('password', ':message'); ?></span> @endif </div>
-        <!-- <div class="mb-3">
-          <label for="password" class="form-label">Password</label>
-          <input id="password" type="password" name='password' class="form-control" placeholder="Enter your password">
-          @if ($errors->has('password'))
-            <span class="red-text"><?php //echo $errors->first('password', ':message'); ?></span>
-        @endif
-        </div> -->
-        <!-- <div class="mb-3 form-check">
-          <input type="checkbox" class="form-check-input" id="remember-me">
-          <label class="form-check-label" for="remember-me">Remember me</label>
-        </div> -->
         <button type="submit" class="btn btn-primary btn-custom">Login</button>
-        <div class="mt-3 text-center">
+        <!-- <div class="mt-3 text-center">
           <a href="#" id="forgot-password-link">Forgot password?</a> 
-          <!-- <a href="#" id="register-link">Register</a> -->
-        </div>
+        </div> -->
       </form>
     </div>
   </div>
@@ -328,3 +316,57 @@ document.addEventListener("DOMContentLoaded", function () {
      } });
      }); 
  </script>
+
+<script type="text/javascript">
+  // Add custom validation method
+$.validator.addMethod("passwordStrength", function(value, element) {
+    return this.optional(element) || /^(?=(?:[^a-zA-Z]*[a-zA-Z]){5,})(?=.*\d)(?=.*[@$!%*?&]).{6,}$/.test(value);
+}, "Password must contain at least 5 letters, 1 number, and 1 special character");
+    
+
+    // Initialize validation for the add form
+    $("#frm_register").validate({
+      rules: {
+        email: {
+          required: true,
+          email:true,
+          // minlength: 3
+        },
+        password: {
+            required: true
+            // minlength: 6,
+            // passwordStrength: true
+        }
+        
+      },
+      messages: {
+        email: {
+          required: "Please enter email ID",
+          required: "Please Enter valid email"
+          // minlength: "Category name must be at least 3 characters long"
+        },
+        password: {
+            required: "Password is required"
+            // minlength: "Password must be at least 6 characters long",
+            // passwordStrength: "Password must contain at least 5 letters, 1 number, and 1 special character"
+        }
+      },
+      errorElement: "span",
+      errorClass: "error-text",
+      highlight: function (element) {
+        $(element).addClass("is-invalid").removeClass("is-valid");
+      },
+      unhighlight: function (element) {
+        $(element).addClass("is-valid").removeClass("is-invalid");
+      }
+    });
+
+     // Remove error message dynamically when password field is cleared
+     $("#password").on("input", function () {
+        if ($(this).val().trim() === "") {
+            $(this).removeClass("is-invalid is-valid"); // Remove validation styling
+            $(this).siblings("span.error-text").remove(); // Remove error message
+        }
+    });
+
+</script>

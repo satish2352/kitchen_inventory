@@ -60,7 +60,7 @@ class MasterKitchenInventoryServices
 
     public function updateItem($request) {
         $user_register_id = $this->repo->updateItem($request);
-        return ['status'=>'success','msg'=>'Master Kitchen Inventory Updated Successful.'];
+        return ['status'=>'success','msg'=>'Master Kitchen Inventory Updated Successfully.'];
     }
 
     public function deleteItem($id){

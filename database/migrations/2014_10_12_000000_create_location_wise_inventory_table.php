@@ -10,14 +10,11 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('master_kitchen_inventory', function (Blueprint $table) {
+        Schema::create('location_wise_inventory', function (Blueprint $table) {
             $table->id();
-            $table->string('category'); // Category name or ID
-            $table->string('item_name'); // Item name
-            $table->integer('quantity')->default(0); // Quantity
-            $table->string('location_id');
-            $table->string('unit'); // Unit (e.g., kg, pcs, liters)
-            $table->integer('price'); // Price with 2 decimal places
+            $table->foreignId('user_id');
+            $table->foreignId('inventory_id');
+            $table->integer('quantity');
             $table->integer('is_active')->default(true);
             $table->integer('is_deleted')->default(false);
             $table->timestamps(); // Created at & Updated at
@@ -29,7 +26,7 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('master_inventory');
+        Schema::dropIfExists('location_wise_inventory');
     }
 };
 

@@ -60,7 +60,7 @@ class LocationServices
 
     public function updateLocation($request) {
         $user_register_id = $this->repo->updateLocation($request);
-        return ['status'=>'success','msg'=>'Location Updated Successful.'];
+        return ['status'=>'success','msg'=>'Location Updated Successfully.'];
     }
 
     public function deleteLocation($id){

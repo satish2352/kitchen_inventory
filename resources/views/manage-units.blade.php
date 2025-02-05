@@ -17,6 +17,7 @@
 
           <button class="btn btn-light add-btn">
             <i class="bi bi-plus-lg"></i>
+            <span>Add Units</span>
           </button>
         </div>
       </div>
@@ -65,10 +66,10 @@
               <!-- Table Head -->
               <thead class="table-header">
                 <tr>
-                  <th>#</th>
-                  <th>Date</th>
-                  <th>Units</th>
-                  <th>Edit</th>
+                  <th><b>#</b></th>
+                  <th><b>Date</b></th>
+                  <th><b>Units</b></th>
+                  <th><b>Action</b></th>
                 </tr>
               </thead>
               <!-- Table Body -->
