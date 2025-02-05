@@ -7,7 +7,7 @@
       <div class="inner-top container-fluid p-3">
         <!-- Top Bar -->
         <div class="d-flex justify-content-between align-items-center">
-          <a href="dashboard.html">
+          <a href="{{ route('/dashboard') }}">
             <button class="btn btn-light">
               <i class="bi bi-arrow-90deg-left"></i>
             </button>
