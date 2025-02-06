@@ -16,7 +16,7 @@
    <!-- Drawer -->
    <div id="drawer" class="drawer">
       <div class="drawer-header d-flex align-items-center">
-         <img src="img/user.png" alt="User" />
+         <img src="{{ asset('/img/user.png') }}" alt="User" />
          <div>
             <h5 class="inter-font">{{ session('user_name') }}</h5>
             <span class="jost-font">Admin</span>

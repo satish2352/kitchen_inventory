@@ -159,7 +159,7 @@
             <button id="submitApproveInventory" class="btn">YES</button>
           </div>
         </div>
-      </div>
+    </div>
 </div>
 
 <script>
