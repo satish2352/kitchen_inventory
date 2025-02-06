@@ -78,6 +78,7 @@ class LoginController extends Controller
                             $request->session()->put('location_selected', rtrim($get_user['location'],","));
                             $final_location  = Locations::where('id',session('location_selected'))->first();
                             $request->session()->put('location_selected_name', $final_location->location);
+                            $request->session()->put('location_selected_id', $final_location->id);
                         }
                     }
                    
