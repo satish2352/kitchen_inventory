@@ -210,6 +210,8 @@ class ShoppingListController extends Controller
     session()->flash('alert_status', $status);
     session()->flash('alert_msg', $msg);
     return \Redirect::back();
+    return redirect('get-submited-shopping-list-admin');
+    
     // return response()->json(['message' => 'Inventory updated successfully!'], 200);
 }
 

@@ -174,7 +174,7 @@
       const submitInventoryButton = document.querySelector(".submitInventory");
     //   const popupadd = document.getElementById("addPopup");
     //   // const confirmPopup = document.getElementById("confirmPopup");
-    //   const cancelDeleteButton = document.getElementById("cancelDelete");
+      const cancelDeleteButton = document.getElementById("cancelDelete");
     //   // const confirmDeleteButton = document.getElementById("confirmDelete");
 
     //   const editButtonCategory = document.querySelector(".edit-btn-category");
@@ -224,9 +224,9 @@
       });
     
       // Close Confirmation Popup on Cancel
-    //   cancelDeleteButton.addEventListener("click", () => {
-    //     confirmPopupCategory.style.display = "none";
-    //   });
+      cancelDeleteButton.addEventListener("click", () => {
+        confirmApprovePopup.style.display = "none";
+      });
     
       // Perform Action on Confirm Delete
       // confirmDeleteButton.addEventListener("click", () => {
