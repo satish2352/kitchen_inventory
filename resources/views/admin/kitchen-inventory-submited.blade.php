@@ -11,7 +11,7 @@
                     <i class="bi bi-arrow-90deg-left"></i>
                 </button>
             </a>
-            <h5 class="sub-title">Shoping List</h5>
+            <h5 class="sub-title">Submit Shopping List</h5>
             <a href="#">
                 <button class="btn btn-light">
                     <i class="bi bi-check2"></i>
@@ -45,14 +45,15 @@
                     Show last submitted Kitchen list
                 </button>
             </a>
+            @if (is_array(session('location_for_user')) && count(session('location_for_user')) > 0)
                 <form id="locationForm" method="post" action="{{ route('location-selected-admin') }}">
                     @csrf
                     <div class="row mb-3">
                         <label class="form-label col-6">Select Location</label>
                         <div class="col-6">
                             <select class="form-select" name="location_selected" id="location_selected">
-                                <!-- <option value="">Select Location</option> -->
-                                @foreach ($locationsData as $locations)
+                                <option value="">Select Location</option>
+                                @foreach (session('location_for_user') as $locations)
                                     <option value="{{ $locations['id'] }}"
                                         @if (session('location_selected') == $locations['id']) selected @endif>{{ $locations['location'] }}
                                     </option>
@@ -61,10 +62,11 @@
                         </div>
                     </div>
                 </form>
+            @endif
 
 
             @if(session()->get('location_selected_id') !='')
-            <form action="{{ route('update-kitchen-inventory-by-super-admin') }}" id="updateKitchenInventory" method="POST">
+            <form action="{{ route('update-kitchen-inventory-by-admin') }}" id="updateKitchenInventory" method="POST">
             @csrf
             @if (!empty($data_location_wise_inventory) && count($data_location_wise_inventory) > 0)
             @foreach ($data_location_wise_inventory as $category => $items)
@@ -94,9 +96,10 @@
 
                                 <tr>
                                     <td>{{ $item['item_name'] }}</td>
-                                    <td>
+                                    <td>{{ $item['quantity'] }}</td>
+                                    <!-- <td>
                                         <input type="text" name="quantity[]" class="form-control qty-input" value="{{ $item['quantity'] }}" placeholder="QTY" />
-                                    </td>
+                                    </td> -->
                                     <td>{{ $item['unit_name'] }}</td>
                                     <td>{{ $item['price'] }}</td>
                                 </tr>
@@ -107,9 +110,9 @@
                 </div>
             </div>
             @endforeach
-            <div class="text-center mt-3">
+            <!-- <div class="text-center mt-3">
             <a type="submit" class="btn btn-success submitInventory">Submit Inventory</a>
-        </div>
+        </div> -->
         @else
         <div class="border-box mb-4" id="search-results">
                 <!-- Header Title -->
@@ -162,7 +165,11 @@
 
 <script>
     document.getElementById('location_selected').addEventListener('change', function() {
+        var locationId= ('#location_selected').val();
+        if(locationId !='')
+    {
         document.getElementById('locationForm').submit();
+    }
     });
 </script>
 

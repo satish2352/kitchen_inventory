@@ -109,6 +109,10 @@ Route::group(['middleware' => ['admin']], function () {
     Route::post('/update-items', ['as' => 'update-items', 'uses' => 'App\Http\Controllers\SuperAdmin\MasterKitchenInventoryController@updateItem']);
     Route::post('/delete-items', ['as' => 'delete-items', 'uses' => 'App\Http\Controllers\SuperAdmin\MasterKitchenInventoryController@deleteItem']);
 
+    Route::get('/get-shopping-list-super-admin', ['as' => 'get-shopping-list-super-admin', 'uses' => 'App\Http\Controllers\SuperAdmin\ShoppingListController@getShopppingListSuperAdmin']);
+    Route::post('/update-kitchen-inventory-by-super-admin', ['as' => 'update-kitchen-inventory-by-super-admin', 'uses' => 'App\Http\Controllers\SuperAdmin\ShoppingListController@updateKitchenInventoryBySuperAdmin']);
+    Route::get('/get-submited-shopping-list-super-admin', ['as' => 'get-submited-shopping-list-super-admin', 'uses' => 'App\Http\Controllers\SuperAdmin\ShoppingListController@getSubmitedShopppingListSuperAdmin']);
+
 });
 
 
@@ -123,6 +127,13 @@ Route::group(['middleware' => ['admin']], function () {
     // Route::get('/get-location-wise-inventory', ['as' => 'get-location-wise-inventory', 'uses' => 'App\Http\Controllers\Manager\ShoppingListController@getLocationWiseInventory']);
     Route::get('/get-location-wise-inventory', ['as' => 'get-location-wise-inventory', 'uses' => 'App\Http\Controllers\Manager\ShoppingListController@getLocationWiseInventory']);
     Route::post('/update-kitchen-inventory-by-manager', ['as' => 'update-kitchen-inventory-by-manager', 'uses' => 'App\Http\Controllers\Manager\ShoppingListController@updateKitchenInventoryByManager']);
+    Route::post('/add-kitchen-inventory-by-manager', ['as' => 'add-kitchen-inventory-by-manager', 'uses' => 'App\Http\Controllers\Manager\ShoppingListController@addKitchenInventoryByManager']);
+
+
+    Route::get('/get-shopping-list-admin', ['as' => 'get-shopping-list-admin', 'uses' => 'App\Http\Controllers\Admin\ShoppingListController@getShopppingListAdmin']);
+    Route::post('/location-selected-admin', ['as' => 'location-selected-admin', 'uses' => 'App\Http\Controllers\Admin\ShoppingListController@getLocationSelectedAdmin']);
+    Route::post('/update-kitchen-inventory-by-admin', ['as' => 'update-kitchen-inventory-by-admin', 'uses' => 'App\Http\Controllers\Admin\ShoppingListController@updateKitchenInventoryByAdmin']);
+    Route::get('/get-submited-shopping-list-admin', ['as' => 'get-submited-shopping-list-admin', 'uses' => 'App\Http\Controllers\Admin\ShoppingListController@getSubmitedShopppingListAdmin']);
 
    
 });

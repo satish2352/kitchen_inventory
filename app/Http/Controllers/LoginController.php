@@ -68,6 +68,7 @@ class LoginController extends Controller
                     $request->session()->put('email', $get_user['email']);
                     $request->session()->put('login_id', $get_user['id']);
                     $request->session()->put('user_role', $get_user['user_role']);
+                    $request->session()->put('user_name', $get_user['name']);
                     if($get_user['user_role'] != 1) {
                         if(count(explode(",",$get_user['location']))  > 1 ) {
                             $final_location  = Locations::whereIn('id',explode(",",$get_user['location']))->get()->toArray();

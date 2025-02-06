@@ -11,7 +11,7 @@
                     <i class="bi bi-arrow-90deg-left"></i>
                 </button>
             </a>
-            <h5 class="sub-title">Shoping List</h5>
+            <h5 class="sub-title">Submit Shopping List</h5>
             <a href="#">
                 <button class="btn btn-light">
                     <i class="bi bi-check2"></i>
@@ -64,7 +64,7 @@
 
 
             @if(session()->get('location_selected_id') !='')
-            <form action="{{ route('update-kitchen-inventory-by-super-admin') }}" id="updateKitchenInventory" method="POST">
+            <form action="{{ route('update-kitchen-inventory-by-admin') }}" id="updateKitchenInventory" method="POST">
             @csrf
             @if (!empty($data_location_wise_inventory) && count($data_location_wise_inventory) > 0)
             @foreach ($data_location_wise_inventory as $category => $items)
@@ -85,6 +85,7 @@
                                 <th>Qty</th>
                                 <th>Unit</th>
                                 <th>Price</th>
+                                <th>Total</th>
                             </tr>
                         </thead>
                         <!-- Table Body -->
@@ -94,11 +95,14 @@
 
                                 <tr>
                                     <td>{{ $item['item_name'] }}</td>
-                                    <td>
+                                    <td>{{ $item['quantity'] }}</td>
+                                    <!-- <td>
                                         <input type="text" name="quantity[]" class="form-control qty-input" value="{{ $item['quantity'] }}" placeholder="QTY" />
-                                    </td>
+                                    </td> -->
                                     <td>{{ $item['unit_name'] }}</td>
-                                    <td>{{ $item['price'] }}</td>
+                                    <td>$ {{ $item['price'] }}</td>
+                                    <td>$ {{ 
+                                        $item['price'] * $item['quantity'] }}</td>
                                 </tr>
                             @endforeach
                             <tr>
@@ -107,9 +111,9 @@
                 </div>
             </div>
             @endforeach
-            <div class="text-center mt-3">
+            <!-- <div class="text-center mt-3">
             <a type="submit" class="btn btn-success submitInventory">Submit Inventory</a>
-        </div>
+        </div> -->
         @else
         <div class="border-box mb-4" id="search-results">
                 <!-- Header Title -->

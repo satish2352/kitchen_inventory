@@ -18,17 +18,21 @@
       <div class="drawer-header d-flex align-items-center">
          <img src="img/user.png" alt="User" />
          <div>
-            <h5 class="inter-font">Jammar White</h5>
-            <span class="jost-font">Super Admin</span>
+            <h5 class="inter-font">{{ session('user_name') }}</h5>
+            <span class="jost-font">Admin</span>
          </div>
       </div>
       <div class="drawer-nav">
          <a href="{{ route('/dashboard') }}" class="active"
-            ><i class="bi bi-house-door-fill"></i> Dashboard</a
-            >
-         <a href="{{ route('shopping-list-to-update') }}"
-            ><i class="bi bi-cart3"></i> Submit Shopping list</a
-            >
+            ><i class="bi bi-house-door-fill"></i> Dashboard</a>
+
+            <a href="{{ route('get-shopping-list-admin') }}"
+            ><i class="bi bi-house-door-fill"></i> Shopping list</a>
+
+            <a href="{{ route('get-submited-shopping-list-admin') }}"
+            ><i class="bi bi-house-door-fill"></i>Submited Shoping List</a>
+
+     
 
             <a href="{{ route('logout') }}"
             ><i class="bi bi-cart3"></i> Log Out</a

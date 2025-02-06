@@ -14,9 +14,11 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id');
             $table->foreignId('inventory_id');
+            $table->foreignId('location_id');
             $table->integer('quantity');
             $table->integer('is_active')->default(true);
             $table->integer('is_deleted')->default(false);
+            $table->tinyInteger('approved_by')->default(0)->comment('0 = Pending, 1 = Sended From manager, 2 = Approved by Admin, 3 = Approved by Super Admin');
             $table->timestamps(); // Created at & Updated at
         });
     }

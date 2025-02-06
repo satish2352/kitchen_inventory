@@ -52,7 +52,7 @@
                         <label class="form-label col-6">Select Location</label>
                         <div class="col-6">
                             <select class="form-select" name="location_selected" id="location_selected">
-                                <!-- <option value="">Select Location</option> -->
+                                <option value="" selected disaled>Select Location</option>
                                 @foreach (session('location_for_user') as $locations)
                                     <option value="{{ $locations['id'] }}"
                                         @if (session('location_selected') == $locations['id']) selected @endif>{{ $locations['location'] }}
@@ -64,12 +64,17 @@
                 </form>
             @endif
 
-
+<!-- first if start -->
             @if(session()->get('location_selected_id') !='')
-            <form action="{{ route('update-kitchen-inventory-by-manager') }}" method="POST">
+            <!-- <?php //print_r($InventoryData); die;?> -->
+            <!-- second if start -->
+            @if($InventoryData['DataType']=='MasterData')
+
+            <form action="{{ route('add-kitchen-inventory-by-manager') }}" method="POST">
             @csrf
-            @if (!empty($data_location_wise_inventory) && count($data_location_wise_inventory) > 0)
-            @foreach ($data_location_wise_inventory as $category => $items)
+            
+            @if (!empty($InventoryData['data_location_wise_inventory']) && count($InventoryData['data_location_wise_inventory']) > 0)
+            @foreach ($InventoryData['data_location_wise_inventory'] as $category => $items)
             <!-- Border Box -->
             <div class="border-box mb-4" id="search-results">
                 <!-- Header Title -->
@@ -97,7 +102,7 @@
                                 <tr>
                                     <td>{{ $item['item_name'] }}</td>
                                     <td>
-                                        <input type="text" name="quantity[]" class="form-control qty-input" value="{{ $item['quantity'] }}" placeholder="QTY" />
+                                        <input type="text" name="quantity[]" class="form-control qty-input"   placeholder="QTY" />
                                     </td>
                                     <td>{{ $item['unit_name'] }}</td>
                                     <td>{{ $item['price'] }}</td>
@@ -124,6 +129,88 @@
         
 
             </form>
+
+
+            <!-- second if end and else start -->
+            @elseif($InventoryData['DataType']=='LocationWiseData')
+            <form action="{{ route('update-kitchen-inventory-by-manager') }}" method="POST">
+            @csrf
+            @if (!empty($InventoryData['data_location_wise_inventory']) && count($InventoryData['data_location_wise_inventory']) > 0)
+            @foreach ($InventoryData['data_location_wise_inventory'] as $category => $items)
+            <!-- Border Box -->
+            <div class="border-box mb-4" id="search-results">
+                <!-- Header Title -->
+                <div class="grid-header text-center">
+                    <h6 class="m-0 text-white">{{ $category }}</h6>
+                </div>
+
+                <!-- Table -->
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <!-- Table Head -->
+                        <thead class="table-header">
+                            <tr>
+                                <th>Item</th>
+                                <th>Qty</th>
+                                <th>Unit</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <!-- Table Body -->
+                        <tbody>
+                            @foreach ($items as $item)
+                            <input type="hidden" class="form-control" name="master_inventory_id[]" id="master_inventory_id" value="{{ $item['id'] }}"/>
+
+                                <tr>
+                                    <td>{{ $item['item_name'] }}</td>
+                                    <td>
+                                        <input type="text" name="quantity[]" class="form-control qty-input" value="{{ $item['quantity'] }}"  placeholder="QTY" />
+                                    </td>
+                                    <td>{{ $item['unit_name'] }}</td>
+                                    <td>{{ $item['price'] }}</td>
+                                </tr>
+                            @endforeach
+                            <tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            @endforeach
+            <div class="text-center mt-3">
+            <button type="submit" class="btn btn-success">Submit Inventory</button>
+        </div>
+        @else
+        <div class="border-box mb-4" id="search-results">
+                <!-- Header Title -->
+                <div class="grid-header text-center">
+                    <h6 class="m-0 text-white">Please Enter Inventory For This location</h6>
+                </div>
+            </div>  
+        @endif
+            <!-- Submit Button -->
+        
+
+            </form>
+
+
+
+
+<!-- second if close -->
+            @endif
+
+
+
+
+            
+
+
+
+
+
+
+
+
+            <!-- first if end and else stat -->
            @else
            <div class="border-box mb-4" id="search-results">
                 <!-- Header Title -->
@@ -131,6 +218,7 @@
                     <h6 class="m-0 text-white">Please Select Location First</h6>
                 </div>
             </div>    
+            <!-- first if end and else ens -->
            @endif
 
         </div>
@@ -149,9 +237,19 @@
 
 <script>
     document.getElementById('location_selected').addEventListener('change', function() {
+        var locationId= this.value;
+        if(locationId !='')
+    {
         document.getElementById('locationForm').submit();
+    }
     });
 </script>
+
+<!-- <script>
+    document.getElementById('location_selected').addEventListener('change', function() {
+        document.getElementById('locationForm').submit();
+    });
+</script> -->
 
 <!-- <script>
  $(document).ready(function() {

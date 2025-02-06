@@ -20,7 +20,7 @@
        <div class="drawer-header d-flex align-items-center">
           <img src="{{ asset('/img/user.png') }}" alt="User" />
           <div>
-             <h5 class="inter-font">Jammar White</h5>
+             <h5 class="inter-font">{{ session('user_name') }}</h5>
              <span class="jost-font">Super Admin</span>
           </div>
        </div>
@@ -31,7 +31,7 @@
           <a href="{{ route('approve-users') }}"
              ><i class="bi bi-person-plus-fill"></i> Approve Users</a
              >
-          <a href="{{ route('submit-shopping-list') }}"
+          <a href="{{ route('get-shopping-list-super-admin') }}"
              ><i class="bi bi-share-fill"></i> Shopping List</a
              >
           <a href="{{ route('activity') }}"><i class="bi bi-book"></i> Activity</a>
@@ -51,7 +51,7 @@
           <a href="{{ route('list-items') }}"
              ><i class="bi bi-card-checklist"></i> Master Inventory</a
              >
-          <a href="submit-shopping-list.html"
+          <a href="get-submited-shopping-list-super-admin"
              ><i class="bi bi-cart3"></i> Submit Shopping list</a
              >
 
