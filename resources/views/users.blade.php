@@ -110,8 +110,8 @@
 
                   </span>
                 </div>
-                <p class="mb-1 fw-light"><b>Email :</b> {{ $item->email }}</p>
-                <p class="mb-1 fw-light"><b>Phone :</b> {{ $item->phone }}</p>
+                <p class="mb-1 fw-light"><b>Email ID :</b> {{ $item->email }}</p>
+                <p class="mb-1 fw-light"><b>Mobile No. :</b> {{ $item->phone }}</p>
                 <p class="mb-1 fw-light"><b>Locations :</b>
                 @if(!empty($item->locations))
                     {{ implode(', ', $item->locations) }}

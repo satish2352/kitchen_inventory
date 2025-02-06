@@ -345,7 +345,7 @@
           <h4 class="confirm-popup-title">Please Confirm</h4>
           <p class="confirm-popup-text">
             Are you sure to delete this Item? <br />
-            this item wil not recover back
+            this item will not recover back
           </p>
           <div class="d-flex justify-content-around mt-4 confrm">
             <button id="cancelDeleteConfirm" class="btn br">NO</button>

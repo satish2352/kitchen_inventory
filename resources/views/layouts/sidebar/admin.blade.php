@@ -30,13 +30,10 @@
             ><i class="bi bi-house-door-fill"></i> Shopping list</a>
 
             <a href="{{ route('get-submited-shopping-list-admin') }}"
-            ><i class="bi bi-house-door-fill"></i>Submited Shoping List</a>
-
-     
+            ><i class="bi bi-house-door-fill"></i>Submitted Shopping List</a>
 
             <a href="{{ route('logout') }}"
-            ><i class="bi bi-cart3"></i> Log Out</a
-            >
+            ><i class="bi bi-cart3"></i> Log Out</a>
       </div>
    </div>
    <!-- Overlay -->
