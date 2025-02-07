@@ -29,7 +29,9 @@
              ><i class="bi bi-house-door-fill"></i> Dashboard</a>
           <a href="{{ route('approve-users') }}"
              ><i class="bi bi-person-plus-fill"></i> Approve Users</a>
-          <a href="{{ route('get-shopping-list-super-admin') }}"
+          <!-- <a href="{{ route('get-shopping-list-super-admin') }}"
+             ><i class="bi bi-share-fill"></i> Shopping List</a> -->
+             <a href="{{ route('get-submited-shopping-list-super-admin') }}"
              ><i class="bi bi-share-fill"></i> Shopping List</a>
           <a href="{{ route('get-activity-log') }}"><i class="bi bi-book"></i> Activity</a>
           <a href="{{ route('list-users') }}"><i class="bi bi-person"></i> Manage User</a>
@@ -44,8 +46,8 @@
           <a href="{{ route('get-location-wise-inventory-sa') }}"
              ><i class="bi bi-bag-plus-fill"></i>Add kitchen Inventory</a>
           
-          <a href="get-submited-shopping-list-super-admin"
-             ><i class="bi bi-cart3"></i> Submit Shopping list</a>
+          <!-- <a href="get-submited-shopping-list-super-admin"
+             ><i class="bi bi-cart3"></i> Submit Shopping list</a> -->
 
              <a href="{{ route('logout') }}"
              ><i class="bi bi-cart3"></i> Log Out</a>
