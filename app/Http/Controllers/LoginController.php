@@ -69,7 +69,7 @@ class LoginController extends Controller
                     $request->session()->put('login_id', $get_user['id']);
                     $request->session()->put('user_role', $get_user['user_role']);
                     $request->session()->put('user_name', $get_user['name']);
-                    if($get_user['user_role'] != 1) {
+                    // if($get_user['user_role'] != 1) {
                         if(count(explode(",",$get_user['location']))  > 1 ) {
                             $final_location  = Locations::whereIn('id',explode(",",$get_user['location']))->get()->toArray();
                             $request->session()->put('location_for_user', $final_location);
@@ -80,7 +80,7 @@ class LoginController extends Controller
                             $request->session()->put('location_selected_name', $final_location->location);
                             $request->session()->put('location_selected_id', $final_location->id);
                         }
-                    }
+                    // }
                    
                     // dd(session('location_for_user'));
                     // Return a successful login redirect

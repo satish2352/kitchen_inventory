@@ -27,7 +27,7 @@
             ><i class="bi bi-house-door-fill"></i> Dashboard</a>
 
             <a href="{{ route('get-shopping-list-admin') }}"
-            ><i class="bi bi-house-door-fill"></i> Shopping list</a>
+            ><i class="bi bi-house-door-fill"></i>Add Kitchen Inventory</a>
 
             <a href="{{ route('get-submited-shopping-list-admin') }}"
             ><i class="bi bi-house-door-fill"></i>Submitted Shopping List</a>

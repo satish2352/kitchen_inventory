@@ -26,7 +26,7 @@
          <a href="{{ route('/dashboard') }}" class="active"
             ><i class="bi bi-house-door-fill"></i> Dashboard</a
             >
-         <a href="{{ route('get-shopping-list-manager') }}"
+         <a href="{{ route('get-location-wise-inventory') }}"
             ><i class="bi bi-cart3"></i>Add Kitchen Inventory</a
             >
 

@@ -2,6 +2,12 @@
 @include('layouts.sidebar')
 
 @yield('content')
+
+<style>
+  .pagination {
+    justify-content: center;
+}
+</style>  
 <div class="main">
       <div class="inner-top container-fluid p-3">
         <!-- Top Bar -->
@@ -42,94 +48,30 @@
       </div>
       <!-- user requestion section  -->
       <div class="user-request">
-        <div class="container-fluid px-3">
-          <!-- User Activity Box -->
-          <div class="user-request-box p-3 shadow rounded mb-2">
-            <!-- Top Row -->
-            <div class="d-flex justify-content-between align-items-center">
-              <!-- Left Section -->
-              <div class="bdr-left">
-                <div class="d-flex align-items-center">
-                  <span class="act-user me-2"
-                    >Jamar white deleted user: Jamer</span
-                  >
+    <div class="container-fluid px-3">
+        @foreach ($ActiviyLogData as $item)
+            <!-- User Activity Box -->
+            <div class="user-request-box p-3 shadow rounded mb-2">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="bdr-left">
+                        <div class="d-flex align-items-center">
+                            <span class="act-user me-2">{{ $item->activity_message }}</span>
+                        </div>
+                        <p class="mb-1 activity-p">
+                            {{ \Carbon\Carbon::parse($item->created_at)->format('D F j, Y | g:ia') }}
+                        </p>
+                    </div>
                 </div>
-                <p class="mb-1 activity-p">Sun April 27, 2024 | 5:45p.m.</p>
-              </div>
             </div>
-          </div>
-          <div class="user-request-box p-3 shadow rounded mb-2">
-            <!-- Top Row -->
-            <div class="d-flex justify-content-between align-items-center">
-              <!-- Left Section -->
-              <div class="bdr-left">
-                <div class="d-flex align-items-center">
-                  <span class="act-user me-2"
-                    >Jamar white deleted user: Jamer</span
-                  >
-                </div>
-                <p class="mb-1 activity-p">Sun April 27, 2024 | 5:45p.m.</p>
-              </div>
-            </div>
-          </div>
-          <div class="user-request-box p-3 shadow rounded mb-2">
-            <!-- Top Row -->
-            <div class="d-flex justify-content-between align-items-center">
-              <!-- Left Section -->
-              <div class="bdr-left">
-                <div class="d-flex align-items-center">
-                  <span class="act-user me-2"
-                    >Jamar white deleted user: Jamer</span
-                  >
-                </div>
-                <p class="mb-1 activity-p">Sun April 27, 2024 | 5:45p.m.</p>
-              </div>
-            </div>
-          </div>
-          <div class="user-request-box p-3 shadow rounded mb-2">
-            <!-- Top Row -->
-            <div class="d-flex justify-content-between align-items-center">
-              <!-- Left Section -->
-              <div class="bdr-left">
-                <div class="d-flex align-items-center">
-                  <span class="act-user me-2"
-                    >Jamar white deleted user: Jamer</span
-                  >
-                </div>
-                <p class="mb-1 activity-p">Sun April 27, 2024 | 5:45p.m.</p>
-              </div>
-            </div>
-          </div>
-          <div class="user-request-box p-3 shadow rounded mb-2">
-            <!-- Top Row -->
-            <div class="d-flex justify-content-between align-items-center">
-              <!-- Left Section -->
-              <div class="bdr-left">
-                <div class="d-flex align-items-center">
-                  <span class="act-user me-2"
-                    >Jamar white deleted user: Jamer</span
-                  >
-                </div>
-                <p class="mb-1 activity-p">Sun April 27, 2024 | 5:45p.m.</p>
-              </div>
-            </div>
-          </div>
-          <div class="user-request-box p-3 shadow rounded mb-2">
-            <!-- Top Row -->
-            <div class="d-flex justify-content-between align-items-center">
-              <!-- Left Section -->
-              <div class="bdr-left">
-                <div class="d-flex align-items-center">
-                  <span class="act-user me-2"
-                    >Jamar white deleted user: Jamer</span
-                  >
-                </div>
-                <p class="mb-1 activity-p">Sun April 27, 2024 | 5:45p.m.</p>
-              </div>
-            </div>
-          </div>
+        @endforeach  
+
+        <!-- Pagination Links -->
+        <div class="mt-3">
+            {{ $ActiviyLogData->links() }}
         </div>
-      </div>
+    </div>
+</div>
+
       <!-- edit popup  -->
       <div id="editPopup" class="popup-container">
         <div class="popup-content">

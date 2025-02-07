@@ -12,8 +12,10 @@ use App\Models\{
 	User,
 	Items,
 	MasterKitchenInventory,
-	LocationWiseInventory
+	LocationWiseInventory,
+	ActivityLog
 };
+use Config;
 use Illuminate\Support\Facades\Mail;
 
 class ShoppingListRepository
@@ -36,6 +38,7 @@ class ShoppingListRepository
     public function addKitchenInventoryByManager($request)
 	{
 		$sess_user_id = session()->get('login_id');
+		$sess_user_name = session()->get('user_name');
 		$sess_location_id = session()->get('location_selected_id');
 		$inventoryIds = $request->input('master_inventory_id');
 		$quantities = $request->input('quantity');
@@ -51,6 +54,18 @@ class ShoppingListRepository
 		$LocationWiseInventoryData->save();
 		$last_insert_id = $LocationWiseInventoryData->id;
 		}
+
+		if($last_insert_id)
+		{
+		$LogMsg= config('constants.MANAGER.1111');
+
+		$FinalLogMessage = $sess_user_name.' '.$LogMsg;
+		$ActivityLogData = new ActivityLog();
+		$ActivityLogData->user_id = $sess_user_id;
+		$ActivityLogData->activity_message = $FinalLogMessage;
+		$ActivityLogData->save();
+		}
+
         return $last_insert_id;
 
 	}
@@ -67,6 +82,14 @@ class ShoppingListRepository
 							'location_id' => $request['location_id'],
 							'quantity' => $request['quantity'],
 						]);
+
+		$LogMsg= config('constants.MANAGER.1112');
+
+						$FinalLogMessage = $sess_user_name.' '.$LogMsg;
+						$ActivityLogData = new ActivityLog();
+						$ActivityLogData->user_id = $sess_user_id;
+						$ActivityLogData->activity_message = $FinalLogMessage;
+						$ActivityLogData->save();					
 		// dd($user_data);
 		return $request->edit_id;
 	}

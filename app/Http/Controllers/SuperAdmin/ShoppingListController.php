@@ -10,7 +10,8 @@ use App\Models\ {
     Items,
     Locations,
     LocationWiseInventory,
-    MasterKitchenInventory
+    MasterKitchenInventory,
+    ActivityLog
 };
 use Session;
 use Cookie;
@@ -70,7 +71,7 @@ class ShoppingListController extends Controller
             ->groupBy('category_name');
 
         }    
-        return view('kitchen-inventory', compact('locationsData','data_location_wise_inventory'));
+        return view('shopping-list', compact('locationsData','data_location_wise_inventory'));
     }
 
     public function getSubmitedShopppingListSuperAdmin(Request $request) 
@@ -227,7 +228,123 @@ class ShoppingListController extends Controller
     // return response()->json(['message' => 'Inventory updated successfully!'], 200);
 }
 
-public function addKitchenInventoryByManager(Request $request)
+// public function addKitchenInventoryByManager(Request $request)
+//     {
+
+//         try {
+
+//             $rules = [
+//                 'quantity' => 'required'
+//             ];
+//             $messages = [
+//             'quantity.required' => 'Quantity is required.'
+//             ];
+
+//             $validation = Validator::make($request->all(), $rules, $messages);
+//             if ($validation->fails()) {
+//                 return redirect('get-shopping-list-manager')
+//                     ->withInput()
+//                     ->withErrors($validation);
+//             } else {
+//                 $add_role = $this->service->addKitchenInventoryByManager($request);
+//                 if ($add_role) {
+//                     $msg = $add_role['msg'];
+//                     $status = $add_role['status'];
+
+//                      // Store SweetAlert data in session for flashing
+//                 session()->flash('alert_status', $status);
+//                 session()->flash('alert_msg', $msg);
+//                     if ($status == 'success') {
+//                         return redirect('get-shopping-list-manager');
+//                     } else {
+//                         return redirect('get-shopping-list-manager')->withInput();
+//                     }
+//                 }
+
+//             }
+//         } catch (Exception $e) {
+//             return redirect('get-shopping-list-manager')->withInput()->with(['msg' => $e->getMessage(), 'status' => 'error']);
+//         }
+//     }
+
+    public function getLocationWiseInventorySA(Request $request) 
+    {
+        $sess_user_id = session()->get('login_id');
+        $location_selected_name = session()->get('location_selected_name');
+        $location_selected_id = session()->get('location_selected_id');
+// dd($location_selected_id);
+        $all_kitchen_inventory = Items::where('is_deleted', '0')
+            ->select('*')
+            ->get()
+            ->toArray();
+        $InventoryData=array();
+
+        if($location_selected_name !=''){
+
+            $data_location_wise_inventory_new = LocationWiseInventory::leftJoin('locations', 'location_wise_inventory.location_id', '=', 'locations.id')
+            ->leftJoin('master_kitchen_inventory', 'location_wise_inventory.inventory_id', '=', 'master_kitchen_inventory.id')
+            ->leftJoin('units', 'master_kitchen_inventory.unit', '=', 'units.id')
+            ->leftJoin('category', 'master_kitchen_inventory.category', '=', 'category.id')
+            ->select(
+                'location_wise_inventory.id',
+                'master_kitchen_inventory.category',
+                'master_kitchen_inventory.item_name',
+                'master_kitchen_inventory.unit',
+                'master_kitchen_inventory.price',
+                'location_wise_inventory.quantity',
+                'location_wise_inventory.created_at',
+                'location_wise_inventory.id as locationWiseId',
+                'category.category_name',
+                'units.unit_name',
+                'locations.location'
+            )
+            ->where('master_kitchen_inventory.location_id', $location_selected_id)
+            ->where('master_kitchen_inventory.is_deleted', '0')
+            ->orderBy('category.category_name', 'asc') // Order by category name first
+            ->orderBy('master_kitchen_inventory.item_name', 'asc') // Then order by item name
+            ->get()
+            ->groupBy('category_name');
+
+
+        if(!empty($data_location_wise_inventory_new) && count($data_location_wise_inventory_new) > 0)
+        {
+            $InventoryData['data_location_wise_inventory']=$data_location_wise_inventory_new;
+            $InventoryData['DataType']='LocationWiseData';
+            // dd($InventoryData);
+        }else{
+            $data_location_wise_inventory = MasterKitchenInventory::leftJoin('category', 'master_kitchen_inventory.category', '=', 'category.id')
+			->leftJoin('units', 'master_kitchen_inventory.unit', '=', 'units.id')
+			->leftJoin('locations', 'master_kitchen_inventory.location_id', '=', 'locations.id')
+			->select(
+				'master_kitchen_inventory.id',
+				'master_kitchen_inventory.category',
+				'master_kitchen_inventory.item_name',
+				'master_kitchen_inventory.unit',
+				'master_kitchen_inventory.price',
+				'master_kitchen_inventory.quantity',
+				'master_kitchen_inventory.created_at',
+				'category.category_name',
+				'units.unit_name',
+				'locations.location'
+			)
+			->where('master_kitchen_inventory.location_id', $location_selected_id)
+			->where('master_kitchen_inventory.is_deleted', '0')
+			->orderBy('category.category_name', 'asc') // Order by category name first
+			->orderBy('master_kitchen_inventory.item_name', 'asc') // Then order by item name
+			->get()
+            // dd($data_location);
+			->groupBy('category_name');
+            $InventoryData['data_location_wise_inventory']=$data_location_wise_inventory;
+            $InventoryData['DataType']='MasterData';
+            // dd($InventoryData);
+
+            }
+        }    
+        // dd($InventoryData);
+        return view('kitchen-inventory', compact('all_kitchen_inventory','InventoryData'));
+    }
+
+    public function addKitchenInventoryBySA(Request $request)
     {
 
         try {
@@ -245,16 +362,46 @@ public function addKitchenInventoryByManager(Request $request)
                     ->withInput()
                     ->withErrors($validation);
             } else {
-                $add_role = $this->service->addKitchenInventoryByManager($request);
-                if ($add_role) {
-                    $msg = $add_role['msg'];
-                    $status = $add_role['status'];
+
+                $sess_user_id = session()->get('login_id');
+		$sess_user_name = session()->get('user_name');
+		$sess_location_id = session()->get('location_selected_id');
+		$inventoryIds = $request->input('master_inventory_id');
+		$quantities = $request->input('quantity');
+
+		$data =array();
+		foreach ($inventoryIds as $index => $inventoryId) {
+		$LocationWiseInventoryData = new LocationWiseInventory();
+		$LocationWiseInventoryData->user_id = $sess_user_id;
+		$LocationWiseInventoryData->inventory_id = $inventoryIds[$index];
+		$LocationWiseInventoryData->location_id = $sess_location_id;
+		$LocationWiseInventoryData->quantity = $quantities[$index];
+		$LocationWiseInventoryData->approved_by = 2;
+		$LocationWiseInventoryData->save();
+		$last_insert_id = $LocationWiseInventoryData->id;
+		}
+
+		if($last_insert_id)
+		{
+		$LogMsg= config('constants.SUPER_ADMIN.1111');
+
+		$FinalLogMessage = $sess_user_name.' '.$LogMsg;
+		$ActivityLogData = new ActivityLog();
+		$ActivityLogData->user_id = $sess_user_id;
+		$ActivityLogData->activity_message = $FinalLogMessage;
+		$ActivityLogData->save();
+		}
+
+                // $add_role = $this->service->addKitchenInventoryByAdmin($request);
+                if ($last_insert_id) {
+                    $msg = "Kitchen Inventory Updated Successfully";
+                    $status = 'success';
 
                      // Store SweetAlert data in session for flashing
                 session()->flash('alert_status', $status);
                 session()->flash('alert_msg', $msg);
                     if ($status == 'success') {
-                        return redirect('get-shopping-list-manager');
+                        return redirect('dashboard');
                     } else {
                         return redirect('get-shopping-list-manager')->withInput();
                     }
@@ -265,6 +412,5 @@ public function addKitchenInventoryByManager(Request $request)
             return redirect('get-shopping-list-manager')->withInput()->with(['msg' => $e->getMessage(), 'status' => 'error']);
         }
     }
-
 
 }

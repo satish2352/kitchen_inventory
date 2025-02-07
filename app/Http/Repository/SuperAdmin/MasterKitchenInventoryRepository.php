@@ -18,7 +18,9 @@ use Illuminate\Support\Facades\Mail;
 class MasterKitchenInventoryRepository
 {
 
-	public function getItemsList() {
+	public function getItemsList() 
+	{
+		$location_selected_id = session()->get('location_selected_id');
 		$data_location = MasterKitchenInventory::leftJoin('category', 'master_kitchen_inventory.category', '=', 'category.id')
 			->leftJoin('units', 'master_kitchen_inventory.unit', '=', 'units.id')
 			->leftJoin('locations', 'master_kitchen_inventory.location_id', '=', 'locations.id')
@@ -35,6 +37,7 @@ class MasterKitchenInventoryRepository
 				'locations.location'
 			)
 			->where('master_kitchen_inventory.is_deleted', '0')
+			->where('master_kitchen_inventory.location_id', $location_selected_id)
 			->orderBy('category.category_name', 'asc') // Order by category name first
 			->orderBy('master_kitchen_inventory.item_name', 'asc') // Then order by item name
 			->get()
