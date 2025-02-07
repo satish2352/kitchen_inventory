@@ -102,6 +102,13 @@
         text-align: center;
       }
 
+      .error-message {
+        color: red;
+        font-size: 14px;
+        text-align: left;
+        margin-top: 5px;
+      }
+
       @media only screen and (min-width: 320px) and (max-width: 375px) {
         form {
           background-color: white;
@@ -150,7 +157,7 @@
                     aria-describedby="usernameHelp" placeholder="Enter your email id">
                     
           </div>
-          <div>
+          <div class="error-message">
             @if ($errors->has('email'))
                 <?php echo $errors->first('email', ':message'); ?>
              @endif
@@ -161,7 +168,11 @@
             <input id="password" type="password" name="password" placeholder="Enter your password">
             <i class="fas fa-eye position-absolute top-50 end-0 translate-middle-y me-3" id="togglePassword" style="cursor: pointer;"></i>
           </div>
-          @if ($errors->has('password')) <span class="red-text"><?php echo $errors->first('password', ':message'); ?></span> @endif
+          <div class="error-message">
+          @if ($errors->has('password')) 
+          <?php echo $errors->first('password', ':message'); ?> 
+          @endif
+        </div>
           <button type="submit" class="rounded-3 btn-submit mt-4">
             Submit
           </button>
