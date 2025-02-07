@@ -279,6 +279,13 @@ class ShoppingListController extends Controller
             ->toArray();
         $InventoryData=array();
 
+        $locationsData = Locations::where('is_active', '1')
+                            ->where('is_deleted', '0')
+                            ->select('id','location')
+                            ->orderBy('location', 'asc')
+                            ->get()
+                            ->toArray();
+
         if($location_selected_name !=''){
 
             $data_location_wise_inventory_new = LocationWiseInventory::leftJoin('locations', 'location_wise_inventory.location_id', '=', 'locations.id')
@@ -341,7 +348,7 @@ class ShoppingListController extends Controller
             }
         }    
         // dd($InventoryData);
-        return view('kitchen-inventory', compact('all_kitchen_inventory','InventoryData'));
+        return view('kitchen-inventory', compact('all_kitchen_inventory','InventoryData','locationsData'));
     }
 
     public function addKitchenInventoryBySA(Request $request)

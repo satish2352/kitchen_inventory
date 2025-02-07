@@ -45,15 +45,16 @@
                     Show last submitted Kitchen list
                 </button>
             </a>
-            @if (is_array(session('location_for_user')) && count(session('location_for_user')) > 0)
-                <form id="locationForm" method="post" action="{{ route('location_selected') }}">
+               
+
+                <form id="locationForm" method="post" action="{{ route('location-selected-admin') }}">
                     @csrf
                     <div class="row mb-3">
                         <label class="form-label col-6">Select Location</label>
                         <div class="col-6">
                             <select class="form-select" name="location_selected" id="location_selected">
-                                <option value="" selected disaled>Select Location</option>
-                                @foreach (session('location_for_user') as $locations)
+                                <option value="">Select Location</option>
+                                @foreach ($locationsData as $locations)
                                     <option value="{{ $locations['id'] }}"
                                         @if (session('location_selected') == $locations['id']) selected @endif>{{ $locations['location'] }}
                                     </option>
@@ -62,7 +63,6 @@
                         </div>
                     </div>
                 </form>
-            @endif
 
 <!-- first if start -->
             @if(session()->get('location_selected_id') !='')
@@ -239,9 +239,9 @@
     document.getElementById('location_selected').addEventListener('change', function() {
         var locationId= this.value;
         if(locationId !='')
-    {
-        document.getElementById('locationForm').submit();
-    }
+        {
+            document.getElementById('locationForm').submit();
+        }
     });
 </script>
 

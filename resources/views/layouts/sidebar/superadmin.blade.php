@@ -39,10 +39,11 @@
              ><i class="bi bi-tag-fill"></i> Manage Category</a>
           <a href="{{ route('list-units') }}"
              ><i class="bi bi-kanban"></i> Manage Units</a>
+             <a href="{{ route('list-items') }}"
+             ><i class="bi bi-card-checklist"></i> Master Inventory</a>
           <a href="{{ route('get-location-wise-inventory-sa') }}"
              ><i class="bi bi-bag-plus-fill"></i>Add kitchen Inventory</a>
-          <a href="{{ route('list-items') }}"
-             ><i class="bi bi-card-checklist"></i> Master Inventory</a>
+          
           <a href="get-submited-shopping-list-super-admin"
              ><i class="bi bi-cart3"></i> Submit Shopping list</a>
 
