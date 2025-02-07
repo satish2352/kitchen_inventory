@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('phone');
             $table->string('password');   
+            $table->string('added_by');
             $table->boolean('is_active')->default(true);
             $table->integer('is_deleted')->default(false);
             $table->timestamps();

@@ -466,7 +466,11 @@
 
  <script>
     document.getElementById('location_selected').addEventListener('change', function() {
-        document.getElementById('locationForm').submit();
+        var locationId= this.value;
+        if(locationId !='')
+        {
+            document.getElementById('locationForm').submit();
+        }
     });
 </script>
 

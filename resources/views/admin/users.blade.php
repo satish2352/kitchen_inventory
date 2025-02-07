@@ -201,8 +201,8 @@
             <div class="col-6">
               <select class="form-select" name="role">
               <option value="">Select Role</option>
-              <option value="1">Super Admin</option>
-                <option value="2">Admin</option>
+              <!-- <option value="1">Super Admin</option> -->
+                <!-- <option value="2">Admin</option> -->
                 <option value="3">Manager</option>
               </select>
             </div>
@@ -338,8 +338,8 @@
             <div class="col-6">
               <select class="form-select" name="role" id="role">
                 <option value="">Select Role</option>
-                <option value="1">Super Admin</option>
-                <option value="2">Admin</option>
+                <!-- <option value="1">Super Admin</option> -->
+                <!-- <option value="2">Admin</option> -->
                 <option value="3">Manager</option>
               </select>
             </div>

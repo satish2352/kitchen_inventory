@@ -26,6 +26,8 @@
          <a href="{{ route('/dashboard') }}" class="active"
             ><i class="bi bi-house-door-fill"></i> Dashboard</a>
 
+            <a href="{{ route('list-admin-users') }}"><i class="bi bi-person"></i> Manage User</a>
+
             <a href="{{ route('get-shopping-list-admin') }}"
             ><i class="bi bi-house-door-fill"></i>Add Kitchen Inventory</a>
 

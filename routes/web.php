@@ -143,5 +143,9 @@ Route::group(['middleware' => ['admin']], function () {
     Route::post('/update-kitchen-inventory-by-admin', ['as' => 'update-kitchen-inventory-by-admin', 'uses' => 'App\Http\Controllers\Admin\ShoppingListController@updateKitchenInventoryByAdmin']);
     Route::get('/get-submited-shopping-list-admin', ['as' => 'get-submited-shopping-list-admin', 'uses' => 'App\Http\Controllers\Admin\ShoppingListController@getSubmitedShopppingListAdmin']);
 
-   
+    Route::get('/list-admin-users', ['as' => 'list-admin-users', 'uses' => 'App\Http\Controllers\Admin\UserController@index']);
+    Route::post('/add-admin-users', ['as' => 'add-users', 'uses' => 'App\Http\Controllers\Admin\UserController@addUser']);
+    Route::get('/edit-admin-users', ['as' => 'edit-users', 'uses' => 'App\Http\Controllers\Admin\UserController@editUser']);
+    Route::post('/update-admin-users', ['as' => 'update-users', 'uses' => 'App\Http\Controllers\Admin\UserController@updateUser']);
+    Route::post('/delete-admin-users', ['as' => 'delete-users', 'uses' => 'App\Http\Controllers\Admin\UserController@deleteUser']);
 });

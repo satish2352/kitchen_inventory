@@ -44,8 +44,8 @@
           <a href="{{ route('get-location-wise-inventory-sa') }}"
              ><i class="bi bi-bag-plus-fill"></i>Add kitchen Inventory</a>
           
-          <a href="get-submited-shopping-list-super-admin"
-             ><i class="bi bi-cart3"></i> Submit Shopping list</a>
+          <!-- <a href="get-submited-shopping-list-super-admin"
+             ><i class="bi bi-cart3"></i> Submit Shopping list</a> -->
 
              <a href="{{ route('logout') }}"
              ><i class="bi bi-cart3"></i> Log Out</a>
