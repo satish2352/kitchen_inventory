@@ -27,6 +27,8 @@ class UserController extends Controller {
     {
         $user_data = $this->service->index();
 
+        
+
         $locationsData = Locations::where('is_active', '1')
                             ->where('is_deleted', '0')
                             ->select('id','location')

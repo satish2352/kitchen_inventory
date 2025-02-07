@@ -11,7 +11,7 @@
                     <i class="bi bi-arrow-90deg-left"></i>
                 </button>
             </a>
-            <h5 class="sub-title">Kitchen Inventory</h5>
+            <h5 class="sub-title">Add Kitchen Inventory</h5>
             <a href="approve-users.html">
                 <button class="btn btn-light">
                     <i class="bi bi-check2"></i>
@@ -88,10 +88,10 @@
                         <!-- Table Head -->
                         <thead class="table-header">
                             <tr>
-                                <th>Item</th>
-                                <th>Qty</th>
-                                <th>Unit</th>
-                                <th>Price</th>
+                                <th><b>Item</b></th>
+                                <th><b>Qty</b></th>
+                                <th><b>Unit</b></th>
+                                <th><b>Price</b></th>
                             </tr>
                         </thead>
                         <!-- Table Body -->
@@ -102,7 +102,7 @@
                                 <tr>
                                     <td>{{ $item['item_name'] }}</td>
                                     <td>
-                                        <input type="text" name="quantity[]" class="form-control qty-input"   placeholder="QTY" />
+                                        <input type="text" name="quantity[]" class="form-control qty-input" placeholder="QTYyyyyy" style="justify-self: center;">
                                     </td>
                                     <td>{{ $item['unit_name'] }}</td>
                                     <td>{{ $item['price'] }}</td>

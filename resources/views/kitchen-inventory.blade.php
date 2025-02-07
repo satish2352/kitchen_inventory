@@ -11,7 +11,7 @@
                     <i class="bi bi-arrow-90deg-left"></i>
                 </button>
             </a>
-            <h5 class="sub-title">Kitchen Inventory</h5>
+            <h5 class="sub-title">Add Kitchen Inventory</h5>
             <a href="approve-users.html">
                 <button class="btn btn-light">
                     <i class="bi bi-check2"></i>

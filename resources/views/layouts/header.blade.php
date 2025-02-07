@@ -44,5 +44,35 @@
 .is-valid {
   border-color: green;
 }
-</style> 
+
+/* Ensure table layout is consistent */
+.table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+/* Align table headers and data */
+.table th, .table td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* Center the input inside the td */
+.qty-input-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+/* Style input to align properly */
+.qty-input {
+    width: 80%;
+    text-align: center;
+    padding: 5px;
+    justify-self: center;
+}
+
+
+</style>
    <body>

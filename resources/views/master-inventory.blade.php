@@ -379,8 +379,8 @@
         <div class="confirm-popup-content">
           <h4 class="confirm-popup-title">Please Confirm</h4>
           <p class="confirm-popup-text">
-            Are you sure to delete this Item? <br />
-            this item will not recover back
+            Are you sure to delete this Inventory? <br />
+            this Inventory will not recover back
           </p>
           <div class="d-flex justify-content-around mt-4 confrm">
             <button id="cancelDeleteConfirm" class="btn br">NO</button>
@@ -476,7 +476,7 @@
 
  <script type="text/javascript">
       document.addEventListener("DOMContentLoaded", () => {
-        const selectButton = document.querySelector(".btn-select");
+        // const selectButton = document.querySelector(".btn-select");
         const selectcategory = document.querySelector(".btn-category");
         const editButton = document.querySelector(".edit-btn-item");
         const editButtons = document.querySelectorAll(".edit-btn-item");
@@ -530,10 +530,10 @@
         });
 
         // Show Confirmation Popup
-        selectButton.addEventListener("click", () => {
-          popup.style.display = "none"; // Close the bottom popup
-          confirmPopup.style.display = "flex"; // Show the confirmation popup
-        });
+        // selectButton.addEventListener("click", () => {
+        //   popup.style.display = "none"; // Close the bottom popup
+        //   confirmPopup.style.display = "flex"; // Show the confirmation popup
+        // });
 
         // Close Confirmation Popup on Cancel
         cancelSelectButton.addEventListener("click", () => {

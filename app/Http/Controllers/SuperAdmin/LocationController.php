@@ -32,12 +32,12 @@ class LocationController extends Controller {
         try {
 
             $rules = [
-                'location' => 'required|unique:locations|regex:/^[a-zA-Z\s]+$/u|max:255',
+                'location' => 'required|unique:locations|max:255',
                 // 'role' => 'required'
             ];
             $messages = [
                 'location.required' => 'Please  enter location name.',
-                'location.regex' => 'Please  enter text only.',
+                // 'location.regex' => 'Please  enter text only.',
                 'location.max' => 'Please  enter text length upto 255 character only.',
                 'location.unique' => 'Title already exist.',
 
