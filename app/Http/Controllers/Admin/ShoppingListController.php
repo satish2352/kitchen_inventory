@@ -114,7 +114,7 @@ class ShoppingListController extends Controller
             ->leftJoin('units', 'master_kitchen_inventory.unit', '=', 'units.id')
             ->leftJoin('category', 'master_kitchen_inventory.category', '=', 'category.id')
             ->select(
-                'master_kitchen_inventory.id',
+                'location_wise_inventory.id',
                 'master_kitchen_inventory.category',
                 'master_kitchen_inventory.item_name',
                 'master_kitchen_inventory.unit',
@@ -229,9 +229,9 @@ class ShoppingListController extends Controller
 
     // Loop through and update each inventory item
     foreach ($inventoryIds as $index => $inventoryId) {
-        LocationWiseInventory::where('inventory_id', $inventoryId)
+        LocationWiseInventory::where('id', $inventoryId)
         ->where('location_id', $location_selected_id)
-        ->where('location_id', $location_selected_id)
+        // ->where('location_id', $location_selected_id)
         ->whereDate('created_at', now()->toDateString())
         ->update([
             'quantity' => $quantities[$index],
