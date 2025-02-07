@@ -79,7 +79,7 @@ class ShoppingListController extends Controller
         $sess_user_id = session()->get('login_id');
         $location_selected_name = session()->get('location_selected_name');
         $location_selected_id = session()->get('location_selected_id');
-
+        $data_location_wise_inventory=array();
         $locationsData = Locations::where('is_active', '1')
                             ->where('is_deleted', '0')
                             ->select('id','location')
@@ -108,7 +108,7 @@ class ShoppingListController extends Controller
             )
             ->where('master_kitchen_inventory.location_id', $location_selected_id)
             ->where('master_kitchen_inventory.is_deleted', '0')
-            ->where('location_wise_inventory.approved_by', '3')
+            // ->where('location_wise_inventory.approved_by', '3')
             ->orderBy('category.category_name', 'asc') // Order by category name first
             ->orderBy('master_kitchen_inventory.item_name', 'asc') // Then order by item name
             ->get()

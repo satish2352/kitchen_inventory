@@ -51,7 +51,7 @@
                         <label class="form-label col-6">Select Location</label>
                         <div class="col-6">
                             <select class="form-select" name="location_selected" id="location_selected">
-                                <!-- <option value="">Select Location</option> -->
+                                <option value="">Select Location</option>
                                 @foreach ($locationsData as $locations)
                                     <option value="{{ $locations['id'] }}"
                                         @if (session('location_selected') == $locations['id']) selected @endif>{{ $locations['location'] }}
@@ -166,7 +166,11 @@
 
 <script>
     document.getElementById('location_selected').addEventListener('change', function() {
-        document.getElementById('locationForm').submit();
+        var locationId= this.value;
+        if(locationId !='')
+        {
+            document.getElementById('locationForm').submit();
+        }
     });
 </script>
 
