@@ -70,16 +70,23 @@ class LoginController extends Controller
                     $request->session()->put('user_role', $get_user['user_role']);
                     $request->session()->put('user_name', $get_user['name']);
                     // if($get_user['user_role'] != 1) {
-                        if(count(explode(",",$get_user['location']))  > 1 ) {
-                            $final_location  = Locations::whereIn('id',explode(",",$get_user['location']))->get()->toArray();
-                            $request->session()->put('location_for_user', $final_location);
+
+                        if($get_user['user_role'] != 1) {
+                            if(count(explode(",",$get_user['location']))  > 1 ) {
+                                $final_location  = Locations::whereIn('id',explode(",",$get_user['location']))->get()->toArray();
+                                $request->session()->put('location_for_user', $final_location);
+                            } else {
+                                
+                                $request->session()->put('location_selected', rtrim($get_user['location'],","));
+                                $final_location  = Locations::where('id',session('location_selected'))->first();
+                                $request->session()->put('location_selected_name', $final_location->location);
+                                $request->session()->put('location_selected_id', $final_location->id);
+                            }
                         } else {
-                            
-                            $request->session()->put('location_selected', rtrim($get_user['location'],","));
-                            $final_location  = Locations::where('id',session('location_selected'))->first();
-                            $request->session()->put('location_selected_name', $final_location->location);
-                            $request->session()->put('location_selected_id', $final_location->id);
+                            $request->session()->put('location_selected_name', '');
+                            $request->session()->put('location_selected_id', '');
                         }
+                        
                     // }
                    
                     // dd(session('location_for_user'));

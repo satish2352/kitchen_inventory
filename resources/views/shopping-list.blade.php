@@ -51,7 +51,7 @@
                         <label class="form-label col-6">Select Location</label>
                         <div class="col-6">
                             <select class="form-select" name="location_selected" id="location_selected">
-                                <!-- <option value="">Select Location</option> -->
+                                <option value="">Select Location</option>
                                 @foreach ($locationsData as $locations)
                                     <option value="{{ $locations['id'] }}"
                                         @if (session('location_selected') == $locations['id']) selected @endif>{{ $locations['location'] }}
@@ -94,9 +94,7 @@
 
                                 <tr>
                                     <td>{{ $item['item_name'] }}</td>
-                                    <td>
-                                        <input type="text" name="quantity[]" class="form-control qty-input" value="{{ $item['quantity'] }}" placeholder="QTY" />
-                                    </td>
+                                    <td>{{ $item['quantity'] }}</td>
                                     <td>{{ $item['unit_name'] }}</td>
                                     <td>{{ $item['price'] }}</td>
                                 </tr>
