@@ -3,210 +3,119 @@
 @yield('content')
 
 <style>
-    
-// CSS
+      @import url("//fonts.googleapis.com/css?family=Google+Sans:400,500,600,700");
+      @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
 
-/* Body Styling */
-body {
-  background-color: #f8f9fa;
-  font-family: Arial, sans-serif;
-}
+      body {
+        font-family: "Times New Roman", Times, serif;
+        font-weight: 500;
+        letter-spacing: 0.3px;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizelegibility;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background: linear-gradient(to right, #a80403, #f88383);
+      }
+      .btn-submit {
+        background: linear-gradient(to right, #a80403, #f88383);
+      }
+      form {
+        background-color: white;
+        padding: 30px;
+        width: 350px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
 
-/* General Container Styling */
-.main-container {
-  max-width: 500px;
-  margin: 50px auto;
-  padding: 20px;
-}
+      header {
+        text-align: center;
+        /* padding: 10px 0; */
+      }
 
-/* Form Container */
-.login-container,
-.signup-container,
-.otp-container,
-.forget-container {
-  width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 50px 15px;
-}
+      .wrapper {
+        display: flex;
+        position: relative;
+        z-index: 2;
+      }
 
-/* Form Styling */
-.login-form,
-.signup-form,
-.otp-form,
-.forget-form {
-  background-color: #ffffff;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
+      input {
+        width: 100%;
+        padding: 10px;
+        outline: none;
+        border: none;
+        font-size: 20px;
+        border-bottom: 2px solid gray;
+        background-color: transparent;
+        padding-left: 40px;
+      }
 
-/* Form Title */
-.login-form h2,
-.signup-form h2,
-.otp-form h2,
-.forget-form h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
+      input:focus {
+        border-bottom: linear-gradient(to right, #a80403, #f88383);
+      }
 
-/* Form Field Styling */
-.form-control,
-.otp-input {
-  margin-bottom: 15px;
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-}
+      i {
+        font-size: 20px !important;
+        padding: 10px;
+        position: absolute;
+      }
 
-/* Focused Input Field */
-.form-control:focus,
-.otp-input:focus {
-  border-color: #007bff;
-  outline: none;
-}
+      button {
+        padding: 10px;
+        margin: 10px 0;
+        font-size: 18px;
+        color: white;
+        border: none;
+        cursor: pointer;
+        position: relative;
+        z-index: 2;
+      }
 
-/* Button Styling */
-.btn-custom {
-  width: 100%;
-  padding: 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-}
+      button:hover {
+        background-color: #7142ff;
+      }
 
-.btn-custom:hover {
-  background-color: #0056b3;
-}
+      a {
+        text-decoration: none;
+        position: relative;
+        z-index: 2;
+      }
 
-/* Link Styling */
-a {
-  color: #007bff;
-  text-decoration: none;
-}
+      .form-container {
+        background-color: white;
+        padding: 30px;
+        border-radius: 10px;
+        width: 100%;
+        max-width: 400px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        text-align: center;
+      }
 
-/* Alert Styling */
-.alert {
-  display: none;
-  padding: 10px;
-  background-color: #f8d7da;
-  color: #721c24;
-  border-radius: 5px;
-  margin-bottom: 15px;
-}
-
-/* Input Group for OTP */
-.otp-input-group {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-
-/* OTP Input Styling */
-.otp-input {
-  width: 40px;
-  height: 50px;
-  text-align: center;
-  font-size: 18px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.otp-input:focus {
-  border-color: #007bff;
-  outline: none;
-}
-
-.red-text{
-    color:red;
-}
-
-
-
-/* Responsive Design */
-@media (max-width: 480px) {
-  .container {
-    padding: 10px;
-  }
-
-  .login-container,
-  .signup-container,
-  .otp-container,
-  .forget-container {
-    padding: 30px 10px;
-  }
-
-  .otp-input-group {
-    flex-wrap: wrap;
-    justify-content: space-around;
-  }
-
-  .otp-input {
-    width: 35px;
-    height: 45px;
-    font-size: 16px;
-  }
-}
-
-</style>
-
-<!-- <div class="container-fluid p-3">
-
-    @if (isset($return_data['msg_alert']) && $return_data['msg_alert'] == 'green')
-        <div class="alert alert-success" role="alert">
-            {{ $return_data['msg'] }}
-        </div>
-    @endif
-
-    @if (session('error'))
-        <div class="alert alert-danger" role="alert">
-            <p>{{ session()->get('error') }} </p>
-        </div>
-    @endif
-    @if (session('success'))
-        <div class="alert alert-danger" role="alert">
-            <p> {{ session('success') }} </p>
-        </div>
-    @endif
-
-    <form class="modal-content animate" method="post" action='{{ route('submitLogin') }}'>
-        @csrf
-
-        <div class="row">
-            <div class="col-sm-12 col-md-12 mb-3">
-                <label for="exampleInputUsername" class="form-label">Email</label>
-                <input type="text" class="form-control" name='email' value='{{ old('email') }}'
-                    aria-describedby="usernameHelp">
-            </div>
-            @if ($errors->has('email'))
-                <span class="red-text"><?php echo $errors->first('email', ':message'); ?></span>
-            @endif
-            <div class="col-sm-12 col-md-12 mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input id="passport" type="password" name='password' class="form-control">
-            </div>
-        </div>
-        <div>
-            <button type="button" class="btn btn-outline-warning change-password-btn">Change
-                Password</button>
-        </div>
-        @if ($errors->has('password'))
-            <span class="red-text"><?php echo $errors->first('password', ':message'); ?></span>
-        @endif
-
-        <div class="modal-footer login-modal-footer d-flex justify-content-end">
-            <button type="submit" class="btn btn-primary ok-btn">OK</button>
-
-            <button type="button" class="btn btn-secondary cancel-btn" data-bs-dismiss="modal">Cancel</button>
-        </div>
-    </form>
-</div> -->
-
+      @media only screen and (min-width: 320px) and (max-width: 375px) {
+        form {
+          background-color: white;
+          padding: 30px;
+          width: 250px;
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+          text-align: center;
+          position: relative;
+          overflow: hidden;
+        }
+      }
+    </style>
 
 @if (isset($return_data['msg_alert']) && $return_data['msg_alert'] == 'green')
         <div class="alert alert-success" role="alert">
@@ -224,34 +133,49 @@ a {
             <p> {{ session('success') }} </p>
         </div>
     @endif
-<div class="container main-container">
-  <!-- Login Form -->
-  <div class="login-container" id="login-container">
-    <div class="alert alert-danger" id="error-message" role="alert">
-      Invalid username or password!
-    </div>
-    <div class="login-form">
-      <h2>Login</h2>
-      <!-- <form id="login-form"> -->
-    <form class="modal-content animate" id="frm_register" method="post" action="{{ route('submitLogin') }}">
-    @csrf
-        <div class="mb-3">
-          <label for="username" class="form-label">Email ID</label>
-                <input type="text" class="form-control" name='email' value="{{ old('email') }}"
+    
+    <div
+      class="container d-flex justify-content-center align-items-center min-vh-100">
+      <div class="form-container">
+      <form class="modal-content animate" id="frm_register" method="post" action="{{ route('submitLogin') }}">
+      @csrf
+          <header>
+            <img src="{{ asset('/img/logo.png') }}" width="50px" height="50px" />
+            <h2>Log In</h2>
+          </header>
+          <div class="wrapper">
+            <i class="material-icons">alternate_email</i>
+            <!-- <input type="text" class="form-control" placeholder="Enter Email Id" name='email'/> -->
+            <input type="text" name='email' value="{{ old('email') }}"
                     aria-describedby="usernameHelp" placeholder="Enter your email id">
-                    @if ($errors->has('email'))
-                <span class="red-text"><?php echo $errors->first('email', ':message'); ?></span>
-            @endif
-        
-        </div>
-        <div class="mb-3 position-relative"> <label for="password" class="form-label">Password</label> <div class="position-relative"> <input id="password" type="password" name="password" class="form-control pe-5" placeholder="Enter your password"> <i class="fas fa-eye position-absolute top-50 end-0 translate-middle-y me-3" id="togglePassword" style="cursor: pointer;"></i> </div> @if ($errors->has('password')) <span class="red-text"><?php echo $errors->first('password', ':message'); ?></span> @endif </div>
-        <button type="submit" class="btn btn-primary btn-custom">Login</button>
-        <!-- <div class="mt-3 text-center">
-          <a href="#" id="forgot-password-link">Forgot password?</a> 
-        </div> -->
-      </form>
+                    
+          </div>
+          <div>
+            @if ($errors->has('email'))
+                <?php echo $errors->first('email', ':message'); ?>
+             @endif
+          </div>
+          <div class="wrapper">
+            <i class="material-icons">lock</i> 
+            <!-- <input id="password" type="password" name="password" placeholder="Password" required /> -->
+            <input id="password" type="password" name="password" placeholder="Enter your password">
+            <i class="fas fa-eye position-absolute top-50 end-0 translate-middle-y me-3" id="togglePassword" style="cursor: pointer;"></i>
+          </div>
+          @if ($errors->has('password')) <span class="red-text"><?php echo $errors->first('password', ':message'); ?></span> @endif
+          <button type="submit" class="rounded-3 btn-submit mt-4">
+            Submit
+          </button>
+          <!-- <a href="#">Forgot Your Password</a> -->
+        </form>
+      </div>
     </div>
-  </div>
+
+
+
+
+
+
+
 
   
 

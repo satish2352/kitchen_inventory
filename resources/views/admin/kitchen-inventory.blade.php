@@ -102,7 +102,7 @@
                                 <tr>
                                     <td>{{ $item['item_name'] }}</td>
                                     <td>
-                                        <input type="text" name="quantity[]" class="form-control qty-input" placeholder="QTYyyyyy" style="justify-self: center;">
+                                        <input type="text" name="quantity[]" class="form-control qty-input" placeholder="QTY" style="justify-self: center;">
                                     </td>
                                     <td>{{ $item['unit_name'] }}</td>
                                     <td>{{ $item['price'] }}</td>
