@@ -108,7 +108,7 @@ class ShoppingListController extends Controller
             )
             ->where('master_kitchen_inventory.location_id', $location_selected_id)
             ->where('master_kitchen_inventory.is_deleted', '0')
-            // ->where('location_wise_inventory.approved_by', '3')
+            ->where('location_wise_inventory.approved_by', '3')
             ->orderBy('category.category_name', 'asc') // Order by category name first
             ->orderBy('master_kitchen_inventory.item_name', 'asc') // Then order by item name
             ->get()
