@@ -149,7 +149,7 @@
         <div class="popup-content">
 
         <form class="forms-sample" id="frm_register" name="frm_register" method="post" role="form"
-          action="{{ route('add-users') }}" enctype="multipart/form-data">
+          action="{{ route('add-admin-users') }}" enctype="multipart/form-data">
           <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
           <!-- Popup Title -->
           <h4 class="popup-title">Add User Details</h4>
@@ -286,7 +286,7 @@
         <div class="popup-content">
 
         <form class="forms-sample" id="editUserForm" name="editUserForm" method="post" role="form"
-          action="{{ route('update-users') }}" enctype="multipart/form-data">
+          action="{{ route('update-admin-users') }}" enctype="multipart/form-data">
           <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
           <!-- Popup Title -->
           <h4 class="popup-title">Edit User Details</h4>
@@ -497,7 +497,7 @@
     
     // AJAX request to get location data
     $.ajax({
-      url: '{{ route('edit-users') }}', // Your route to fetch the location data
+      url: '{{ route('edit-admin-users') }}', // Your route to fetch the location data
       type: 'GET',
       data: {
                 locationId: locationId

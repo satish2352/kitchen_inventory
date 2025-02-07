@@ -26,15 +26,37 @@ class UserController extends Controller {
     public function index()
     {
         $user_data = $this->service->index();
+        $sess_user_id = session()->get('login_id');
+        // Extract location IDs from users
+        $locationIds = UsersData::whereNotNull('location')
+        ->where('id', $sess_user_id)
+        ->pluck('location')
+        ->toArray();
+// dd($locationIds);
+        // Flatten and get unique location IDs
+        $locationIds = collect($locationIds)
+            ->map(fn($ids) => explode(',', $ids))
+            ->flatten()
+            ->unique()
+            ->toArray();
+
+        // Get only associated locations
+        $locationsData = Locations::whereIn('id', $locationIds)
+        ->where('is_active', '1')
+        ->where('is_deleted', '0')
+        ->select('id', 'location')
+        ->orderBy('location', 'asc')
+        ->get()
+        ->toArray();
 
         
-
-        $locationsData = Locations::where('is_active', '1')
-                            ->where('is_deleted', '0')
-                            ->select('id','location')
-                            ->orderBy('location', 'asc')
-                            ->get()
-                            ->toArray();
+        // $locationsData = Locations::where('is_active', '1')
+        //                     ->where('is_deleted', '0')
+        //                     ->select('id','location')
+        //                     ->orderBy('location', 'asc')
+        //                     ->get()
+        //                     ->toArray();
+        dd($locationsData);
         // dd($projects);
         return view('admin.users',compact('user_data','locationsData'));
     }
