@@ -56,7 +56,7 @@ class UserController extends Controller {
         //                     ->orderBy('location', 'asc')
         //                     ->get()
         //                     ->toArray();
-        dd($locationsData);
+        // dd($locationsData);
         // dd($projects);
         return view('admin.users',compact('user_data','locationsData'));
     }
