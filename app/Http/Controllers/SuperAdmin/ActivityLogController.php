@@ -182,7 +182,7 @@ class ActivityLogController extends Controller
         ]);
     }
 
-    $msg = "Kitchen Inventory Added Successfully";
+    $msg = "Kitchen Inventory Updated Successfully";
     $status = "success";
 
     session()->flash('alert_status', $status);

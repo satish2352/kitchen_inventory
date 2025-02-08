@@ -122,6 +122,8 @@ Route::group(['middleware' => ['admin']], function () {
 
     Route::get('/list-approve-users', ['as' => 'list-approve-users', 'uses' => 'App\Http\Controllers\SuperAdmin\UserController@getApproveUsers']);
     Route::post('/update-approve-users', ['as' => 'update-approve-users', 'uses' => 'App\Http\Controllers\SuperAdmin\UserController@updateOne']);
+    Route::post('/update-approve-users-all-data', ['as' => 'update-approve-users-all-data', 'uses' => 'App\Http\Controllers\SuperAdmin\UserController@updateApproveUserAllData']);
+    Route::post('/delete-approve-users', ['as' => 'delete-approve-users', 'uses' => 'App\Http\Controllers\SuperAdmin\UserController@deleteApproveUser']);
 
 });
 

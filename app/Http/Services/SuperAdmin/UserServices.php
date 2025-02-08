@@ -86,4 +86,22 @@ class UserServices
     {
         return $this->repo->updateOne($id);
     }
+
+    public function updateApproveUserAllData($request) {
+        $user_register_id = $this->repo->updateApproveUserAllData($request);
+        return ['status'=>'success','msg'=>'User Updated Successfully.'];
+    }
+
+    public function deleteApproveUser($id){
+        try {
+            $delete = $this->repo->deleteApproveUser($id);
+            if ($delete) {
+                return ['status' => 'success', 'msg' => 'User Deleted Successfully.'];
+            } else {
+                return ['status' => 'error', 'msg' => 'User Not Deleted.'];
+            }  
+        } catch (Exception $e) {
+            return ['status' => 'error', 'msg' => $e->getMessage()];
+        } 
+    }
 }    

@@ -189,4 +189,42 @@ class UserRepository
             ];
         }
     }
+
+	public function updateApproveUserAllData($request)
+	{
+
+		$locations = implode(',', $request['location']); // Implode the array into a string (e.g., "1,2,3")
+		$user_data = UsersData::where('id',$request['edit_id']) 
+						->update([
+							'name' => ucwords(strtolower($request['name'])),
+							'location' => $locations,
+							'user_role' => $request['role'],
+							'phone' => $request['phone'],
+							'email' => $request['email'],
+							'password' => $request['password'],
+						]);
+		// dd($user_data);
+		return $request->edit_id;
+	}
+
+	public function deleteApproveUser($id)
+    {
+        $all_data=[];
+
+        $student_data = UsersData::find($id);
+// dd($student_data);
+                // Delete the record from the database
+                $is_deleted = $student_data->is_deleted == 1 ? 0 : 1;
+                $student_data->is_deleted = $is_deleted;
+                $student_data->save();
+
+        return $student_data;
+
+            // }
+            // return response()->json([
+            //     'status' => 'error',
+            //     'message' => 'Intern ID Card details not found.',
+            // ], 404);
+
+    }
 }

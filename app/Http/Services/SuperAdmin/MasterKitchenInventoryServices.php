@@ -41,7 +41,7 @@ class MasterKitchenInventoryServices
                 $last_id = $this->repo->addItem($request);
                 // dd($last_id);
                 if ($last_id) {
-                    return ['status' => 'success', 'msg' => 'Kitchen Inventory Added Successfully.'];
+                    return ['status' => 'success', 'msg' => 'Kitchen Inventory Updated Successfully.'];
                 } else {
                     return ['status' => 'error', 'msg' => 'Kitchen Inventory get Not Added.'];
                 }  

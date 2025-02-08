@@ -213,7 +213,7 @@ class ShoppingListController extends Controller
 		$ActivityLogData->save();
 		// }
 
-    $msg = "Kitchen Inventory Added Successfully";
+    $msg = "Kitchen Inventory Updated Successfully";
     $status = "success";
 
     session()->flash('alert_status', $status);
