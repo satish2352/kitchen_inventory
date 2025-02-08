@@ -267,7 +267,6 @@
       document.querySelectorAll(".approve-btn").forEach(button => {
     button.addEventListener("click", function () { // Use function() instead of () => {}
         var xyz = this.getAttribute("dataId"); // Correctly gets the dataId attribute
-        alert(xyz);
         document.getElementById("activid").value = xyz;
         document.getElementById("popupadd").style.display = "flex";
     });

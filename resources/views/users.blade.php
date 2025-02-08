@@ -111,12 +111,13 @@
                   @endif
                   </span>
 
-                  @if($item->is_approved == 0)
+                  
+                  @if($item->is_approved == 0 && $item->added_by == 2 && $item->user_role == 3)
                   <div class="status-badge ms-2 d-flex align-items-center" style="background-color:red">
                     <i class="bi bi-check-circle-fill text-success me-1"></i>
                     <span style="color:white">Unapproved</span>
                   </div>
-                @elseif($item->is_approved == 1) 
+                @elseif($item->is_approved == 1 && $item->added_by == 2 && $item->user_role == 3) 
                   <div class="status-badge ms-2 d-flex align-items-center">
                     <i class="bi bi-check-circle-fill text-success me-1"></i>
                     <span style="color:white">Approved</span>
