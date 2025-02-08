@@ -20,9 +20,9 @@ Route::get('/', ['as' => '/', 'uses' => 'App\Http\Controllers\LoginController@in
 //     return view('approve-users');
 // });
 
-Route::get('/approve-users', function () {
-    return view('approve-users');
-})->name('approve-users');
+// Route::get('/approve-users', function () {
+//     return view('approve-users');
+// })->name('approve-users');
 
 Route::get('/submit-shopping-list', function () {
     return view('submit-shopping-list');
@@ -119,6 +119,9 @@ Route::group(['middleware' => ['admin']], function () {
     Route::post('/add-kitchen-inventory-by-sa', ['as' => 'add-kitchen-inventory-by-sa', 'uses' => 'App\Http\Controllers\SuperAdmin\ShoppingListController@addKitchenInventoryBySA']);
     
     Route::get('/get-activity-log', ['as' => 'get-activity-log', 'uses' => 'App\Http\Controllers\SuperAdmin\ActivityLogController@getActivityLog']);
+
+    Route::get('/list-approve-users', ['as' => 'list-approve-users', 'uses' => 'App\Http\Controllers\SuperAdmin\UserController@getApproveUsers']);
+    Route::post('/update-approve-users', ['as' => 'update-approve-users', 'uses' => 'App\Http\Controllers\SuperAdmin\UserController@updateOne']);
 
 });
 

@@ -10,143 +10,22 @@ return [
         'MANAGER'          => 3
     ],
 
-
-    // 'ROLE_ID_NAME' => [
-    //     '111' => 'SUPER',
-    //     '1' => 'HIGHER AUTHORITY',
-    //     '2' => 'PURCHASE',
-    //     '3' => 'DESIGNER',          
-    //     '4' => 'PRODUCTION',
-    //     '5' => 'SECURITY',
-    //     '6' => 'QUALITY',
-    //     '7' => 'STORE',
-    //     '8' => 'FINANCE',
-    //     '9' => 'HR',
-    //     '10' => 'LOGISTICS',
-    //     '11' => 'DISPATCH',
-    //     '12' => 'CMS',
-    //     '13' => 'EMPOLYEE',
-    //     '14' => 'INVENTORY',
-    // ],
     
     'SUPER_ADMIN' => [
         1111 =>'Added New Inventory',
-        1112     => 'Updated Inventory',
-        // 'NEW'                            => 1111,
-        // 'NEW_REQUIREMENTS_SENT_TO_DESIGN_DEPARTMENT'  => 1112,
-        // 'NEW_REQUIREMENTS_SENT_TO_PRODUCTION_DEPARTMENT'  => 1113,
-        // 'NEW_REQUIREMENTS_STARTED_WORKING_BY_PRODUCTION_DEPARTMENT'  => 1114,
-        // 'LIST_DESIGN_RECIEVED_FROM_PROD_DEPT_FOR_REVISED'    => 1115,
-        // 'DESIGN_SENT_TO_PROD_DEPT_REVISED'    => 1116,
-        // 'LIST_BOM_PART_MATERIAL_SENT_TO_PROD_DEPT_FOR_PRODUCTION'          => 1118,
-        // 'LIST_PO_TO_BE_APPROVE_FROM_PURCHASE'         => 1126,
-        // 'APPROVED_PO_FROM_PURCHASE'               => 1127,
-        // 'HALF_APPROVED_PO_FROM_PURCHASE'               => 1200,
-        // 'NOT_APPROVED_PO_FROM_PURCHASE'           => 1128,
-        // 'LIST_APPROVED_PO_SENT_TO_VENDOR_BY_PURCHASE'  => 1129,
-        // 'LIST_INVOICE_TO_BE_APPROVE_FINANCE'             => 1139,
-        // 'APPROVED_INVOICE_FINANCE'                       => 1140,
-        // 'NOT_APPROVED_INVOICE_FINANCE'                   => 1141,
-        // 'ACTUAL_WORK_COMPLETED_FROM_PRODUCTION_DEPARTMENT'   => 1121,
-        // 'LIST_REQUEST_NOTE_RECIEVED_FROM_STORE_DEPT_FOR_PURCHASE'         => 1123,
-        // 'INVOICE_RECEIVED_FOR_BILL_APPROVAL_TO_HIGHER_AUTHORITY'        => 1138,
-        // 'LIST_DISPATCH_COMPLETED_FROM_DISPATCH_DEPARTMENT'                   => 1147,
+        1112     => 'Updated Inventory'
     ],
 
     'ADMIN' => [
-        1111 =>'Added New Inventory',
+        1111     => 'Added New Inventory',
         1112     => 'Updated Inventory',
-        'REQUEST_NOTE_RECIEVED_FROM_STORE_DEPT_FOR_PURCHASE_VENDOR_FINAL' => 1125,
-        'PO_NEW_SENT_TO_HIGHER_AUTH_FOR_APPROVAL'                => 1126,
-
-        'LIST_APPROVED_PO_FROM_HIGHER_AUTHORITY'                 => 1127,
-        'LIST_APPROVED_PO_FROM_HIGHER_AUTHORITY_SENT_TO_VENDOR'  => 1129,
-        'LIST_NOT_APPROVED_PO_FROM_HIGHER_AUTHORITY'             => 1128,
-        'NOT_APPROVED_PO_AGAIN_SENT_FOR_APPROVAL_TO_HIGHER_AUTHORITY' => 1143,
+        1113     => 'Added New User',
       
     ],
 
     'MANAGER' => [
         1111 =>'Added New Inventory',
         1112     => 'Updated Inventory',
-        'DESIGN_SENT_TO_PROD_DEPT_FIRST_TIME' => 1113,
-        'LIST_DESIGN_RECIEVED_FROM_PROD_DEPT_FOR_REVISED'    => 1115,
-        'DESIGN_SENT_TO_PROD_DEPT_REVISED'    => 1116,
-        'ACCEPTED_DESIGN_BY_PRODUCTION'           => 1114,
       
-    ],
-
-    'PRODUCTION_DEPARTMENT' => [
-        'LIST_DESIGN_RECEIVED_FOR_PRODUCTION'           => 1113,
-        'ACCEPTED_DESIGN_RECEIVED_FOR_PRODUCTION'           => 1114,
-        'DESIGN_SENT_TO_DESIGN_DEPT_FOR_REVISED'   => 1115,
-        'LIST_DESIGN_RECIVED_FROM_PRODUCTION_DEPT_REVISED'   => 1116,
-        'BOM_SENT_TO_STORE_DEPT_FOR_CHECKING'   => 1117,
-        'LIST_BOM_RECIVED_FROM_STORE_DEPT_FOR_PRODUCTION'   => 1118,
-        'LIST_BOM_PART_MATERIAL_RECIVED_FROM_STORE_DEPT_FOR_PRODUCTION'   => 1119,
-        'ACTUAL_WORK_STATED_FOR_PRODUCTION_ACCORDING_TO_DESIGN'   => 1120,
-        'ACTUAL_WORK_INPROCESS_FOR_PRODUCTION'   => 11201,
-        'ACTUAL_WORK_COMPLETED_FROM_PRODUCTION_ACCORDING_TO_DESIGN'   => 1121,
-
-        'LIST_STORE_RECIEPT_AND_GRN_RECEIVED_FROM_STORE_DEAPRTMENT' => 1136,
-
-      
-    ],
-
-    'SECURIY_DEPARTMENT' => [
-        'LIST_PO_TO_BE_CHECKED'                  => 1129,
-        'PO_CHECKED'                             => 1130,
-        'GATE_PASS_GENRATED'                     => 1131,
-        'PO_SENT_TO_QUALITY_DEPARTMENT'         => 1132,
-      
-    ],
-
-    'QUALITY_DEPARTMENT' => [
-        'LIST_PO_RECEIVED_FROM_SECURITY' => 1132,
-        'PO_CHECKED'                     => 1133,
-        'PO_CHECKED_OK_GRN_GENRATED_SENT_TO_STORE' => 1134,
-        'PO_CHECKED_NOT_OK_RETURN_TO_VENDOR'       => 1144,
-      
-    ],
-    
-    'STORE_DEPARTMENT' => [
-        'LIST_BOM_RECIVED_TO_STORE_DEPT_FOR_CHECKING'   => 1117,
-        'LIST_BOM_PART_MATERIAL_SENT_TO_PROD_DEPT_FOR_PRODUCTION'          => 1118,
-        'LIST_BOM_ALL_MATERIAL_SENT_TO_PROD_DEPT_FOR_PRODUCTION'           => 1119,
-        'LIST_REQUEST_NOTE_SENT_FROM_STORE_DEPT_FOR_PURCHASE'         => 1123,
-        
-        'LIST_PO_RECEIVED_FROM_QUALITY_DEPARTMENT'              => 1134,
-        'STORE_RECIEPT_GENRATED'                                => 1135,
-        'STORE_RECIEPT_GENRATED_SENT_TO_FINANCE'                => 1136,
-      
-    ],
-
-    'FINANCE_DEPARTMENT' => [
-        'LIST_STORE_RECIEPT_AND_GRN_RECEIVED_FROM_STORE_DEAPRTMENT' => 1136,
-        'STORE_RECIEPT_AND_GRN_AGINST_PO_INVOICE_GENRATED'          => 1137,
-        'INVOICE_SENT_FOR_BILL_APPROVAL_TO_HIGHER_AUTHORITY'        => 1138,
-        'INVOICE_APPROVED_FROM_HIGHER_AUTHORITY'                    => 1140,
-        'INVOICE_NOT_APPROVED_FROM_HIGHER_AUTHORITY'                => 1141,
-        'INVOICE_PAID_AGAINST_PO'                                   => 1142,
-        'LIST_LOGISTICS_RECEIVED_FROM_LOGISTICS'                    => 1146,
-        'LIST_LOGISTICS_SEND_TO_DISPATCH_DEAPRTMENT'                 => 1147,
-      
-      
-    ],
-    'LOGISTICS_DEPARTMENT' => [
-        'ACTUAL_WORK_COMPLETED_FROM_PRODUCTION_ACCORDING_TO_DESIGN'   => 1121,
-        'LOGISTICS_FILL_COMPLETED_PRODUCTION_FORM_IN_LOGISTICS'       => 1145,
-        'LOGISTICS_SEND_PRODUCTION_REQUEST_TO_FINANCE'                => 1146,
-        'LIST_SEND_PRODUCTION_REQUEST_TO_FINANCE_BY_LOGISTICS'            => 1147,
-  
-      ],
-      'DISPATCH_DEPARTMENT' => [
-        'LIST_RECEIVED_FROM_FINANCE_ACCORDING_TO_LOGISTICS'            => 1147,
-        'DISPATCH_DEPARTMENT_MARKED_DISPATCH_COMPLETED'                   => 1148,
-        'LIST_DISPATCH_COMPLETED_FROM_DISPATCH_DEPARTMENT'                   => 1148,
-      ],
-
-    'CMS'=>[
-
-    ],
+    ]
 ];

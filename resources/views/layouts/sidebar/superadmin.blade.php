@@ -7,12 +7,17 @@
              <i class="bi bi-list"></i>
           </div>
           <!-- Location -->
-          @if(session()->get('location_selected_id') !='')
-          <div class="location jost-font">
-             <i class="bi bi-geo-alt"></i>
-             <span>{{session('location_selected_name')}}</span>
-          </div>
+          @if(Route::currentRouteName() == 'get-submited-shopping-list-super-admin' || 
+          Route::currentRouteName() == 'list-items' || 
+          Route::currentRouteName() == 'get-location-wise-inventory-sa')
+            @if(session()->get('location_selected_id') !='' && session()->get('location_selected_id') !='')
+            <div class="location jost-font">
+               <i class="bi bi-geo-alt"></i>
+               <span>{{session('location_selected_name')}}</span>
+            </div>
+            @endif
           @endif
+
        </div>
     </div>
     <!-- Drawer -->
@@ -27,7 +32,7 @@
        <div class="drawer-nav">
           <a href="{{ route('/dashboard') }}" class="active"
              ><i class="bi bi-house-door-fill"></i> Dashboard</a>
-          <a href="{{ route('approve-users') }}"
+          <a href="{{ route('list-approve-users') }}"
              ><i class="bi bi-person-plus-fill"></i> Approve Users</a>
           <a href="{{ route('get-submited-shopping-list-super-admin') }}"
              ><i class="bi bi-share-fill"></i> Shopping List</a>

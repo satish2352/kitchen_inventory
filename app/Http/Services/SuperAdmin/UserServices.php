@@ -75,4 +75,15 @@ class UserServices
             return ['status' => 'error', 'msg' => $e->getMessage()];
         } 
     }
+
+    public function getApproveUsers() {
+        $data_users = $this->repo->getApproveUsers();
+        // dd($data_users);
+        return $data_users;
+    }
+
+    public function updateOne($id)
+    {
+        return $this->repo->updateOne($id);
+    }
 }    

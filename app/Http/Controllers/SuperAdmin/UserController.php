@@ -209,5 +209,31 @@ class UserController extends Controller {
     return view('users-search-results', compact('user_data'))->render();
 }
 
+public function getApproveUsers()
+    {
+        $user_data = $this->service->getApproveUsers();
+
+        $locationsData = Locations::where('is_active', '1')
+                            ->where('is_deleted', '0')
+                            ->where('is_deleted', '0')
+                            ->select('id','location')
+                            ->orderBy('location', 'asc')
+                            // ->get()
+                            ->paginate(10);
+                            // ->toArray();
+        // dd($projects);
+        return view('approve-users',compact('user_data','locationsData'));
+    }
+
+    public function updateOne(Request $request){
+        try {
+            $active_id = $request->activid;
+        $result = $this->service->updateOne($active_id);
+            return redirect('list-approve-users')->with('flash_message', 'Updated!');  
+        } catch (\Exception $e) {
+            return $e;
+        }
+    }
+
 
 }

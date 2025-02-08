@@ -27,8 +27,6 @@ class UserRepository
         $locationIds = explode(',', $user_data->location);
         $user_data->locations = Locations::whereIn('id', $locationIds)->pluck('location')->toArray();
     });
-// dd($data_location);
-    // return $users;
 							
 		return $data_location;
 	}
@@ -56,6 +54,11 @@ class UserRepository
 
     public function addUser($request)
 	{
+
+		$sess_user_id = session()->get('login_id');
+		$sess_user_name = session()->get('user_name');
+		$sess_location_id = session()->get('location_selected_id');
+
 		// dd($request);
 		$data =array();
 		$user_data = new UsersData();
@@ -65,6 +68,8 @@ class UserRepository
 		$user_data->phone = $request['phone'];
 		$user_data->email = $request['email'];
 		$user_data->password = $request['password'];
+		$user_data->added_by = 1;
+		$user_data->added_byId = $sess_user_id;
 		// $user_data->save();
 
 		// dd(json_encode($request['location']));
@@ -138,5 +143,50 @@ class UserRepository
             //     'message' => 'Intern ID Card details not found.',
             // ], 404);
 
+    }
+
+	public function getApproveUsers() {
+        $data_location = UsersData::select('id','name','location','user_role','email','password','created_at','email','phone','is_approved')
+							->where('is_deleted', '0')
+							->where('added_by', 2)
+							->where('is_approved', 0)
+							->orderBy('created_at', 'desc')
+							->get();
+
+							  // Fetch locations for each user
+    $data_location->each(function ($user_data) {
+        $locationIds = explode(',', $user_data->location);
+        $user_data->locations = Locations::whereIn('id', $locationIds)->pluck('location')->toArray();
+    });
+							
+		return $data_location;
+	}
+
+	public function updateOne($request){
+        try {
+            $slide = UsersData::find($request); // Assuming $request directly contains the ID
+// dd($slide);
+            // Assuming 'is_active' is a field in the Slider model
+            if ($slide) {
+                $is_active = $slide->is_approved == 1 ? 0 : 1;
+                $slide->is_approved = $is_active;
+                $slide->save();
+
+                return [
+                    'msg' => 'Slide updated successfully.',
+                    'status' => 'success'
+                ];
+            }
+
+            return [
+                'msg' => 'Slide not found.',
+                'status' => 'error'
+            ];
+        } catch (\Exception $e) {
+            return [
+                'msg' => 'Failed to update slide.',
+                'status' => 'error'
+            ];
+        }
     }
 }

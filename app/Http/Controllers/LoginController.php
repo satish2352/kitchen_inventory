@@ -58,9 +58,18 @@ class LoginController extends Controller
                 // The username exists, now verify the password
                 $password = $request->password;
 
+                $isApproved =$get_user['is_approved'];
+
+
                 // Decrypt the password stored in the database
                 // $decryptedPassword = Crypt::decryptString($get_user->password);
                 $decryptedPassword =$get_user['password'];
+
+
+                if ($isApproved == '1') {
+
+
+
 
                 // Compare the decrypted password with the input password
                 if ($password == $decryptedPassword) {
@@ -93,11 +102,11 @@ class LoginController extends Controller
                     // Return a successful login redirect
                     // dd("dsdfasfsafgsa");
 
-                    $msg = "Logged In Successfully";
-                    $status = "success";
+                    // $msg = "Logged In Successfully";
+                    // $status = "success";
 
-                    session()->flash('alert_status', $status);
-                    session()->flash('alert_msg', $msg);
+                    // session()->flash('alert_status', $status);
+                    // session()->flash('alert_msg', $msg);
 
                     $request->session()->regenerate();
                     return redirect(route('/dashboard'));  // Change to your dashboard route
@@ -109,6 +118,19 @@ class LoginController extends Controller
                         ->withInput()
                         ->withErrors(['password' => 'You Entered Wrong Password']);
                 }
+
+            } else {
+                // Invalid password
+
+                return redirect('/')
+                    ->withInput()
+                    ->withErrors(['password' => 'This User Is Not Approved']);
+            }
+
+
+
+
+
             } else {
                 // Invalid username
                 return redirect('/')

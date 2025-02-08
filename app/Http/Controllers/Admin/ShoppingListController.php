@@ -328,7 +328,7 @@ public function addKitchenInventoryByAdmin(Request $request)
 
 		if($last_insert_id)
 		{
-		$LogMsg= config('constants.MANAGER.1111');
+		$LogMsg= config('constants.SUPER_ADMIN.1111');
 
 		$FinalLogMessage = $sess_user_name.' '.$LogMsg;
 		$ActivityLogData = new ActivityLog();

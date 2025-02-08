@@ -10,7 +10,8 @@ use App\Models\{
 	Category,
 	Unit,
 	User,
-	UsersData
+	UsersData,
+	ActivityLog
 };
 use Illuminate\Support\Facades\Mail;
 
@@ -22,7 +23,8 @@ class UserRepository
 							->where('is_deleted', '0')
 							->where('added_by', $sess_user_id)
 							->orderBy('created_at', 'desc')
-							->get();
+							->paginate(10);
+							// ->get();
 
 							  // Fetch locations for each user
     $data_location->each(function ($user_data) {
@@ -69,7 +71,8 @@ class UserRepository
 		$user_data->phone = $request['phone'];
 		$user_data->email = $request['email'];
 		$user_data->password = $request['password'];
-		$user_data->added_by = $sess_user_id;
+		$user_data->added_by = 2;
+		$user_data->added_byId = $sess_user_id;
 		// $user_data->save();
 
 		// dd(json_encode($request['location']));
@@ -83,6 +86,23 @@ class UserRepository
 			$user_data->location = implode(',', $request['location']); // Join values with commas
 		}
 		$user_data->save();
+
+		// if($last_insert_id)
+		// {
+
+		$sess_user_id = session()->get('login_id');
+		$sess_user_name = session()->get('user_name');
+		$sess_location_id = session()->get('location_selected_id');
+
+
+		$LogMsg= config('constants.ADMIN.1113');
+
+		$FinalLogMessage = $sess_user_name.' '.$LogMsg;
+		$ActivityLogData = new ActivityLog();
+		$ActivityLogData->user_id = $sess_user_id;
+		$ActivityLogData->activity_message = $FinalLogMessage;
+		$ActivityLogData->save();
+		// }
 		// dd($user_data);
 		$last_insert_id = $user_data->id;
 // dd($user_data);

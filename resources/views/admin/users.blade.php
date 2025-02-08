@@ -88,6 +88,8 @@
       </div>
       <!-- user requestion section  -->
       <div class="user-request pb-3">
+
+      @if (!empty($user_data) && count($user_data) > 0)
         <div class="container-fluid px-3" id="search-results">
 
 
@@ -142,6 +144,19 @@
 
 
         </div>
+
+        <div class="mt-3">
+            {{ $user_data->links() }}
+        </div>
+
+        @else
+            <div class="border-box mb-4" id="search-results">
+                <!-- Header Title -->
+                <div class="grid-header text-center">
+                    <h6 class="m-0 text-white">No Data Found</h6>
+                </div>
+            </div> 
+        @endif
       </div>
 
       <!-- add popup  -->
@@ -184,7 +199,7 @@
 
 
           <!-- Select Options -->
-          <div class="row mb-3">
+          <!-- <div class="row mb-3">
             <label class="col-6 form-label">Select Location</label>
             <div class="col-6">
               <select class="form-select select2" name="location[]" multiple>
@@ -194,7 +209,19 @@
                 @endforeach
               </select>
             </div>
-          </div>
+          </div> -->
+
+      <div class="row mb-3">
+        <label class="col-6 form-label">Select Location</label>
+        <div class="col-6">
+            <select class="form-select select2" name="location[]" multiple data-placeholder="Select Location">
+            <option disabled selected hidden>Select Location</option>
+                @foreach ($locationsData as $locationItem)
+                    <option value="{{ $locationItem['id'] }}">{{ $locationItem['location'] }}</option>
+                @endforeach
+            </select>
+        </div>
+      </div>
 
           <div class="row mb-3">
             <label class="form-label col-6">Select Role</label>
