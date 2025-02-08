@@ -248,7 +248,7 @@
 @extends('layouts.footer')
 <script>
 $(document).ready(function () {
-    $("form").submit(function (e) {
+    $("#locationForm").submit(function (e) {
         let isValid = true; // Assume the form is valid initially
 
         $(".qty-input").each(function () {

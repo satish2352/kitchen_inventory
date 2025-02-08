@@ -8,7 +8,8 @@ use Session;
 use App\Models\{
 	Locations,
 	Category,
-	Unit
+	Unit,
+	ActivityLog
 };
 use Illuminate\Support\Facades\Mail;
 
@@ -55,6 +56,18 @@ class UnitRepository
 		$location_data->save();
 		$last_insert_id = $location_data->id;
 
+		$sess_user_id = session()->get('login_id');
+		$sess_user_name = session()->get('user_name');
+		$sess_location_id = session()->get('location_selected_id');
+				
+		$LogMsg= config('constants.SUPER_ADMIN.1125');
+
+		$FinalLogMessage = $sess_user_name.' '.$LogMsg;
+		$ActivityLogData = new ActivityLog();
+		$ActivityLogData->user_id = $sess_user_id;
+		$ActivityLogData->activity_message = $FinalLogMessage;
+		$ActivityLogData->save();
+
         return $last_insert_id;
 
 	}
@@ -65,7 +78,18 @@ class UnitRepository
 						->update([
 							'unit_name' => ucwords(strtolower($request['unit_name']))
 						]);
-		// dd($user_data);
+
+		$sess_user_id = session()->get('login_id');
+		$sess_user_name = session()->get('user_name');
+		$sess_location_id = session()->get('location_selected_id');
+				
+		$LogMsg= config('constants.SUPER_ADMIN.1126');
+
+		$FinalLogMessage = $sess_user_name.' '.$LogMsg;
+		$ActivityLogData = new ActivityLog();
+		$ActivityLogData->user_id = $sess_user_id;
+		$ActivityLogData->activity_message = $FinalLogMessage;
+		$ActivityLogData->save();
 		return $request->edit_id;
 	}
 
@@ -96,6 +120,18 @@ class UnitRepository
                 $is_deleted = $student_data->is_deleted == 1 ? 0 : 1;
                 $student_data->is_deleted = $is_deleted;
                 $student_data->save();
+
+				$sess_user_id = session()->get('login_id');
+		$sess_user_name = session()->get('user_name');
+		$sess_location_id = session()->get('location_selected_id');
+				
+		$LogMsg= config('constants.SUPER_ADMIN.1127');
+
+		$FinalLogMessage = $sess_user_name.' '.$LogMsg;
+		$ActivityLogData = new ActivityLog();
+		$ActivityLogData->user_id = $sess_user_id;
+		$ActivityLogData->activity_message = $FinalLogMessage;
+		$ActivityLogData->save();
 
         return $student_data;
 

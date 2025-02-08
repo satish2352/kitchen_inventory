@@ -6,7 +6,8 @@ use DB;
 use Illuminate\Support\Carbon;
 use Session;
 use App\Models\{
-	Locations
+	Locations,
+	ActivityLog
 };
 use Illuminate\Support\Facades\Mail;
 
@@ -55,6 +56,18 @@ class LocationRepository
 		$location_data->save();
 		$last_insert_id = $location_data->id;
 
+		$sess_user_id = session()->get('login_id');
+		$sess_user_name = session()->get('user_name');
+		$sess_location_id = session()->get('location_selected_id');
+				
+		$LogMsg= config('constants.SUPER_ADMIN.1116');
+
+		$FinalLogMessage = $sess_user_name.' '.$LogMsg;
+		$ActivityLogData = new ActivityLog();
+		$ActivityLogData->user_id = $sess_user_id;
+		$ActivityLogData->activity_message = $FinalLogMessage;
+		$ActivityLogData->save();
+
         return $last_insert_id;
 
 	}
@@ -64,9 +77,20 @@ class LocationRepository
 		$user_data = Locations::where('id',$request['edit_id']) 
 						->update([
 							'location' => ucwords(strtolower($request['location']))
-							// 'role' => $request['role']
 						]);
-		// dd($user_data);
+		
+		$sess_user_id = session()->get('login_id');
+		$sess_user_name = session()->get('user_name');
+		$sess_location_id = session()->get('location_selected_id');
+				
+		$LogMsg= config('constants.SUPER_ADMIN.1117');
+
+		$FinalLogMessage = $sess_user_name.' '.$LogMsg;
+		$ActivityLogData = new ActivityLog();
+		$ActivityLogData->user_id = $sess_user_id;
+		$ActivityLogData->activity_message = $FinalLogMessage;
+		$ActivityLogData->save();
+
 		return $request->edit_id;
 	}
 
@@ -97,6 +121,18 @@ class LocationRepository
                 $is_deleted = $student_data->is_deleted == 1 ? 0 : 1;
                 $student_data->is_deleted = $is_deleted;
                 $student_data->save();
+
+		$sess_user_id = session()->get('login_id');
+		$sess_user_name = session()->get('user_name');
+		$sess_location_id = session()->get('location_selected_id');
+				
+		$LogMsg= config('constants.SUPER_ADMIN.1118');
+
+		$FinalLogMessage = $sess_user_name.' '.$LogMsg;
+		$ActivityLogData = new ActivityLog();
+		$ActivityLogData->user_id = $sess_user_id;
+		$ActivityLogData->activity_message = $FinalLogMessage;
+		$ActivityLogData->save();		
 
         return $student_data;
 

@@ -10,12 +10,14 @@ use App\Models\{
 	Category,
 	Unit,
 	User,
-	UsersData
+	UsersData,
+	ActivityLog
 };
 use Illuminate\Support\Facades\Mail;
 
 class UserRepository
 {
+
     public function getUsersList() {
         $data_location = UsersData::select('id','name','location','user_role','email','password','created_at','email','phone')
 							->where('is_deleted', '0')
@@ -72,20 +74,25 @@ class UserRepository
 		$user_data->added_byId = $sess_user_id;
 		// $user_data->save();
 
-		// dd(json_encode($request['location']));
-		// // Store selected locations as a JSON array
-		// if ($request->has('location')) {
-		// 	$user_data->location = json_encode($request['location']); // Store as JSON
-		// }
-
 		 // Save selected locations as a comma-separated string
 		 if ($request->has('location')) {
 			$user_data->location = implode(',', $request['location']); // Join values with commas
 		}
 		$user_data->save();
-		// dd($user_data);
+
 		$last_insert_id = $user_data->id;
-// dd($user_data);
+
+		if($last_insert_id)
+		{
+		$LogMsg= config('constants.SUPER_ADMIN.1113');
+
+		$FinalLogMessage = $sess_user_name.' '.$LogMsg;
+		$ActivityLogData = new ActivityLog();
+		$ActivityLogData->user_id = $sess_user_id;
+		$ActivityLogData->activity_message = $FinalLogMessage;
+		$ActivityLogData->save();
+		}
+
         return $last_insert_id;
 
 	}
@@ -103,6 +110,18 @@ class UserRepository
 							'email' => $request['email'],
 							'password' => $request['password'],
 						]);
+
+		$sess_user_id = session()->get('login_id');
+		$sess_user_name = session()->get('user_name');
+		$sess_location_id = session()->get('location_selected_id');
+						
+		$LogMsg= config('constants.SUPER_ADMIN.1114');
+
+		$FinalLogMessage = $sess_user_name.' '.$LogMsg;
+		$ActivityLogData = new ActivityLog();
+		$ActivityLogData->user_id = $sess_user_id;
+		$ActivityLogData->activity_message = $FinalLogMessage;
+		$ActivityLogData->save();
 		// dd($user_data);
 		return $request->edit_id;
 	}
@@ -135,13 +154,24 @@ class UserRepository
                 $student_data->is_deleted = $is_deleted;
                 $student_data->save();
 
-        return $student_data;
+		// 		if($last_insert_id)
+		// {
 
-            // }
-            // return response()->json([
-            //     'status' => 'error',
-            //     'message' => 'Intern ID Card details not found.',
-            // ], 404);
+		$sess_user_id = session()->get('login_id');
+		$sess_user_name = session()->get('user_name');
+		$sess_location_id = session()->get('location_selected_id');
+
+
+		$LogMsg= config('constants.SUPER_ADMIN.1115');
+
+		$FinalLogMessage = $sess_user_name.' '.$LogMsg;
+		$ActivityLogData = new ActivityLog();
+		$ActivityLogData->user_id = $sess_user_id;
+		$ActivityLogData->activity_message = $FinalLogMessage;
+		$ActivityLogData->save();
+		// }
+
+        return $student_data;
 
     }
 
@@ -172,19 +202,32 @@ class UserRepository
                 $slide->is_approved = $is_active;
                 $slide->save();
 
+
+				$sess_user_id = session()->get('login_id');
+				$sess_user_name = session()->get('user_name');
+				$sess_location_id = session()->get('location_selected_id');
+
+
+				$LogMsg= config('constants.SUPER_ADMIN.1124');
+
+				$FinalLogMessage = $sess_user_name.' '.$LogMsg;
+				$ActivityLogData = new ActivityLog();
+				$ActivityLogData->user_id = $sess_user_id;
+				$ActivityLogData->activity_message = $FinalLogMessage;
+				$ActivityLogData->save();
                 return [
-                    'msg' => 'Slide updated successfully.',
+                    'msg' => 'User updated successfully.',
                     'status' => 'success'
                 ];
             }
 
             return [
-                'msg' => 'Slide not found.',
+                'msg' => 'User not found.',
                 'status' => 'error'
             ];
         } catch (\Exception $e) {
             return [
-                'msg' => 'Failed to update slide.',
+                'msg' => 'Failed to update User.',
                 'status' => 'error'
             ];
         }
@@ -203,6 +246,18 @@ class UserRepository
 							'email' => $request['email'],
 							'password' => $request['password'],
 						]);
+
+		$sess_user_id = session()->get('login_id');
+		$sess_user_name = session()->get('user_name');
+		$sess_location_id = session()->get('location_selected_id');
+
+		$LogMsg= config('constants.SUPER_ADMIN.1114');
+
+		$FinalLogMessage = $sess_user_name.' '.$LogMsg;
+		$ActivityLogData = new ActivityLog();
+		$ActivityLogData->user_id = $sess_user_id;
+		$ActivityLogData->activity_message = $FinalLogMessage;
+		$ActivityLogData->save();
 		// dd($user_data);
 		return $request->edit_id;
 	}
@@ -217,6 +272,18 @@ class UserRepository
                 $is_deleted = $student_data->is_deleted == 1 ? 0 : 1;
                 $student_data->is_deleted = $is_deleted;
                 $student_data->save();
+
+		$sess_user_id = session()->get('login_id');
+		$sess_user_name = session()->get('user_name');
+		$sess_location_id = session()->get('location_selected_id');
+				
+		$LogMsg= config('constants.SUPER_ADMIN.1115');
+
+		$FinalLogMessage = $sess_user_name.' '.$LogMsg;
+		$ActivityLogData = new ActivityLog();
+		$ActivityLogData->user_id = $sess_user_id;
+		$ActivityLogData->activity_message = $FinalLogMessage;
+		$ActivityLogData->save();			
 
         return $student_data;
 

@@ -28,9 +28,9 @@ class ShoppingListServices
                 $last_id = $this->repo->addKitchenInventoryByManager($request);
                 // dd($last_id);
                 if ($last_id) {
-                    return ['status' => 'success', 'msg' => 'Shopping List Data Added Successfully.'];
+                    return ['status' => 'success', 'msg' => 'Shopping List Data Updated Successfully.'];
                 } else {
-                    return ['status' => 'error', 'msg' => 'Shopping List Data get Not Added.'];
+                    return ['status' => 'error', 'msg' => 'Shopping List Data get Not Updated.'];
                 }  
 
         } catch (Exception $e) {

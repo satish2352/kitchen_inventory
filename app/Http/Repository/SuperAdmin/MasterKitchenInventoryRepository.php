@@ -11,7 +11,8 @@ use App\Models\{
 	Unit,
 	User,
 	Items,
-	MasterKitchenInventory
+	MasterKitchenInventory,
+	ActivityLog
 };
 use Illuminate\Support\Facades\Mail;
 
@@ -92,6 +93,19 @@ class MasterKitchenInventoryRepository
 		$user_data->save();
 		$last_insert_id = $user_data->id;
 		// dd($user_data);
+
+		$sess_user_id = session()->get('login_id');
+		$sess_user_name = session()->get('user_name');
+		$sess_location_id = session()->get('location_selected_id');
+						
+		$LogMsg= config('constants.SUPER_ADMIN.1111');
+
+		$FinalLogMessage = $sess_user_name.' '.$LogMsg;
+		$ActivityLogData = new ActivityLog();
+		$ActivityLogData->user_id = $sess_user_id;
+		$ActivityLogData->activity_message = $FinalLogMessage;
+		$ActivityLogData->save();
+
         return $last_insert_id;
 
 	}
@@ -108,6 +122,18 @@ class MasterKitchenInventoryRepository
 							'location_id' => $request['location_id'],
 							'quantity' => $request['quantity'],
 						]);
+
+		$sess_user_id = session()->get('login_id');
+		$sess_user_name = session()->get('user_name');
+		$sess_location_id = session()->get('location_selected_id');
+						
+		$LogMsg= config('constants.SUPER_ADMIN.1122');
+
+		$FinalLogMessage = $sess_user_name.' '.$LogMsg;
+		$ActivityLogData = new ActivityLog();
+		$ActivityLogData->user_id = $sess_user_id;
+		$ActivityLogData->activity_message = $FinalLogMessage;
+		$ActivityLogData->save();
 		// dd($user_data);
 		return $request->edit_id;
 	}
@@ -139,6 +165,18 @@ class MasterKitchenInventoryRepository
                 $is_deleted = $student_data->is_deleted == 1 ? 0 : 1;
                 $student_data->is_deleted = $is_deleted;
                 $student_data->save();
+
+		$sess_user_id = session()->get('login_id');
+		$sess_user_name = session()->get('user_name');
+		$sess_location_id = session()->get('location_selected_id');
+						
+		$LogMsg= config('constants.SUPER_ADMIN.1123');
+
+		$FinalLogMessage = $sess_user_name.' '.$LogMsg;
+		$ActivityLogData = new ActivityLog();
+		$ActivityLogData->user_id = $sess_user_id;
+		$ActivityLogData->activity_message = $FinalLogMessage;
+		$ActivityLogData->save();
 
         return $student_data;
 
