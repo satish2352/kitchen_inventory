@@ -19,7 +19,7 @@ class UserRepository
 {
 
     public function getUsersList() {
-        $data_location = UsersData::select('id','name','location','user_role','email','password','created_at','email','phone')
+        $data_location = UsersData::select('id','name','location','user_role','email','password','created_at','email','phone','is_approved')
 							->where('is_deleted', '0')
 							->orderBy('created_at', 'desc')
 							->get();
