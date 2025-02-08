@@ -245,66 +245,34 @@
     });
 </script>
 
-<!-- <script>
-    document.getElementById('location_selected').addEventListener('change', function() {
-        document.getElementById('locationForm').submit();
-    });
-</script> -->
-
-<!-- <script>
- $(document).ready(function() {
-  $('#location_selected').on('change', function() {
-    var locationId = $(this).val(); // Get the location ID from the button
-    // alert(locationId);
-    $.ajax({
-      url: '{{ route('get-location-wise-inventory') }}', // Your route to fetch the location data
-      type: 'GET',
-      data: {
-                locationId: locationId
-            },
-      success: function(response) {
-        var searchResultsContainer = $('#search-results');
-        searchResultsContainer.empty(); // Clear previous results
-
-        $.each(response, function(category, items) {
-                    var borderBox = `
-                        <div class="border-box">
-                            <div class="grid-header text-center">
-                                <h6 class="m-0 text-white">${category}</h6>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table table-striped">
-                                    <thead class="table-header">
-                                        <tr>
-                                            <th>Item</th>
-                                            <th>Qty</th>
-                                            <th>Unit</th>
-                                            <th>Price</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>`;
-
-                    $.each(items, function(index, item) {
-                        borderBox += `
-                            <tr>
-                                <td>${item.item_name}</td>
-                                <td>
-                                    <input type="text" name="quantity" class="form-control qty-input" />
-                                </td>
-                                <td>${item.unit_name}</td>
-                                <td>$${item.price}</td>
-                            </tr>`;
-                    });
-
-                    borderBox += `</tbody></table></div></div>`;
-                    searchResultsContainer.append(borderBox);
-                });
-      },
-      error: function() {
-        alert('Failed to load location data.');
-      }
-    });
-  });
-});
-</script>  -->
 @extends('layouts.footer')
+<script>
+$(document).ready(function () {
+    $("form").submit(function (e) {
+        let isValid = true; // Assume the form is valid initially
+
+        $(".qty-input").each(function () {
+            let value = $(this).val().trim();
+            
+            if (value === "" || isNaN(value) || parseFloat(value) <= 0) {
+                isValid = false;
+                $(this).addClass("is-invalid"); // Add Bootstrap invalid class for styling
+                $(this).after('<span class="error text-danger">Please enter a valid quantity.</span>');
+            } else {
+                $(this).removeClass("is-invalid");
+                $(this).next(".error").remove(); // Remove error message if input is valid
+            }
+        });
+
+        if (!isValid) {
+            e.preventDefault(); // Prevent form submission if validation fails
+        }
+    });
+
+    // Remove error message when user starts typing
+    $(document).on("input", ".qty-input", function () {
+        $(this).removeClass("is-invalid");
+        $(this).next(".error").remove();
+    });
+});
+</script>

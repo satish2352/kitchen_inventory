@@ -121,6 +121,7 @@
               <!-- Table Head -->
               <thead class="table-header">
                 <tr>
+                  <th>Sr. No.</th>
                   <th>Item</th>
                   <th>Qty</th>
                   <th>Unit</th>
@@ -132,9 +133,10 @@
               <!-- Table Body -->
               <tbody>
 
-
+              @php $srNo = 1; @endphp
               @foreach ($items as $item)
                 <tr>
+                <td>{{ $srNo++ }}</td>
                   <td>{{ $item->item_name }}</td>
                   <!-- <td>
                     <input type="text" name="quantity" class="form-control qty-input" />

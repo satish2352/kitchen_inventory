@@ -21,7 +21,8 @@ class UserRepository
 		$sess_user_id = session()->get('login_id');
         $data_location = UsersData::select('id','name','location','user_role','email','password','created_at','email','phone')
 							->where('is_deleted', '0')
-							->where('added_by', $sess_user_id)
+							->where('added_by', 2)
+							->where('added_byId', $sess_user_id)
 							->orderBy('created_at', 'desc')
 							->paginate(10);
 							// ->get();

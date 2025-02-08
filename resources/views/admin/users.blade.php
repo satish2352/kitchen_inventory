@@ -629,7 +629,7 @@ $.validator.addMethod("passwordStrength", function(value, element) {
           // minlength: "Category name must be at least 3 characters long"
         },
         phone: {
-          required: "Please enter phone number",
+          required: "Please enter mobile number",
           // number:"Please enter valid mobile number",
           minlength: "Phone number min length must be exactly 10 digits.",
           maxlength: "Phone number max length must be exactly 10 digits.",
