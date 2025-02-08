@@ -65,7 +65,7 @@ class LoginController extends Controller
                 // Decrypt the password stored in the database
                 // $decryptedPassword = Crypt::decryptString($get_user->password);
                 $decryptedPassword =$get_user['password'];
-                $decryptedPassword =$get_user['password'];
+                $added_by =$get_user['added_by'];
 
                 if ($added_by != '1' ) {
                 if ($isApproved == '1' ) {
