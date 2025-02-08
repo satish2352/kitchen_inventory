@@ -118,7 +118,7 @@
             <div class="border-box mb-4" id="search-results">
                 <!-- Header Title -->
                 <div class="grid-header text-center">
-                    <h6 class="m-0 text-white">Please Add Inventory For This location</h6>
+                    <h6 class="m-0 text-white">No Data Found</h6>
                 </div>
             </div>  
         @endif

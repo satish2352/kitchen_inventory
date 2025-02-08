@@ -16,7 +16,7 @@
         </div>
         <hr class="my-2" />
         <div class="text-center fw-light fs-sm">
-            Last active: Sun April 27, 2024 | 5:45 p.m.
+        {{ \Carbon\Carbon::parse($item->created_at)->format('D F j, Y | g:ia') }}
         </div>
     </div>
 @endforeach

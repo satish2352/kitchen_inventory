@@ -29,7 +29,7 @@ class LoginController extends Controller
     {
         // Define the validation rules
         $rules = [
-            'email' => 'required|exists:users_data,email', // Check if the user_name exists in the users_data table
+            'email' => 'required|exists:users_data,email|email', // Check if the user_name exists in the users_data table
             'password' => 'required',  // Make sure the password field is required
         ];
 
@@ -37,6 +37,7 @@ class LoginController extends Controller
         $messages = [   
             'email.required' => 'Please Enter email id.',
             'email.exists' => 'The provided email does not exist.',
+            'email.email' => 'Please provide a valid email address.',
             'password.required' => 'Please Enter Password.',
         ];
 
@@ -64,9 +65,10 @@ class LoginController extends Controller
                 // Decrypt the password stored in the database
                 // $decryptedPassword = Crypt::decryptString($get_user->password);
                 $decryptedPassword =$get_user['password'];
+                $decryptedPassword =$get_user['password'];
 
-
-                if ($isApproved == '1') {
+                if ($added_by != '1' ) {
+                if ($isApproved == '1' ) {
 
 
 
@@ -126,7 +128,54 @@ class LoginController extends Controller
                     ->withInput()
                     ->withErrors(['password' => 'This User Is Not Approved']);
             }
+        }else{
+            if ($password == $decryptedPassword) {
+                // Store the user data in session
+                $request->session()->put('email', $get_user['email']);
+                $request->session()->put('login_id', $get_user['id']);
+                $request->session()->put('user_role', $get_user['user_role']);
+                $request->session()->put('user_name', $get_user['name']);
+                // if($get_user['user_role'] != 1) {
 
+                    if($get_user['user_role'] != 1) {
+                        if(count(explode(",",$get_user['location']))  > 1 ) {
+                            $final_location  = Locations::whereIn('id',explode(",",$get_user['location']))->get()->toArray();
+                            $request->session()->put('location_for_user', $final_location);
+                        } else {
+                            
+                            $request->session()->put('location_selected', rtrim($get_user['location'],","));
+                            $final_location  = Locations::where('id',session('location_selected'))->first();
+                            $request->session()->put('location_selected_name', $final_location->location);
+                            $request->session()->put('location_selected_id', $final_location->id);
+                        }
+                    } else {
+                        $request->session()->put('location_selected_name', '');
+                        $request->session()->put('location_selected_id', '');
+                    }
+                    
+                // }
+               
+                // dd(session('location_for_user'));
+                // Return a successful login redirect
+                // dd("dsdfasfsafgsa");
+
+                // $msg = "Logged In Successfully";
+                // $status = "success";
+
+                // session()->flash('alert_status', $status);
+                // session()->flash('alert_msg', $msg);
+
+                $request->session()->regenerate();
+                return redirect(route('/dashboard'));  // Change to your dashboard route
+               
+            } else {
+                // Invalid password
+
+                return redirect('/')
+                    ->withInput()
+                    ->withErrors(['password' => 'You Entered Wrong Password']);
+            }
+        }    
 
 
 

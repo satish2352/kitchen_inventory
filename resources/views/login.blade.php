@@ -109,6 +109,14 @@
         margin-top: 5px;
       }
 
+      .error{
+        color: red;
+        font-size: 14px;
+        text-align: left;
+        margin-top: 5px;
+        font-weight:bold;
+      }
+
       @media only screen and (min-width: 320px) and (max-width: 375px) {
         form {
           background-color: white;
@@ -252,7 +260,50 @@ document.addEventListener("DOMContentLoaded", function () {
      }); 
  </script>
 
-<script type="text/javascript">
+<script>
+  $(document).ready(function () {
+    // Initialize the form validation
+    $('#frm_register').validate({
+      rules: {
+        email: {
+          required: true,          // Email field is required
+          email: true,             // Must be a valid email format
+          maxlength: 255,          // Email cannot be more than 255 characters
+        },
+        password: {
+          required: true,          // Password field is required
+          // minlength: 6,            // Password must be at least 6 characters long
+        }
+      },
+      messages: {
+        email: {
+          required: "Please enter your email address.",             // Custom message for the required rule
+          email: "Please enter a valid email address.",              // Custom message for invalid email format
+          maxlength: "Email address cannot exceed 255 characters."   // Custom message for maxlength rule
+        },
+        password: {
+          required: "Please enter your password.",                  // Custom message for the required rule
+          // minlength: "Password must be at least 6 characters long."  // Custom message for minlength rule
+        }
+      },
+      errorPlacement: function (error, element) {
+        // Append error message below the respective input field
+        error.insertAfter(element.closest('.wrapper'));
+      },
+      highlight: function (element, errorClass, validClass) {
+        // Highlight the input field with an error
+        $(element).closest('.wrapper').addClass('has-error');
+      },
+      unhighlight: function (element, errorClass, validClass) {
+        // Remove the highlight once the input is valid
+        $(element).closest('.wrapper').removeClass('has-error');
+      }
+    });
+  });
+</script>
+
+
+<!-- <script type="text/javascript">
   // Add custom validation method
 $.validator.addMethod("passwordStrength", function(value, element) {
     return this.optional(element) || /^(?=(?:[^a-zA-Z]*[a-zA-Z]){5,})(?=.*\d)(?=.*[@$!%*?&]).{6,}$/.test(value);
@@ -304,4 +355,4 @@ $.validator.addMethod("passwordStrength", function(value, element) {
         }
     });
 
-</script>
+</script> -->

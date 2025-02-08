@@ -773,7 +773,7 @@ $.validator.addMethod("passwordStrength", function(value, element) {
 
             if (query.length > 0) {
                 $.ajax({
-                    url: "{{ route('users_search') }}",  // Define your search route here
+                    url: "{{ route('users_search_admin') }}",  // Define your search route here
                     method: "GET",
                     data: { query: query },
                     success: function(response) {
@@ -791,7 +791,6 @@ $.validator.addMethod("passwordStrength", function(value, element) {
                 });
             } else {
                 // Clear the results if input is empty
-                // $('#search-results').html('');
                 $('#search-results').html(originalData);
             }
         });

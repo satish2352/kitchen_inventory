@@ -151,4 +151,6 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('/edit-admin-users', ['as' => 'edit-admin-users', 'uses' => 'App\Http\Controllers\Admin\UserController@editUser']);
     Route::post('/update-admin-users', ['as' => 'update-admin-users', 'uses' => 'App\Http\Controllers\Admin\UserController@updateUser']);
     Route::post('/delete-admin-users', ['as' => 'delete-admin-users', 'uses' => 'App\Http\Controllers\Admin\UserController@deleteUser']);
+    Route::get('/users_search_admin', ['as' => 'users_search_admin', 'uses' => 'App\Http\Controllers\Admin\UserController@searchUser']);
+
 });
