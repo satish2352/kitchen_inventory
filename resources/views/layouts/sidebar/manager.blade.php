@@ -29,7 +29,7 @@
             ><i class="bi bi-house-door-fill"></i> Dashboard</a
             >
          <a href="{{ route('get-location-wise-inventory') }}"
-            ><i class="bi bi-cart3"></i>Add Kitchen Inventory</a
+            ><i class="bi bi-cart3"></i>Update Kitchen Inventory</a
             >
 
             <a href="{{ route('logout') }}"

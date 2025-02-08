@@ -11,8 +11,8 @@
                     <i class="bi bi-arrow-90deg-left"></i>
                 </button>
             </a>
-            <h5 class="sub-title">Add Kitchen Inventory</h5>
-            <a href="approve-users.html">
+            <h5 class="sub-title">Update Kitchen Inventory</h5>
+            <a href="#">
                 <button class="btn btn-light">
                     <i class="bi bi-check2"></i>
                 </button>
@@ -30,17 +30,17 @@
             </div>
 
             <!-- Location Icon -->
-            <button class="btn btn-white mx-2">
+            <!-- <button class="btn btn-white mx-2">
                 <i class="bi bi-geo-alt-fill"></i>
-            </button>
+            </button> -->
 
             <!-- Bar Grid Icon -->
-            <button class="btn btn-white btn-delete">
+            <!-- <button class="btn btn-white btn-delete">
                 <i class="bi bi-filter"></i>
-            </button>
+            </button> -->
         </div>
         <div class="container-fluid px-3">
-            <a href="new-shopping-list.html">
+            <a href="#">
                 <button type="button" class="btn btn-outline-danger fs-6">
                     Show last submitted Kitchen list
                 </button>
@@ -70,7 +70,7 @@
             <!-- second if start -->
             @if($InventoryData['DataType']=='MasterData')
 
-            <form action="{{ route('add-kitchen-inventory-by-sa') }}" method="POST">
+            <form action="{{ route('add-kitchen-inventory-by-sa') }}" id="frm_register" method="POST">
             @csrf
             
             @if (!empty($InventoryData['data_location_wise_inventory']) && count($InventoryData['data_location_wise_inventory']) > 0)
@@ -102,7 +102,7 @@
                                 <tr>
                                     <td>{{ $item['item_name'] }}</td>
                                     <td>
-                                        <input type="text" name="quantity[]" class="form-control qty-input"   placeholder="QTY" />
+                                        <input type="text" name="quantity[]" class="form-control qty-input" placeholder="QTY"/>
                                     </td>
                                     <td>{{ $item['unit_name'] }}</td>
                                     <td>{{ $item['price'] }}</td>
@@ -121,7 +121,7 @@
         <div class="border-box mb-4" id="search-results">
                 <!-- Header Title -->
                 <div class="grid-header text-center">
-                    <h6 class="m-0 text-white">Please Enter Inventory For This location</h6>
+                    <h6 class="m-0 text-white">Please Add Inventory For This location</h6>
                 </div>
             </div>  
         @endif
@@ -133,7 +133,7 @@
 
             <!-- second if end and else start -->
             @elseif($InventoryData['DataType']=='LocationWiseData')
-            <form action="{{ route('update-kitchen-inventory-by-super-admin') }}" method="POST">
+            <form action="{{ route('update-kitchen-inventory-by-super-admin') }}" id="frm_register" method="POST">
             @csrf
             @if (!empty($InventoryData['data_location_wise_inventory']) && count($InventoryData['data_location_wise_inventory']) > 0)
             @foreach ($InventoryData['data_location_wise_inventory'] as $category => $items)
@@ -183,7 +183,7 @@
         <div class="border-box mb-4" id="search-results">
                 <!-- Header Title -->
                 <div class="grid-header text-center">
-                    <h6 class="m-0 text-white">Please Enter Inventory For This location</h6>
+                    <h6 class="m-0 text-white">Please Add Inventory For This location</h6>
                 </div>
             </div>  
         @endif
@@ -244,67 +244,192 @@
         }
     });
 </script>
-
-<!-- <script>
-    document.getElementById('location_selected').addEventListener('change', function() {
-        document.getElementById('locationForm').submit();
-    });
-</script> -->
-
-<!-- <script>
- $(document).ready(function() {
-  $('#location_selected').on('change', function() {
-    var locationId = $(this).val(); // Get the location ID from the button
-    // alert(locationId);
-    $.ajax({
-      url: '{{ route('get-location-wise-inventory') }}', // Your route to fetch the location data
-      type: 'GET',
-      data: {
-                locationId: locationId
-            },
-      success: function(response) {
-        var searchResultsContainer = $('#search-results');
-        searchResultsContainer.empty(); // Clear previous results
-
-        $.each(response, function(category, items) {
-                    var borderBox = `
-                        <div class="border-box">
-                            <div class="grid-header text-center">
-                                <h6 class="m-0 text-white">${category}</h6>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table table-striped">
-                                    <thead class="table-header">
-                                        <tr>
-                                            <th>Item</th>
-                                            <th>Qty</th>
-                                            <th>Unit</th>
-                                            <th>Price</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>`;
-
-                    $.each(items, function(index, item) {
-                        borderBox += `
-                            <tr>
-                                <td>${item.item_name}</td>
-                                <td>
-                                    <input type="text" name="quantity" class="form-control qty-input" />
-                                </td>
-                                <td>${item.unit_name}</td>
-                                <td>$${item.price}</td>
-                            </tr>`;
-                    });
-
-                    borderBox += `</tbody></table></div></div>`;
-                    searchResultsContainer.append(borderBox);
-                });
-      },
-      error: function() {
-        alert('Failed to load location data.');
-      }
-    });
-  });
-});
-</script>  -->
 @extends('layouts.footer')
+
+<script type="text/javascript">
+// $(document).ready(function () {
+//     $("#frm_register").validate({
+//         ignore: [], // Ensure jQuery Validate doesn't ignore hidden fields
+//         rules: {
+//             "quantity[]": {
+//                 required: true,  // Each field is required
+//                 number: true,    // Must be a valid number
+//                 min: 1           // Minimum value should be 1
+//             }
+//         },
+//         messages: {
+//             "quantity[]": {
+//                 required: "This field is required.",
+//                 number: "Please enter a valid number.",
+//                 min: "Quantity must be at least 1."
+//             }
+//         },
+//         errorElement: "span",
+//         errorClass: "error-text",
+//         highlight: function (element) {
+//             $(element).addClass("is-invalid").removeClass("is-valid");
+//         },
+//         unhighlight: function (element) {
+//             $(element).addClass("is-valid").removeClass("is-invalid");
+//         },
+//         errorPlacement: function (error, element) {
+//             error.insertAfter(element);
+//         },
+//         submitHandler: function (form) {
+//             let allFilled = true;
+//             var abc=1;
+//             $("input[name='quantity[]']").each(function () {
+//                 alert('ggggggggg',abc);
+//                 console.log('hhhhhhhhhh',$(this).val());
+                
+//                 if ($(this).val().trim() === "" || $(this).val() <= 0) {
+//                     allFilled = false;
+//                     $(this).addClass("is-invalid").removeClass("is-valid");
+//                     $(this).after('<span class="error-text">This field is required and must be at least 1.</span>');
+//                 } else {
+//                     $(this).removeClass("is-invalid").addClass("is-valid");
+//                     $(this).next(".error-text").remove();
+//                 }
+//             });
+
+//             if (allFilled) {
+//                 form.submit(); // Submit only if all quantity fields are valid
+//             }
+//         }
+//     });
+
+//     // Trigger validation when a user types or changes the quantity fields
+//     $(document).on("input", "input[name='quantity[]']", function () {
+//         $(this).valid(); // Validate the specific field
+//     });
+// });
+
+
+
+
+
+
+//   $(document).ready(function () {  
+    // Initialize validation for the add form
+//     $("#frm_register").validate({
+//         rules: {
+//         "quantity[]": {
+//             required: function(element) {
+//                 let isValid = true;
+//                 $("input[name='quantity[]']").each(function() {
+//                     // alert('kkkkkkkkkkkkk');
+//                     if ($(this).val() === "" || $(this).val() <= 0) {
+//                         isValid = true;
+//                     }
+//                 });
+//                 return isValid;
+//             },
+//             number: true,  // Must be a valid number
+//             min: 1         // Minimum value should be 1
+//         }
+//     },
+//         messages: {
+//             "quantity[]": {
+//                 required: "All quantity fields are required",
+//                 number: "Please enter a valid number.",
+//                 // min: "Quantity must be at least 1."
+//             }
+//         },
+//         errorElement: "span",
+//         errorClass: "error-text",
+//         highlight: function (element) {
+//             $(element).addClass("is-invalid").removeClass("is-valid");
+//         },
+//         unhighlight: function (element) {
+//             $(element).addClass("is-valid").removeClass("is-invalid");
+//         },
+//         errorPlacement: function(error, element) {
+//             error.insertAfter(element); // Places error message directly after the input
+//         }
+//     });
+
+//     $(document).on('change', '.qty-input', function() {
+//     // Trigger validation for all quantity[] fields
+//     $("#frm_register").valid(); // Validates the entire form
+// });
+
+    // Initialize validation for the edit form
+    // Initialize validation for the add form
+    // $("#editUserForm").validate({
+    //   rules: {
+    //     location: {
+    //       required: true
+    //       // minlength: 3
+    //     },
+    //     role: {
+    //       required: true
+    //       // minlength: 3
+    //     },
+    //     name: {
+    //       required: true
+    //       // minlength: 3
+    //     },
+    //     phone: {
+    //       required: true,
+    //       // number:true,
+    //       minlength: 10,
+    //       maxlength: 10,
+    //       validPhone: true
+    //       // pattern: /^[6-9]\d{9}$/
+    //       // minlength: 3
+    //     },
+    //     email: {
+    //       required: true,
+    //       email:true,
+    //       // minlength: 3
+    //     },
+    //     password: {
+    //       required: true
+    //       // minlength: 3
+    //     }
+        
+    //   },
+    //   messages: {
+    //     location: {
+    //       required: "Please select the location name"
+    //       // minlength: "Category name must be at least 3 characters long"
+    //     },
+    //     role: {
+    //       required: "Please select the role name"
+    //       // minlength: "Category name must be at least 3 characters long"
+    //     },
+    //     name: {
+    //       required: "Please enter user name"
+    //       // minlength: "Category name must be at least 3 characters long"
+    //     },
+    //     phone: {
+    //       required: "Please enter mobbile number",
+    //       // number:"Please enter valid mobile number",
+    //       minlength: "Mobile number min length must be exactly 10 digits.",
+    //       maxlength: "Mobile number max length must be exactly 10 digits.",
+    //       pattern: "Please enter a valid 10-digit mobile number starting with 6-9."
+    //       // minlength: "Category name must be at least 3 characters long"
+    //     },
+    //     email: {
+    //       required: "Please enter email ID",
+    //       required: "Please Enter valid email Id"
+    //       // minlength: "Category name must be at least 3 characters long"
+    //     },
+    //     password: {
+    //       required: "Please enter password"
+    //       // minlength: "Category name must be at least 3 characters long"
+    //     }
+    //   },
+    //   errorElement: "span",
+    //   errorClass: "error-text",
+    //   highlight: function (element) {
+    //     $(element).addClass("is-invalid").removeClass("is-valid");
+    //   },
+    //   unhighlight: function (element) {
+    //     $(element).addClass("is-valid").removeClass("is-invalid");
+    //   }
+    // });
+
+
+//   });
+</script>

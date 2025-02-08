@@ -22,7 +22,7 @@
         align-items: center;
         justify-content: center;
         min-height: 100vh;
-        background: linear-gradient(to right, #a80403, #f88383);
+        background: #f88383;
       }
       .btn-submit {
         background: linear-gradient(to right, #a80403, #f88383);

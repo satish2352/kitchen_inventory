@@ -13,9 +13,9 @@
             </a>
             <h5 class="sub-title">Submit Shopping List</h5>
             <a href="#">
-                <button class="btn btn-light">
+                <!-- <button class="btn btn-light">
                     <i class="bi bi-check2"></i>
-                </button>
+                </button> -->
             </a>
         </div>
     </div>
@@ -30,17 +30,17 @@
             </div>
 
             <!-- Location Icon -->
-            <button class="btn btn-white mx-2">
+            <!-- <button class="btn btn-white mx-2">
                 <i class="bi bi-geo-alt-fill"></i>
-            </button>
+            </button> -->
 
             <!-- Bar Grid Icon -->
-            <button class="btn btn-white btn-delete">
+            <!-- <button class="btn btn-white btn-delete">
                 <i class="bi bi-filter"></i>
-            </button>
+            </button> -->
         </div>
         <div class="container-fluid px-3">
-            <a href="new-shopping-list.html">
+            <a href="#">
                 <button type="button" class="btn btn-outline-danger fs-6">
                     Show last submitted Kitchen list
                 </button>
@@ -115,10 +115,10 @@
             <a type="submit" class="btn btn-success submitInventory">Submit Inventory</a>
         </div> -->
         @else
-        <div class="border-box mb-4" id="search-results">
+            <div class="border-box mb-4" id="search-results">
                 <!-- Header Title -->
                 <div class="grid-header text-center">
-                    <h6 class="m-0 text-white">Please Enter Inventory For This location</h6>
+                    <h6 class="m-0 text-white">Please Add Inventory For This location</h6>
                 </div>
             </div>  
         @endif
@@ -171,15 +171,24 @@
         {
             document.getElementById('locationForm').submit();
         }
+        // else{
+        //     $('#search-results').html('');
+        //     $('#search-results').html(`<div class="border-box mb-4" id="search-results">
+        //         <!-- Header Title -->
+        //         <div class="grid-header text-center">
+        //             <h6 class="m-0 text-white">Please Add Inventory For This location</h6>
+        //         </div>
+        //     </div>`);
+        // }
     });
 </script>
 
 <script type="text/javascript">
-    document.addEventListener("DOMContentLoaded", () => {
+    // document.addEventListener("DOMContentLoaded", () => {
       // const deleteButton = document.querySelector(".btn-delete");
       // const editButton = document.querySelector(".edit-btn");
       // const popup = document.getElementById("editPopup");
-      const submitInventoryButton = document.querySelector(".submitInventory");
+    //   const submitInventoryButton = document.querySelector(".submitInventory");
     //   const popupadd = document.getElementById("addPopup");
     //   // const confirmPopup = document.getElementById("confirmPopup");
     //   const cancelDeleteButton = document.getElementById("cancelDelete");
@@ -189,7 +198,7 @@
     //   const popupcategory = document.getElementById("editPopupCategory");
     //   const deleteButtonCategory = document.querySelector(".btn-delete-category");
     //   const confirmPopupCategory = document.getElementById("confirmPopupCategory");
-      const submitApproveButton = document.getElementById("submitApproveInventory");
+    //   const submitApproveButton = document.getElementById("submitApproveInventory");
 
 
 
@@ -226,10 +235,10 @@
       //   confirmPopup.style.display = "flex"; // Show the confirmation popup
       // });
 
-      submitInventoryButton.addEventListener("click", () => {
-        // popupcategory.style.display = "none"; // Close the bottom popup
-        confirmApprovePopup.style.display = "flex"; // Show the confirmation popup
-      });
+    //   submitInventoryButton.addEventListener("click", () => {
+    //     // popupcategory.style.display = "none"; // Close the bottom popup
+    //     confirmApprovePopup.style.display = "flex"; // Show the confirmation popup
+    //   });
     
       // Close Confirmation Popup on Cancel
     //   cancelDeleteButton.addEventListener("click", () => {
@@ -245,14 +254,14 @@
       //   // Add delete logic here
       // });
 
-      submitApproveButton.addEventListener("click", () => {
-        confirmApprovePopup.style.display = "none";
-                // $("#delete_id").val($("#edit-category-id").val());
-                $("#updateKitchenInventory").submit();
-        // alert("Category deleted successfully!");
-        // Add delete logic here
-      });
-    });
+    //   submitApproveButton.addEventListener("click", () => {
+    //     confirmApprovePopup.style.display = "none";
+    //             // $("#delete_id").val($("#edit-category-id").val());
+    //             $("#updateKitchenInventory").submit();
+    //     // alert("Category deleted successfully!");
+    //     // Add delete logic here
+    //   });
+    // });
  </script>
 
 <!-- <script>

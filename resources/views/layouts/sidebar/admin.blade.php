@@ -31,7 +31,7 @@
             <a href="{{ route('list-admin-users') }}"><i class="bi bi-person"></i> Manage User</a>
 
             <a href="{{ route('get-shopping-list-admin') }}"
-            ><i class="bi bi-house-door-fill"></i>Add Kitchen Inventory</a>
+            ><i class="bi bi-house-door-fill"></i>Update Kitchen Inventory</a>
 
             <a href="{{ route('get-submited-shopping-list-admin') }}"
             ><i class="bi bi-house-door-fill"></i>Submitted Shopping List</a>

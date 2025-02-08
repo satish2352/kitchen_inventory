@@ -74,6 +74,8 @@
                         <!-- Left Section -->
                         <div>
                             <div class="d-flex align-items-center">
+                                
+                                <span class="act-user me-2">{{ $loop->iteration }}) </span>
                                 <span class="act-user me-2">{{ $item->location }}</span>
                             </div>
                             <!-- <p class="mb-1">{{ $item->role }}</p> -->
@@ -88,6 +90,10 @@
                     </div>
                 </div>
             @endforeach
+        </div>
+
+        <div class="mt-3">
+            {{ $locations_data->links() }}
         </div>
     </div>
     <!-- add popup -->

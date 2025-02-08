@@ -123,9 +123,11 @@
 
               <!-- Right Section -->
               <div>
+              @if($item->user_role != '1')
                 <button class="btn btn-edit text-center shadow-sm edit-btn-user" data-id="{{ $item->id }}">
                   <i class="bi bi-pencil-square"></i> <br />Edit
                 </button>
+              @endif
               </div>
             </div>
 
@@ -139,8 +141,10 @@
           </div>
           
           @endforeach
+        </div>
 
-
+        <div class="mt-3">
+            {{ $locationsData->links() }}
         </div>
       </div>
 
@@ -184,17 +188,29 @@
 
 
           <!-- Select Options -->
-          <div class="row mb-3">
+          <!-- <div class="row mb-3">
             <label class="col-6 form-label">Select Location</label>
             <div class="col-6">
               <select class="form-select select2" name="location[]" multiple>
-                <option value="" disabled>Select Location</option>
+                <option value="">Select Location</option>
                 @foreach ($locationsData as $locationItem)
                   <option value="{{ $locationItem['id'] }}">{{ $locationItem['location'] }}</option>
                 @endforeach
               </select>
             </div>
-          </div>
+          </div> -->
+
+          <div class="row mb-3">
+        <label class="col-6 form-label">Select Location</label>
+        <div class="col-6">
+            <select class="form-select select2" name="location[]" multiple data-placeholder="Select Location">
+            <option disabled selected hidden>Select Location</option>
+                @foreach ($locationsData as $locationItem)
+                    <option value="{{ $locationItem['id'] }}">{{ $locationItem['location'] }}</option>
+                @endforeach
+            </select>
+        </div>
+      </div>
 
           <div class="row mb-3">
             <label class="form-label col-6">Select Role</label>

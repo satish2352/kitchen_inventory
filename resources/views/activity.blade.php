@@ -19,10 +19,11 @@
           </a>
           <h5 class="sub-title">Activity</h5>
           <!-- person -->
-          <div class="person edit-btn">
+          <div></div>
+          <!-- <div class="person edit-btn">
             <i class="bi bi-person"></i>
             <span>Amar Deep</span>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="filter">
@@ -49,6 +50,7 @@
       <!-- user requestion section  -->
       <div class="user-request">
     <div class="container-fluid px-3">
+    @if (!empty($ActiviyLogData) && count($ActiviyLogData) > 0)
         @foreach ($ActiviyLogData as $item)
             <!-- User Activity Box -->
             <div class="user-request-box p-3 shadow rounded mb-2">
@@ -69,6 +71,15 @@
         <div class="mt-3">
             {{ $ActiviyLogData->links() }}
         </div>
+    @else
+        <div class="border-box mb-4" id="search-results">
+            <!-- Header Title -->
+            <div class="grid-header text-center">
+                <h6 class="m-0 text-white">No Activity Data Found</h6>
+            </div>
+        </div>    
+    @endif
+        
     </div>
 </div>
 

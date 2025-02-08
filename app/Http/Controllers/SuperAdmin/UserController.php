@@ -31,8 +31,9 @@ class UserController extends Controller {
                             ->where('is_deleted', '0')
                             ->select('id','location')
                             ->orderBy('location', 'asc')
-                            ->get()
-                            ->toArray();
+                            // ->get()
+                            ->paginate(10);
+                            // ->toArray();
         // dd($projects);
         return view('users',compact('user_data','locationsData'));
     }

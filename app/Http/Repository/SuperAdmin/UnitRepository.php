@@ -19,7 +19,8 @@ class UnitRepository
 							)
 							->where('is_deleted', '0')
 							->orderBy('unit_name', 'asc')
-							->get();
+							->paginate(1);
+							// ->get();
 							
 		return $data_location;
 	}

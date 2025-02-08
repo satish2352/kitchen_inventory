@@ -86,7 +86,7 @@
               <!-- Left Section -->
               <div>
                 <div class="d-flex flex-column">
-                  <span class="act-user me-2">#{{ $loop->iteration }}</span>
+                  <span class="act-user me-2">{{ $loop->iteration }}</span>
                   <span class="act-user me-2">{{ $item->category_name }}</span>
                 </div>
                 <p class="mb-1 activity-p">{{ $item->created_at->format('Y-m-d') }}
@@ -103,6 +103,10 @@
           </div>
         @endforeach
           
+        </div>
+
+        <div class="mt-3">
+            {{ $category_data->links() }}
         </div>
       </div>
 

@@ -33,7 +33,7 @@ class ActivityLogController extends Controller
     $ActiviyLogData = ActivityLog::select('id', 'activity_message', 'created_at')
         ->orderBy('created_at', 'desc') // Optional: Sort by latest first
         ->paginate(10); // Change 10 to the number of items per page
-
+// dd($ActiviyLogData);
     return view('activity', compact('ActiviyLogData'));
 }
 

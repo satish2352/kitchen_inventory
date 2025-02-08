@@ -62,11 +62,13 @@
 
           <!-- Table -->
           <div class="table-responsive">
+
+          @if (!empty($unit_data) && count($unit_data) > 0)
             <table class="table table-striped">
               <!-- Table Head -->
               <thead class="table-header">
                 <tr>
-                  <th><b>#</b></th>
+                  <th><b>Sr. No.</b></th>
                   <th><b>Date</b></th>
                   <th><b>Units</b></th>
                   <th><b>Action</b></th>
@@ -75,9 +77,13 @@
               <!-- Table Body -->
               <tbody id="search-results">
 
+              @php
+                  $serialNumber = ($unit_data->currentPage() - 1) * $unit_data->perPage() + 1;
+              @endphp
+
               @foreach ($unit_data as $item)
                 <tr>
-                  <td>{{ $loop->iteration }}</td>
+                  <td>{{ $serialNumber++ }}</td>
                   <td>{{ $item->created_at }}</td>
                   <td>{{ $item->unit_name }}</td>
                   <td>
@@ -90,6 +96,20 @@
               @endforeach
               </tbody>
             </table>
+
+            <div class="mt-3">
+            {{ $unit_data->links() }}
+        </div>
+          @else
+            <div class="border-box mb-4" id="search-results">
+                          <!-- Header Title -->
+                          <div class="grid-header text-center">
+                              <h6 class="m-0 text-white">No Data Found</h6>
+                          </div>
+                      </div> 
+          
+        @endif  
+
           </div>
         </div>
       </div>

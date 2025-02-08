@@ -47,26 +47,25 @@
                   class="form-control"
                   placeholder="Search..."
                   aria-label="Search"
-                  id="search-query"
-              />
+                  id="search-query"/>
               <button class="btn btn-srh" type="button">
                   <i class="bi bi-search"></i>
               </button>
           </div>
 
           <!-- Location Icon -->
-          <button class="btn btn-white mx-2">
+          <!-- <button class="btn btn-white mx-2">
             <i class="bi bi-geo-alt-fill"></i>
-          </button>
+          </button> -->
 
           <!-- Bar Grid Icon -->
-          <button class="btn btn-white btn-category">
+          <!-- <button class="btn btn-white btn-category">
             <i class="bi bi-filter"></i>
-          </button>
+          </button> -->
         </div>
       </div>
       <div class="container-fluid px-3">
-        <div class="d-flex align-items-center justify-content-between">
+        <!-- <div class="d-flex align-items-center justify-content-between">
           <label>Show last submitted Kitchen list</label>
           <div class="form-check form-switch">
             <input
@@ -76,7 +75,7 @@
               checked="checked"
             />
           </div>
-        </div>
+        </div> -->
         <!-- <div class="d-flex align-items-center justify-content-between">
           <label>Select Multiplier</label>
           <button type="button" class="btn btn-select rounded-5 btn-sm">
@@ -163,7 +162,7 @@
         <div class="border-box mb-4" id="search-results">
                 <!-- Header Title -->
                 <div class="grid-header text-center">
-                    <h6 class="m-0 text-white">Please Enter Inventory For This location</h6>
+                    <h6 class="m-0 text-white">Please Add Inventory For This location</h6>
                 </div>
             </div>  
         @endif

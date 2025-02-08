@@ -11,7 +11,7 @@
                     <i class="bi bi-arrow-90deg-left"></i>
                 </button>
             </a>
-            <h5 class="sub-title">Add Kitchen Inventory</h5>
+            <h5 class="sub-title">Update Kitchen Inventory</h5>
             <a href="#">
                 <button class="btn btn-light">
                     <i class="bi bi-check2"></i>
@@ -30,17 +30,17 @@
             </div>
 
             <!-- Location Icon -->
-            <button class="btn btn-white mx-2">
+            <!-- <button class="btn btn-white mx-2">
                 <i class="bi bi-geo-alt-fill"></i>
-            </button>
+            </button> -->
 
             <!-- Bar Grid Icon -->
-            <button class="btn btn-white btn-delete">
+            <!-- <button class="btn btn-white btn-delete">
                 <i class="bi bi-filter"></i>
-            </button>
+            </button> -->
         </div>
         <div class="container-fluid px-3">
-            <a href="new-shopping-list.html">
+            <a href="#">
                 <button type="button" class="btn btn-outline-danger fs-6">
                     Show last submitted Kitchen list
                 </button>
@@ -116,7 +116,7 @@
         <div class="border-box mb-4" id="search-results">
                 <!-- Header Title -->
                 <div class="grid-header text-center">
-                    <h6 class="m-0 text-white">Please Enter Inventory For This location</h6>
+                    <h6 class="m-0 text-white">No List Found For Kitchen Inventory. Please Contact To Super Admin</h6>
                 </div>
             </div>  
         @endif

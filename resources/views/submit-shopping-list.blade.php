@@ -34,17 +34,17 @@
           </div>
 
           <!-- Location Icon -->
-          <button class="btn btn-white mx-2">
+          <!-- <button class="btn btn-white mx-2">
             <i class="bi bi-geo-alt-fill"></i>
-          </button>
+          </button> -->
 
           <!-- Bar Grid Icon -->
-          <button class="btn btn-white btn-delete">
+          <!-- <button class="btn btn-white btn-delete">
             <i class="bi bi-filter"></i>
-          </button>
+          </button> -->
         </div>
         <div class="container-fluid px-3">
-          <a href="new-shopping-list.html">
+          <a href="#">
             <button type="button" class="btn btn-outline-danger fs-6">
               Show last submitted shopping list
             </button>

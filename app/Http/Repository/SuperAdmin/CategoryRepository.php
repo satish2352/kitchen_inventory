@@ -19,7 +19,8 @@ class CategoryRepository
 							)
 							->where('is_deleted', '0')
 							->orderBy('category_name', 'asc')
-							->get();
+							->paginate(10);
+							// ->get();
 							
 		return $data_location;
 	}
