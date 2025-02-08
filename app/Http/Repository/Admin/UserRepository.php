@@ -19,7 +19,8 @@ class UserRepository
 {
     public function getUsersList() {
 		$sess_user_id = session()->get('login_id');
-        $data_location = UsersData::select('id','name','location','user_role','email','password','created_at','email','phone','is_approved')
+        $data_location = UsersData::select('id','name','location','user_role','email','password','created_at','email','phone',
+		'is_approved','added_by','user_role')
 							->where('is_deleted', '0')
 							->where('added_by', 2)
 							->where('added_byId', $sess_user_id)
