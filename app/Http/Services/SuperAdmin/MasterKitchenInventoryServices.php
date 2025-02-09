@@ -41,9 +41,9 @@ class MasterKitchenInventoryServices
                 $last_id = $this->repo->addItem($request);
                 // dd($last_id);
                 if ($last_id) {
-                    return ['status' => 'success', 'msg' => 'Kitchen Inventory Updated Successfully.'];
+                    return ['status' => 'success', 'msg' => 'Master Inventory Updated Successfully.'];
                 } else {
-                    return ['status' => 'error', 'msg' => 'Kitchen Inventory get Not Added.'];
+                    return ['status' => 'error', 'msg' => 'Master Inventory get Not Added.'];
                 }  
             // }
 
@@ -60,16 +60,16 @@ class MasterKitchenInventoryServices
 
     public function updateItem($request) {
         $user_register_id = $this->repo->updateItem($request);
-        return ['status'=>'success','msg'=>'Kitchen Inventory Updated Successfully.'];
+        return ['status'=>'success','msg'=>'Master Inventory Updated Successfully.'];
     }
 
     public function deleteItem($id){
         try {
             $delete = $this->repo->deleteItem($id);
             if ($delete) {
-                return ['status' => 'success', 'msg' => 'Kitchen Inventory Deleted Successfully.'];
+                return ['status' => 'success', 'msg' => 'Master Inventory Deleted Successfully.'];
             } else {
-                return ['status' => 'error', 'msg' => 'Kitchen Inventory Not Deleted.'];
+                return ['status' => 'error', 'msg' => 'Master Inventory Not Deleted.'];
             }  
         } catch (Exception $e) {
             return ['status' => 'error', 'msg' => $e->getMessage()];

@@ -88,6 +88,7 @@
                         <!-- Table Head -->
                         <thead class="table-header">
                             <tr>
+                                <th>Sr. No.</th>
                                 <th>Item</th>
                                 <th>Qty</th>
                                 <th>Unit</th>
@@ -96,10 +97,12 @@
                         </thead>
                         <!-- Table Body -->
                         <tbody>
+                        @php $srNo = 1; @endphp
                             @foreach ($items as $item)
                             <input type="hidden" class="form-control" name="master_inventory_id[]" id="master_inventory_id" value="{{ $item['id'] }}"/>
 
                                 <tr>
+                                    <td> {{ $srNo++ }} </td>
                                     <td>{{ $item['item_name'] }}</td>
                                     <td>
                                         <input type="text" name="quantity[]" class="form-control qty-input" placeholder="QTY"/>
@@ -150,6 +153,7 @@
                         <!-- Table Head -->
                         <thead class="table-header">
                             <tr>
+                                <th>Sr. No.</th>
                                 <th>Item</th>
                                 <th>Qty</th>
                                 <th>Unit</th>
@@ -158,10 +162,13 @@
                         </thead>
                         <!-- Table Body -->
                         <tbody>
+                            @php $srNo = 1; @endphp
                             @foreach ($items as $item)
-                            <input type="hidden" class="form-control" name="master_inventory_id[]" id="master_inventory_id" value="{{ $item['id'] }}"/>
+                            <input type="hidden" class="form-control" name="location_wise_inventory_id[]" id="location_wise_inventory_id" value="{{ $item['locationWiseId'] }}"/>
+                            <!-- <input type="hidden" class="form-control" name="master_inventory_id[]" id="master_inventory_id" value="{{ $item['id'] }}"/> -->
 
                                 <tr>
+                                <td> {{ $srNo++ }} </td>
                                     <td>{{ $item['item_name'] }}</td>
                                     <td>
                                         <input type="text" name="quantity[]" class="form-control qty-input" value="{{ $item['quantity'] }}"  placeholder="QTY" />

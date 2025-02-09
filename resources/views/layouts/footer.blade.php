@@ -17,10 +17,13 @@
  </script>
  <script>
   $(document).ready(function() {
-    $('#locationSelect').select2({
+    $('.select2').select2({
+      minimumResultsForSearch: 0,
       placeholder: "Select Location", // Optional placeholder
       allowClear: true,// Optional to allow clearing the selection
-      width: '100%'
+      width: '100%',
+      closeOnSelect: false,
+      tags: false
     });
   });
 </script>

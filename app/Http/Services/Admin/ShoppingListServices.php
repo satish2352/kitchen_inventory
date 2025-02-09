@@ -1,7 +1,7 @@
 <?php
-namespace App\Http\Services\Manager;
+namespace App\Http\Services\Admin;
 
-use App\Http\Repository\Manager\ShoppingListRepository;
+use App\Http\Repository\Admin\ShoppingListRepository;
 
 
 use App\Models\
@@ -22,10 +22,10 @@ class ShoppingListServices
         $this->repo = new ShoppingListRepository();
     }
 
-    public function addKitchenInventoryByManager($request){
+    public function addKitchenInventoryByAdmin($request){
         try {
 
-                $pdfBase64 = $this->repo->addKitchenInventoryByManager($request);
+                $pdfBase64 = $this->repo->addKitchenInventoryByAdmin($request);
                 // dd($last_id);
                 if ($pdfBase64) {
                     return ['status' => 'success', 
@@ -47,8 +47,8 @@ class ShoppingListServices
         return $data_location;
     }
 
-    public function updateKitchenInventoryByManager($request) {
-        $pdfBase64 = $this->repo->updateKitchenInventoryByManager($request);
+    public function updateKitchenInventoryByAdmin($request) {
+        $pdfBase64 = $this->repo->updateKitchenInventoryByAdmin($request);
         return [
             'status' => 'success',
             'msg' => 'Master Kitchen Inventory Updated Successfully.',

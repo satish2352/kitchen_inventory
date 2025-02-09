@@ -22,11 +22,11 @@
     <div class="inner-top container-fluid p-3">
         <!-- Top Bar -->
         <div class="d-flex justify-content-between align-items-center">
-          <a href="{{ route('/dashboard') }}">
-            <button class="btn btn-light">
-              <i class="bi bi-arrow-90deg-left"></i>
-            </button>
-          </a>
+            <a href="{{ route('/dashboard') }}">
+                <button class="btn btn-light">
+                    <i class="bi bi-arrow-90deg-left"></i>
+                </button>
+            </a>
             <h5 class="sub-title">Locations</h5>
             <button class="btn btn-light add-btn">
                 <i class="bi bi-plus-lg"></i>
@@ -44,17 +44,12 @@
                 </button>
             </div> -->
             <div class="input-group search-input">
-              <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Search..."
-                  aria-label="Search"
-                  id="search-query"
-              />
-              <button class="btn btn-srh" type="button">
-                  <i class="bi bi-search"></i>
-              </button>
-          </div>
+                <input type="text" class="form-control" placeholder="Search..." aria-label="Search"
+                    id="search-query" />
+                <button class="btn btn-srh" type="button">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
 
             <!-- Location Icon -->
             <button class="btn btn-white mx-2">
@@ -74,7 +69,7 @@
                         <!-- Left Section -->
                         <div>
                             <div class="d-flex align-items-center">
-                                
+
                                 <span class="act-user me-2">{{ $loop->iteration }}) </span>
                                 <span class="act-user me-2">{{ $item->location }}</span>
                             </div>
@@ -113,23 +108,11 @@
                     <div class="col-6">
                         <input type="text" class="form-control" placeholder="Enter Location Name" name="location"
                             style="text-transform: capitalize;" />
-                    @if ($errors->has('location'))
-                        <span class="red-text"><?php echo $errors->first('location', ':message'); ?></span>
-                    @endif
+                        @if ($errors->has('location'))
+                            <span class="red-text"><?php echo $errors->first('location', ':message'); ?></span>
+                        @endif
                     </div>
                 </div>
-
-                <!-- Select Role -->
-                <!-- <div class="row mb-3">
-                    <label class="form-label col-6">Select Role:</label>
-                    <div class="col-6">
-                      <select class="form-select" name="role">
-                        <option>Admin</option>
-                        <option>Editor</option>
-                        <option>Viewer</option>
-                      </select>
-                    </div>
-                  </div> -->
 
                 <hr />
                 <div class="d-flex justify-content-around">
@@ -203,22 +186,22 @@
     </div>
 
     <!-- Delete Confirmation Popup -->
-    
+
 </div>
 
 <div id="confirmPopup" class="confirm-popup-container" style="display:none">
-        <div class="confirm-popup-content">
-            <h4 class="confirm-popup-title">Please Confirm</h4>
-            <p class="confirm-popup-text">
-                Are you sure to delete this Location? <br />
-                this location will not recover back
-            </p>
-            <div class="d-flex justify-content-around mt-4 confrm">
-                <button id="cancelDelete" class="btn br">NO</button>
-                <button id="confirmDelete" class="btn">YES</button>
-            </div>
+    <div class="confirm-popup-content">
+        <h4 class="confirm-popup-title">Please Confirm</h4>
+        <p class="confirm-popup-text">
+            Are you sure to delete this Location? <br />
+            this location will not recover back
+        </p>
+        <div class="d-flex justify-content-around mt-4 confrm">
+            <button id="cancelDelete" class="btn br">NO</button>
+            <button id="confirmDelete" class="btn">YES</button>
         </div>
     </div>
+</div>
 
 <form method="POST" action="{{ url('/delete-locations') }}" id="deleteform">
     @csrf
@@ -278,9 +261,9 @@
         });
 
         // Close Confirmation Popup on Cancel
-      cancelDeleteButton.addEventListener("click", () => {
-        confirmPopup.style.display = "none";
-      });
+        cancelDeleteButton.addEventListener("click", () => {
+            confirmPopup.style.display = "none";
+        });
 
     });
 </script>
@@ -304,7 +287,7 @@
                     // alert('ppppppppppppppppppp');
                     // Populate the popup with the fetched data
                     $('#edit-location').val(response.location_data
-                    .location); // Set location value
+                        .location); // Set location value
                     // $('#edit-role').val(response.location_data.role); // Set role value
                     $('#edit-location-id').val(response.location_data.id); // Set role value
 
@@ -380,32 +363,32 @@
 
 
     });
-
 </script>
 
 <script>
     $(document).ready(function() {
-      var originalData = $('#search-results').html();
+        var originalData = $('#search-results').html();
         // Bind keyup event to the search input
         $('#search-query').on('keyup', function() {
-            var query = $(this).val().trim();  // Get the value entered in the search box
+            var query = $(this).val().trim(); // Get the value entered in the search box
 
             if (query.length > 0) {
                 $.ajax({
-                    url: "{{ route('search-locations') }}",  // Define your search route here
+                    url: "{{ route('search-locations') }}", // Define your search route here
                     method: "GET",
-                    data: { query: query },
+                    data: {
+                        query: query
+                    },
                     success: function(response) {
-                        if(response.length > 0)
-                    {
-                        // Clear the previous results
-                        $('#search-results').html('');
-                        
-                        // Append the new search results
-                        $('#search-results').html(response);
-                    }else{
-                        $('#search-results').html('No Data Found');
-                    }
+                        if (response.length > 0) {
+                            // Clear the previous results
+                            $('#search-results').html('');
+
+                            // Append the new search results
+                            $('#search-results').html(response);
+                        } else {
+                            $('#search-results').html('No Data Found');
+                        }
                     }
                 });
             } else {

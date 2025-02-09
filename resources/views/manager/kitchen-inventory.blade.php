@@ -2,6 +2,7 @@
 @include('layouts.sidebar')
 
 @yield('content')
+
 <div class="main">
     <div class="inner-top container-fluid p-3">
         <!-- Top Bar -->
@@ -159,7 +160,8 @@
                         <!-- Table Body -->
                         <tbody>
                             @foreach ($items as $item)
-                            <input type="hidden" class="form-control" name="master_inventory_id[]" id="master_inventory_id" value="{{ $item['id'] }}"/>
+                            <input type="hidden" class="form-control" name="location_wise_inventory_id[]" id="location_wise_inventory_id" value="{{ $item['locationWiseId'] }}"/>
+                            <!-- <input type="hidden" class="form-control" name="master_inventory_id[]" id="master_inventory_id" value="{{ $item['masterInventoryId'] }}"/> -->
 
                                 <tr>
                                     <td>{{ $item['item_name'] }}</td>
@@ -244,6 +246,8 @@
     }
     });
 </script>
+
+
 
 <!-- <script>
     document.getElementById('location_selected').addEventListener('change', function() {

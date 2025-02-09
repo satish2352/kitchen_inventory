@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Repository\Manager;
+namespace App\Http\Repository\Admin;
 
 use Illuminate\Database\QueryException;
 use DB;
@@ -40,7 +40,7 @@ class ShoppingListRepository
 		return $data_location;
 	}
 
-    public function addKitchenInventoryByManager($request)
+    public function addKitchenInventoryByAdmin($request)
 	{
 		$sess_user_id = session()->get('login_id');
 		$sess_user_name = session()->get('user_name');
@@ -55,7 +55,7 @@ class ShoppingListRepository
 		$LocationWiseInventoryData->inventory_id = $inventoryIds[$index];
 		$LocationWiseInventoryData->location_id = $sess_location_id;
 		$LocationWiseInventoryData->quantity = $quantities[$index];
-		$LocationWiseInventoryData->approved_by = 3;
+		$LocationWiseInventoryData->approved_by = 2;
 		$LocationWiseInventoryData->save();
 		$last_insert_id = $LocationWiseInventoryData->id;
 		}
@@ -78,7 +78,7 @@ class ShoppingListRepository
 		$InventoryHistoryData->inventory_id = $inventoryIds[$index];
 		$InventoryHistoryData->location_id = $sess_location_id;
 		$InventoryHistoryData->quantity = $quantities[$index];
-		$InventoryHistoryData->approved_by = 3;
+		$InventoryHistoryData->approved_by = 2;
 		$InventoryHistoryData->save();
 
 		$LocationsData = Locations::find($sess_location_id);
@@ -116,7 +116,7 @@ class ShoppingListRepository
 		return $responseData;
 	}
 
-	public function updateKitchenInventoryByManager($request) {
+public function updateKitchenInventoryByAdmin($request) {
 		$sess_user_id = session()->get('login_id');
 		$sess_user_name = session()->get('user_name');
 		$sess_location_id = session()->get('location_selected_id');
@@ -126,7 +126,8 @@ class ShoppingListRepository
 		foreach ($inventoryIds as $index => $inventoryId) {
 			LocationWiseInventory::where('id', $inventoryId)
 				->update([
-					'quantity' => $quantities[$index]
+					'quantity' => $quantities[$index],
+					'approved_by' => '2',
 				]);
 
 				
@@ -142,7 +143,7 @@ class ShoppingListRepository
 		];
 		}
 	// dd($historyData);
-		$LogMsg = config('constants.MANAGER.1112');
+		$LogMsg = config('constants.ADMIN.1112');
 		$FinalLogMessage = $sess_user_name . ' ' . $LogMsg;
 		$ActivityLogData = new ActivityLog();
 		$ActivityLogData->user_id = $sess_user_id;
@@ -156,7 +157,7 @@ class ShoppingListRepository
 		$InventoryHistoryData->inventory_id = $inventoryIds[$index];
 		$InventoryHistoryData->location_id = $sess_location_id;
 		$InventoryHistoryData->quantity = $quantities[$index];
-		$InventoryHistoryData->approved_by = 3;
+		$InventoryHistoryData->approved_by = 2;
 		$InventoryHistoryData->save();
 
 		$LocationsData = Locations::find($sess_location_id);
@@ -186,57 +187,5 @@ class ShoppingListRepository
 	}
 	
 
-    public function updateItem($request)
-	{
-		// dd($request);
-		$user_data = MasterKitchenInventory::where('id',$request['edit_id']) 
-						->update([
-							'item_name' => $request['item_name'],
-							'category' => $request['category'],
-							'unit' => $request['unit'],
-							'price' => $request['price'],
-							'location_id' => $request['location_id'],
-							'quantity' => $request['quantity'],
-						]);
 
-		$LogMsg= config('constants.MANAGER.1112');
-
-			$FinalLogMessage = $sess_user_name.' '.$LogMsg;
-			$ActivityLogData = new ActivityLog();
-			$ActivityLogData->user_id = $sess_user_id;
-			$ActivityLogData->activity_message = $FinalLogMessage;
-			$ActivityLogData->save();	
-						
-						
-		// return $request->edit_id;
-
-
-		$htmlContent = view('inventory_history_pdf')->render();
-
-		$pdf = PDF::loadHTML($htmlContent);
-		// dd($pdf);
-        // return $pdf->download('inventory_history.pdf');
-		return $pdf->download('inventory_history.pdf');
-	}
-
-    public function deleteItem($id)
-    {
-        $all_data=[];
-
-        $student_data = MasterKitchenInventory::find($id);
-// dd($student_data);
-                // Delete the record from the database
-                $is_deleted = $student_data->is_deleted == 1 ? 0 : 1;
-                $student_data->is_deleted = $is_deleted;
-                $student_data->save();
-
-        return $student_data;
-
-            // }
-            // return response()->json([
-            //     'status' => 'error',
-            //     'message' => 'Intern ID Card details not found.',
-            // ], 404);
-
-    }
 }

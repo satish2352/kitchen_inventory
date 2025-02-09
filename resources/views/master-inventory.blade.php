@@ -3,6 +3,13 @@
 
 @yield('content')
 
+<!-- <style>
+    /* Custom styling for select dropdown */
+    .select2-dropdown {
+        max-height: 200px !important; /* Set a max height */
+        overflow-y: auto !important; /* Enable scrolling */
+    }
+</style> -->
 
 <div class="main">
       <div class="inner-top container-fluid p-3">
@@ -191,7 +198,7 @@
           <hr />
 
           <!-- Select Options -->
-          <div class="row mb-3">
+          <!-- <div class="row mb-3">
             <label class="col-6 form-label">Select Location</label>
             <div class="col-6">
               <select class="form-select select2" name="location_id">
@@ -201,10 +208,23 @@
                 @endforeach
               </select>
             </div>
-          </div>
+          </div> -->
+
+          <div class="row mb-3">
+                    <label class="col-6 form-label">Select Location</label>
+                    <div class="col-6">
+                        <select class="form-select select2" name="location_id"
+                            data-placeholder="Select Location" id="locationSelect">
+                            <option value="">Select Location</option>
+                            @foreach ($locationsData as $locationItem)
+                                <option value="{{ $locationItem['id'] }}">{{ $locationItem['location'] }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
           
           <!-- Select Options -->
-          <div class="row mb-3">
+          <!-- <div class="row mb-3">
             <label class="col-6 form-label">Select Category</label>
             <div class="col-6">
               <select class="form-select" name="category">
@@ -214,7 +234,22 @@
                 @endforeach
               </select>
             </div>
+          </div> -->
+
+          <div class="row mb-3">
+              <label class="col-6 form-label">Select Category</label>
+              <div class="col-6">
+                  <select class="form-select select2" name="category"
+                      data-placeholder="Select Category">
+                      <option value="">Select Category</option>
+                      @foreach ($categoryData as $categoryItem)
+                        <option value="{{ $categoryItem['id'] }}">{{ $categoryItem['category_name'] }}</option>
+                      @endforeach
+                  </select>
+              </div>
           </div>
+
+
           <div class="row mb-3">
             <label class="form-label col-6">Item Name</label>
             <div class="col-6">
@@ -237,7 +272,7 @@
               />
             </div> 
           </div>
-          <div class="row mb-3">
+          <!-- <div class="row mb-3">
             <label class="form-label col-6">Select Unit</label>
             <div class="col-6">
               <select class="form-select" name="unit">
@@ -247,7 +282,21 @@
                 @endforeach
               </select>
             </div>
+          </div> -->
+
+          <div class="row mb-3">
+              <label class="col-6 form-label">Select Unit</label>
+              <div class="col-6">
+                  <select class="form-select select2" name="unit"
+                      data-placeholder="Select Unit">
+                      <option value="">Select Unit</option>
+                      @foreach ($unitData as $unitItem)
+                        <option value="{{ $unitItem['id'] }}">{{ $unitItem['unit_name'] }}</option>
+                      @endforeach
+                  </select>
+              </div>
           </div>
+
           <div class="row mb-3">
             <label class="form-label col-6">Price</label>
             <div class="col-6">
@@ -478,7 +527,7 @@
  <script type="text/javascript">
       document.addEventListener("DOMContentLoaded", () => {
         // const selectButton = document.querySelector(".btn-select");
-        const selectcategory = document.querySelector(".btn-category");
+        // const selectcategory = document.querySelector(".btn-category");
         const editButton = document.querySelector(".edit-btn-item");
         const editButtons = document.querySelectorAll(".edit-btn-item");
         const popup = document.getElementById("editPopup");
@@ -548,10 +597,10 @@
           // Add delete logic here
         });
         // Show Category Popup
-        selectcategory.addEventListener("click", () => {
-          popup.style.display = "none"; // Close the bottom popup
-          filterPopup.style.display = "flex"; // Show the confirmation popup
-        });
+        // selectcategory.addEventListener("click", () => {
+        //   popup.style.display = "none"; // Close the bottom popup
+        //   filterPopup.style.display = "flex"; // Show the confirmation popup
+        // });
 
         // Close Category Popup on Cancel
         cancelcategory.addEventListener("click", () => {

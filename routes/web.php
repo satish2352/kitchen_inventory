@@ -116,7 +116,7 @@ Route::group(['middleware' => ['admin']], function () {
     // Route::post('/add-kitchen-inventory-by-manager', ['as' => 'add-kitchen-inventory-by-manager', 'uses' => 'App\Http\Controllers\SuperAdmin\ShoppingListController@addKitchenInventoryBySA']);
     Route::get('/get-location-wise-inventory-sa', ['as' => 'get-location-wise-inventory-sa', 'uses' => 'App\Http\Controllers\SuperAdmin\ShoppingListController@getLocationWiseInventorySA']);
     // Route::post('/update-kitchen-inventory-by-sa', ['as' => 'update-kitchen-inventory-by-sa', 'uses' => 'App\Http\Controllers\SuperAdmin\ShoppingListController@updateKitchenInventoryBySA']);
-    Route::post('/add-kitchen-inventory-by-sa', ['as' => 'add-kitchen-inventory-by-sa', 'uses' => 'App\Http\Controllers\SuperAdmin\ShoppingListController@addKitchenInventoryBySA']);
+    Route::post('/add-kitchen-inventory-by-sa', ['as' => 'add-kitchen-inventory-by-sa', 'uses' => 'App\Http\Controllers\SuperAdmin\ShoppingListController@addKitchenInventoryBySuperAdmin']);
     
     Route::get('/get-activity-log', ['as' => 'get-activity-log', 'uses' => 'App\Http\Controllers\SuperAdmin\ActivityLogController@getActivityLog']);
 
@@ -154,5 +154,10 @@ Route::group(['middleware' => ['admin']], function () {
     Route::post('/update-admin-users', ['as' => 'update-admin-users', 'uses' => 'App\Http\Controllers\Admin\UserController@updateUser']);
     Route::post('/delete-admin-users', ['as' => 'delete-admin-users', 'uses' => 'App\Http\Controllers\Admin\UserController@deleteUser']);
     Route::get('/users_search_admin', ['as' => 'users_search_admin', 'uses' => 'App\Http\Controllers\Admin\UserController@searchUser']);
+
+    Route::get('/get-inventory-history-manager', ['as' => 'get-inventory-history-manager', 'uses' => 'App\Http\Controllers\Admin\ShoppingListController@getInventoryHistoryManager']);
+    Route::get('/get-inventory-pdf', ['as' => 'get-inventory-pdf', 'uses' => 'App\Http\Controllers\Manager\ShoppingListController@downloadInventoryHistory']);
+
+    Route::get('/get-submited-shopping-list-manager', ['as' => 'get-submited-shopping-list-manager', 'uses' => 'App\Http\Controllers\Manager\ShoppingListController@getSubmitedShopppingListManager']);
 
 });
