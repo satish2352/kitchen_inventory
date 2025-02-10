@@ -71,7 +71,7 @@
             <!-- second if start -->
             @if($InventoryData['DataType']=='MasterData')
 
-            <form action="{{ route('add-kitchen-inventory-by-manager') }}" method="POST">
+            <form action="{{ route('add-kitchen-inventory-by-manager') }}"id="frm_register_add" method="POST">
             @csrf
             
             @if (!empty($InventoryData['data_location_wise_inventory']) && count($InventoryData['data_location_wise_inventory']) > 0)
@@ -103,7 +103,9 @@
                                 <tr>
                                     <td>{{ $item['item_name'] }}</td>
                                     <td>
-                                        <input type="text" name="quantity[]" class="form-control qty-input"   placeholder="QTY" />
+                                        <input type="text" name="quantity[]" class="form-control qty-input-add"   placeholder="QTY" />
+                                        <span class="error-message text-danger"></span>
+                                    
                                     </td>
                                     <td>{{ $item['unit_name'] }}</td>
                                     <td>{{ $item['price'] }}</td>
@@ -134,7 +136,7 @@
 
             <!-- second if end and else start -->
             @elseif($InventoryData['DataType']=='LocationWiseData')
-            <form action="{{ route('update-kitchen-inventory-by-manager') }}" method="POST">
+            <form action="{{ route('update-kitchen-inventory-by-manager') }}" id="frm_register_edit" method="POST">
             @csrf
             @if (!empty($InventoryData['data_location_wise_inventory']) && count($InventoryData['data_location_wise_inventory']) > 0)
             @foreach ($InventoryData['data_location_wise_inventory'] as $category => $items)
@@ -166,7 +168,9 @@
                                 <tr>
                                     <td>{{ $item['item_name'] }}</td>
                                     <td>
-                                        <input type="text" name="quantity[]" class="form-control qty-input" value="{{ $item['quantity'] }}"  placeholder="QTY" />
+                                        <input type="text" name="quantity[]" class="form-control qty-input-edit" value="{{ $item['quantity'] }}"  placeholder="QTY" />
+                                        <span class="error-message text-danger"></span>
+                                    
                                     </td>
                                     <td>{{ $item['unit_name'] }}</td>
                                     <td>{{ $item['price'] }}</td>
@@ -247,7 +251,65 @@
     });
 </script>
 
+<script>
+    $(document).ready(function () {
+        $("#frm_register_add").on("submit", function (e) {
+            let isValid = true;
 
+            // Loop through each quantity[] field and validate
+            $(".qty-input-add").each(function () {
+                let quantity = $(this).val().trim();
+                let errorSpan = $(this).siblings(".error-message");
+
+                if (quantity === "" || isNaN(quantity) || parseFloat(quantity) <= 0) {
+                    errorSpan.text("Please enter a valid quantity (greater than 0).");
+                    isValid = false;
+                } else {
+                    errorSpan.text(""); // Clear the error message
+                }
+            });
+
+            if (!isValid) {
+                e.preventDefault(); // Prevent form submission if validation fails
+            }
+        });
+
+        // Clear error when user starts typing
+        $(".qty-input-add").on("input", function () {
+            $(this).siblings(".error-message").text("");
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#frm_register_edit").on("submit", function (e) {
+            let isValid = true;
+
+            // Loop through each quantity[] field and validate
+            $(".qty-input-edit").each(function () {
+                let quantity = $(this).val().trim();
+                let errorSpan = $(this).siblings(".error-message");
+
+                if (quantity === "" || isNaN(quantity) || parseFloat(quantity) <= 0) {
+                    errorSpan.text("Please enter a valid quantity (greater than 0).");
+                    isValid = false;
+                } else {
+                    errorSpan.text(""); // Clear the error message
+                }
+            });
+
+            if (!isValid) {
+                e.preventDefault(); // Prevent form submission if validation fails
+            }
+        });
+
+        // Clear error when user starts typing
+        $(".qty-input-edit").on("input", function () {
+            $(this).siblings(".error-message").text("");
+        });
+    });
+</script>
 
 <!-- <script>
     document.getElementById('location_selected').addEventListener('change', function() {

@@ -39,10 +39,17 @@
                 <div class="d-flex align-items-center">
                   <span class="ur-user me-2 jost-font">{{ $item->name }}</span>
                 @if($item->is_approved == 0)
-                  <div class="status-badge ms-2 d-flex align-items-center approve-btn" style="background-color:red" dataId="{{ $item->id }}">
+                  <!-- <div class="status-badge ms-2 d-flex align-items-center approve-btn" style="background-color:red" dataId="{{ $item->id }}">
                     <i class="bi bi-check-circle-fill text-success me-1"></i>
                     <span style="color:white">Unapprove</span>
-                  </div>
+                  </div> -->
+
+                  <div class="status-badge ms-2 d-flex align-items-center approve-btn" 
+     style="background-color:red; cursor:pointer; padding:8px 12px; border-radius:5px;"
+     role="button" dataId="{{ $item->id }}">
+    <i class="bi bi-check-circle-fill text-success me-1"></i>
+    <span style="color:white">Unapprove</span>
+</div>
                 @endif  
                 </div>
                 <p class="mb-1 fw-light"><b>Email ID :</b> {{ $item->email }}</p>
