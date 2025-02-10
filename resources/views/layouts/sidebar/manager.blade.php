@@ -34,8 +34,8 @@
          <a href="{{ route('get-submited-shopping-list-manager') }}"
             ><i class="bi bi-house-door-fill"></i>Submitted Shopping List</a>
 
-         <a href="{{ route('get-inventory-history-manager') }}"
-            ><i class="bi bi-house-door-fill"></i>Inventory History List</a>   
+         <!-- <a href="{{ route('get-inventory-history-manager') }}"
+            ><i class="bi bi-house-door-fill"></i>Inventory History List</a>    -->
 
             <a href="{{ route('logout') }}"
             ><i class="bi bi-cart3"></i> Log Out</a
