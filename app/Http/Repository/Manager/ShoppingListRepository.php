@@ -122,17 +122,46 @@ class ShoppingListRepository
 		$sess_location_id = session()->get('location_selected_id');
 		$inventoryIds = $request->input('location_wise_inventory_id');
 		$quantities = $request->input('quantity');
+		$MasterInventoryIds = $request->input('master_inventory_id');
+// dd($MasterInventoryIds);
 	
 		foreach ($inventoryIds as $index => $inventoryId) {
+			$existingInventory = LocationWiseInventory::where('id', $inventoryId)
+			->first();
+
+			if ($existingInventory) {
 			LocationWiseInventory::where('id', $inventoryId)
 				->update([
-					'quantity' => $quantities[$index]
+					'quantity' => $quantities[$index],
+					'approved_by' => '3',
 				]);
+			}else {
+				// Insert new inventory if not exists
+				// $newInventory = new LocationWiseInventory();
+				// $newInventory->inventory_id = $inventoryId;
+				// $newInventory->location_id = $sess_location_id;
+				// $newInventory->quantity = $quantities[$index];
+				// $newInventory->save();
 
+				// if($index==2)
+				// {
+				// 	dd($MasterInventoryIds[$index]);
+				// }
+
+				$LocationWiseInventoryData = new LocationWiseInventory();
+				$LocationWiseInventoryData->user_id = $sess_user_id;
+				$LocationWiseInventoryData->inventory_id = (int) $MasterInventoryIds[$index];
+				$LocationWiseInventoryData->location_id = $sess_location_id;
+				$LocationWiseInventoryData->quantity = $quantities[$index];
+				$LocationWiseInventoryData->approved_by = 3;
+				// dd($LocationWiseInventoryData);
+				$LocationWiseInventoryData->save();
+				$last_insert_id = $LocationWiseInventoryData->id;
+			}
 				
 				$LocationsData = Locations::find($sess_location_id);
-		$LocationsWiseData = LocationWiseInventory::find($inventoryId);
-		$MasterInventoryData = MasterKitchenInventory::find($LocationsWiseData->inventory_id);
+		// $LocationsWiseData = LocationWiseInventory::find($inventoryId);
+		$MasterInventoryData = MasterKitchenInventory::find((int) $MasterInventoryIds[$index]);
 
 		$historyData[] = [
 			'inventory_id' => $MasterInventoryData->item_name,
@@ -141,7 +170,6 @@ class ShoppingListRepository
 			// 'approved_by' => 1,
 		];
 		}
-	// dd($historyData);
 		$LogMsg = config('constants.MANAGER.1112');
 		$FinalLogMessage = $sess_user_name . ' ' . $LogMsg;
 		$ActivityLogData = new ActivityLog();
@@ -153,14 +181,14 @@ class ShoppingListRepository
 		foreach ($inventoryIds as $index => $inventoryId) {
 		$InventoryHistoryData = new InventoryHistory();
 		$InventoryHistoryData->user_id = $sess_user_id;
-		$InventoryHistoryData->inventory_id = $inventoryIds[$index];
+		$InventoryHistoryData->inventory_id = (int) $MasterInventoryIds[$index];
 		$InventoryHistoryData->location_id = $sess_location_id;
 		$InventoryHistoryData->quantity = $quantities[$index];
 		$InventoryHistoryData->approved_by = 3;
 		$InventoryHistoryData->save();
 
 		$LocationsData = Locations::find($sess_location_id);
-		$MasterInventoryData = MasterKitchenInventory::find($inventoryIds[$index]);
+		$MasterInventoryData = MasterKitchenInventory::find((int) $MasterInventoryIds[$index]);
 		}
 	
 		// Generate PDF

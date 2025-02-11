@@ -163,7 +163,7 @@
                         <tbody>
                             @foreach ($items as $item)
                             <input type="hidden" class="form-control" name="location_wise_inventory_id[]" id="location_wise_inventory_id" value="{{ $item['locationWiseId'] }}"/>
-                            <!-- <input type="hidden" class="form-control" name="master_inventory_id[]" id="master_inventory_id" value="{{ $item['masterInventoryId'] }}"/> -->
+                            <input type="hidden" class="form-control" name="master_inventory_id[]" id="master_inventory_id" value="{{ $item['masterInventoryId'] }}"/>
 
                                 <tr>
                                     <td>{{ $item['item_name'] }}</td>

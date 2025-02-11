@@ -167,7 +167,7 @@
                         @php $srNo = 1; @endphp
                             @foreach ($items as $item)
                             <input type="hidden" class="form-control" name="location_wise_inventory_id[]" id="location_wise_inventory_id" value="{{ $item['locationWiseId'] }}"/>
-                            <!-- <input type="hidden" class="form-control" name="master_inventory_id[]" id="master_inventory_id" value="{{ $item['id'] }}"/> -->
+                            <input type="hidden" class="form-control" name="master_inventory_id[]" id="master_inventory_id" value="{{ $item['masterInventoryId'] }}"/>
 
                                 <tr>
                                     <td> {{ $srNo++ }} </td>
