@@ -218,7 +218,7 @@ class UserRepository
 				$ActivityLogData->activity_message = $FinalLogMessage;
 				$ActivityLogData->save();
                 return [
-                    'msg' => 'User updated successfully.',
+                    'msg' => 'User Approved successfully.',
                     'status' => 'success'
                 ];
             }
@@ -229,7 +229,7 @@ class UserRepository
             ];
         } catch (\Exception $e) {
             return [
-                'msg' => 'Failed to update User.',
+                'msg' => 'Failed to Approve User.',
                 'status' => 'error'
             ];
         }

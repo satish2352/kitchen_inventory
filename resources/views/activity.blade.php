@@ -42,9 +42,9 @@
           </div>
 
           <!-- Location Icon -->
-          <button class="btn btn-white mx-2">
+          <!-- <button class="btn btn-white mx-2">
             <i class="bi bi-geo-alt-fill"></i>
-          </button>
+          </button> -->
         </div>
       </div>
       <!-- user requestion section  -->

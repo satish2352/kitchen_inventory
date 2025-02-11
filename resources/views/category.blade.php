@@ -67,9 +67,9 @@
           </div>
 
           <!-- Location Icon -->
-          <button class="btn btn-white mx-2">
+          <!-- <button class="btn btn-white mx-2">
             <i class="bi bi-geo-alt-fill"></i>
-          </button>
+          </button> -->
         </div>
       </div>
       <!-- user requestion section  -->
@@ -113,7 +113,7 @@
     <!-- Add Popup -->
      <div id="addPopup" class="popup-container">
         <div class="popup-content">
-        <form class="forms-sample" id="frm_register" name="frm_register" method="post" role="form"
+        <form class="forms-sample" id="frm_register_add" name="frm_register" method="post" role="form"
           action="{{ route('add-category') }}" enctype="multipart/form-data">
           <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
 
@@ -224,7 +224,7 @@
       const popupadd = document.getElementById("addPopup");
       // const confirmPopup = document.getElementById("confirmPopup");
       const cancelDeleteButton = document.getElementById("cancelDelete");
-      // const confirmDeleteButton = document.getElementById("confirmDelete");
+      const closePopUpButton = document.getElementById("closePopup");
 
       const editButtonCategory = document.querySelector(".edit-btn-category");
       const popupcategory = document.getElementById("editPopupCategory");
@@ -240,10 +240,11 @@
         popupadd.style.display = "flex";
       });
 
-      // Open Popup
-      // editButton.addEventListener("click", () => {
-      //   popup.style.display = "flex";
-      // });
+      // Close Popup
+      closePopUpButton.addEventListener("click", () => {
+        document.getElementById("frm_register_add").reset();
+          popupadd.style.display = "none";
+      });
     
       // Close Popup when clicking outside
       popupcategory.addEventListener("click", (e) => {
@@ -255,7 +256,7 @@
       popupadd.addEventListener("click", (e) => {
         if (e.target === popupadd) {
           // document.getElementById("abc").value = '';
-          document.getElementById("frm_register").reset();
+          document.getElementById("frm_register_add").reset();
           popupadd.style.display = "none";
           
         }
@@ -340,7 +341,7 @@ document.getElementById('editPopupCategory').style.display = "flex";
 <script type="text/javascript">
   $(document).ready(function () {
     // Initialize validation for the add form
-    $("#frm_register").validate({
+    $("#frm_register_add").validate({
       rules: {
         category_name: {
           required: true,

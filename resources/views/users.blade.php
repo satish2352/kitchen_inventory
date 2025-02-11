@@ -174,7 +174,7 @@
     <div id="addPopup" class="popup-container">
         <div class="popup-content">
 
-            <form class="forms-sample" id="frm_register" name="frm_register" method="post" role="form"
+            <form class="forms-sample" id="frm_register_add" name="frm_register" method="post" role="form"
                 action="{{ route('add-users') }}" enctype="multipart/form-data">
                 <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
                 <!-- Popup Title -->
@@ -212,7 +212,7 @@
                 <div class="row mb-3">
                     <label class="form-label col-6">Select Role</label>
                     <div class="col-6">
-                        <select class="form-select" name="role">
+                        <select class="form-select" name="role" id="roleid">
                             <option value="">Select Role</option>
                             <!-- <option value="1">Super Admin</option> -->
                             <option value="2">Admin</option>
@@ -388,6 +388,8 @@
         const confirmDeleteUser = document.getElementById("confirmDeleteUser");
         const cancelDeleteButton = document.getElementById("cancelDelete");
 
+        const closePopUpButton = document.getElementById("closePopup");
+
         // Close Confirmation Popup on Cancel
         if (cancelDeleteButton) {
             cancelDeleteButton.addEventListener("click", (e) => {
@@ -405,9 +407,23 @@
 
         popupadd.addEventListener("click", (e) => {
             if (e.target === popupadd) {
+                document.getElementById("frm_register_add").reset();
+             // Reset Select2 dropdowns manually
+          $('#roleid').val(null).trigger('change');
+        $('.select2').val([]).trigger('change');
                 popupadd.style.display = "none";
             }
         });
+
+          // Close Popup
+      closePopUpButton.addEventListener("click", () => {
+        document.getElementById("frm_register_add").reset();
+
+        $('#roleid').val(null).trigger('change');
+        $('.select2').val([]).trigger('change');
+
+          popupadd.style.display = "none";
+      });
 
         // // Open Popup
         addButton.addEventListener("click", () => {
@@ -507,11 +523,11 @@
 
 
         // Initialize validation for the add form
-        $("#frm_register").validate({
+        $("#frm_register_add").validate({
             rules: {
                 "location[]": {
                     required: function() {
-                        return $("#frm_register select[name='location[]'] option:selected")
+                        return $("#frm_register_add select[name='location[]'] option:selected")
                             .length === 0;
                     }
                 },

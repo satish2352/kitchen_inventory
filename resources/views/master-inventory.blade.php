@@ -190,25 +190,12 @@
       <div id="addPopup" class="popup-container">
         <div class="popup-content">
 
-        <form class="forms-sample" id="frm_register" name="frm_register" method="post" role="form"
+        <form class="forms-sample" id="frm_register_add" name="frm_register" method="post" role="form"
           action="{{ route('add-items') }}" enctype="multipart/form-data">
           <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
           <!-- Popup Title -->
           <h4 class="popup-title">Add Master Inventory</h4>
           <hr />
-
-          <!-- Select Options -->
-          <!-- <div class="row mb-3">
-            <label class="col-6 form-label">Select Location</label>
-            <div class="col-6">
-              <select class="form-select select2" name="location_id">
-                <option value="">Select Location</option>
-                @foreach ($locationsData as $locationItem)
-                  <option value="{{ $locationItem['id'] }}">{{ $locationItem['location'] }}</option>
-                @endforeach
-              </select>
-            </div>
-          </div> -->
 
           <div class="row mb-3">
                     <label class="col-6 form-label">Select Location</label>
@@ -222,19 +209,7 @@
                         </select>
                     </div>
                 </div>
-          
-          <!-- Select Options -->
-          <!-- <div class="row mb-3">
-            <label class="col-6 form-label">Select Category</label>
-            <div class="col-6">
-              <select class="form-select" name="category">
-              <option value="">Select Category</option>
-              @foreach ($categoryData as $categoryItem)
-                <option value="{{ $categoryItem['id'] }}">{{ $categoryItem['category_name'] }}</option>
-                @endforeach
-              </select>
-            </div>
-          </div> -->
+
 
           <div class="row mb-3">
               <label class="col-6 form-label">Select Category</label>
@@ -272,17 +247,6 @@
               />
             </div> 
           </div>
-          <!-- <div class="row mb-3">
-            <label class="form-label col-6">Select Unit</label>
-            <div class="col-6">
-              <select class="form-select" name="unit">
-              <option value="">Select Unit</option>
-              @foreach ($unitData as $unitItem)
-                <option value="{{ $unitItem['id'] }}">{{ $unitItem['unit_name'] }}</option>
-                @endforeach
-              </select>
-            </div>
-          </div> -->
 
           <div class="row mb-3">
               <label class="col-6 form-label">Select Unit</label>
@@ -545,6 +509,9 @@
         const confirmPopupDelete = document.getElementById("confirmPopupDelete");
       const cancelDeleteConfirm = document.getElementById("cancelDeleteConfirm");
 
+      const closePopUpButton = document.getElementById("closePopup");
+
+
       cancelDeleteConfirm.addEventListener("click", () => {
         popup.style.display = "flex";
         });
@@ -569,9 +536,22 @@
          // Close Popup when clicking outside
          popupadd.addEventListener("click", (e) => {
           if (e.target === popupadd) {
+            document.getElementById("frm_register_add").reset();
+             // Reset Select2 dropdowns manually
+          $('.select2').val(null).trigger('change');
             popupadd.style.display = "none";
           }
         });
+
+        // Close Popup
+      closePopUpButton.addEventListener("click", () => {
+        document.getElementById("frm_register_add").reset();
+
+        // Reset Select2 dropdowns manually
+          $('.select2').val(null).trigger('change');
+
+          popupadd.style.display = "none";
+      });
         // Close Popup when clicking outside
         popup.addEventListener("click", (e) => {
           if (e.target === popup) {
@@ -673,7 +653,7 @@ document.getElementById('editPopup').style.display = "flex";
   $(document).ready(function () {
 
     // Initialize validation for the add form
-    $("#frm_register").validate({
+    $("#frm_register_add").validate({
       rules: {
         location_id: {
           required: true

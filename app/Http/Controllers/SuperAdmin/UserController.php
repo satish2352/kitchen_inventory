@@ -229,7 +229,12 @@ public function getApproveUsers()
         try {
             $active_id = $request->activid;
         $result = $this->service->updateOne($active_id);
-            return redirect('list-approve-users')->with('flash_message', 'Updated!');  
+
+        $msg = $result['msg'];
+                    $status = $result['status'];
+                    session()->flash('alert_status', $status);
+                    session()->flash('alert_msg', $msg);
+            return redirect('list-approve-users');  
         } catch (\Exception $e) {
             return $e;
         }

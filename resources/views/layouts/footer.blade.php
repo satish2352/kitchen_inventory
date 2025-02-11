@@ -22,7 +22,7 @@
       placeholder: "Select Location", // Optional placeholder
       allowClear: true,// Optional to allow clearing the selection
       width: '100%',
-      closeOnSelect: false,
+      // closeOnSelect: false,
       tags: false
     });
   });

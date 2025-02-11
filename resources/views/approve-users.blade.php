@@ -275,15 +275,16 @@
     button.addEventListener("click", function () { // Use function() instead of () => {}
         var xyz = this.getAttribute("dataId"); // Correctly gets the dataId attribute
         document.getElementById("activid").value = xyz;
-        document.getElementById("popupadd").style.display = "flex";
+        confirmPopup.style.display = "flex";
+        // document.getElementById("popupadd").style.display = "flex";
     });
 });
 
 
-      approveButton.addEventListener("click", () => {
-        // popupuser.style.display = "none"; // Close the bottom popup
-        confirmPopup.style.display = "flex"; // Show the confirmation popup
-      });
+      // approveButton.addEventListener("click", () => {
+      //   // popupuser.style.display = "none"; // Close the bottom popup
+      //   confirmPopup.style.display = "flex"; // Show the confirmation popup
+      // });
     
       // // Close Confirmation Popup on Cancel
       cancelDeleteButton.addEventListener("click", () => {

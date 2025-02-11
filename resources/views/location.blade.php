@@ -52,9 +52,9 @@
             </div>
 
             <!-- Location Icon -->
-            <button class="btn btn-white mx-2">
+            <!-- <button class="btn btn-white mx-2">
                 <i class="bi bi-geo-alt-fill"></i>
-            </button>
+            </button> -->
         </div>
     </div>
 
@@ -95,7 +95,7 @@
 
     <div id="addPopup" class="popup-container">
         <div class="popup-content">
-            <form class="forms-sample" id="frm_register" name="frm_register" method="post" role="form"
+            <form class="forms-sample" id="frm_register_add" name="frm_register" method="post" role="form"
                 action="{{ route('add-locations') }}" enctype="multipart/form-data">
                 <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
                 <!-- Popup Title -->
@@ -220,6 +220,8 @@
         const confirmPopup = document.getElementById("confirmPopup");
         const cancelDeleteButton = document.getElementById("cancelDelete");
         const confirmDeleteButton = document.getElementById("confirmDelete");
+      const closePopUpButton = document.getElementById("closePopup");
+
 
         // Open Popup
         addButton.addEventListener("click", () => {
@@ -250,9 +252,16 @@
         // Close Popup when clicking outside
         popupadd.addEventListener("click", (e) => {
             if (e.target === popupadd) {
+                document.getElementById("frm_register_add").reset();
                 popupadd.style.display = "none";
             }
         });
+
+        // Close Popup
+      closePopUpButton.addEventListener("click", () => {
+        document.getElementById("frm_register_add").reset();
+          popupadd.style.display = "none";
+      });
 
         // Show Confirmation Popup
         deleteButton.addEventListener("click", () => {
@@ -314,7 +323,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
         // Initialize validation for the add form
-        $("#frm_register").validate({
+        $("#frm_register_add").validate({
             rules: {
                 location: {
                     required: true,
