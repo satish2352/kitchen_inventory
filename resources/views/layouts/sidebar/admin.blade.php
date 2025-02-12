@@ -6,6 +6,10 @@
          <div id="toggleDrawer" class="toggle-drawer">
             <i class="bi bi-list"></i>
          </div>
+
+         <div>
+               <h5 class="inter-font"><span class="jost-font">Manager</span></h5>
+            </div>
          <!-- Location -->
          @if(session()->get('location_selected_id') !='')
           <div class="location jost-font">
@@ -36,10 +40,51 @@
             <a href="{{ route('get-submited-shopping-list-admin') }}"
             ><i class="bi bi-house-door-fill"></i>Submitted Shopping List</a>
 
-            <a href="{{ route('logout') }}"
-            ><i class="bi bi-cart3"></i> Log Out</a>
+            <a href="javascript:void(0);" id="logoutbtn">
+                  <i class="bi bi-box-arrow-right"></i> Log Out
+            </a>
       </div>
    </div>
    <!-- Overlay -->
    <div id="backdrop" class="backdrop"></div>
    <!-- dashboard content  -->
+
+   <!-- Confirm Logout Popup -->
+<div id="confirmLogOutPopUp" class="confirm-popup-container" style="display: none;">
+    <div class="confirm-popup-content">
+        <h4 class="confirm-popup-title">Confirm Logout</h4>
+        <p class="confirm-popup-text">Are you sure you want to log out?</p>
+        <div class="d-flex justify-content-around mt-4">
+            <button id="cancelLogout" class="btn br">NO</button>
+            <button id="confirmLogout" class="btn">YES</button>
+        </div>
+    </div>
+</div>
+
+<!-- Hidden Logout Form -->
+<form id="logoutForm" action="{{ route('logout') }}" method="get" style="display: none;">
+    @csrf
+</form>
+
+<!-- JavaScript -->
+<script type="text/javascript">
+document.addEventListener("DOMContentLoaded", () => {
+    const logOutButton = document.querySelector("#logoutbtn");
+    const confirmLogOutPopUp = document.getElementById("confirmLogOutPopUp");
+    const cancelLogout = document.getElementById("cancelLogout");
+    const confirmLogout = document.getElementById("confirmLogout");
+    const logoutForm = document.getElementById("logoutForm");
+
+    logOutButton.addEventListener("click", () => {
+        confirmLogOutPopUp.style.display = "flex"; // Show the confirmation popup
+    });
+
+    cancelLogout.addEventListener("click", () => {
+        confirmLogOutPopUp.style.display = "none"; // Hide the popup if canceled
+    });
+
+    confirmLogout.addEventListener("click", () => {
+        logoutForm.submit(); // Submit the form to trigger Laravel logout
+    });
+});
+</script>

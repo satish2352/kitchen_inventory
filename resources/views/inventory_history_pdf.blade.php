@@ -12,12 +12,12 @@
     </style>
 </head>
 <body>
-<h3>Inventory Report - {{ $location }} ({{ $currentDate }})</h3>
+<h3>Inventory Report - {{ $location }} ({{ date('d-m-Y', strtotime($currentDate)) }})</h3>
 
     <table>
         <thead>
             <tr>
-                <th>Location Name</th>
+                <!-- <th>Location Name</th> -->
                 <th>Inventory Name</th>
                 <th>Quantity</th>
             </tr>
@@ -26,7 +26,7 @@
           
             @foreach ($historyData as $data)
             <tr>
-                <td>{{ $data['location_id'] }}</td>
+                <!-- <td>{{ $data['location_id'] }}</td> -->
                 <td>{{ $data['inventory_id'] }}</td>
                 <td>{{ $data['quantity'] }}</td>
             </tr>

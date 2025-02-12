@@ -107,10 +107,10 @@
                     <label class="col-6 form-label">Location Name:</label>
                     <div class="col-6">
                         <input type="text" class="form-control" placeholder="Enter Location Name" name="location"
-                            style="text-transform: capitalize;" />
-                        @if ($errors->has('location'))
-                            <span class="red-text"><?php echo $errors->first('location', ':message'); ?></span>
-                        @endif
+                            value="{{ old('location') }}" style="text-transform: capitalize;" />
+                        @error('location')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
 

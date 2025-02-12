@@ -39,17 +39,16 @@ class LocationController extends Controller {
                 'location.required' => 'Please  enter location name.',
                 // 'location.regex' => 'Please  enter text only.',
                 'location.max' => 'Please  enter text length upto 255 character only.',
-                'location.unique' => 'Title already exist.',
+                'location.unique' => 'Location already exist.',
 
                 // 'role.required' => 'Please Select Role.'
             ];
 
             $validation = Validator::make($request->all(), $rules, $messages);
-            if ($validation->fails()) {
-                return redirect('list-locations')
-                    ->withInput()
-                    ->withErrors($validation);
-            } else {
+
+                if ($validation->fails()) {
+                    return redirect()->back()->withErrors($validation)->withInput();
+                } else {
                 $add_role = $this->service->addLocation($request);
                 if ($add_role) {
                     $msg = $add_role['msg'];

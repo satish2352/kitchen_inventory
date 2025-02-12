@@ -69,9 +69,12 @@
             var pdfBlob = new Blob([byteNumbers], { type: 'application/pdf' });
             var url = URL.createObjectURL(pdfBlob);
 
+            var currentDate = new Date("{{ $pdfBase64['currentDate'] }}"); // Converts string to Date object
+            var formattedDate = currentDate.toLocaleDateString('en-GB'); // Formats as DD-MM-YYYY
+
             var link = document.createElement('a');
             link.href = url;
-            link.download = "{{ $pdfBase64['location'] }}_{{ $pdfBase64['currentDate'] }}_inventory_history.pdf";
+            link.download = "{{ $pdfBase64['location'] }}_" + formattedDate + "_inventory_history.pdf";
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);

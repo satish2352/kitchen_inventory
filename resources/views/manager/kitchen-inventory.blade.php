@@ -89,26 +89,31 @@
                         <!-- Table Head -->
                         <thead class="table-header">
                             <tr>
-                                <th>Item</th>
-                                <th>Qty</th>
-                                <th>Unit</th>
-                                <th>Price</th>
+                                <th><b>Sr. No.</b></th>
+                                <th><b>Required QTY</b></th>
+                                <th><b>Item</b></th>
+                                <th><b>Qty</b></th>
+                                <th><b>Unit</b></th>
+                                <!-- <th>Price</th> -->
                             </tr>
                         </thead>
                         <!-- Table Body -->
                         <tbody>
+                        @php $srNo = 1; @endphp
                             @foreach ($items as $item)
                             <input type="hidden" class="form-control" name="master_inventory_id[]" id="master_inventory_id" value="{{ $item['id'] }}"/>
 
                                 <tr>
+                                    <td>{{ $srNo++ }}</td>
+                                    <td>{{ $item['masterQuantity'] }}</td>
                                     <td>{{ $item['item_name'] }}</td>
                                     <td>
-                                        <input type="text" name="quantity[]" class="form-control qty-input-add"   placeholder="QTY" />
+                                        <input type="text" name="quantity[]" class="form-control qty-input-add" style="text-align: center;"   placeholder="QTY" />
                                         <span class="error-message text-danger"></span>
                                     
                                     </td>
                                     <td>{{ $item['unit_name'] }}</td>
-                                    <td>{{ $item['price'] }}</td>
+                                    <!-- <td>{{ $item['price'] }}</td> -->
                                 </tr>
                             @endforeach
                             <tr>
@@ -153,27 +158,31 @@
                         <!-- Table Head -->
                         <thead class="table-header">
                             <tr>
-                                <th>Item</th>
-                                <th>Qty</th>
-                                <th>Unit</th>
-                                <th>Price</th>
+                            <th><b>Sr. No.</b></th>
+                                <th><b>Required QTY</b></th>
+                                <th><b>Item</b></th>
+                                <th><b>Qty</b></th>
+                                <th><b>Unit</b></th>
                             </tr>
                         </thead>
                         <!-- Table Body -->
                         <tbody>
+                        @php $srNo = 1; @endphp
                             @foreach ($items as $item)
                             <input type="hidden" class="form-control" name="location_wise_inventory_id[]" id="location_wise_inventory_id" value="{{ $item['locationWiseId'] }}"/>
                             <input type="hidden" class="form-control" name="master_inventory_id[]" id="master_inventory_id" value="{{ $item['masterInventoryId'] }}"/>
 
                                 <tr>
+                                    <td>{{ $srNo++ }}</td>
+                                    <td>{{ $item['masterQuantity'] }}</td>
                                     <td>{{ $item['item_name'] }}</td>
                                     <td>
-                                        <input type="text" name="quantity[]" class="form-control qty-input-edit" value="{{ $item['quantity'] }}"  placeholder="QTY" />
+                                        <input type="text" name="quantity[]" class="form-control qty-input-edit" style="text-align: center;" value="{{ $item['quantity'] }}"  placeholder="QTY" />
                                         <span class="error-message text-danger"></span>
                                     
                                     </td>
                                     <td>{{ $item['unit_name'] }}</td>
-                                    <td>{{ $item['price'] }}</td>
+                                    <!-- <td>{{ $item['price'] }}</td> -->
                                 </tr>
                             @endforeach
                             <tr>
@@ -260,9 +269,16 @@
             $(".qty-input-add").each(function () {
                 let quantity = $(this).val().trim();
                 let errorSpan = $(this).siblings(".error-message");
+                let masterQuantity = parseFloat($(this).closest("tr").find("td:nth-child(2)").text().trim()) || 0; // Getting masterQuantity
 
                 if (quantity === "" || isNaN(quantity) || parseFloat(quantity) <= 0) {
                     errorSpan.text("Please enter a valid quantity (greater than 0).");
+                    isValid = false;
+                } else if (quantity.length > 5) {
+                    errorSpan.text("Quantity cannot be more than 5 digits.");
+                    isValid = false;
+                } else if (parseFloat(quantity) > masterQuantity) {
+                    errorSpan.text("Entered quantity cannot exceed required quantity!");
                     isValid = false;
                 } else {
                     errorSpan.text(""); // Clear the error message
@@ -274,12 +290,22 @@
             }
         });
 
-        // Clear error when user starts typing
-        $(".qty-input-add").on("input", function () {
-            $(this).siblings(".error-message").text("");
+         // Clear error when user starts typing
+         $(".qty-input-add").on("input", function () {
+            let quantity = $(this).val().trim();
+            let errorSpan = $(this).siblings(".error-message");
+
+            if (quantity !== "" && !isNaN(quantity)) {
+                if (quantity.length > 5) {
+                    errorSpan.text("Quantity cannot be more than 5 digits.");
+                } else {
+                    errorSpan.text(""); // Clear the error message
+                }
+            }
         });
     });
 </script>
+
 
 <script>
     $(document).ready(function () {
@@ -290,9 +316,16 @@
             $(".qty-input-edit").each(function () {
                 let quantity = $(this).val().trim();
                 let errorSpan = $(this).siblings(".error-message");
+                let masterQuantity = parseFloat($(this).closest("tr").find("td:nth-child(2)").text().trim()) || 0; // Getting masterQuantity
 
                 if (quantity === "" || isNaN(quantity) || parseFloat(quantity) <= 0) {
                     errorSpan.text("Please enter a valid quantity (greater than 0).");
+                    isValid = false;
+                } else if (quantity.length > 5) {
+                    errorSpan.text("Quantity cannot be more than 5 digits.");
+                    isValid = false;
+                } else if (parseFloat(quantity) > masterQuantity) {
+                    errorSpan.text("Entered quantity cannot exceed required quantity!");
                     isValid = false;
                 } else {
                     errorSpan.text(""); // Clear the error message
@@ -310,6 +343,7 @@
         });
     });
 </script>
+
 
 <!-- <script>
     document.getElementById('location_selected').addEventListener('change', function() {

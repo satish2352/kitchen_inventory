@@ -1,25 +1,31 @@
 <div class="main">
-    <div class="container-fluid p-3">
-       <!-- Top Bar -->
-       <div class="d-flex justify-content-between align-items-center mb-3">
-          <!-- Toggle Drawer Button -->
-          <div id="toggleDrawer" class="toggle-drawer">
-             <i class="bi bi-list"></i>
-          </div>
-          <!-- Location -->
-          @if(Route::currentRouteName() == 'get-submited-shopping-list-super-admin' || 
-          Route::currentRouteName() == 'list-items' || 
-          Route::currentRouteName() == 'get-location-wise-inventory-sa')
-            @if(session()->get('location_selected_id') !='' && session()->get('location_selected_id') !='')
-            <div class="location jost-font">
-               <i class="bi bi-geo-alt"></i>
-               <span>{{session('location_selected_name')}}</span>
+      <div class="container-fluid p-3">
+         <!-- Top Bar -->
+         <div class="d-flex justify-content-between align-items-center mb-3">
+            <!-- Toggle Drawer Button -->
+            <div id="toggleDrawer" class="toggle-drawer">
+               <i class="bi bi-list"></i>
             </div>
-            @endif
-          @endif
 
-       </div>
-    </div>
+            <!-- Username and Role Together -->
+            <div>
+               <h5 class="inter-font"><span class="jost-font">Super Admin</span></h5>
+            </div>
+
+            <!-- Location (If Applicable) -->
+            @if(Route::currentRouteName() == 'get-submited-shopping-list-super-admin' || 
+               Route::currentRouteName() == 'list-items' || 
+               Route::currentRouteName() == 'get-location-wise-inventory-sa')
+               @if(session()->get('location_selected_id'))
+               <div class="location jost-font">
+                  <i class="bi bi-geo-alt"></i>
+                  <span>{{ session('location_selected_name') }}</span>
+               </div>
+               @endif
+            @endif
+         </div>
+      </div>
+
     <!-- Drawer -->
     <div id="drawer" class="drawer">
        <div class="drawer-header d-flex align-items-center">
@@ -55,8 +61,8 @@
              <!-- <a href="{{ route('logout') }}"
              ><i class="bi bi-cart3"></i> Log Out</a> -->
              <a href="javascript:void(0);" id="logoutbtn">
-    <i class="bi bi-box-arrow-right"></i> Log Out
-</a>
+               <i class="bi bi-box-arrow-right"></i> Log Out
+            </a>
        </div>
     </div>
     <!-- Overlay -->
