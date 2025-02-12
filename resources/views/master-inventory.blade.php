@@ -135,7 +135,6 @@
                   <th><b>Item</b></th>
                   <th><b>Qty</b></th>
                   <th><b>Unit</b></th>
-                  <!-- <th><b>IX</b></th> -->
                   <th><b>Price</b></th>
                   <th><b>Action</b></th>
                 </tr>
