@@ -20,7 +20,7 @@
                 <!-- <th>Location Name</th> -->
                 <th>Sr. No.</th>
                 <th>Master Qty</th>
-                <th>Inventory Name</th>
+                <th>Item Name</th>
                 <th>Present Qty</th>
                 <th>Buy Qty</th>
                 @if(session()->get('user_role') =='1')
@@ -42,7 +42,7 @@
                 <td>{{ $data['quantity'] }}</td>
                 <td>{{ $buyQty }}</td>
                 @if(session()->get('user_role') =='1')
-                <td>$ {{ $data['quantity'] * $data['price'] }}</td>
+                <td>$ {{ $data['buyQty'] * $data['price'] }}</td>
                 @endif
             </tr>
             @endforeach

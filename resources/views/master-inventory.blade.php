@@ -26,7 +26,7 @@
           </button>
 
           <button class="btn btn-light add-btn">
-            <i class="bi bi-plus-lg">Copy Inventory</i>
+            <i class="bi bi-plus-lg">Add Inventory</i>
           </button>
         </div>
       </div>
@@ -131,13 +131,13 @@
               <!-- Table Head -->
               <thead class="table-header">
                 <tr>
-                  <th>Sr. No.</th>
-                  <th>Item</th>
-                  <th>Qty</th>
-                  <th>Unit</th>
-                  <!-- <th>IX</th> -->
-                  <th>Price</th>
-                  <th>Action</th>
+                  <th><b>Sr. No.</b></th>
+                  <th><b>Item</b></th>
+                  <th><b>Qty</b></th>
+                  <th><b>Unit</b></th>
+                  <!-- <th><b>IX</b></th> -->
+                  <th><b>Price</b></th>
+                  <th><b>Action</b></th>
                 </tr>
               </thead>
               <!-- Table Body -->
@@ -428,7 +428,7 @@
 
           <hr />
           <div class="d-flex justify-content-around">
-          <a class="btn btn-secondary btn-lg w-100 me-2" id="closePopup">
+          <a class="btn btn-secondary btn-lg w-100 me-2" id="closePopupCopyInventory">
               <i class="bi bi-x-circle"></i> Cancel
             </a>
             
@@ -561,10 +561,11 @@
         const popupadd = document.getElementById("addPopup");
         const confirmPopupDelete = document.getElementById("confirmPopupDelete");
       const cancelDeleteConfirm = document.getElementById("cancelDeleteConfirm");
-      const closePopUpButton = document.getElementById("closePopup");
 
       const copyInventoryButton = document.querySelector(".copy-inventory-btn");
       const CopyInventoryPopup = document.getElementById("CopyInventoryPopup");
+      const closePopupCopyInventory = document.getElementById("closePopupCopyInventory");
+
 
 
       copyInventoryButton.addEventListener("click", () => {
@@ -574,6 +575,23 @@
       cancelDeleteConfirm.addEventListener("click", () => {
         popup.style.display = "flex";
         });
+
+         // Close Popup when clicking outside
+         CopyInventoryPopup.addEventListener("click", (e) => {
+          if (e.target === CopyInventoryPopup) {
+            CopyInventoryPopup.style.display = "none";
+          }
+        });
+
+        // Close Popup
+        closePopupCopyInventory.addEventListener("click", () => {
+        document.getElementById("frm_copy_inventory").reset();
+
+        // Reset Select2 dropdowns manually
+          $('.select2').val(null).trigger('change');
+
+          CopyInventoryPopup.style.display = "none";
+      });
 
       if (editButtons.length > 0) {
         editButtons.forEach(button => {
