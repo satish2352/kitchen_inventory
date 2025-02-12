@@ -22,7 +22,10 @@
           </a>
           <h5 class="sub-title">Master Inventory</h5>
 
-          <button class="btn btn-light copy-inventory-btn">
+          <button class="btn btn-light copy-inventory-btn">Copy Inventory
+          </button>
+
+          <button class="btn btn-light add-btn">
             <i class="bi bi-plus-lg">Copy Inventory</i>
           </button>
         </div>
