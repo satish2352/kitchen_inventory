@@ -173,6 +173,7 @@
 
                                 <tr>
                                 <td> {{ $srNo++ }} </td>
+                                <td>{{ $item['masterQuantity'] }}</td>
                                     <td>{{ $item['item_name'] }}</td>
                                     <td>
                                         <input type="text" name="quantity[]" class="form-control qty-input-edit" style="text-align: center;" value="{{ $item['quantity'] }}"  placeholder="QTY" min="1" max="5"/>

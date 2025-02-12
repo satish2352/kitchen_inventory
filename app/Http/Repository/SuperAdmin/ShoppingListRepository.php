@@ -86,9 +86,11 @@ class ShoppingListRepository
 
 		// Store data for PDF
 		$historyData[] = [
+			'master_qty' => $MasterInventoryData->quantity,
 			'inventory_id' => $MasterInventoryData->item_name,
 			'quantity' => $quantities[$index],
 			'location_id' => $LocationsData->location,
+			'price' => $MasterInventoryData->price,
 			// 'approved_by' => 1,
 		];
 
@@ -155,9 +157,11 @@ public function updateKitchenInventoryBySuperAdmin($request) {
 
 
 		$historyData[] = [
+			'master_qty' => $MasterInventoryData->quantity,
 			'inventory_id' => $MasterInventoryData->item_name,
 			'quantity' => $quantities[$index],
 			'location_id' => $LocationsData->location,
+			'price' => $MasterInventoryData->price,
 			// 'approved_by' => 1,
 		];
 		}

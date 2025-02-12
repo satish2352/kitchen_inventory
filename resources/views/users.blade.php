@@ -105,7 +105,7 @@
                                         @elseif($item->user_role == '2')
                                             (Admin)
                                         @else
-                                            (Manager)
+                                            (Night Manager)
                                         @endif
                                     </span>
 
@@ -211,7 +211,7 @@
                             <option value="">Select Role</option>
                             <!-- <option value="1">Super Admin</option> -->
                             <option value="2">Admin</option>
-                            <option value="3">Manager</option>
+                            <option value="3">Night Manager</option>
                         </select>
                     </div>
                 </div>
@@ -303,7 +303,7 @@
                             <option value="">Select Role</option>
                             <!-- <option value="1">Super Admin</option> -->
                             <option value="2">Admin</option>
-                            <option value="3">Manager</option>
+                            <option value="3">Night Manager</option>
                         </select>
                     </div>
                 </div>

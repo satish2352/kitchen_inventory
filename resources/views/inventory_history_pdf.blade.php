@@ -18,17 +18,28 @@
         <thead>
             <tr>
                 <!-- <th>Location Name</th> -->
+                <th>Sr. No.</th>
+                <th>Master Qty</th>
                 <th>Inventory Name</th>
-                <th>Quantity</th>
+                <th>Present Qty</th>
+                <th>Buy Qty</th>
+                <th>Total Price</th>
             </tr>
         </thead>
         <tbody>
-          
+        @php $srNo = 1; @endphp
             @foreach ($historyData as $data)
+            @php
+                $buyQty=$data['master_qty'] - $data['quantity'];
+            @endphp
             <tr>
                 <!-- <td>{{ $data['location_id'] }}</td> -->
+                <td>{{ $srNo++ }}</td>
+                <td>{{ $data['master_qty'] }}</td>
                 <td>{{ $data['inventory_id'] }}</td>
                 <td>{{ $data['quantity'] }}</td>
+                <td>{{ $buyQty }}</td>
+                <td>$ {{ $data['quantity'] * $data['price'] }}</td>
             </tr>
             @endforeach
         </tbody>

@@ -9,7 +9,7 @@
 
          <!-- Username and Role Together -->
          <div>
-               <h5 class="inter-font"><span class="jost-font">Manager</span></h5>
+               <h5 class="inter-font"><span class="jost-font">Night Manager</span></h5>
             </div>
          <!-- Location -->
          @if(session()->get('location_selected_id') !='')

@@ -107,7 +107,7 @@
                   @elseif($item->user_role == '2')
                   (Admin)
                   @else
-                  (Manager)
+                  (Night Manager)
                   @endif
                   </span>
 
