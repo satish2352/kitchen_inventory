@@ -23,7 +23,9 @@
                 <th>Inventory Name</th>
                 <th>Present Qty</th>
                 <th>Buy Qty</th>
+                @if(session()->get('user_role') =='1')
                 <th>Total Price</th>
+                @endif
             </tr>
         </thead>
         <tbody>
@@ -39,7 +41,9 @@
                 <td>{{ $data['inventory_id'] }}</td>
                 <td>{{ $data['quantity'] }}</td>
                 <td>{{ $buyQty }}</td>
+                @if(session()->get('user_role') =='1')
                 <td>$ {{ $data['quantity'] * $data['price'] }}</td>
+                @endif
             </tr>
             @endforeach
         </tbody>
