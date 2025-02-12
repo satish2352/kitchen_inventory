@@ -90,9 +90,9 @@
                         <thead class="table-header">
                             <tr>
                                 <th><b>Sr. No.</b></th>
-                                <th><b>Required QTY</b></th>
+                                <th><b>Req. Qty For This Location </b></th>
                                 <th><b>Item</b></th>
-                                <th><b>Qty</b></th>
+                                <th><b>Available Qty</b></th>
                                 <th><b>Unit</b></th>
                                 <!-- <th>Price</th> -->
                             </tr>
@@ -159,9 +159,9 @@
                         <thead class="table-header">
                             <tr>
                             <th><b>Sr. No.</b></th>
-                                <th><b>Required QTY</b></th>
+                                <th><b>Req. Qty For This Location</b></th>
                                 <th><b>Item</b></th>
-                                <th><b>Qty</b></th>
+                                <th><b>Available Qty</b></th>
                                 <th><b>Unit</b></th>
                             </tr>
                         </thead>
