@@ -860,61 +860,24 @@ document.getElementById('editPopup').style.display = "flex";
       }
     });
 
-    $("#frm_register_add").validate({
+    $("#frm_copy_inventory").validate({
       rules: {
-        location_id: {
+        from_location_id: {
           required: true
           // minlength: 3
         },
-        category: {
+        to_location_id: {
           required: true
           // minlength: 3
-        },
-        unit: {
-          required: true
-          // minlength: 3
-        },
-        quantity: {
-          required: true
-          // minlength: 3
-        },
-        item_name: {
-          required: true
-          // minlength: 3
-        },
-        price: {
-          required: true,
-          number: true,
-          min: 0
-          // minlength: 3
-        }
-        
+        }        
       },
       messages: {
-        location_id: {
-          required: "Please select the Location"
+        from_location_id: {
+          required: "Please select the from Location"
           // minlength: "Category name must be at least 3 characters long"
         },
-        category: {
-          required: "Please select the category name"
-          // minlength: "Category name must be at least 3 characters long"
-        },
-        unit: {
-          required: "Please select the unit"
-          // minlength: "Category name must be at least 3 characters long"
-        },
-        quantity: {
-          required: "Please select the Quantity"
-          // minlength: "Category name must be at least 3 characters long"
-        },
-        item_name: {
-          required: "Please enter item name"
-          // minlength: "Category name must be at least 3 characters long"
-        },
-        price: {
-          required: "Please enter price",
-          number: "Please enter a valid number.",
-          min: "Price cannot be negative."
+        to_location_id: {
+          required: "Please select the to Location"
           // minlength: "Category name must be at least 3 characters long"
         }
       },
