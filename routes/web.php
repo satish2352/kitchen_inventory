@@ -125,6 +125,9 @@ Route::group(['middleware' => ['admin']], function () {
     Route::post('/update-approve-users-all-data', ['as' => 'update-approve-users-all-data', 'uses' => 'App\Http\Controllers\SuperAdmin\UserController@updateApproveUserAllData']);
     Route::post('/delete-approve-users', ['as' => 'delete-approve-users', 'uses' => 'App\Http\Controllers\SuperAdmin\UserController@deleteApproveUser']);
 
+
+    Route::post('/copy-master-inventory', ['as' => 'copy-master-inventory', 'uses' => 'App\Http\Controllers\SuperAdmin\MasterKitchenInventoryController@copyMasterInventory']);
+
 });
 
 

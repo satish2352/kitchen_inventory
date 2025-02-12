@@ -180,11 +180,45 @@ class MasterKitchenInventoryRepository
 
         return $student_data;
 
-            // }
-            // return response()->json([
-            //     'status' => 'error',
-            //     'message' => 'Intern ID Card details not found.',
-            // ], 404);
-
     }
+
+	public function copyMasterInventory($request)
+{
+    $data_master_inventory_data = MasterKitchenInventory::where('master_kitchen_inventory.location_id', '=', $request->from_location_id)
+        ->where('master_kitchen_inventory.is_deleted', '=', '0')
+        ->select('master_kitchen_inventory.*')->get()
+        ->toArray();
+
+    if (empty($data_master_inventory_data)) {
+        session()->flash('alert_status', 'error');
+        session()->flash('alert_msg', 'No inventory data found for the selected From Location.');
+        return ['status' => 'error', 'msg' => 'No inventory data found for the selected From Location.'];
+    }
+
+    foreach ($data_master_inventory_data as $index => $inventoryData) {
+        $user_data = new MasterKitchenInventory();
+        $user_data->item_name = $inventoryData['item_name'];
+        $user_data->category = $inventoryData['category'];
+        $user_data->unit = $inventoryData['unit'];
+        $user_data->price = $inventoryData['price'];
+        $user_data->location_id = $request->to_location_id;
+        $user_data->quantity = $inventoryData['quantity'];
+        $user_data->save();
+    }
+
+    // Logging activity
+    $sess_user_id = session()->get('login_id');
+    $sess_user_name = session()->get('user_name');
+    
+    $LogMsg = config('constants.SUPER_ADMIN.1128');
+    $FinalLogMessage = $sess_user_name . ' ' . $LogMsg;
+    
+    $ActivityLogData = new ActivityLog();
+    $ActivityLogData->user_id = $sess_user_id;
+    $ActivityLogData->activity_message = $FinalLogMessage;
+    $ActivityLogData->save();
+
+    return ['status' => 'success', 'msg' => 'Master Inventory Copied Successfully.'];
+}
+
 }

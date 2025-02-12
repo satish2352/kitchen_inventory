@@ -33,7 +33,9 @@ return [
         1127     => 'Deleted Unit',
 
         1122     =>'Edited Inventory',
-        1123     =>'Deleted Inventory'
+        1123     =>'Deleted Inventory',
+
+        1128     =>'Copied Inventory',
 
     ],
 

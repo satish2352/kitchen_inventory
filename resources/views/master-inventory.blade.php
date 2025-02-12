@@ -22,8 +22,8 @@
           </a>
           <h5 class="sub-title">Master Inventory</h5>
 
-          <button class="btn btn-light add-btn">
-            <i class="bi bi-plus-lg"></i>
+          <button class="btn btn-light copy-inventory-btn">
+            <i class="bi bi-plus-lg">Copy Inventory</i>
           </button>
         </div>
       </div>
@@ -283,7 +283,7 @@
               <i class="bi bi-plus-lg"></i> ADD
             </button>
           </div>
-</form>
+        </form>
         </div>
       </div>
 
@@ -381,6 +381,56 @@
             </a>
             <button class="btn btn-danger btn-lg w-100">
               <i class="bi bi-arrow-repeat"></i> Update
+            </button>
+          </div>
+        </form>
+        </div>
+      </div>
+
+      <div id="CopyInventoryPopup" class="popup-container">
+        <div class="popup-content">
+
+        <form class="forms-sample" id="frm_copy_inventory" name="frm_copy_inventory" method="post" role="form"
+          action="{{ route('copy-master-inventory') }}" enctype="multipart/form-data">
+          <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
+          <!-- Popup Title -->
+          <h4 class="popup-title">Copy Master Inventory</h4>
+          <hr />
+
+                <div class="row mb-3">
+                  <label class="col-6 form-label">Select From Location</label>
+                  <div class="col-6">
+                      <select class="form-select select2" name="from_location_id"
+                          data-placeholder="Select Location" id="FromLocationId">
+                          <option value="">Select Location</option>
+                          @foreach ($locationsData as $locationItem)
+                              <option value="{{ $locationItem['id'] }}">{{ $locationItem['location'] }}</option>
+                          @endforeach
+                      </select>
+                  </div>  
+                </div>
+
+                <div class="row mb-3">
+                  <label class="col-6 form-label">Select To Location</label>
+                  <div class="col-6">
+                      <select class="form-select select2" name="to_location_id"
+                          data-placeholder="Select Location" id="ToLocationId">
+                          <option value="">Select Location</option>
+                          @foreach ($locationsData as $locationItem)
+                              <option value="{{ $locationItem['id'] }}">{{ $locationItem['location'] }}</option>
+                          @endforeach
+                      </select>
+                  </div>
+                </div>
+
+          <hr />
+          <div class="d-flex justify-content-around">
+          <a class="btn btn-secondary btn-lg w-100 me-2" id="closePopup">
+              <i class="bi bi-x-circle"></i> Cancel
+            </a>
+            
+            <button class="btn btn-danger btn-lg w-100">
+              <i class="bi bi-plus-lg"></i> ADD
             </button>
           </div>
         </form>
@@ -508,9 +558,15 @@
         const popupadd = document.getElementById("addPopup");
         const confirmPopupDelete = document.getElementById("confirmPopupDelete");
       const cancelDeleteConfirm = document.getElementById("cancelDeleteConfirm");
-
       const closePopUpButton = document.getElementById("closePopup");
 
+      const copyInventoryButton = document.querySelector(".copy-inventory-btn");
+      const CopyInventoryPopup = document.getElementById("CopyInventoryPopup");
+
+
+      copyInventoryButton.addEventListener("click", () => {
+        CopyInventoryPopup.style.display = "flex";
+        });
 
       cancelDeleteConfirm.addEventListener("click", () => {
         popup.style.display = "flex";
@@ -771,6 +827,74 @@ document.getElementById('editPopup').style.display = "flex";
         },
         password: {
           required: "Please enter password"
+          // minlength: "Category name must be at least 3 characters long"
+        }
+      },
+      errorElement: "span",
+      errorClass: "error-text",
+      highlight: function (element) {
+        $(element).addClass("is-invalid").removeClass("is-valid");
+      },
+      unhighlight: function (element) {
+        $(element).addClass("is-valid").removeClass("is-invalid");
+      }
+    });
+
+    $("#frm_register_add").validate({
+      rules: {
+        location_id: {
+          required: true
+          // minlength: 3
+        },
+        category: {
+          required: true
+          // minlength: 3
+        },
+        unit: {
+          required: true
+          // minlength: 3
+        },
+        quantity: {
+          required: true
+          // minlength: 3
+        },
+        item_name: {
+          required: true
+          // minlength: 3
+        },
+        price: {
+          required: true,
+          number: true,
+          min: 0
+          // minlength: 3
+        }
+        
+      },
+      messages: {
+        location_id: {
+          required: "Please select the Location"
+          // minlength: "Category name must be at least 3 characters long"
+        },
+        category: {
+          required: "Please select the category name"
+          // minlength: "Category name must be at least 3 characters long"
+        },
+        unit: {
+          required: "Please select the unit"
+          // minlength: "Category name must be at least 3 characters long"
+        },
+        quantity: {
+          required: "Please select the Quantity"
+          // minlength: "Category name must be at least 3 characters long"
+        },
+        item_name: {
+          required: "Please enter item name"
+          // minlength: "Category name must be at least 3 characters long"
+        },
+        price: {
+          required: "Please enter price",
+          number: "Please enter a valid number.",
+          min: "Price cannot be negative."
           // minlength: "Category name must be at least 3 characters long"
         }
       },

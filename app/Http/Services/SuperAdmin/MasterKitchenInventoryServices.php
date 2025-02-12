@@ -63,6 +63,19 @@ class MasterKitchenInventoryServices
         return ['status'=>'success','msg'=>'Master Inventory Updated Successfully.'];
     }
 
+    public function copyMasterInventory($request) {
+        $data_master_inventory_data = $this->repo->copyMasterInventory($request);
+    
+        // Check if repository returned an error
+        if ($data_master_inventory_data['status'] === 'error') {
+            return $data_master_inventory_data; // Return the same error response
+        }
+    
+        return ['status' => 'success', 'msg' => 'Master Inventory Copied Successfully.'];
+    }
+    
+    
+
     public function deleteItem($id){
         try {
             $delete = $this->repo->deleteItem($id);

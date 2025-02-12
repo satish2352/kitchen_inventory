@@ -236,4 +236,41 @@ class MasterKitchenInventoryController extends Controller {
         return view('master-kitchen-inventory-search-results', compact('user_data'))->render();
     }
 
+    public function copyMasterInventory(Request $request)
+{
+    $rules = [
+        'from_location_id' => 'required',
+        'to_location_id' => 'required'
+    ];
+    $messages = [
+        'from_location_id.required' => 'From location is required.',
+        'to_location_id.required' => 'To location is required.'
+    ];
+
+    try {
+        $validation = Validator::make($request->all(), $rules, $messages);
+        if ($validation->fails()) {
+            return redirect()->back()
+                ->withInput()
+                ->withErrors($validation);
+        }
+
+        $register_user = $this->service->copyMasterInventory($request);
+
+        session()->flash('alert_status', $register_user['status']);
+        session()->flash('alert_msg', $register_user['msg']);
+
+        if ($register_user['status'] === 'success') {
+            return redirect('list-items');
+        } else {
+            return redirect()->back()->withInput();
+        }
+    } catch (Exception $e) {
+        return redirect()->back()
+            ->withInput()
+            ->with(['msg' => $e->getMessage(), 'status' => 'error']);
+    }
+}
+
+
 }
