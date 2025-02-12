@@ -42,7 +42,7 @@
                 <td>{{ $data['quantity'] }}</td>
                 <td>{{ $buyQty }}</td>
                 @if(session()->get('user_role') =='1')
-                <td>$ {{ $data['buyQty'] * $data['price'] }}</td>
+                <td>$ {{ $buyQty * $data['price'] }}</td>
                 @endif
             </tr>
             @endforeach
