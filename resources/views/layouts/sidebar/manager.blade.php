@@ -26,7 +26,7 @@
          <img src="{{ asset('/img/user.png') }}" alt="User" />
          <div>
             <h5 class="inter-font">{{ session('user_name') }}</h5>
-            <span class="jost-font">Manager</span>
+            <span class="jost-font">Night Manager</span>
          </div>
       </div>
       <div class="drawer-nav">

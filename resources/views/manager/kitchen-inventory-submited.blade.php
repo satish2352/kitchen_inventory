@@ -103,7 +103,6 @@
                                         <input type="text" name="quantity[]" class="form-control qty-input" value="{{ $item['quantity'] }}" placeholder="QTY" />
                                     </td> -->
                                     <td>{{ $item['unit_name'] }}</td>
-                                    <td>{{ $item['price'] }}</td>
                                 </tr>
                             @endforeach
                             <tr>
