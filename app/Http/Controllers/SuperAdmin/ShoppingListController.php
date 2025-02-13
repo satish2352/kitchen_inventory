@@ -592,6 +592,10 @@ class ShoppingListController extends Controller
         ->orderBy('location', 'asc')
         ->get()
         ->toArray();
+        
+
+        $location_val_data = Locations::find($LocationValData);
+        $LocationName=$location_val_data->location;
 
         $user_data = LocationWiseInventory::leftJoin('locations', 'location_wise_inventory.location_id', '=', 'locations.id')
         ->leftJoin('master_kitchen_inventory', 'location_wise_inventory.inventory_id', '=', 'master_kitchen_inventory.id')
@@ -613,18 +617,17 @@ class ShoppingListController extends Controller
         ->where('location_wise_inventory.location_id', $LocationValData)
     ->whereDate('location_wise_inventory.created_at', $DateValData)
         ->where('master_kitchen_inventory.is_deleted', '0')
-        // ->whereDate('location_wise_inventory.created_at', now()->toDateString())
-        // ->where('location_wise_inventory.approved_by', '1')
         ->orderBy('category.category_name', 'asc') // Order by category name first
         ->orderBy('master_kitchen_inventory.item_name', 'asc') // Then order by item name
         ->get()
         ->groupBy('category_name');
+
 
         // Get raw SQL query
 // $sql = $query->toSql();
 // $bindings = $query->getBindings();
 // dd($query);
         // Return the user listing Blade with the search results (no full page reload)
-        return view('kitchen-inventory-history', compact('locationsData','user_data'))    ;
+        return view('kitchen-inventory-history', compact('locationsData','user_data','LocationName','DateValData'))    ;
     }
 } 

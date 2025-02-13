@@ -425,3 +425,45 @@ document.getElementById('editPopupCategory').style.display = "flex";
         });
     });
 </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        $('#frm_register_add').submit(function (event) {
+            event.preventDefault(); // Prevent the form from submitting traditionally
+            
+            let form = $(this);
+            let formData = new FormData(form[0]); // Collect form data
+
+            $.ajax({
+                url: "{{ route('add-category') }}", // Define the route directly here
+                method: "POST", // POST method for form submission
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    if (response.status == 'success') {
+                        // Reload the page after success
+                        location.reload();
+                    } else {
+                        // Handle error message if category was not added
+                        alert(response.msg);
+                    }
+                },
+                error: function (xhr) {
+                    // Handle validation errors here
+                    var errors = xhr.responseJSON.errors;
+                    // Clear previous error messages
+                    $('.text-danger').remove();
+                    
+                    // Display new errors
+                    if (errors.category_name) {
+                        $('input[name="category_name"]').after('<span class="text-danger">' + errors.category_name[0] + '</span>');
+                    }
+
+                    // Keep the popup open in case of errors
+                    $('#addPopup').show();
+                }
+            });
+        });
+    });
+</script>

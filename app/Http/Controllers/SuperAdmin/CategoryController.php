@@ -30,41 +30,40 @@ class CategoryController extends Controller {
     public function AddCategory(Request $request)
     {
 
+       
         try {
-
             $rules = [
                 'category_name' => 'required|unique:category|max:255'
             ];
             $messages = [
-                'category_name.required' => 'Please  enter category_name name.',
-                'category_name.max' => 'Please  enter text length upto 255 character only.',
-                'category_name.unique' => 'Title already exist.'
+                'category_name.required' => 'Please enter category name.',
+                'category_name.max' => 'Please enter text length up to 255 characters only.',
+                'category_name.unique' => 'Category name already exists.'
             ];
-
+    
             $validation = Validator::make($request->all(), $rules, $messages);
+            
             if ($validation->fails()) {
-                return redirect('list-category')
-                    ->withInput()
-                    ->withErrors($validation);
+                // Return validation errors as JSON
+                return response()->json(['errors' => $validation->errors()], 422);
             } else {
                 $add_role = $this->service->addCategory($request);
                 if ($add_role) {
                     $msg = $add_role['msg'];
                     $status = $add_role['status'];
-                    session()->flash('alert_status', $status);
-                    session()->flash('alert_msg', $msg);
+                    
                     if ($status == 'success') {
-                        return redirect('list-category');
+                        return response()->json(['status' => 'success', 'msg' => $msg]);
                     } else {
-                        return redirect('list-category')->withInput();
+                        return response()->json(['status' => 'error', 'msg' => $msg]);
                     }
                 }
-
             }
         } catch (Exception $e) {
-            return redirect('list-category')->withInput()->with(['msg' => $e->getMessage(), 'status' => 'error']);
+            return response()->json(['status' => 'error', 'msg' => $e->getMessage()]);
         }
     }
+    
 
     public function editCategory(Request $request){
         $category_data = $this->service->editCategory($request);

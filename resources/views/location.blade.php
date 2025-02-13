@@ -408,3 +408,44 @@
         });
     });
 </script>
+
+<script>
+    $(document).ready(function () {
+        $('#frm_register_add').submit(function (event) {
+            event.preventDefault(); // Prevent the form from submitting the traditional way
+
+            let form = $(this);
+            let formData = new FormData(form[0]); // Collect form data
+
+            $.ajax({
+                url: "{{ route('add-locations') }}",  // Define the route directly here
+                method: "POST", // POST method for form submission
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    if (response.status == 'success') {
+                        location.reload();
+                        
+                    }
+                },
+                error: function (xhr) {
+                    // Handle validation errors here
+                    var errors = xhr.responseJSON.errors;
+
+                    // Clear previous errors
+                    $('.text-danger').remove();
+
+                    // Display new errors
+                    if (errors.location) {
+                        $('input[name="location"]').after('<span class="text-danger">' + errors.location[0] + '</span>');
+                    }
+
+                    // Keep the popup open
+                    $('#addPopup').show();
+                }
+            });
+        });
+    });
+</script>
+

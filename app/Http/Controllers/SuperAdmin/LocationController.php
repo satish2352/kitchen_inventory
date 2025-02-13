@@ -27,47 +27,44 @@ class LocationController extends Controller {
     }
 
     public function addLocation(Request $request)
-    {
+{
+    try {
+        $rules = [
+            'location' => 'required|unique:locations|max:255',
+        ];
 
-        try {
+        $messages = [
+            'location.required' => 'Please enter location name.',
+            'location.max' => 'Please enter text length up to 255 characters only.',
+            'location.unique' => 'Location already exists.',
+        ];
 
-            $rules = [
-                'location' => 'required|unique:locations|max:255',
-                // 'role' => 'required'
-            ];
-            $messages = [
-                'location.required' => 'Please  enter location name.',
-                // 'location.regex' => 'Please  enter text only.',
-                'location.max' => 'Please  enter text length upto 255 character only.',
-                'location.unique' => 'Location already exist.',
+        $validation = Validator::make($request->all(), $rules, $messages);
 
-                // 'role.required' => 'Please Select Role.'
-            ];
+        if ($validation->fails()) {
+            // Return validation errors as a JSON response
+            return response()->json(['errors' => $validation->errors()], 422);
+        } else {
+            // Assuming this is where you save the location
+            $add_role = $this->service->addLocation($request);
+            if ($add_role) {
+                $msg = $add_role['msg'];
+                $status = $add_role['status'];
 
-            $validation = Validator::make($request->all(), $rules, $messages);
-
-                if ($validation->fails()) {
-                    return redirect()->back()->withErrors($validation)->withInput();
+                session()->flash('alert_status', $status);
+                session()->flash('alert_msg', $msg);
+                if ($status == 'success') {
+                    return response()->json(['status' => 'success']);
                 } else {
-                $add_role = $this->service->addLocation($request);
-                if ($add_role) {
-                    $msg = $add_role['msg'];
-                    $status = $add_role['status'];
-
-                    session()->flash('alert_status', $status);
-                    session()->flash('alert_msg', $msg);
-                    if ($status == 'success') {
-                        return redirect('list-locations');
-                    } else {
-                        return redirect('list-locations')->withInput();
-                    }
+                    return response()->json(['status' => 'error']);
                 }
-
             }
-        } catch (Exception $e) {
-            return redirect('list-locations')->withInput()->with(['msg' => $e->getMessage(), 'status' => 'error']);
         }
+    } catch (Exception $e) {
+        return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
     }
+}
+
 
     public function editLocation(Request $request){
         $location_data = $this->service->editLocation($request);

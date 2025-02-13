@@ -71,10 +71,19 @@
       </div> -->
 
       <div class="container-fluid px-3" id="search-results">
-        @if(session()->get('location_selected_id') !='')
+        <!-- @if(session()->get('location_selected_id') !='') -->
 
         @if (!empty($user_data) && count($user_data) > 0)
         
+        <div class="row">
+            <div class="col-md-6">
+                <span><b>Location</b> : {{ $LocationName }} </span>
+            </div>
+            <div class="col-md-6">
+                <span><b>Date</b> : {{ $DateValData }} </span>
+            </div>
+        </div>
+       
         @foreach ($user_data as $category => $items)
 
       
@@ -127,19 +136,18 @@
         <div class="border-box mb-4" id="search-results">
                 <!-- Header Title -->
                 <div class="grid-header text-center">
-                    <h6 class="m-0 text-white">Please Add Inventory For This location</h6>
+                    <h6 class="m-0 text-white">No Data Found</h6>
                 </div>
             </div>  
         @endif
 
-        @else
+        <!-- @else
            <div class="border-box mb-4" id="search-results">
-                <!-- Header Title -->
                 <div class="grid-header text-center">
                     <h6 class="m-0 text-white">Please Select Location First</h6>
                 </div>
             </div>    
-           @endif
+           @endif -->
       </div>
 
 
@@ -205,73 +213,6 @@
         </div>
       </div>
 
-      <!-- Select Multiplier Popup -->
-      <div id="confirmPopup" class="confirm-popup-container">
-        <div class="confirm-popup-content">
-          <h4 class="confirm-popup-title">Select Multiplier</h4>
-          <hr />
-          <div class="confirm-popup-text px-3">
-            <div class="d-flex align-items-center justify-content-between pb-2">
-              <label>1x All Quantity</label>
-              <input type="radio" name="multiplier" id="" />
-            </div>
-            <div class="d-flex align-items-center justify-content-between pb-2">
-              <label>2x All Quantity</label>
-              <input type="radio" name="multiplier" id="" />
-            </div>
-            <div class="d-flex align-items-center justify-content-between pb-2">
-              <label>3x All Quantity</label>
-              <input type="radio" name="multiplier" id="" />
-            </div>
-            <div class="d-flex align-items-center justify-content-between pb-2">
-              <label>4x All Quantity</label>
-              <input type="radio" name="multiplier" id="" />
-            </div>
-            <div class="d-flex align-items-center justify-content-between">
-              <label>5x All Quantity</label>
-              <input type="radio" name="multiplier" id="" />
-            </div>
-          </div>
-          <div class="d-flex justify-content-around mt-4 confrm">
-            <button id="cancelDelete" class="btn br">Cancel</button>
-            <button id="confirmDelete" class="btn">Confirm</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- filter ccategory Popup -->
-      <div id="filterPopup" class="confirm-popup-container">
-        <div class="confirm-popup-content">
-          <h4 class="confirm-popup-title">Filter Category</h4>
-          <hr />
-          <div class="confirm-popup-text px-3">
-            <div class="d-flex align-items-center justify-content-between pb-2">
-              <label>All </label>
-              <input type="radio" name="category" id="" />
-            </div>
-            <div class="d-flex align-items-center justify-content-between pb-2">
-              <label>Chicken/ Protiens</label>
-              <input type="radio" name="category" id="" />
-            </div>
-            <div class="d-flex align-items-center justify-content-between pb-2">
-              <label>Chicken/ Protiens</label>
-              <input type="radio" name="category" id="" />
-            </div>
-            <div class="d-flex align-items-center justify-content-between pb-2">
-              <label>Side Items</label>
-              <input type="radio" name="category" id="" />
-            </div>
-            <div class="d-flex align-items-center justify-content-between">
-              <label>Side Items</label>
-              <input type="radio" name="category" id="" />
-            </div>
-          </div>
-          <div class="d-flex justify-content-around mt-4 confrm">
-            <button id="cancelcategory" class="btn br">Cancel</button>
-            <button id="confirmcategory" class="btn">Confirm</button>
-          </div>
-        </div>
-      </div>
     </div>
 
 
@@ -319,4 +260,45 @@
       });
 
       });
+</script>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+
+    // Initialize validation for the add form
+    $("#frm_register_add").validate({
+      rules: {
+        location_id: {
+          required: true
+          // minlength: 3
+        },
+        inventory_date: {
+          required: true
+          // minlength: 3
+        }
+        
+      },
+      messages: {
+        location_id: {
+          required: "Please select the Location"
+          // minlength: "Category name must be at least 3 characters long"
+        },
+        inventory_date: {
+          required: "Please select the date"
+          // minlength: "Category name must be at least 3 characters long"
+        }
+      },
+      errorElement: "span",
+      errorClass: "error-text",
+      highlight: function (element) {
+        $(element).addClass("is-invalid").removeClass("is-valid");
+      },
+      unhighlight: function (element) {
+        $(element).addClass("is-valid").removeClass("is-invalid");
+      }
+    });
+
+
+
+  });
 </script>

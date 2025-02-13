@@ -16,6 +16,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', ['as' => '/', 'uses' => 'App\Http\Controllers\LoginController@index']);
 
+Route::get('/serviceworker.js', function () {
+    return response()->file(public_path('serviceworker.js'));
+});
+
 // Route::get('/approve-users', function () {
 //     return view('approve-users');
 // });
