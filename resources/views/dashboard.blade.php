@@ -32,7 +32,7 @@
  <!-- <img src="{{ asset('/img/main_logo.png') }}" alt="Company Logo dsds"> -->
 
  <!-- <img src="{{ asset('/img/main_logo.png') }}" alt="Company Logo" /> -->
- @if ($return_data['sess_user_id'] =='22')
+ @if ($return_data['role_id'] =='1')
  <div class="service-box jost-font">
     <div class="container-fluid p-3">
        <div class="row d-flex g-2">
@@ -118,7 +118,7 @@
        </div>
     </div>
  </div>
- @elseif ($return_data['sess_user_id'] =='14')
+ @elseif ($return_data['role_id'] =='2')
  <div class="service-box jost-font">
     <div class="container-fluid p-3">
        <div class="row d-flex g-2">
@@ -193,7 +193,7 @@
        </div>
     </div>
  </div>
- @elseif ($return_data['sess_user_id'] =='12')
+ @elseif ($return_data['role_id'] =='3')
  <div class="service-box jost-font">
     <div class="container-fluid p-3">
        <div class="row d-flex g-2">

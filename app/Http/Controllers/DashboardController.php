@@ -70,7 +70,7 @@ class DashboardController extends Controller
             'master_inventory_count' => $MasterInventoryCount,
             'ActivityLogCount' => $ActivityLogCount,
             'LocationWiseInventoryCount' => $LocationWiseInventoryCount,
-            'sess_user_id' => $sess_user_id
+            'role_id' => $role_id
 
         ];
         return view('dashboard',compact('return_data'));
@@ -107,7 +107,7 @@ class DashboardController extends Controller
             'message' => 'Counts retrieved successfully',
             'users_count' => $userCount,
             'LocationWiseInventoryCount' => $LocationWiseInventoryCount,
-            'sess_user_id' => $sess_user_id,
+            'role_id' => $role_id,
             'alluserCount' => $alluserCount
 
         ];
@@ -145,7 +145,7 @@ class DashboardController extends Controller
             'message' => 'Counts retrieved successfully',
             'users_count' => $userCount,
             'LocationWiseInventoryCount' => $LocationWiseInventoryCount,
-            'sess_user_id' => $sess_user_id,
+            'role_id' => $role_id,
             'alluserCount' => $alluserCount
 
         ];
