@@ -30,11 +30,13 @@ class DashboardController extends Controller
     public function index(Request $request) 
     {
         $sess_user_id = session()->get('login_id');
+        $role_id = session()->get('user_role');
+        // dd($role_id);
         $location_selected_name = session()->get('location_selected_name');
         $location_selected_id = session()->get('location_selected_id');
 
         
-        if($sess_user_id =='22'){
+        if($role_id =='1'){
         $userCount = UsersData::where('is_deleted', '0') -> where('is_approved', '1') ->count();
 
         // ---------------------------
@@ -73,7 +75,7 @@ class DashboardController extends Controller
         ];
         return view('dashboard',compact('return_data'));
 
-        }else if($sess_user_id =='14'){
+        }else if($role_id =='2'){
 
         $userCount = UsersData::where('is_deleted', '0')
         ->where('added_by', '2')
@@ -110,7 +112,7 @@ class DashboardController extends Controller
 
         ];
         return view('dashboard',compact('return_data'));
-    }else if($sess_user_id =='12'){
+    }else if($role_id =='3'){
 
         $userCount = UsersData::where('is_deleted', '0')
         ->where('added_by', '2')
