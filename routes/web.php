@@ -127,6 +127,9 @@ Route::group(['middleware' => ['admin']], function () {
 
 
     Route::post('/copy-master-inventory', ['as' => 'copy-master-inventory', 'uses' => 'App\Http\Controllers\SuperAdmin\MasterKitchenInventoryController@copyMasterInventory']);
+    // Route::get('/get-inventory-history-super-admin', ['as' => 'get-inventory-history-super-admin', 'uses' => 'App\Http\Controllers\SuperAdmin\MasterKitchenInventoryController@getInventoryHistorySuperAdmin']);
+    Route::get('/get-inventory-history-view', ['as' => 'get-inventory-history-view', 'uses' => 'App\Http\Controllers\SuperAdmin\ShoppingListController@getInventory']);
+    Route::post('/search-master-kitchen-inventory-history', ['as' => 'search-master-kitchen-inventory-history', 'uses' => 'App\Http\Controllers\SuperAdmin\ShoppingListController@getInventorySubmitHistory']);
 
 });
 

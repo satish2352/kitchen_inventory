@@ -13,7 +13,8 @@ use App\Models\ {
     Locations,
     LocationWiseInventory,
     MasterKitchenInventory,
-    ActivityLog
+    ActivityLog,
+    InventoryHistory
 };
 use Session;
 use Cookie;
@@ -450,4 +451,180 @@ class ShoppingListController extends Controller
         }
     }
 
-}
+    // public function getInventory(Request $request) 
+    // {
+    //     $sess_user_id = session()->get('login_id');
+    //     $location_selected_name = session()->get('location_selected_name');
+    //     $location_selected_id = session()->get('location_selected_id');
+    //     $LocationId = $request->input('location_id');
+    //     $InventoryDate = $request->input('inventory_date');
+
+    //     $data_location_wise_inventory=array();
+    //     $locationsData = Locations::where('is_active', '1')
+    //                         ->where('is_deleted', '0')
+    //                         ->select('id','location')
+    //                         ->orderBy('location', 'asc')
+    //                         ->get()
+    //                         ->toArray();
+
+    //     // if($location_selected_name !=''){
+
+    //         $data_location_wise_inventory = LocationWiseInventory::leftJoin('locations', 'location_wise_inventory.location_id', '=', 'locations.id')
+    //         ->leftJoin('master_kitchen_inventory', 'location_wise_inventory.inventory_id', '=', 'master_kitchen_inventory.id')
+    //         ->leftJoin('units', 'master_kitchen_inventory.unit', '=', 'units.id')
+    //         ->leftJoin('category', 'master_kitchen_inventory.category', '=', 'category.id')
+    //         ->select(
+    //             'master_kitchen_inventory.id',
+    //             'master_kitchen_inventory.category',
+    //             'master_kitchen_inventory.item_name',
+    //             'master_kitchen_inventory.unit',
+    //             'master_kitchen_inventory.price',
+    //             'location_wise_inventory.quantity',
+    //             'location_wise_inventory.created_at',
+    //             'location_wise_inventory.id as locationWiseId',
+    //             'category.category_name',
+    //             'units.unit_name',
+    //             'locations.location'
+    //         )
+    //         // ->where('master_kitchen_inventory.location_id', $location_selected_id)
+    //         ->where('master_kitchen_inventory.is_deleted', '0')
+    //         ->whereDate('location_wise_inventory.created_at', now()->toDateString())
+    //         // ->where('location_wise_inventory.approved_by', '1')
+    //         ->orderBy('category.category_name', 'asc') // Order by category name first
+    //         ->orderBy('master_kitchen_inventory.item_name', 'asc') // Then order by item name
+    //         ->get()
+    //         ->groupBy('category_name');
+
+    //     // }    
+    //     return view('kitchen-inventory-history', compact('locationsData','data_location_wise_inventory'));
+    // }
+
+    public function getInventory(Request $request) 
+    {
+        $sess_user_id = session()->get('login_id');
+        $location_selected_name = session()->get('location_selected_name');
+        $location_selected_id = session()->get('location_selected_id');
+
+        $LocationId = $request->input('location_id');
+        $InventoryDate = $request->input('inventory_date');
+
+        $data_location_wise_inventory=array();
+        $locationsData = Locations::where('is_active', '1')
+                            ->where('is_deleted', '0')
+                            ->select('id','location')
+                            ->orderBy('location', 'asc')
+                            ->get()
+                            ->toArray();
+
+        if($location_selected_name !=''){
+
+            $data_location_wise_inventory = LocationWiseInventory::leftJoin('locations', 'location_wise_inventory.location_id', '=', 'locations.id')
+            ->leftJoin('master_kitchen_inventory', 'location_wise_inventory.inventory_id', '=', 'master_kitchen_inventory.id')
+            ->leftJoin('units', 'master_kitchen_inventory.unit', '=', 'units.id')
+            ->leftJoin('category', 'master_kitchen_inventory.category', '=', 'category.id')
+            ->select(
+                'master_kitchen_inventory.id',
+                'master_kitchen_inventory.category',
+                'master_kitchen_inventory.item_name',
+                'master_kitchen_inventory.unit',
+                'master_kitchen_inventory.price',
+                'location_wise_inventory.quantity',
+                'location_wise_inventory.created_at',
+                'location_wise_inventory.id as locationWiseId',
+                'category.category_name',
+                'units.unit_name',
+                'locations.location'
+            )
+            ->where('master_kitchen_inventory.location_id', $location_selected_id)
+            ->where('master_kitchen_inventory.is_deleted', '0')
+            ->whereDate('location_wise_inventory.created_at', now()->toDateString())
+            // ->where('location_wise_inventory.approved_by', '1')
+            ->orderBy('category.category_name', 'asc') // Order by category name first
+            ->orderBy('master_kitchen_inventory.item_name', 'asc') // Then order by item name
+            ->get()
+            ->groupBy('category_name');
+
+        }    
+        return view('kitchen-inventory-history', compact('locationsData','data_location_wise_inventory'));
+    }
+
+    // public function searchMasterKitchenInventory(Request $request)
+    // {
+    //     $query = $request->input('query');
+
+    //     $user_data = MasterKitchenInventory::leftJoin('category', 'master_kitchen_inventory.category', '=', 'category.id')
+    //     ->leftJoin('units', 'master_kitchen_inventory.unit', '=', 'units.id')
+    //     ->select(
+    //         'master_kitchen_inventory.id',
+    //         'master_kitchen_inventory.category',
+    //         'master_kitchen_inventory.item_name',
+    //         'master_kitchen_inventory.unit',
+    //         'master_kitchen_inventory.price',
+    //         'master_kitchen_inventory.created_at',
+    //         'category.category_name',
+    //         'units.unit_name'
+    //     )
+    //     ->where('master_kitchen_inventory.is_deleted', '0')
+    //     ->when($query, function ($q) use ($query) {
+    //         $q->where(function ($subQuery) use ($query) {
+    //             $subQuery->where('master_kitchen_inventory.item_name', 'like', "%$query%")
+    //                 ->orWhere('category.category_name', 'like', "%$query%")
+    //                 ->orWhere('units.unit_name', 'like', "%$query%");
+    //         });
+    //     })
+    //     ->orderBy('category.category_name', 'asc') // Order by category name first
+    //     ->orderBy('master_kitchen_inventory.item_name', 'asc') // Then order by item name
+    //     ->get()
+    //     ->groupBy('category_name'); // Group items by category name
+
+    //     // Return the user listing Blade with the search results (no full page reload)
+    //     return view('master-kitchen-inventory-search-results', compact('user_data'));
+    // }
+
+    public function getInventorySubmitHistory(Request $request)
+    {
+        $LocationValData = $request->input('location_id');
+        $DateValData = $request->input('inventory_date');
+
+        $locationsData = Locations::where('is_active', '1')
+        ->where('is_deleted', '0')
+        ->select('id','location')
+        ->orderBy('location', 'asc')
+        ->get()
+        ->toArray();
+
+        $user_data = LocationWiseInventory::leftJoin('locations', 'location_wise_inventory.location_id', '=', 'locations.id')
+        ->leftJoin('master_kitchen_inventory', 'location_wise_inventory.inventory_id', '=', 'master_kitchen_inventory.id')
+        ->leftJoin('units', 'master_kitchen_inventory.unit', '=', 'units.id')
+        ->leftJoin('category', 'master_kitchen_inventory.category', '=', 'category.id')
+        ->select(
+            'master_kitchen_inventory.id',
+            'master_kitchen_inventory.category',
+            'master_kitchen_inventory.item_name',
+            'master_kitchen_inventory.unit',
+            'master_kitchen_inventory.price',
+            'location_wise_inventory.quantity',
+            'location_wise_inventory.created_at',
+            'location_wise_inventory.id as locationWiseId',
+            'category.category_name',
+            'units.unit_name',
+            'locations.location'
+        )
+        ->where('location_wise_inventory.location_id', $LocationValData)
+    ->whereDate('location_wise_inventory.created_at', $DateValData)
+        ->where('master_kitchen_inventory.is_deleted', '0')
+        // ->whereDate('location_wise_inventory.created_at', now()->toDateString())
+        // ->where('location_wise_inventory.approved_by', '1')
+        ->orderBy('category.category_name', 'asc') // Order by category name first
+        ->orderBy('master_kitchen_inventory.item_name', 'asc') // Then order by item name
+        ->get()
+        ->groupBy('category_name');
+
+        // Get raw SQL query
+// $sql = $query->toSql();
+// $bindings = $query->getBindings();
+// dd($query);
+        // Return the user listing Blade with the search results (no full page reload)
+        return view('kitchen-inventory-history', compact('locationsData','user_data'))    ;
+    }
+} 
