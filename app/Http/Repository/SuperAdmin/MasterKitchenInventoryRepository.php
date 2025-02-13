@@ -20,32 +20,51 @@ class MasterKitchenInventoryRepository
 {
 
 	public function getItemsList() 
-	{
-		$location_selected_id = session()->get('location_selected_id');
-		$data_location = MasterKitchenInventory::leftJoin('category', 'master_kitchen_inventory.category', '=', 'category.id')
-			->leftJoin('units', 'master_kitchen_inventory.unit', '=', 'units.id')
-			->leftJoin('locations', 'master_kitchen_inventory.location_id', '=', 'locations.id')
-			->select(
-				'master_kitchen_inventory.id',
-				'master_kitchen_inventory.category',
-				'master_kitchen_inventory.item_name',
-				'master_kitchen_inventory.unit',
-				'master_kitchen_inventory.price',
-				'master_kitchen_inventory.quantity',
-				'master_kitchen_inventory.created_at',
-				'category.category_name',
-				'units.unit_name',
-				'locations.location'
-			)
-			->where('master_kitchen_inventory.is_deleted', '0')
-			->where('master_kitchen_inventory.location_id', $location_selected_id)
-			->orderBy('category.category_name', 'asc') // Order by category name first
-			->orderBy('master_kitchen_inventory.item_name', 'asc') // Then order by item name
-			->get()
-			->groupBy('category_name'); // Group items by category name
-	// dd($data_location);
-		return $data_location;
-	}
+{
+    $location_selected_id = session()->get('location_selected_id');
+
+    // Get all categories that are active and not deleted
+    $categories = Category::where('is_active', 1)
+        ->where('is_deleted', 0)
+        ->pluck('id');  // Only get the category IDs
+
+    $data_location = [];
+
+    // Loop through each category and check if it has at least one non-deleted item
+    foreach ($categories as $category_id) {
+        $items = MasterKitchenInventory::leftJoin('category', 'master_kitchen_inventory.category', '=', 'category.id')
+            ->leftJoin('units', 'master_kitchen_inventory.unit', '=', 'units.id')
+            ->leftJoin('locations', 'master_kitchen_inventory.location_id', '=', 'locations.id')
+            ->select(
+                'master_kitchen_inventory.id',
+                'master_kitchen_inventory.category',
+                'master_kitchen_inventory.item_name',
+                'master_kitchen_inventory.unit',
+                'master_kitchen_inventory.price',
+                'master_kitchen_inventory.quantity',
+                'master_kitchen_inventory.created_at',
+                'category.category_name',
+                'units.unit_name',
+                'locations.location'
+            )
+            ->where('master_kitchen_inventory.is_deleted', 0)  // Only non-deleted items
+            ->where('master_kitchen_inventory.location_id', $location_selected_id)  // Only for the selected location
+            ->where('master_kitchen_inventory.category', $category_id)  // For the current category
+            ->orderBy('master_kitchen_inventory.item_name', 'asc')  // Ordering by item name
+            ->paginate(10);  // Paginate the results for each category
+
+        // Only add the category to the result if it has items
+        if ($items->count() > 0) {
+            $data_location[$category_id] = $items;  // Store paginated items by category
+        }
+    }
+
+    return $data_location;
+}
+
+
+
+
 	
     // public function getItemsList() {
     //     $data_location = Items::leftJoin('category', 'items.category', '=', 'category.id')

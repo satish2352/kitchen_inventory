@@ -18,7 +18,56 @@
 .is-valid {
   border-color: green;
 }
-</style>  
+
+/* Pagination styles */
+.pagination {
+    margin: 20px 0;
+}
+
+.pagination ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.pagination ul li {
+    display: inline;
+    margin-right: 5px;
+}
+
+.pagination ul li a,
+.pagination ul li span {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    text-decoration: none;
+    color: #333;
+}
+
+.pagination ul li.active a {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+.pagination ul li.disabled span {
+    color: #ccc;
+}
+
+img, svg {
+    vertical-align: middle;
+    width: 2%;
+}
+
+div.dataTables_wrapper div.dataTables_info {
+    display: none;
+}
+div.dataTables_wrapper div.dataTables_paginate ul.pagination{
+    display: none; 
+}
+.pagination .flex .flex{
+    display: none; 
+}
+</style>
 <div class="main">
       <div class="inner-top container-fluid p-3">
         <!-- Top Bar -->
@@ -106,7 +155,63 @@
         </div>
 
         <div class="mt-3">
-            {{ $category_data->links() }}
+        <div class="col-md-8">
+                                                    <div class="pagination">
+                                                        @if ($category_data->lastPage() > 1)
+                                                            <ul class="pagination">
+                                                                <li class="{{ ($category_data->currentPage() == 1) ? ' disabled' : '' }}">
+                                                                    @if ($category_data->currentPage() > 1)
+                                                                        <a href="{{ $category_data->url($category_data->currentPage() - 1) }}">Previous</a>
+                                                                    @else
+                                                                        <span>Previous</span>
+                                                                    @endif
+                                                                </li>
+                                                                @php
+                                                                    $currentPage = $category_data->currentPage();
+                                                                    $lastPage = $category_data->lastPage();
+                                                                    $startPage = max($currentPage - 5, 1);
+                                                                    $endPage = min($currentPage + 4, $lastPage);
+                                                                @endphp
+                                                                @if ($startPage > 1)
+                                                                    <li>
+                                                                        <a href="{{ $category_data->url(1) }}">1</a>
+                                                                    </li>
+                                                                    @if ($startPage > 2)
+                                                                        <li>
+                                                                            <span>...</span>
+                                                                        </li>
+                                                                    @endif
+                                                                @endif
+                                                                @for ($i = $startPage; $i <= $endPage; $i++)
+                                                                    <li class="{{ ($currentPage == $i) ? ' active' : '' }}">
+                                                                        <a href="{{ $category_data->url($i) }}">{{ $i }}</a>
+                                                                    </li>
+                                                                @endfor
+                                                                @if ($endPage < $lastPage)
+                                                                    @if ($endPage < $lastPage - 1)
+                                                                        <li>
+                                                                            <span>...</span>
+                                                                        </li>
+                                                                    @endif
+                                                                    <li>
+                                                                        <a href="{{ $category_data->url($lastPage) }}">{{ $lastPage }}</a>
+                                                                    </li>
+                                                                @endif
+                                                                <li class="{{ ($currentPage == $lastPage) ? ' disabled' : '' }}">
+                                                                    @if ($currentPage < $lastPage)
+                                                                        <a href="{{ $category_data->url($currentPage + 1) }}">Next</a>
+                                                                    @else
+                                                                        <span>Next</span>
+                                                                    @endif
+                                                                </li>
+                                                                <!-- <li>
+                                                                    <span>Page {{ $currentPage }}</span>
+                                                                </li> -->
+                                                            </ul>
+                                                        @endif
+                                                    </div>
+                                                </div><!-- Pagination for each category -->
+                    </div>
         </div>
       </div>
 

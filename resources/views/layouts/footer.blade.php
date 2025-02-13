@@ -161,6 +161,52 @@ document.getElementById('editPopup').style.display = "flex";
     });
 </script>
 
+<script>
+  let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (event) => {
+    // Prevent default so we can trigger it later
+    event.preventDefault();
+
+    // Store the event for later use
+    deferredPrompt = event;
+
+    // Show install button
+    document.getElementById('installButton').style.display = 'block';
+});
+
+document.getElementById('installButton').addEventListener('click', () => {
+    if (deferredPrompt) {
+        // Show install prompt
+        deferredPrompt.prompt();
+
+        deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+                console.log('User accepted the install prompt');
+            } else {
+                console.log('User dismissed the install prompt');
+            }
+            deferredPrompt = null; // Reset event
+        });
+    }
+});
+
+
+  </script>
+
+<script type="text/javascript">
+             if ('serviceWorker' in navigator) {
+              navigator.serviceWorker
+                .register('sw.js')
+                .then(function () {
+                  console.log('Website Worker Registered!');
+                })
+                .catch(function(err) {
+                  console.log(err);
+                });
+            }
+
+        </script>
 
 </div>
 </body>
