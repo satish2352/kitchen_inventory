@@ -551,9 +551,9 @@ class ShoppingListController extends Controller
         ->orderBy('master_kitchen_inventory.item_name', 'asc') // Then order by item name
         ->get()
         ->groupBy('category_name');
-
+// dd($user_data);
         // }    
-        return view('kitchen-inventory-history', compact('locationsData','data_location_wise_inventory'));
+        return view('kitchen-inventory-history', compact('locationsData','user_data','data_location_wise_inventory'));
     }
 
     public function getInventorySubmitHistory(Request $request)

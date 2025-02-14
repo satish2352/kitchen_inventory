@@ -540,7 +540,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
             </a>
             
             <button class="btn btn-danger btn-lg w-100">
-              <i class="bi bi-plus-lg"></i> ADD
+              <i class="bi bi-plus-lg"></i> Copy
             </button>
           </div>
         </form>

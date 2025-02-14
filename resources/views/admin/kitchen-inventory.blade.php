@@ -302,7 +302,7 @@ $(document).ready(function () {
                 let errorSpan = $(this).siblings(".error-message");
                 let masterQuantity = parseFloat($(this).closest("tr").find("td:nth-child(2)").text().trim()) || 0; // Getting masterQuantity
 
-                if (quantity === "" || isNaN(quantity) || parseFloat(quantity) <= 0) {
+                if (quantity === "" || isNaN(quantity) || parseFloat(quantity) < 0) {
                     errorSpan.text("Please enter a valid quantity (greater than 0).");
                     isValid = false;
                 } else if (quantity.length > 5) {
@@ -349,7 +349,7 @@ $(document).ready(function () {
                 let errorSpan = $(this).siblings(".error-message");
                 let masterQuantity = parseFloat($(this).closest("tr").find("td:nth-child(2)").text().trim()) || 0; // Getting masterQuantity
 
-                if (quantity === "" || isNaN(quantity) || parseFloat(quantity) <= 0) {
+                if (quantity === "" || isNaN(quantity) || parseFloat(quantity) < 0) {
                     errorSpan.text("Please enter a valid quantity (greater than 0).");
                     isValid = false;
                 } else if (quantity.length > 5) {
