@@ -23,7 +23,7 @@
           <h5 class="sub-title">Inventory History Details</h5>
 
           <button class="btn btn-light add-btn">
-                    Serach History
+                  Search History
                 </button>
         </div>
       </div>
@@ -80,7 +80,7 @@
                 <span><b>Location</b> : {{ $LocationName }} </span>
             </div>
             <div class="col-md-6">
-                <span><b>Date</b> : {{ $DateValData }} </span>
+                <span><b>Date</b> : {{ date('d-m-Y', strtotime($DateValData)) }} </span>
             </div>
         </div>
        
@@ -158,7 +158,7 @@
           action="{{ route('search-master-kitchen-inventory-history') }}" enctype="multipart/form-data">
           <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
           <!-- Popup Title -->
-          <h4 class="popup-title">Add Master Inventory</h4>
+          <h4 class="popup-title">Search Inventory History</h4>
           <hr />
 
                 <div class="row mb-3">
@@ -301,4 +301,8 @@
 
 
   });
+</script>
+
+<script>
+    document.getElementById('datePicker').setAttribute('max', new Date().toISOString().split('T')[0]);
 </script>

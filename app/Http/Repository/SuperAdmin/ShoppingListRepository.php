@@ -155,6 +155,8 @@ public function updateKitchenInventoryBySuperAdmin($request) {
 		// $MasterInventoryData = MasterKitchenInventory::find($LocationsWiseData->inventory_id);
 		$MasterInventoryData = MasterKitchenInventory::find((int) $MasterInventoryIds[$index]);
 
+		$logoPath = asset('/img/main_logo.png');
+		$logoBase64 = base64_encode(file_get_contents($logoPath));
 
 		$historyData[] = [
 			'master_qty' => $MasterInventoryData->quantity,
@@ -162,6 +164,7 @@ public function updateKitchenInventoryBySuperAdmin($request) {
 			'quantity' => $quantities[$index],
 			'location_id' => $LocationsData->location,
 			'price' => $MasterInventoryData->price,
+			'logimg'=> $logoBase64
 			// 'approved_by' => 1,
 		];
 		}

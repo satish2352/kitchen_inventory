@@ -117,6 +117,29 @@
         font-weight:bold;
       }
 
+      .pwa-button-container {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#installPWA {
+    background: linear-gradient(to right, #ff7e5f, #feb47b);
+    color: white;
+    font-size: 16px;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#installPWA:hover {
+    background: linear-gradient(to right, #ff512f, #dd2476);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
       @media only screen and (min-width: 320px) and (max-width: 375px) {
         form {
           background-color: white;
@@ -148,82 +171,46 @@
             <p> {{ session('success') }} </p>
         </div>
     @endif
-    <button id="installPWA">Install App</button>
-
-
-    <div
     
-      class="container d-flex justify-content-center align-items-center min-vh-100">
-      <div class="form-container">
-      <form class="modal-content animate" id="frm_register" method="post" action="{{ route('submitLogin') }}">
-      @csrf
-          <header>
-            <img src="{{ asset('/img/logo.png') }}" width="50px" height="50px" />
-            <h2>Log In</h2>
-          </header>
-          <div class="wrapper">
-            <i class="material-icons">alternate_email</i>
-            <!-- <input type="text" class="form-control" placeholder="Enter Email Id" name='email'/> -->
-            <input type="text" name='email' value="{{ old('email') }}"
-                    aria-describedby="usernameHelp" placeholder="Enter your email id">
-                    
-          </div>
-          <div class="error-message">
-            @if ($errors->has('email'))
-                <?php echo $errors->first('email', ':message'); ?>
-             @endif
-          </div>
-          <div class="wrapper">
-            <i class="material-icons">lock</i> 
-            <!-- <input id="password" type="password" name="password" placeholder="Password" required /> -->
-            <input id="password" type="password" name="password" placeholder="Enter your password">
-            <i class="fas fa-eye position-absolute top-50 end-0 translate-middle-y me-3" id="togglePassword" style="cursor: pointer;"></i>
-          </div>
-          <div class="error-message">
-          @if ($errors->has('password')) 
-          <?php echo $errors->first('password', ':message'); ?> 
-          @endif
-        </div>
-          <button type="submit" class="rounded-3 btn-submit mt-4">
-            Submit
-          </button>
-          <!-- <a href="#">Forgot Your Password</a> -->
+    <!-- <button id="installPWA">Install this app for a better experience.</button> -->
+    <div class="container d-flex justify-content-center align-items-center min-vh-100 position-relative">
+    <!-- Install PWA Button -->
+    <div class="pwa-button-container">
+        <button id="installPWA">Install this app for a better experience</button>
+    </div>
+
+    <!-- Login Form -->
+    <div class="form-container">
+        <form class="modal-content animate" id="frm_register" method="post" action="{{ route('submitLogin') }}">
+            @csrf
+            <header>
+                <img src="{{ asset('/img/main_logo.png') }}" width="100%;" />
+                <h2>Log In</h2>
+            </header>
+            <div class="wrapper">
+                <i class="material-icons">alternate_email</i>
+                <input type="text" name="email" value="{{ old('email') }}"
+                       aria-describedby="usernameHelp" placeholder="Enter your email id">
+            </div>
+            <div class="error-message">
+                @if ($errors->has('email'))
+                    {{ $errors->first('email') }}
+                @endif
+            </div>
+            <div class="wrapper">
+                <i class="material-icons">lock</i> 
+                <input id="password" type="password" name="password" placeholder="Enter your password">
+                <i class="fas fa-eye position-absolute top-50 end-0 translate-middle-y me-3" id="togglePassword" style="cursor: pointer;"></i>
+            </div>
+            <div class="error-message">
+                @if ($errors->has('password')) 
+                    {{ $errors->first('password') }} 
+                @endif
+            </div>
+            <button type="submit" class="rounded-3 btn-submit mt-4">Submit</button>
         </form>
-      </div>
     </div>
-
-
-
-
-
-
-
-
-  
-
-  <!-- OTP Verification Form -->
-  <div class="otp-container" id="otp-container" style="display: none;">
-    <div class="alert alert-danger" id="otp-error-message" role="alert">
-      Please enter the correct OTP!
-    </div>
-    <div class="otp-form">
-      <h2>Verify OTP</h2>
-      <form id="otp-form">
-        <div class="otp-input-group">
-          <input type="text" class="otp-input" maxlength="1" required>
-          <input type="text" class="otp-input" maxlength="1" required>
-          <input type="text" class="otp-input" maxlength="1" required>
-          <input type="text" class="otp-input" maxlength="1" required>
-          <input type="text" class="otp-input" maxlength="1" required>
-          <input type="text" class="otp-input" maxlength="1" required>
-        </div>
-        <button type="submit" class="btn btn-primary btn-custom mt-3">Verify</button>
-        <div class="mt-3 text-center">
-          <a href="#">Resend OTP</a>
-        </div>
-      </form>
-    </div>
-  </div>
+</div>
 
   <!-- Forgot Password Form -->
   <div class="forget-container" id="forget-container" style="display: none;">
@@ -304,58 +291,3 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 </script>
-
-
-<!-- <script type="text/javascript">
-  // Add custom validation method
-$.validator.addMethod("passwordStrength", function(value, element) {
-    return this.optional(element) || /^(?=(?:[^a-zA-Z]*[a-zA-Z]){5,})(?=.*\d)(?=.*[@$!%*?&]).{6,}$/.test(value);
-}, "Password must contain at least 5 letters, 1 number, and 1 special character");
-    
-
-    // Initialize validation for the add form
-    $("#frm_register").validate({
-      rules: {
-        email: {
-          required: true,
-          email:true,
-          // minlength: 3
-        },
-        password: {
-            required: true
-            // minlength: 6,
-            // passwordStrength: true
-        }
-        
-      },
-      messages: {
-        email: {
-          required: "Please enter email ID",
-          required: "Please Enter valid email Id"
-          // minlength: "Category name must be at least 3 characters long"
-        },
-        password: {
-            required: "Password is required"
-            // minlength: "Password must be at least 6 characters long",
-            // passwordStrength: "Password must contain at least 5 letters, 1 number, and 1 special character"
-        }
-      },
-      errorElement: "span",
-      errorClass: "error-text",
-      highlight: function (element) {
-        $(element).addClass("is-invalid").removeClass("is-valid");
-      },
-      unhighlight: function (element) {
-        $(element).addClass("is-valid").removeClass("is-invalid");
-      }
-    });
-
-     // Remove error message dynamically when password field is cleared
-     $("#password").on("input", function () {
-        if ($(this).val().trim() === "") {
-            $(this).removeClass("is-invalid is-valid"); // Remove validation styling
-            $(this).siblings("span.error-text").remove(); // Remove error message
-        }
-    });
-
-</script> -->

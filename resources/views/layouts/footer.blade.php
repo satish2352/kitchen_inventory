@@ -1,3 +1,42 @@
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("installPWA").click();
+  });
+</script>
+
+
+<script>
+  let deferredPrompt;
+
+  window.addEventListener("beforeinstallprompt", (event) => {
+    event.preventDefault();
+    deferredPrompt = event; // Store the event for later use
+
+    // Enable the install button
+    document.getElementById("installPWA").style.display = "block";
+  });
+
+  document.getElementById("installPWA").addEventListener("click", () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt(); // Show the install prompt
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === "accepted") {
+          console.log("User accepted the install");
+        } else {
+          console.log("User dismissed the install");
+        }
+        deferredPrompt = null; // Reset so it doesn't prompt again
+      });
+    } 
+    // else {
+    //   alert("Install prompt is not available right now.");
+    // }
+  });
+</script>
+
+
+
 <script>
     const toggleDrawer = document.getElementById("toggleDrawer");
     const drawer = document.getElementById("drawer");
@@ -164,71 +203,6 @@ document.getElementById('editPopup').style.display = "flex";
 
 
 <!-- <script>
-let deferredPrompt;
-
-window.addEventListener('beforeinstallprompt', (event) => {
-    console.log('👍 beforeinstallprompt event detected');
-    event.preventDefault();
-    deferredPrompt = event;
-
-    // Auto-click the hidden button after a delay
-    setTimeout(() => {
-        document.getElementById('installPWA').click();
-    }, 2000); // Adjust delay as needed
-});
-
-// Auto-trigger the install prompt when the hidden button is clicked
-document.getElementById('installPWA').addEventListener('click', () => {
-    if (deferredPrompt) {
-        console.log('📢 Triggering Install Prompt');
-        deferredPrompt.prompt();
-
-        deferredPrompt.userChoice.then(choiceResult => {
-            if (choiceResult.outcome === 'accepted') {
-                console.log('✅ User accepted PWA installation');
-            } else {
-                console.log('❌ User dismissed PWA installation');
-            }
-            deferredPrompt = null; // Reset prompt
-        });
-    }
-});
-
-  </script> -->
-
-  <script>
-    // Assuming you have the `beforeinstallprompt` event listener
-let deferredPrompt;
-
-window.addEventListener('beforeinstallprompt', (e) => {
-  // Prevent the default prompt from showing
-  e.preventDefault();
-  // Save the event to trigger later
-  deferredPrompt = e;
-});
-
-// Auto-click the install button after some time (for example, after 3 seconds)
-setTimeout(() => {
-  // Simulate a click event on the install button
-  const installButton = document.getElementById('installButton');
-  installButton.click();
-}, 3000);
-
-// Button click listener to trigger the prompt
-const installButton = document.getElementById('installButton');
-installButton.addEventListener('click', () => {
-  if (deferredPrompt) {
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then((choiceResult) => {
-      console.log(choiceResult.outcome);
-      deferredPrompt = null;
-    });
-  }
-});
-
-    </script>
-
-<script>
   
   if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
     console.log("ℹ️ PWA is already installed, skipping prompt.");
@@ -253,30 +227,20 @@ installButton.addEventListener('click', () => {
     });
 }
 
-  </script>
+  </script> -->
 
 <script type="text/javascript">
-            //  if ('serviceWorker' in navigator) {
-            //   navigator.serviceWorker
-            //     .register('sw.js')
-            //     .then(function () {
-            //       console.log('Website Worker Registered!');
-            //     })
-            //     .catch(function(err) {
-            //       console.log(err);
-            //     });
-            // }
-
-            if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function () {
-        navigator.serviceWorker.register('sw.js')
-            .then(reg => console.log("Service Worker Registered!", reg))
-            .catch(err => console.log("Service Worker Registration Failed!", err));
-    });
-}
+         
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function () {
+            navigator.serviceWorker.register('sw.js')
+                .then(reg => console.log("Service Worker Registered!", reg))
+                .catch(err => console.log("Service Worker Registration Failed!", err));
+        });
+    }
 
 
-        </script>
+</script>
 
 </div>
 </body>

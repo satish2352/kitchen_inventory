@@ -1,7 +1,7 @@
 {
   "id": "/",
-  "name": "PWA Trail App",
-  "short_name": "PWA Trail App",
+  "name": "Buffalo Boss",
+  "short_name": "Buffalo Boss",
   "theme_color": "#28166f",
   "background_color": "#f4f3ef",
   "display": "standalone",

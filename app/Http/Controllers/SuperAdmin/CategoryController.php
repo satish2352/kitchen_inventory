@@ -51,6 +51,9 @@ class CategoryController extends Controller {
                 if ($add_role) {
                     $msg = $add_role['msg'];
                     $status = $add_role['status'];
+
+                    session()->flash('alert_status', $status);
+                    session()->flash('alert_msg', $msg);
                     
                     if ($status == 'success') {
                         return response()->json(['status' => 'success', 'msg' => $msg]);

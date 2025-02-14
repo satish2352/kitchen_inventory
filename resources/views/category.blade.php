@@ -383,15 +383,6 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
         confirmPopupCategory.style.display = "none";
       });
     
-      // Perform Action on Confirm Delete
-      // confirmDeleteButton.addEventListener("click", () => {
-      //   confirmPopup.style.display = "none";
-      //           $("#delete_id").val($("#edit-location-id").val());
-      //           $("#deleteform").submit();
-      //   alert("User deleted successfully!");
-      //   // Add delete logic here
-      // });
-
       confirmDeleteButtonCategory.addEventListener("click", () => {
         confirmPopupCategory.style.display = "none";
                 $("#delete_id").val($("#edit-category-id").val());

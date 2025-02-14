@@ -37,11 +37,11 @@ class DashboardController extends Controller
 
         
         if($role_id =='1'){
-        $userCount = UsersData::where('is_deleted', '0')->where('is_approved', '1')->count();
+        $userCount = UsersData::where('is_deleted', '0') -> where('is_approved', '1') ->count();
 
         // ---------------------------
         $userLocationData = UsersData::where('is_deleted', '0')
-        // ->where('is_approved', '1')
+        ->where('is_approved', '1')
         ->where('id', $sess_user_id)
         ->pluck('location')
         ->toArray(); 
@@ -49,33 +49,19 @@ class DashboardController extends Controller
         foreach ($userLocationData as $location) {
             $userLocation = array_merge($userLocation, explode(',', $location));
         }
-        
-        // $MasterInventoryCount = MasterKitchenInventory::where('is_deleted', '0')
-        // ->whereIn('location_id', $userLocation)
-        // ->groupBy('location_id')
-        // ->count();
+        $MasterInventoryCount = MasterKitchenInventory::where('is_deleted', '0')
+        ->whereIn('location_id', $userLocation)
+        ->groupBy('location_id')
+        ->count();
         // ---------------------------
 
-        $MasterInventoryCount = MasterKitchenInventory::where('is_deleted', '0')
-        ->distinct('location_id')
-        ->whereIn('location_id', $userLocation)
-        ->count('location_id');
-
-    // dd($MasterInventoryCount);
-
         $ActivityLogCount = ActivityLog::count();
-
         $Count = LocationWiseInventory::selectRaw('DATE(created_at) as date, COUNT(*) as count')
         ->where('is_deleted', '0')
-        ->whereIn('location_id', $userLocation)
         ->groupBy('date')
         ->get();
-        
-        $LocationWiseInventoryCount = $Count->count();
-        // dd($LocationWiseInventoryCount);
 
-        $CategoryCount = Category::where('is_deleted', '0')->count();
-        $LocationCount = Locations::where('is_deleted', '0')->count();
+        $LocationWiseInventoryCount = $Count->count();
 
         $return_data = [
             'status' => 'true',
@@ -84,8 +70,6 @@ class DashboardController extends Controller
             'master_inventory_count' => $MasterInventoryCount,
             'ActivityLogCount' => $ActivityLogCount,
             'LocationWiseInventoryCount' => $LocationWiseInventoryCount,
-            'CategoryCount' => $CategoryCount,
-            'LocationCount' => $LocationCount,
             'role_id' => $role_id
 
         ];
@@ -94,17 +78,17 @@ class DashboardController extends Controller
         }else if($role_id =='2'){
 
         $userCount = UsersData::where('is_deleted', '0')
+        ->where('added_by', '2')
         ->where('added_byId', $sess_user_id)
         ->count();
 
-        // dd($userCount);
-        $alluserCount = UsersData::where('is_deleted', '0')->where('added_byId', $sess_user_id)
+        $alluserCount = UsersData::where('is_deleted', '0')
         ->count();
-        // dd($alluserCount);
     
         // ----------------------------
 
         $userLocationData = UsersData::where('is_deleted', '0')
+        ->where('is_approved', '1')
         ->where('id', $sess_user_id)
         ->pluck('location')
         ->toArray(); 
@@ -113,14 +97,10 @@ class DashboardController extends Controller
             $userLocation = array_merge($userLocation, explode(',', $location));
         }
 
-    // --------------------------
-    $CountAdminShopingList = LocationWiseInventory::selectRaw('DATE(created_at) as date, COUNT(*) as count')
-        ->where('is_deleted', '0')
+        $LocationWiseInventoryCount = LocationWiseInventory::where('is_deleted', '0')
         ->whereIn('location_id', $userLocation)
-        ->groupBy('date')
-        ->get();
-        
-        $LocationWiseInventoryCount = $CountAdminShopingList->count();
+        ->groupBy('location_id')
+        ->count();
 
         $return_data = [
             'status' => 'true',
@@ -135,6 +115,7 @@ class DashboardController extends Controller
     }else if($role_id =='3'){
 
         $userCount = UsersData::where('is_deleted', '0')
+        ->where('added_by', '2')
         ->where('added_byId', $sess_user_id)
         ->count();
         // dd($userCount);
@@ -145,6 +126,7 @@ class DashboardController extends Controller
         // ----------------------------
 
         $userLocationData = UsersData::where('is_deleted', '0')
+        ->where('is_approved', '1')
         ->where('id', $sess_user_id)
         ->pluck('location')
         ->toArray(); 
@@ -153,14 +135,10 @@ class DashboardController extends Controller
             $userLocation = array_merge($userLocation, explode(',', $location));
         }
 
-        $CountAdminShopingList = LocationWiseInventory::selectRaw('DATE(created_at) as date, COUNT(*) as count')
-        ->where('is_deleted', '0')
+        $LocationWiseInventoryCount = LocationWiseInventory::where('is_deleted', '0')
         ->whereIn('location_id', $userLocation)
-        ->groupBy('date')
-        ->get();
-        
-        $LocationWiseInventoryCount = $CountAdminShopingList->count();
-
+        ->groupBy('location_id')
+        ->count();
 
         $return_data = [
             'status' => 'true',
