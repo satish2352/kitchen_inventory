@@ -899,36 +899,41 @@ document.getElementById('editPopup').style.display = "flex";
       }
     });
 
+    $(document).ready(function () {
+    $.validator.addMethod("differentLocation", function (value, element) {
+        return $("#FromLocationId").val() !== $("#ToLocationId").val();
+    }, "From Location and To Location cannot be the same.");
+
     $("#frm_copy_inventory").validate({
-      rules: {
-        from_location_id: {
-          required: true
-          // minlength: 3
+        rules: {
+            from_location_id: {
+                required: true
+            },
+            to_location_id: {
+                required: true,
+                differentLocation: true // Custom rule
+            }
         },
-        to_location_id: {
-          required: true
-          // minlength: 3
-        }        
-      },
-      messages: {
-        from_location_id: {
-          required: "Please select the from Location"
-          // minlength: "Category name must be at least 3 characters long"
+        messages: {
+            from_location_id: {
+                required: "Please select the from Location"
+            },
+            to_location_id: {
+                required: "Please select the to Location",
+                differentLocation: "From Location and To Location cannot be the same."
+            }
         },
-        to_location_id: {
-          required: "Please select the to Location"
-          // minlength: "Category name must be at least 3 characters long"
+        errorElement: "span",
+        errorClass: "error-text",
+        highlight: function (element) {
+            $(element).addClass("is-invalid").removeClass("is-valid");
+        },
+        unhighlight: function (element) {
+            $(element).addClass("is-valid").removeClass("is-invalid");
         }
-      },
-      errorElement: "span",
-      errorClass: "error-text",
-      highlight: function (element) {
-        $(element).addClass("is-invalid").removeClass("is-valid");
-      },
-      unhighlight: function (element) {
-        $(element).addClass("is-valid").removeClass("is-invalid");
-      }
     });
+});
+
 
 
   });

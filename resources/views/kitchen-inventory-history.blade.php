@@ -190,7 +190,7 @@
             </a>
             
             <button class="btn btn-danger btn-lg w-100" id="search-query-btn">
-              <i class="bi bi-plus-lg"></i> ADD
+              <i class="bi bi-plus-lg"></i> Search
             </button>
           </div>
         </form>

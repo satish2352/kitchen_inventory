@@ -22,7 +22,7 @@ class UserRepository
         $data_location = UsersData::select('id','name','location','user_role','email','password','created_at','email','phone',
 		'is_approved','added_by','user_role')
 							->where('is_deleted', '0')
-							// ->where('is_approved', '1')
+							->where('is_approved', '1')
 							->orderBy('created_at', 'desc')
 							->paginate(10);
 							// ->get();
@@ -74,6 +74,7 @@ class UserRepository
 		$user_data->email = $request['email'];
 		$user_data->password = $request['password'];
 		$user_data->added_by = 1;
+		$user_data->is_approved = 1;
 		$user_data->added_byId = $sess_user_id;
 		// $user_data->save();
 

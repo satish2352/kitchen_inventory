@@ -148,14 +148,17 @@
             <p> {{ session('success') }} </p>
         </div>
     @endif
-    
+    <button id="installPWA">Install App</button>
+
+
     <div
+    
       class="container d-flex justify-content-center align-items-center min-vh-100">
       <div class="form-container">
       <form class="modal-content animate" id="frm_register" method="post" action="{{ route('submitLogin') }}">
       @csrf
           <header>
-            <img src="{{ asset('/img/main_logo.png') }}" width="100%;"/>
+            <img src="{{ asset('/img/logo.png') }}" width="50px" height="50px" />
             <h2>Log In</h2>
           </header>
           <div class="wrapper">
