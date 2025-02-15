@@ -187,6 +187,110 @@
           position: relative;
           overflow: hidden;
         }
+        .eye_css {
+          margin-right: -2rem !important;
+        }
+        .pwa-button-container {
+          left: 56%;
+          top: 10%;
+        }
+      }
+
+      @media only screen and (min-width: 373px) and (max-width: 377px) {
+        .eye_css {
+          margin-right: -1rem !important;
+        }
+
+        .pwa-button-container {
+          left: 58%;
+        }
+      }
+
+      @media only screen and (min-width: 412px) and (max-width: 416px) {
+        .eye_css {
+          margin-right: -1rem !important;
+        }
+        .pwa-button-container {
+          left: 62%;
+          top: 17%;
+        }
+      }
+
+      @media only screen and (min-width: 428px) and (max-width: 432px) {
+          .pwa-button-container {
+          left: 63%;
+          top: 17%;
+        }
+      }
+
+      @media only screen and (min-width: 388px) and (max-width: 392px) {
+        .eye_css {
+          margin-right: -1rem !important;
+        }
+
+        .pwa-button-container {
+          left: 60%;
+          top: 15%;
+        }
+      }
+
+      @media only screen and (min-width: 278px) and (max-width: 282px) {
+        .eye_css {
+          margin-right: -2rem !important;
+        }
+      .pwa-button-container {
+        left: 44%;
+        top: 8%;
+          }
+      }
+
+      @media only screen and (min-width: 766px) and (max-width: 770px) {
+        .pwa-button-container {
+          left: 79%;
+          top: 4%;
+        }
+      }
+
+      @media only screen and (min-width: 818px) and (max-width: 822px) {
+        .pwa-button-container {
+          left: 79%;
+          top: 4%;
+        }
+      }
+
+      @media only screen and (min-width: 1022px) and (max-width: 1026px) {
+        .pwa-button-container {
+          left: 84%;
+          top: 7%;
+        }
+      }
+
+      @media only screen and (min-width: 910px) and (max-width: 914px) {
+        .pwa-button-container {
+          left: 82%;
+          top: 3%;
+        }
+      }
+
+      @media only screen and (min-width: 538px) and (max-width: 542px) {
+        .pwa-button-container {
+          left: 71%;
+          top: 5%;
+        }
+      }
+
+      @media only screen and (min-width: 850px) and (max-width: 855px) {
+        .pwa-button-container {
+          left: 80%;
+          top: 4%;
+        }
+      }
+
+      @media only screen and (min-width: 1278px) and (max-width: 1282px) {
+        .pwa-button-container {
+          left: 88%;
+          top: 5%;
+        }
       }
     </style>
 
@@ -237,7 +341,7 @@
             <div class="wrapper">
                 <i class="material-icons">lock</i> 
                 <input id="password" type="password" name="password" placeholder="Enter your password">
-                <i class="fas fa-eye position-absolute top-50 end-0 translate-middle-y me-3" id="togglePassword" style="cursor: pointer;"></i>
+                <i class="fas fa-eye position-absolute top-50 end-0 translate-middle-y eye_css" id="togglePassword" style="cursor: pointer;"></i>
             </div>
             <div class="error-message">
                 @if ($errors->has('password')) 

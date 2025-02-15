@@ -60,6 +60,62 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
 .pagination .flex .flex{
     display: none; 
 }
+
+.master_inventory_css{
+    margin-left: 10px;
+}
+
+.copy_inventory_css{
+  margin-right: 7px;
+}
+
+@media only screen and (min-width: 766px) and (max-width: 770px) {
+      .copy_inventory_css{
+        margin-left: 15rem;
+    }
+    }
+
+@media only screen and (min-width: 778px) and (max-width: 822px) {
+  .copy_inventory_css{
+    margin-left: 19rem;
+}
+}
+
+@media only screen and (min-width: 1022px) and (max-width: 1026px) {
+  .copy_inventory_css{
+    margin-left: 31rem;
+}
+}
+
+@media only screen and (min-width: 910px) and (max-width: 914px) {
+  .copy_inventory_css{
+    margin-left: 25rem;
+}
+}
+
+@media only screen and (min-width: 538px) and (max-width: 542px) {
+  .copy_inventory_css{
+    margin-left: 2rem;
+}
+}
+
+@media only screen and (min-width: 850px) and (max-width: 855px) {
+  .copy_inventory_css{
+    margin-left: 21rem;
+}
+}
+
+@media only screen and (min-width: 1278px) and (max-width: 1282px) {
+  .copy_inventory_css{
+    margin-left: 48rem;
+}
+}
+
+@media only screen and (min-width: 1364px) and (max-width: 1368px) {
+  .copy_inventory_css{
+    margin-left: 54rem;
+}
+}
 </style>
 
 <div class="main">
@@ -71,9 +127,9 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
               <i class="bi bi-arrow-90deg-left"></i>
             </button>
           </a>
-          <h5 class="sub-title">Master Inventory</h5>
+          <h5 class="sub-title master_inventory_css">Master Inventory</h5>
 
-          <button class="btn btn-light copy-inventory-btn">Copy Inventory
+          <button class="btn btn-light copy-inventory-btn copy_inventory_css">Copy Inventory
           </button>
 
           <button class="btn btn-light add-btn">

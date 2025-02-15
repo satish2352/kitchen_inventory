@@ -67,6 +67,10 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
 .pagination .flex .flex{
     display: none; 
 }
+
+.btn_css:hover{
+    color: blue;
+}
 </style>
 <div class="main">
     <div class="inner-top container-fluid p-3">
@@ -304,8 +308,8 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
             this location will not recover back
         </p>
         <div class="d-flex justify-content-around mt-4 confrm">
-            <button id="cancelDelete" class="btn br">NO</button>
-            <button id="confirmDelete" class="btn">YES</button>
+            <button id="cancelDelete" class="btn br btn_css">NO</button>
+            <button id="confirmDelete" class="btn btn_css">YES</button>
         </div>
     </div>
 </div>

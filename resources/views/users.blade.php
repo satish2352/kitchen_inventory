@@ -73,6 +73,30 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
 .pagination .flex .flex{
     display: none; 
 }
+
+    @media only screen and (min-width: 373px) and (max-width: 544px) {
+    .added_by_css {
+        margin-top: 4rem;
+        margin-bottom: 0.3rem;
+        margin-left: -17.5rem !important;
+    }
+    }
+
+    @media only screen and (min-width: 278px) and (max-width: 282px) {
+    .added_by_css {
+        margin-top: 6rem;
+        margin-bottom: 0.2rem;
+        margin-left: -11.5rem !important;
+    }
+    .user_name_css{
+        word-break: break-word;
+        max-width: 100%;
+    }
+    }
+
+.btn_css:hover{
+    color: blue;
+}
 </style>
 
 <div class="main">
@@ -147,7 +171,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
                             <!-- Left Section -->
                             <div>
                                 <div class="d-flex align-items-center">
-                                    <span class="ur-user me-2 jost-font">{{ $item->name }}
+                                    <span class="ur-user me-2 jost-font user_name_css">{{ $item->name }}
                                         @if ($item->user_role == '1')
                                             (Super Admin)
                                         @elseif($item->user_role == '2')
@@ -160,7 +184,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
 
                                     
                                     @if($item->is_approved == 1 && $item->added_by == 2 && $item->user_role == 3)
-                                        <div class="status-badge ms-2 d-flex align-items-center">
+                                        <div class="status-badge ms-2 d-flex align-items-center added_by_css">
                                             <i class="bi bi-check-circle-fill text-success me-1"></i>
                                             <span style="color:white">Added By Admin</span>
                                         </div>
@@ -462,8 +486,8 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
             this user wil not recover back
         </p>
         <div class="d-flex justify-content-around mt-4 confrm">
-            <button id="cancelDelete" class="btn br">NO</button>
-            <button id="confirmDeleteUser" class="btn">YES</button>
+            <button id="cancelDelete" class="btn br btn_css">NO</button>
+            <button id="confirmDeleteUser" class="btn btn_css">YES</button>
         </div>
     </div>
 </div>

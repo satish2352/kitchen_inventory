@@ -45,7 +45,7 @@
         </div>
         <div class="container-fluid px-3">
           <a href="#">
-            <button type="button" class="btn btn-outline-danger fs-6">
+            <button type="button" class="btn btn-outline-danger fs-6 mb-4">
               Show last submitted shopping list
             </button>
           </a>

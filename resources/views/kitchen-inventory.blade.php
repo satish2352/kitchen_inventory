@@ -2,6 +2,12 @@
 @include('layouts.sidebar')
 
 @yield('content')
+
+<style>
+    .submit_inventory_css{
+        margin-top: -12px;
+    }
+</style>
 <div class="main">
     <div class="inner-top container-fluid p-3">
         <!-- Top Bar -->
@@ -41,9 +47,9 @@
         </div>
         <div class="container-fluid px-3">
             <a href="#">
-                <button type="button" class="btn btn-outline-danger fs-6">
+                <!-- <button type="button" class="btn btn-outline-danger fs-6">
                     Show last submitted Kitchen list
-                </button>
+                </button> -->
             </a>
                
 
@@ -120,7 +126,7 @@
                 </div>
             </div>
             @endforeach
-            <div class="text-center mt-3">
+            <div class="text-center submit_inventory_css">
             <button type="submit" class="btn btn-success">Submit Inventory</button>
         </div>
         @else
@@ -189,7 +195,7 @@
                 </div>
             </div>
             @endforeach
-            <div class="text-center mt-3">
+            <div class="text-center submit_inventory_css">
             <button type="submit" class="btn btn-success">Submit Inventory</button>
         </div>
         @else

@@ -22,6 +22,10 @@
     transform: translateY(-50%);
     pointer-events: none;
 }
+
+.btn_css:hover{
+    color: blue;
+}
 </style>
 
 <div class="main">
@@ -451,8 +455,8 @@
             this user wil not recover back
           </p>
           <div class="d-flex justify-content-around mt-4 confrm">
-            <button id="cancelDelete" class="btn br">NO</button>
-            <button id="confirmDeleteUser" class="btn">YES</button>
+            <button id="cancelDelete" class="btn br btn_css">NO</button>
+            <button id="confirmDeleteUser" class="btn btn_css">YES</button>
           </div>
         </div>
       </div>
