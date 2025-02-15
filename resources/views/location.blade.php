@@ -346,6 +346,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
 
         // Open Popup
         editButton.addEventListener("click", () => {
+            alert('jjjjjjjjjjjjj');
             popupLocation.style.display = "flex";
         });
 
@@ -430,6 +431,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
 <script type="text/javascript">
     $(document).ready(function() {
         // Initialize validation for the add form
+        $(document).ready(function (e) {
         $("#frm_register_add").validate({
             rules: {
                 location: {
@@ -453,7 +455,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
                 $(element).addClass("is-valid").removeClass("is-invalid");
             }
         });
-
+    });
         // Initialize validation for the edit form
         $("#editLocationForm").validate({
             rules: {
