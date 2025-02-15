@@ -221,13 +221,18 @@ class UserController extends Controller {
     public function searchUser(Request $request)
 {
     $query = $request->input('query');
+    $sess_user_id = session()->get('login_id');
+
     
     // Modify the query to search users based on name, email, or phone
-    $user_data = UsersData::where('name', 'like', "%$query%")
-                     ->orWhere('email', 'like', "%$query%")
-                     ->orWhere('phone', 'like', "%$query%")
+    $user_data = UsersData::where('added_byId', $sess_user_id)
+                     ->where(function ($q) use ($query) {  // Group the OR conditions
+                         $q->where('name', 'like', "%$query%")
+                           ->orWhere('email', 'like', "%$query%")
+                           ->orWhere('phone', 'like', "%$query%");
+                     })
                      ->get();
-
+                   
     // Return the user listing Blade with the search results (no full page reload)
     return view('admin.users-search-results', compact('user_data'))->render();
 }

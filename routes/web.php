@@ -125,6 +125,7 @@ Route::group(['middleware' => ['admin']], function () {
     Route::post('/add-kitchen-inventory-by-sa', ['as' => 'add-kitchen-inventory-by-sa', 'uses' => 'App\Http\Controllers\SuperAdmin\ShoppingListController@addKitchenInventoryBySuperAdmin']);
     
     Route::get('/get-activity-log', ['as' => 'get-activity-log', 'uses' => 'App\Http\Controllers\SuperAdmin\ActivityLogController@getActivityLog']);
+    Route::get('/search-activity', ['as' => 'search-activity', 'uses' => 'App\Http\Controllers\SuperAdmin\ActivityLogController@searchActivityLog']);
 
     Route::get('/list-approve-users', ['as' => 'list-approve-users', 'uses' => 'App\Http\Controllers\SuperAdmin\UserController@getApproveUsers']);
     Route::post('/update-approve-users', ['as' => 'update-approve-users', 'uses' => 'App\Http\Controllers\SuperAdmin\UserController@updateOne']);

@@ -60,6 +60,25 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
 .pagination .flex .flex{
     display: none; 
 }
+
+ /* Make table scrollable on small screens */
+    .table-container {
+        overflow-x: auto;
+        width: 100%;
+    }
+
+    /* Ensure table does not wrap text in cells */
+    .table-responsive table {
+        white-space: nowrap;
+    }
+
+    /* Optional: Add shadow and border for better visibility */
+    .table-responsive {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 5px;
+        background: #fff;
+    }
 </style>
 
 <div class="main">
@@ -177,40 +196,42 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
                     </div>
 
                     <!-- Table -->
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <!-- Table Head -->
-                            <thead class="table-header">
-                                <tr>
-                                    <th><b>Sr. No.</b></th>
-                                    <th><b>Item</b></th>
-                                    <th><b>Qty</b></th>
-                                    <th><b>Unit</b></th>
-                                    <th><b>Price</b></th>
-                                    <th><b>Action</b></th>
-                                </tr>
-                            </thead>
-                            <!-- Table Body -->
-                            <tbody>
-                                @php $srNo = 1; @endphp
-                                @foreach ($items as $item)
-                                    <tr>
-                                        <td>{{ $srNo++ }}</td>
-                                        <td>{{ $item->item_name }}</td>
-                                        <td>{{ $item->quantity }}</td>
-                                        <td>{{ $item->unit_name }}</td>
-                                        <td>${{ $item->price }}</td>
-                                        <td>
-                                            <div>
-                                                <button class="btn btn-edit text-center shadow-sm edit-btn-item" data-id="{{ $item->id }}">
-                                                    <i class="bi bi-pencil-square"></i> <br />Edit
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                    <div class="table-container">
+                      <div class="table-responsive">
+                          <table class="table table-striped">
+                              <!-- Table Head -->
+                              <thead class="table-header">
+                                  <tr>
+                                      <th><b>Sr. No.</b></th>
+                                      <th><b>Item</b></th>
+                                      <th><b>Qty</b></th>
+                                      <th><b>Unit</b></th>
+                                      <th><b>Price</b></th>
+                                      <th><b>Action</b></th>
+                                  </tr>
+                              </thead>
+                              <!-- Table Body -->
+                              <tbody>
+                                  @php $srNo = 1; @endphp
+                                  @foreach ($items as $item)
+                                      <tr>
+                                          <td>{{ $srNo++ }}</td>
+                                          <td>{{ $item->item_name }}</td>
+                                          <td>{{ $item->quantity }}</td>
+                                          <td>{{ $item->unit_name }}</td>
+                                          <td>${{ $item->price }}</td>
+                                          <td>
+                                              <div>
+                                                  <button class="btn btn-edit text-center shadow-sm edit-btn-item" data-id="{{ $item->id }}">
+                                                      <i class="bi bi-pencil-square"></i> <br />Edit
+                                                  </button>
+                                              </div>
+                                          </td>
+                                      </tr>
+                                  @endforeach
+                              </tbody>
+                          </table>
+                      </div>
                     </div>
 
                     <!-- Pagination for this category -->

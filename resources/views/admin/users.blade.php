@@ -531,6 +531,7 @@
   // alert('kkkkkkkkkkkkkk');
   // Open the popup when Edit button is clicked
   $('.edit-btn-user').on('click', function() {
+    click('kkkkkkkkkkkkkk');
     var locationId = $(this).data('id'); // Get the location ID from the button
     
     // AJAX request to get location data
@@ -796,7 +797,12 @@ $.validator.addMethod("passwordStrength", function(value, element) {
                         // Append the new search results
                         $('#search-results').html(response);
                     }else{
-                        $('#search-results').html('No Data Found');
+                        $('#search-results').html(`<div class="border-box mb-4" id="search-results">
+                                <!-- Header Title -->
+                                <div class="grid-header text-center">
+                                    <h6 class="m-0 text-white">No Data Found</h6>
+                                </div>
+                            </div> `);
                     }
                     }
                 });
