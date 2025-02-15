@@ -44,11 +44,11 @@
           </button> -->
         </div>
         <div class="container-fluid px-3">
-          <a href="#">
+          <!-- <a href="#">
             <button type="button" class="btn btn-outline-danger fs-6">
               Show last submitted shopping list
             </button>
-          </a>
+          </a> -->
           <!-- Border Box -->
           <div class="border-box">
             <!-- Header Title -->

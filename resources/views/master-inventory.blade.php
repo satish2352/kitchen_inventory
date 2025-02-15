@@ -589,9 +589,9 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
         const confirmPopup = document.getElementById("confirmPopup");
         const filterPopup = document.getElementById("filterPopup");
         const cancelSelectButton = document.getElementById("cancelDelete");
-        const confirmSelectButton = document.getElementById("confirmDelete");
-        const cancelcategory = document.getElementById("cancelcategory");
-        const confirmcategory = document.getElementById("confirmcategory");
+        const confirmSelectButton = document.getElementById("confirmDeleteItem");
+        // const cancelcategory = document.getElementById("cancelcategory");
+        // const confirmcategory = document.getElementById("confirmcategory");
 
       const deleteButton = document.querySelector(".btn-delete-item");
 
@@ -603,6 +603,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
       const copyInventoryButton = document.querySelector(".copy-inventory-btn");
       const CopyInventoryPopup = document.getElementById("CopyInventoryPopup");
       const closePopupCopyInventory = document.getElementById("closePopupCopyInventory");
+      const closePopUpButton = document.getElementById("closePopup");
 
 
 
@@ -681,9 +682,9 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
         // });
 
         // Close Confirmation Popup on Cancel
-        cancelSelectButton.addEventListener("click", () => {
-          confirmPopup.style.display = "none";
-        });
+        // cancelSelectButton.addEventListener("click", () => {
+        //   confirmPopup.style.display = "none";
+        // });
 
         // Perform Action on Confirm Delete
         confirmSelectButton.addEventListener("click", () => {
@@ -698,9 +699,9 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
         // });
 
         // Close Category Popup on Cancel
-        cancelcategory.addEventListener("click", () => {
-          filterPopup.style.display = "none";
-        });
+        // cancelcategory.addEventListener("click", () => {
+        //   filterPopup.style.display = "none";
+        // });
 
         deleteButton.addEventListener("click", () => {
         popup.style.display = "none"; // Close the bottom popup
@@ -716,11 +717,11 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
       });
 
         // Perform Action on Category
-        confirmcategory.addEventListener("click", () => {
-          filterPopup.style.display = "none";
-          // alert("User deleted successfully!");
-          // Add delete logic here
-        });
+        // confirmcategory.addEventListener("click", () => {
+        //   filterPopup.style.display = "none";
+        //   // alert("User deleted successfully!");
+        //   // Add delete logic here
+        // });
       });
     </script>
 
