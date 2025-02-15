@@ -50,28 +50,10 @@
 
         </div>
       </div>
-      <!-- <div class="container-fluid px-3">
-
-        <form id="locationForm" method="post" action="{{ route('location-selected-admin') }}">
-                    @csrf
-                    <div class="row mb-3">
-                        <label class="form-label col-6">Select Location</label>
-                        <div class="col-6">
-                            <select class="form-select" name="location_selected" id="location_selected">
-                                <option value="">Select Location</option>
-                                @foreach ($locationsData as $locations)
-                                    <option value="{{ $locations['id'] }}"
-                                        @if (session('location_selected') == $locations['id']) selected @endif>{{ $locations['location'] }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                </form>
-      </div> -->
+      
 
       <div class="container-fluid px-3" id="search-results">
-        <!-- @if(session()->get('location_selected_id') !='') -->
+
 
         @if (!empty($user_data) && count($user_data) > 0)
         
@@ -104,7 +86,6 @@
                     <th><b>Item</b></th>
                     <th><b>Available Qty</b></th>
                     <th><b>Unit</b></th>
-                    <th><b>Date</b></th>
                 </tr>
               </thead>
               <!-- Table Body -->
@@ -121,7 +102,6 @@
                                         <input type="text" name="quantity[]" class="form-control qty-input" value="{{ $item['quantity'] }}" placeholder="QTY" />
                                     </td> -->
                                     <td>{{ $item['unit_name'] }}</td>
-                                    <td>{{ date('Y-m-d', strtotime($item['created_at'])) }}</td>
                                     
                                 </tr>
                             @endforeach
@@ -141,13 +121,7 @@
             </div>  
         @endif
 
-        <!-- @else
-           <div class="border-box mb-4" id="search-results">
-                <div class="grid-header text-center">
-                    <h6 class="m-0 text-white">Please Select Location First</h6>
-                </div>
-            </div>    
-           @endif -->
+       
       </div>
 
 

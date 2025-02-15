@@ -40,11 +40,11 @@
             </button> -->
         </div>
         <div class="container-fluid px-3">
-            <a href="#">
+            <!-- <a href="#">
                 <button type="button" class="btn btn-outline-danger fs-6">
                     Show last submitted Kitchen list
                 </button>
-            </a>
+            </a> -->
             @if (is_array(session('location_for_user')) && count(session('location_for_user')) > 0)
                 <form id="locationForm" method="post" action="{{ route('location_selected') }}">
                     @csrf
@@ -302,7 +302,7 @@ $(document).ready(function () {
                 let errorSpan = $(this).siblings(".error-message");
                 let masterQuantity = parseFloat($(this).closest("tr").find("td:nth-child(2)").text().trim()) || 0; // Getting masterQuantity
 
-                if (quantity === "" || isNaN(quantity) || parseFloat(quantity) <= 0) {
+                if (quantity === "" || isNaN(quantity) || parseFloat(quantity) < 0) {
                     errorSpan.text("Please enter a valid quantity (greater than 0).");
                     isValid = false;
                 } else if (quantity.length > 5) {
@@ -349,7 +349,7 @@ $(document).ready(function () {
                 let errorSpan = $(this).siblings(".error-message");
                 let masterQuantity = parseFloat($(this).closest("tr").find("td:nth-child(2)").text().trim()) || 0; // Getting masterQuantity
 
-                if (quantity === "" || isNaN(quantity) || parseFloat(quantity) <= 0) {
+                if (quantity === "" || isNaN(quantity) || parseFloat(quantity) < 0) {
                     errorSpan.text("Please enter a valid quantity (greater than 0).");
                     isValid = false;
                 } else if (quantity.length > 5) {

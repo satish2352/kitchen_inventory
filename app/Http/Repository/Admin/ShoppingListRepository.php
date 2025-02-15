@@ -84,6 +84,10 @@ class ShoppingListRepository
 		$LocationsData = Locations::find($sess_location_id);
 		$MasterInventoryData = MasterKitchenInventory::find($inventoryIds[$index]);
 
+		$logoPath = asset('/img/main_logo.png');
+		$logoBase64 = base64_encode(file_get_contents($logoPath));
+		
+
 		// Store data for PDF
 		$historyData[] = [
 			'master_qty' => $MasterInventoryData->quantity,
@@ -91,6 +95,7 @@ class ShoppingListRepository
 			'quantity' => $quantities[$index],
 			'location_id' => $LocationsData->location,
 			'price' => $MasterInventoryData->price,
+			'logimg'=> $logoBase64
 			// 'approved_by' => 1,
 		];
 
@@ -154,6 +159,8 @@ public function updateKitchenInventoryByAdmin($request) {
 		// $MasterInventoryData = MasterKitchenInventory::find($LocationsWiseData->inventory_id);
 		$MasterInventoryData = MasterKitchenInventory::find((int) $MasterInventoryIds[$index]);
 
+		$logoPath = asset('/img/main_logo.png');
+		$logoBase64 = base64_encode(file_get_contents($logoPath));
 
 		$historyData[] = [
 			'master_qty' => $MasterInventoryData->quantity,
@@ -161,6 +168,7 @@ public function updateKitchenInventoryByAdmin($request) {
 			'quantity' => $quantities[$index],
 			'location_id' => $LocationsData->location,
 			'price' => $MasterInventoryData->price,
+			'logimg'=> $logoBase64
 			// 'approved_by' => 1,
 		];
 		}

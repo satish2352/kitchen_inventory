@@ -229,8 +229,8 @@ class MasterKitchenInventoryRepository
 
         if (empty($filteredInventoryData)) {
         session()->flash('alert_status', 'error');
-        session()->flash('alert_msg', 'From Locations all data is already inserted in to location data');
-        return ['status' => 'error', 'msg' => 'From Locations all data is already inserted in to location data.'];
+        session()->flash('alert_msg', 'All data from the From Location has already been inserted into the To Location data.');
+        return ['status' => 'error', 'msg' => 'All data from the From Location has already been inserted into the To Location data..'];
         }else{
             foreach ($filteredInventoryData as $index => $inventoryData) {
                 $user_data = new MasterKitchenInventory();
