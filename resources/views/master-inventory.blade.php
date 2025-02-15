@@ -77,7 +77,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
           </button>
 
           <button class="btn btn-light add-btn">
-            <i class="bi bi-plus-lg">Add Inventory</i>
+            Add Inventory
           </button>
         </div>
       </div>

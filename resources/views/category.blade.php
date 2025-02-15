@@ -422,28 +422,40 @@
 <script type="text/javascript">
    $(document).ready(function () {
      // Initialize validation for the add form
-     $("#frm_register_add").validate({
-       rules: {
-         category_name: {
-           required: true,
-           minlength: 3
-         }
-       },
-       messages: {
-         category_name: {
-           required: "Please enter the category name",
-           minlength: "Category name must be at least 3 characters long"
-         }
-       },
-       errorElement: "span",
-       errorClass: "error-text",
-       highlight: function (element) {
-         $(element).addClass("is-invalid").removeClass("is-valid");
-       },
-       unhighlight: function (element) {
-         $(element).addClass("is-valid").removeClass("is-invalid");
-       }
-     });
+     $(document).ready(function (e) {
+    $("#frm_register_add").validate({
+        rules: {
+            category_name: {
+                required: true,
+                minlength: 3
+            }
+        },
+        messages: {
+            category_name: {
+                required: "Please enter the category name",
+                minlength: "Category name must be at least 3 characters long"
+            }
+        },
+        errorElement: "span",
+        errorClass: "error-text",
+        highlight: function (element) {
+         e.preventDefault();
+            $(element).addClass("is-invalid").removeClass("is-valid");
+        },
+        unhighlight: function (element) {
+            $(element).addClass("is-valid").removeClass("is-invalid");
+        }
+    });
+
+    // Prevent form submission if validation fails
+   //  $("#frm_register_add").on("submit", function (e) {
+   //      if (!$(this).valid()) {
+   //          e.preventDefault(); // Prevent form submission
+   //          return false;
+   //      }
+   //  });
+});
+
    
      // Initialize validation for the edit form
      $("#editCategoryForm").validate({

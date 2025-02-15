@@ -446,6 +446,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
             errorElement: "span",
             errorClass: "error-text",
             highlight: function(element) {
+                e.preventDefault();
                 $(element).addClass("is-invalid").removeClass("is-valid");
             },
             unhighlight: function(element) {
