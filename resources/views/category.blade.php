@@ -226,8 +226,8 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
          <hr />
          <!-- Select Options -->
          <div class="row mb-3">
-            <label class="col-6 form-label">Category Name</label>
-            <div class="col-6">
+            <label class="col-md-6 col-sm-12 col-lg-6 form-label">Category Name</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
                <input
                   type="text"
                   class="form-control"
@@ -261,8 +261,8 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
          <hr />
          <!-- Select Options -->
          <div class="row mb-3">
-            <label class="col-6 form-label">Category Name</label>
-            <div class="col-6">
+            <label class="col-md-6 col-sm-12 col-lg-6 form-label">Category Name</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
                <input
                   type="text"
                   class="form-control"
@@ -293,12 +293,12 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
    <div class="confirm-popup-content">
       <h4 class="confirm-popup-title">Please Confirm</h4>
       <p class="confirm-popup-text">
-         Are you sure to delete this Category? <br />
+         Are you sure to delete this Category? <br/>
          this Category will not recover back
       </p>
       <div class="d-flex justify-content-around mt-4 confrm">
-         <button id="cancelDelete" class="btn br">NO</button>
-         <button id="confirmDeleteCategory" class="btn">YES</button>
+         <button id="cancelDelete" class="btn br btn_css">NO</button>
+         <button id="confirmDeleteCategory" class="btn btn_css">YES</button>
       </div>
 
       <!-- Delete Confirmation Popup -->

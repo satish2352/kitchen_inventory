@@ -215,8 +215,8 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
 
                 <!-- Input Field for Location Name -->
                 <div class="row mb-3">
-                    <label class="col-6 form-label">Location Name:</label>
-                    <div class="col-6">
+                    <label class="col-md-6 col-sm-12 col-lg-6 form-label">Location Name:</label>
+                    <div class="col-md-6 col-sm-12 col-lg-6">
                         <input type="text" class="form-control" placeholder="Enter Location Name" name="location"
                             value="{{ old('location') }}" style="text-transform: capitalize;" />
                         @error('location')
@@ -258,8 +258,8 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
 
                 <!-- Select Options -->
                 <div class="row mb-3">
-                    <label class="col-6 form-label">Select Location:</label>
-                    <div class="col-6">
+                    <label class="col-md-6 col-sm-12 col-lg-6 form-label">Select Location:</label>
+                    <div class="col-md-6 col-sm-12 col-lg-6">
                         <input type="text" class="form-control" placeholder="Enter Location Name" name="location"
                             id="edit-location" style="text-transform: capitalize;" />
                         <input type="hidden" class="form-control" placeholder="Enter Location Name" name="edit_id"
@@ -273,8 +273,8 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <!-- <label class="form-label col-6">Select Role:</label>
-            <div class="col-6">
+                    <!-- <label class="form-label col-md-6 col-sm-12 col-lg-6">Select Role:</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
               <select class="form-select" name="role" id="edit-role">
                 <option>Admin</option>
                 <option>Editor</option>

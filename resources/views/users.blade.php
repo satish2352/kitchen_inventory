@@ -76,7 +76,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
 
     @media only screen and (min-width: 373px) and (max-width: 544px) {
     .added_by_css {
-        margin-top: 4rem;
+        margin-top: 2.5rem;
         margin-bottom: 0.3rem;
         margin-left: -17.5rem !important;
     }
@@ -170,7 +170,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
                         <div class="d-flex justify-content-between align-items-center">
                             <!-- Left Section -->
                             <div>
-                                <div class="d-flex align-items-center">
+                                <div class="d-flex">
                                     <span class="ur-user me-2 jost-font user_name_css">{{ $item->name }}
                                         @if ($item->user_role == '1')
                                             (Super Admin)
@@ -306,8 +306,8 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
 
 
                 <!-- <div class="row mb-3">
-                    <label class="col-6 form-label">Select Location</label>
-                    <div class="col-6">
+                    <label class="col-md-6 col-sm-12 col-lg-6 form-label">Select Location</label>
+                    <div class="col-md-6 col-sm-12 col-lg-6">
                         <select class="form-select select2" name="location[]" multiple
                             data-placeholder="Select Location">
                             <option value="">Select Location</option>
@@ -319,8 +319,8 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
                 </div> -->
 
                 <div class="row mb-3">
-                    <label class="col-6 form-label">Select Location</label>
-                    <div class="col-6">
+                    <label class="col-md-6 col-sm-12 col-lg-6 form-label">Select Location</label>
+                    <div class="col-md-6 col-sm-12 col-lg-6">
                         <select class="form-select select2" name="location[]" multiple
                             data-placeholder="Select Location" id="locationSelect">
                             <option value="">Select Location</option>
@@ -332,8 +332,8 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
                 </div>
 
                 <div class="row mb-3">
-                    <label class="form-label col-6">Select Role</label>
-                    <div class="col-6">
+                    <label class="form-label col-md-6 col-sm-12 col-lg-6">Select Role</label>
+                    <div class="col-md-6 col-sm-12 col-lg-6">
                         <select class="form-select" name="role" id="roleid">
                             <option value="">Select Role</option>
                             <!-- <option value="1">Super Admin</option> -->
@@ -343,15 +343,15 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label class="form-label col-6">Enter User Name</label>
-                    <div class="col-6">
+                    <label class="form-label col-md-6 col-sm-12 col-lg-6">Enter User Name</label>
+                    <div class="col-md-6 col-sm-12 col-lg-6">
                         <input type="text" class="form-control" placeholder="Enter User Name" name="name"
                             style="text-transform: capitalize;" />
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label class="form-label col-6">Enter Mobile Number</label>
-                    <div class="col-6">
+                    <label class="form-label col-md-6 col-sm-12 col-lg-6">Enter Mobile Number</label>
+                    <div class="col-md-6 col-sm-12 col-lg-6">
                         <input type="text" class="form-control" placeholder="Enter Mobile Number"
                             name="phone" />
                         <span id="validation-message" class="red-text"></span>
@@ -361,8 +361,8 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label class="form-label col-6">Enter Email Id</label>
-                    <div class="col-6">
+                    <label class="form-label col-md-6 col-sm-12 col-lg-6">Enter Email Id</label>
+                    <div class="col-md-6 col-sm-12 col-lg-6">
                         <input type="text" class="form-control" placeholder="Enter Email Id" name="email" />
                     </div>
                     <!-- @error('email')
@@ -373,8 +373,8 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
                     @endif
                 </div>
                 <div class="row mb-3">
-                    <label class="form-label col-6">Enter password</label>
-                    <div class="col-6">
+                    <label class="form-label col-md-6 col-sm-12 col-lg-6">Enter password</label>
+                    <div class="col-md-6 col-sm-12 col-lg-6">
                         <input type="text" class="form-control" placeholder="Enter password" name="password" />
                     </div>
                 </div>
@@ -412,8 +412,8 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
 
 
                 <div class="row mb-3">
-                    <label class="col-6 form-label">Select Location</label>
-                    <div class="col-6">
+                    <label class="col-md-6 col-sm-12 col-lg-6 form-label">Select Location</label>
+                    <div class="col-md-6 col-sm-12 col-lg-6">
                         <select class="form-select select2" name="location[]" id="location" multiple>
                             <option value="">Select Location</option>
                             @foreach ($locationsData as $locationItem)
@@ -424,8 +424,8 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
                 </div>
 
                 <div class="row mb-3">
-                    <label class="form-label col-6">Select Role</label>
-                    <div class="col-6">
+                    <label class="form-label col-md-6 col-sm-12 col-lg-6">Select Role</label>
+                    <div class="col-md-6 col-sm-12 col-lg-6">
                         <select class="form-select" name="role" id="role">
                             <option value="">Select Role</option>
                             <!-- <option value="1">Super Admin</option> -->
@@ -435,29 +435,29 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label class="form-label col-6">Enter User Name</label>
-                    <div class="col-6">
+                    <label class="form-label col-md-6 col-sm-12 col-lg-6">Enter User Name</label>
+                    <div class="col-md-6 col-sm-12 col-lg-6">
                         <input type="text" class="form-control" placeholder="Enter User Name" name="name"
                             id="name" style="text-transform: capitalize;" />
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label class="form-label col-6">Enter Mobile Number</label>
-                    <div class="col-6">
+                    <label class="form-label col-md-6 col-sm-12 col-lg-6">Enter Mobile Number</label>
+                    <div class="col-md-6 col-sm-12 col-lg-6">
                         <input type="text" class="form-control" placeholder="Enter Mobile Number" name="phone"
                             id="phone" />
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label class="form-label col-6">Enter Email Id</label>
-                    <div class="col-6">
+                    <label class="form-label col-md-6 col-sm-12 col-lg-6">Enter Email Id</label>
+                    <div class="col-md-6 col-sm-12 col-lg-6">
                         <input type="text" class="form-control" placeholder="Enter Email Id" name="email"
                             id="email" />
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label class="form-label col-6">Enter password</label>
-                    <div class="col-6">
+                    <label class="form-label col-md-6 col-sm-12 col-lg-6">Enter password</label>
+                    <div class="col-md-6 col-sm-12 col-lg-6">
                         <input type="text" class="form-control" placeholder="Enter password" name="password"
                             id="password" />
                     </div>

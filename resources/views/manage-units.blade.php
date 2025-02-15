@@ -238,8 +238,8 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
 
           <!-- Select Options -->
           <div class="row mb-3">
-            <label class="col-6 form-label">Unit</label>
-            <div class="col-6">
+            <label class="col-md-6 col-sm-12 col-lg-6 form-label">Unit</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
             <input
                 type="text"
                 class="form-control"
@@ -283,8 +283,8 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
 
           <!-- Select Options -->
           <div class="row mb-3">
-            <label class="col-6 form-label">Unit</label>
-            <div class="col-6">
+            <label class="col-md-6 col-sm-12 col-lg-6 form-label">Unit</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
             <input
                 type="text"
                 class="form-control"
