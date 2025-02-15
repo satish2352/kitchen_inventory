@@ -61,7 +61,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
     display: none; 
 }
 
-.master_inventory_css{
+/* .master_inventory_css{
     margin-left: 10px;
 }
 
@@ -69,74 +69,82 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
   margin-right: 7px;
 }
 
-@media only screen and (min-width: 766px) and (max-width: 770px) {
-      .copy_inventory_css{
-        margin-left: 15rem;
+@media only screen and (min-width: 0px) and (max-width: 557px) {
+    .master_inventory_css{
+      font-size: 18px;
     }
     }
 
-@media only screen and (min-width: 778px) and (max-width: 822px) {
-  .copy_inventory_css{
-    margin-left: 19rem;
-}
+    @media (max-width: 330px) {
+  .inner-top .d-flex {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .inner-top .d-flex > * {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 5px;
+  }
+
+  .inner-top .d-flex > .d-flex {
+    flex-direction: row;
+    justify-content: center;
+    gap: 5px;
+  }
 }
 
-@media only screen and (min-width: 1022px) and (max-width: 1026px) {
-  .copy_inventory_css{
-    margin-left: 31rem;
-}
+@media only screen and (min-width: 328px) and (max-width: 464px) {
+    .master_inventory_css{
+      font-size: 14px;
+    }
+    } */
+
+
+
+
+    @media (max-width: 460px) {
+  .top-bar {
+    flex-wrap: wrap;
+  }
+
+  .button-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 8px; /* Adjust spacing */
+  }
 }
 
-@media only screen and (min-width: 910px) and (max-width: 914px) {
-  .copy_inventory_css{
-    margin-left: 25rem;
-}
-}
 
-@media only screen and (min-width: 538px) and (max-width: 542px) {
-  .copy_inventory_css{
-    margin-left: 2rem;
-}
-}
-
-@media only screen and (min-width: 850px) and (max-width: 855px) {
-  .copy_inventory_css{
-    margin-left: 21rem;
-}
-}
-
-@media only screen and (min-width: 1278px) and (max-width: 1282px) {
-  .copy_inventory_css{
-    margin-left: 48rem;
-}
-}
-
-@media only screen and (min-width: 1364px) and (max-width: 1368px) {
-  .copy_inventory_css{
-    margin-left: 54rem;
-}
-}
 </style>
 
 <div class="main">
-      <div class="inner-top container-fluid p-3">
-        <!-- Top Bar -->
-        <div class="d-flex justify-content-between align-items-center">
-          <a href="{{ route('/dashboard') }}">
-            <button class="btn btn-light">
-              <i class="bi bi-arrow-90deg-left"></i>
-            </button>
-          </a>
-          <h5 class="sub-title master_inventory_css">Master Inventory</h5>
+<div class="inner-top container-fluid p-3">
+  <!-- Top Bar -->
+  <div class="top-bar d-flex justify-content-between align-items-center flex-wrap">
+    <a href="{{ route('/dashboard') }}">
+      <button class="btn btn-light btn-sm">
+        <i class="bi bi-arrow-90deg-left"></i>
+      </button>
+    </a>
+    <h5 class="sub-title master_inventory_css text-center flex-grow-1 mb-0">Master Inventory</h5>
 
-          <button class="btn btn-light copy-inventory-btn copy_inventory_css">Copy Inventory
-          </button>
+    <!-- Buttons Wrapper -->
+    <div class="button-wrapper d-flex gap-2">
+      <button class="btn btn-light copy-inventory-btn copy_inventory_css">Copy Inventory</button>
+      <button class="btn btn-light add-btn">Add Inventory</button>
+    </div>
+  </div>
+</div>
 
-          <button class="btn btn-light add-btn">
-            Add Inventory
-          </button>
-        </div>
-      </div>
+
+
+      <!-- --------------------------- -->
+  
+
+
+
 <!-- 
       @if(session('alert_status'))
     <p>Session Status: {{ session('alert_status') }}</p>
