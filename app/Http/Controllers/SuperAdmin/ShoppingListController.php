@@ -205,46 +205,6 @@ class ShoppingListController extends Controller
 
     }
 
-//     public function updateKitchenInventoryBySuperAdmin(Request $request)
-// {
-//     // Ensure arrays are received
-//     $inventoryIds = $request->input('master_inventory_id');
-//     $quantities = $request->input('quantity');
-//     $location_selected_id = session()->get('location_selected_id');
-
-//     // Loop through and update each inventory item
-//     // foreach ($inventoryIds as $index => $inventoryId) {
-//     //     LocationWiseInventory::where('inventory_id', $inventoryId)
-//     //     ->where('location_id', $location_selected_id)
-//     //     ->where('location_id', $location_selected_id)
-//     //     ->whereDate('created_at', now()->toDateString())
-//     //     ->update([
-//     //         'quantity' => $quantities[$index],
-//     //         'approved_by' => '3'
-//     //     ]);
-//     // }
-
-//     foreach ($inventoryIds as $index => $inventoryId) {
-//         LocationWiseInventory::where('id', $inventoryId)
-//         ->where('location_id', $location_selected_id)
-//         // ->where('location_id', $location_selected_id)
-//         ->whereDate('created_at', now()->toDateString())
-//         ->update([
-//             'quantity' => $quantities[$index],
-//             'approved_by' => '3'
-//         ]);
-//     }
-
-//     $msg = "Kitchen Inventory Updated Successfully";
-//     $status = "success";
-
-//     session()->flash('alert_status', $status);
-//     session()->flash('alert_msg', $msg);
-//     return \Redirect::back();
-//     // return response()->json(['message' => 'Inventory updated successfully!'], 200);
-// }
-
-
     public function getLocationWiseInventorySA(Request $request) 
     {
         $sess_user_id = session()->get('login_id');
@@ -604,5 +564,48 @@ class ShoppingListController extends Controller
 // dd($query);
         // Return the user listing Blade with the search results (no full page reload)
         return view('kitchen-inventory-history', compact('locationsData','user_data','LocationName','DateValData'))    ;
+    }
+
+    public function searchShoppingList(Request $request)
+    {
+        $query = $request->input('query');
+        $location_selected_id = session()->get('location_selected_id');
+        // Modify the query to search users based on name, email, or phone
+        // $user_data = UsersData::where('name', 'like', "%$query%")
+        //                  ->orWhere('email', 'like', "%$query%")
+        //                  ->orWhere('phone', 'like', "%$query%")
+        //                  ->get();
+
+        $data_location_wise_inventory = LocationWiseInventory::leftJoin('locations', 'location_wise_inventory.location_id', '=', 'locations.id')
+            ->leftJoin('master_kitchen_inventory', 'location_wise_inventory.inventory_id', '=', 'master_kitchen_inventory.id')
+            ->leftJoin('units', 'master_kitchen_inventory.unit', '=', 'units.id')
+            ->leftJoin('category', 'master_kitchen_inventory.category', '=', 'category.id')
+            ->select(
+                'master_kitchen_inventory.id',
+                'master_kitchen_inventory.category',
+                'master_kitchen_inventory.item_name',
+                'master_kitchen_inventory.unit',
+                'master_kitchen_inventory.price',
+                'location_wise_inventory.quantity',
+                'location_wise_inventory.created_at',
+                'location_wise_inventory.id as locationWiseId',
+                'category.category_name',
+                'units.unit_name',
+                'locations.location'
+            )
+            ->where('master_kitchen_inventory.location_id', $location_selected_id)
+            ->where('master_kitchen_inventory.is_deleted', '0')
+            ->whereDate('location_wise_inventory.created_at', now()->toDateString())
+            ->orWhere('master_kitchen_inventory.item_name', 'like', "%$query%")
+            ->orWhere('category.category_name', 'like', "%$query%")
+            ->orWhere('locations.location', 'like', "%$query%")
+            // ->where('location_wise_inventory.approved_by', '1')
+            ->orderBy('category.category_name', 'asc') // Order by category name first
+            ->orderBy('master_kitchen_inventory.item_name', 'asc') // Then order by item name
+            ->get()
+            ->groupBy('category_name');
+    
+        // Return the user listing Blade with the search results (no full page reload)
+        return view('shopping-list-search-results', compact('data_location_wise_inventory'))->render();
     }
 } 

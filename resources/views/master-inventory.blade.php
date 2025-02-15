@@ -920,7 +920,7 @@ document.getElementById('editPopup').style.display = "flex";
             },
             to_location_id: {
                 required: "Please select the to Location",
-                differentLocation: "From Location and To Location cannot be the same."
+                differentLocation: "The From location and To location must be different."
             }
         },
         errorElement: "span",

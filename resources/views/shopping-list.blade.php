@@ -40,11 +40,11 @@
             </button> -->
         </div>
         <div class="container-fluid px-3">
-            <a href="#">
+            <!-- <a href="#">
                 <button type="button" class="btn btn-outline-danger fs-6">
                     Show last submitted Kitchen list
                 </button>
-            </a>
+            </a> -->
                 <form id="locationForm" method="post" action="{{ route('location-selected-admin') }}">
                     @csrf
                     <div class="row mb-3">

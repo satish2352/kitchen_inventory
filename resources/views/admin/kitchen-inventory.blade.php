@@ -40,11 +40,11 @@
             </button> -->
         </div>
         <div class="container-fluid px-3">
-            <a href="#">
+            <!-- <a href="#">
                 <button type="button" class="btn btn-outline-danger fs-6">
                     Show last submitted Kitchen list
                 </button>
-            </a>
+            </a> -->
             @if (is_array(session('location_for_user')) && count(session('location_for_user')) > 0)
                 <form id="locationForm" method="post" action="{{ route('location_selected') }}">
                     @csrf
