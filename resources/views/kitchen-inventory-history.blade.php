@@ -3,6 +3,13 @@
 
 @yield('content')
 
+<style>
+  @media (max-width: 410px) {
+    .sub-title {
+      margin-left: 10px 
+    }
+    }
+</style>
 <!-- <style>
     /* Custom styling for select dropdown */
     .select2-dropdown {

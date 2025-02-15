@@ -2,47 +2,59 @@
 @include('layouts.sidebar')
 @yield('content')
 <style>
-   /* Pagination styles */
-   .pagination {
-   margin: 20px 0;
-   }
-   .pagination ul {
-   list-style-type: none;
-   padding: 0;
-   margin: 0;
-   }
-   .pagination ul li {
-   display: inline;
-   margin-right: 5px;
-   }
-   .pagination ul li a,
-   .pagination ul li span {
-   padding: 5px 10px;
-   border: 1px solid #ccc;
-   text-decoration: none;
-   color: #333;
-   }
-   .pagination ul li.active a {
-   background-color: #007bff;
-   color: #fff;
-   border-color: #007bff;
-   }
-   .pagination ul li.disabled span {
-   color: #ccc;
-   }
-   img, svg {
-   vertical-align: middle;
-   width: 2%;
-   }
-   div.dataTables_wrapper div.dataTables_info {
-   display: none;
-   }
-   div.dataTables_wrapper div.dataTables_paginate ul.pagination{
-   display: none; 
-   }
-   .pagination .flex .flex{
-   display: none; 
-   }
+  
+/* Pagination styles */
+.pagination {
+    margin: 20px 0;
+}
+
+.pagination ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.pagination ul li {
+    display: inline;
+    margin-right: 5px;
+}
+
+.pagination ul li a,
+.pagination ul li span {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    text-decoration: none;
+    color: #333;
+}
+
+.pagination ul li.active a {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+.pagination ul li.disabled span {
+    color: #ccc;
+}
+
+img, svg {
+    vertical-align: middle;
+    width: 2%;
+}
+
+div.dataTables_wrapper div.dataTables_info {
+    display: none;
+}
+div.dataTables_wrapper div.dataTables_paginate ul.pagination{
+    display: none; 
+}
+.pagination .flex .flex{
+    display: none; 
+}
+
+.btn_css:hover{
+    color: blue;
+}
 </style>
 <div class="main">
    <div class="inner-top container-fluid p-3">
@@ -190,55 +202,102 @@
             </div>
             @else
             <div class="border-box mb-4" id="search-results">
-               <!-- Header Title -->
-               <div class="grid-header text-center">
-                  <h6 class="m-0 text-white">No Data Found</h6>
-               </div>
+                          <!-- Header Title -->
+                          <div class="grid-header text-center">
+                              <h6 class="m-0 text-white">No Data Found</h6>
+                          </div>
+                      </div> 
+          
+        @endif  
+
+          </div>
+        </div>
+      </div>
+
+      <div id="addPopup" class="popup-container">
+   <div class="popup-content">
+      <form class="forms-sample" id="frm_register" name="frm_register" method="post" role="form"
+         action="{{ route('add-units') }}" enctype="multipart/form-data">
+         <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
+         <!-- Popup Title -->
+         <h4 class="popup-title">Add Unit</h4>
+         <hr />
+         <!-- Select Options -->
+         <div class="row mb-3">
+            <label class="col-6 form-label">Unit</label>
+            <div class="col-6">
+               <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Unit"
+                  name="unit_name"
+                  style="text-transform: capitalize;"
+                  />
+               <!-- <select class="form-select">
+                  <option value="1">1</option>
+                  <option value="1">1</option>
+                  <option value="1">1</option> -->
             </div>
-            @endif  
          </div>
-      </div>
-   </div>
-   <!-- add popup  -->
-   <div id="addPopup" class="popup-container">
-      <div class="popup-content">
-         <form class="forms-sample" id="frm_register" name="frm_register" method="post" role="form"
-            action="{{ route('add-units') }}" enctype="multipart/form-data">
-            <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
-            <!-- Popup Title -->
-            <h4 class="popup-title">Add Unit</h4>
-            <hr />
-            <!-- Select Options -->
-            <div class="row mb-3">
-               <label class="col-6 form-label">Unit</label>
-               <div class="col-6">
-                  <input
-                     type="text"
-                     class="form-control"
-                     placeholder="Unit"
-                     name="unit_name"
-                     style="text-transform: capitalize;"
-                     />
-                  <!-- <select class="form-select">
-                     <option value="1">1</option>
-                     <option value="1">1</option>
-                     <option value="1">1</option> -->
-               </div>
-            </div>
-            <hr />
-            <div class="d-flex justify-content-around">
-               <!-- <button class="btn btn-secondary btn-lg w-100 me-2">
-                  <i class="bi bi-x-circle"></i> Cancel
-                  </button> -->
-               <a class="btn btn-secondary btn-lg w-100 me-2" id="closePopup">
+         <hr />
+         <div class="d-flex justify-content-around">
+            <!-- <button class="btn btn-secondary btn-lg w-100 me-2">
                <i class="bi bi-x-circle"></i> Cancel
-               </a>
-               <button class="btn btn-success btn-lg w-100">
-               <i class="bi bi-plus-circle"></i> Add
-               </button>
+               </button> -->
+            <a class="btn btn-secondary btn-lg w-100 me-2" id="closePopup">
+            <i class="bi bi-x-circle"></i> Cancel
+            </a>
+            <button class="btn btn-success btn-lg w-100">
+            <i class="bi bi-plus-circle"></i> Add
+            </button>
+         </div>
+      </form>
+   </div>
+</div>
+
+
+<div id="editPopupUnit" class="popup-container">
+   <div class="popup-content">
+      <form class="forms-sample" id="editUnitForm" name="editUnitForm" method="post" role="form"
+         action="{{ route('update-units') }}" enctype="multipart/form-data">
+         <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
+         <!-- Popup Title -->
+         <h4 class="popup-title">Edit Unit</h4>
+         <hr />
+         <!-- Select Options -->
+         <div class="row mb-3">
+            <label class="col-6 form-label">Unit</label>
+            <div class="col-6">
+               <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Unit"
+                  name="unit_name"
+                  id="unit_id"
+                  style="text-transform: capitalize;"
+                  />
+               <!-- <select class="form-select">
+                  <option value="1">1</option>
+                  <option value="1">1</option>
+                  <option value="1">1</option> -->
             </div>
-         </form>
-      </div>
+         </div>
+         <input type="hidden" class="form-control" placeholder="Enter Location Name" name="edit_id" id="edit-unit-id"/>
+         <hr />
+         <div class="d-flex justify-content-around">
+            <a  class="btn btn-outline-danger btn-delete-unit btn-lg w-100 me-2">
+            <i class="bi bi-trash"></i> Delete
+            </a>
+            <!-- <button class="btn btn-outline-danger btn-delete-unit btn-lg w-100 me-2">
+               <i class="bi bi-trash"></i> Delete
+               </button> -->
+            <button class="btn btn-danger btn-lg w-100">
+            <i class="bi bi-arrow-repeat"></i> Update
+            </button>
+         </div>
+      </form>
+   </div>
+</div>
    </div>
    <!-- edit popup  -->
    <div id="editPopupUnit" class="popup-container">
@@ -289,6 +348,14 @@
          <h4 class="confirm-popup-title">Please Confirm</h4>
          <p class="confirm-popup-text">
             Are you sure to delete this unit? <br />
+            this unit will not recover back
+<<<          </p>
+          <div class="d-flex justify-content-around mt-4 confrm">
+            <button id="cancelDelete" class="btn br btn_css">NO</button>
+            <button id="confirmDeleteUnit" class="btn btn_css">YES</button>
+          </div>
+        </div>
+s unit? <br />
             this unit will not recover back
          </p>
          <div class="d-flex justify-content-around mt-4 confrm">
@@ -470,7 +537,7 @@
                          // Clear the previous results
                          $('#search-results').html('');
    
-                         // Append the new search results
+                          // Append the new search results
                          $('#search-results').html(response);
                        }else{
                          // Clear the previous results

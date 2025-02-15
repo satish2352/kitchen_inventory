@@ -2,57 +2,70 @@
 @include('layouts.sidebar')
 @yield('content')
 <style>
-   .error-text {
-   color: red;
-   font-size: 12px;
-   }
-   .is-invalid {
-   border-color: red;
-   }
-   .is-valid {
-   border-color: green;
-   }
-   /* Pagination styles */
-   .pagination {
-   margin: 20px 0;
-   }
-   .pagination ul {
-   list-style-type: none;
-   padding: 0;
-   margin: 0;
-   }
-   .pagination ul li {
-   display: inline;
-   margin-right: 5px;
-   }
-   .pagination ul li a,
-   .pagination ul li span {
-   padding: 5px 10px;
-   border: 1px solid #ccc;
-   text-decoration: none;
-   color: #333;
-   }
-   .pagination ul li.active a {
-   background-color: #007bff;
-   color: #fff;
-   border-color: #007bff;
-   }
-   .pagination ul li.disabled span {
-   color: #ccc;
-   }
-   img, svg {
-   vertical-align: middle;
-   width: 2%;
-   }
-   div.dataTables_wrapper div.dataTables_info {
-   display: none;
-   }
-   div.dataTables_wrapper div.dataTables_paginate ul.pagination{
-   display: none; 
-   }
-   .pagination .flex .flex{
-   display: none; 
-   }
+  .error-text {
+  color: red;
+  font-size: 12px;
+}
+
+.is-invalid {
+  border-color: red;
+}
+
+.is-valid {
+  border-color: green;
+}
+
+/* Pagination styles */
+.pagination {
+    margin: 20px 0;
+}
+
+.pagination ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.pagination ul li {
+    display: inline;
+    margin-right: 5px;
+}
+
+.pagination ul li a,
+.pagination ul li span {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    text-decoration: none;
+    color: #333;
+}
+
+.pagination ul li.active a {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+.pagination ul li.disabled span {
+    color: #ccc;
+}
+
+img, svg {
+    vertical-align: middle;
+    width: 2%;
+}
+
+div.dataTables_wrapper div.dataTables_info {
+    display: none;
+}
+div.dataTables_wrapper div.dataTables_paginate ul.pagination{
+    display: none; 
+}
+.pagination .flex .flex{
+    display: none; 
+}
+.btn_css:hover{
+    color: blue;
+}
 </style>
 <div class="main">
    <div class="inner-top container-fluid p-3">
@@ -210,8 +223,8 @@
          <hr />
          <!-- Select Options -->
          <div class="row mb-3">
-            <label class="col-6 form-label">Category Name</label>
-            <div class="col-6">
+            <label class="col-md-6 col-sm-12 col-lg-6 form-label">Category Name</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
                <input
                   type="text"
                   class="form-control"
@@ -245,8 +258,8 @@
          <hr />
          <!-- Select Options -->
          <div class="row mb-3">
-            <label class="col-6 form-label">Category Name</label>
-            <div class="col-6">
+            <label class="col-md-6 col-sm-12 col-lg-6 form-label">Category Name</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
                <input
                   type="text"
                   class="form-control"
@@ -277,21 +290,150 @@
    <div class="confirm-popup-content">
       <h4 class="confirm-popup-title">Please Confirm</h4>
       <p class="confirm-popup-text">
-         Are you sure to delete this Category? <br />
+         Are you sure to delete this Category? <br/>
          this Category will not recover back
       </p>
       <div class="d-flex justify-content-around mt-4 confrm">
-         <button id="cancelDelete" class="btn br">NO</button>
-         <button id="confirmDeleteCategory" class="btn">YES</button>
+         <button id="cancelDelete" class="btn br btn_css">NO</button>
+         <button id="confirmDeleteCategory" class="btn btn_css">YES</button>
       </div>
-   </div>
-</div>
-</div>
-<form method="POST" action="{{ url('/delete-category') }}" id="deleteform">
-   @csrf
-   <input type="hidden" name="delete_id" id="delete_id" value="">
-</form>
-@extends('layouts.footer')
+
+      <!-- Delete Confirmation Popup -->
+      <div id="confirmPopupCategory" class="confirm-popup-container">
+        <div class="confirm-popup-content">
+          <h4 class="confirm-popup-title">Please Confirm</h4>
+          <p class="confirm-popup-text">
+            Are you sure to delete this Category? <br />
+            this Category will not recover back
+          </p>
+          <div class="d-flex justify-content-around mt-4 confrm">
+            <button id="cancelDelete" class="btn br btn_css">NO</button>
+            <button id="confirmDeleteCategory" class="btn btn_css">YES</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <form method="POST" action="{{ url('/delete-category') }}" id="deleteform">
+            @csrf
+            <input type="hidden" name="delete_id" id="delete_id" value="">
+        </form>
+    
+ @extends('layouts.footer')
+
+ <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", () => {
+      // const deleteButton = document.querySelector(".btn-delete");
+      // const editButton = document.querySelector(".edit-btn");
+      // const popup = document.getElementById("editPopup");
+      const addButton = document.querySelector(".add-btn");
+      const popupadd = document.getElementById("addPopup");
+      // const confirmPopup = document.getElementById("confirmPopup");
+      const cancelDeleteButton = document.getElementById("cancelDelete");
+      const closePopUpButton = document.getElementById("closePopup");
+
+      const editButtonCategory = document.querySelector(".edit-btn-category");
+      const popupcategory = document.getElementById("editPopupCategory");
+      const deleteButtonCategory = document.querySelector(".btn-delete-category");
+      const confirmPopupCategory = document.getElementById("confirmPopupCategory");
+      const confirmDeleteButtonCategory = document.getElementById("confirmDeleteCategory");
+
+
+
+    
+      // // Open Popup
+      addButton.addEventListener("click", () => {
+        popupadd.style.display = "flex";
+      });
+
+      // Close Popup
+      closePopUpButton.addEventListener("click", () => {
+        document.getElementById("frm_register_add").reset();
+          popupadd.style.display = "none";
+      });
+    
+      // Close Popup when clicking outside
+      popupcategory.addEventListener("click", (e) => {
+        if (e.target === popupcategory) {
+          popupcategory.style.display = "none";
+        }
+      });
+
+      popupadd.addEventListener("click", (e) => {
+        if (e.target === popupadd) {
+          // document.getElementById("abc").value = '';
+          document.getElementById("frm_register_add").reset();
+          popupadd.style.display = "none";
+          
+        }
+      });
+    
+      // Show Confirmation Popup
+      // deleteButton.addEventListener("click", () => {
+      //   popup.style.display = "none"; // Close the bottom popup
+      //   confirmPopup.style.display = "flex"; // Show the confirmation popup
+      // });
+
+      deleteButtonCategory.addEventListener("click", () => {
+        popupcategory.style.display = "none"; // Close the bottom popup
+        confirmPopupCategory.style.display = "flex"; // Show the confirmation popup
+      });
+    
+      // Close Confirmation Popup on Cancel
+      cancelDeleteButton.addEventListener("click", () => {
+        confirmPopupCategory.style.display = "none";
+      });
+    
+      confirmDeleteButtonCategory.addEventListener("click", () => {
+        confirmPopupCategory.style.display = "none";
+                $("#delete_id").val($("#edit-category-id").val());
+                $("#deleteform").submit();
+        // alert("Category deleted successfully!");
+        // Add delete logic here
+      });
+    });
+ </script>
+ <script>
+ $(document).ready(function() {
+  // alert('kkkkkkkkkkkkkk');
+  // Open the popup when Edit button is clicked
+  $('.edit-btn-category').on('click', function() {
+    var locationId = $(this).data('id'); // Get the location ID from the button
+    
+    // AJAX request to get location data
+    $.ajax({
+      url: '{{ route('edit-category') }}', // Your route to fetch the location data
+      type: 'GET',
+      data: {
+                locationId: locationId
+            },
+      success: function(response) {
+        // console.log('responseresponseresponseresponse',response.location_data);
+        // alert('ppppppppppppppppppp');
+        // Populate the popup with the fetched data
+        $('#category_id').val(response.category_data.category_name); // Set location value
+        $('#edit-category-id').val(response.category_data.id); // Set role value
+
+        
+        // Show the popup
+        $('#editPopupCategory').show();
+
+// Add the CSS property for flex display
+document.getElementById('editPopupCategory').style.display = "flex";
+      },
+      error: function() {
+        alert('Failed to load location data.');
+      }
+    });
+  });
+  // Close the popup if clicked outside (optional)
+  // $(document).on('click', function(event) {
+  //   if (!$(event.target).closest('#editPopup, .edit-btn').length) {
+  //     $('#editPopup').hide();
+  //   }
+  // });
+});
+</script> 
+
 <script type="text/javascript">
    document.addEventListener("DOMContentLoaded", () => {
      // const deleteButton = document.querySelector(".btn-delete");

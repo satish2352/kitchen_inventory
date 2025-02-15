@@ -3,6 +3,15 @@
 
 @yield('content')
 
+<style>
+   @media  (max-width: 440px) {
+      .icon-box {
+      height: 63vh;
+   }
+   }
+
+</style>
+
 <div class="container-fluid p-3">
     <!-- Dashboard Title -->
     <h1 class="mb-3 fw-bold">Dashboard</h1>

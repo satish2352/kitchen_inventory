@@ -2,57 +2,72 @@
 @include('layouts.sidebar')
 @yield('content')
 <style>
-   .error-text {
-   color: red;
-   font-size: 12px;
-   }
-   .is-invalid {
-   border-color: red;
-   }
-   .is-valid {
-   border-color: green;
-   }
-   /* Pagination styles */
-   .pagination {
-   margin: 20px 0;
-   }
-   .pagination ul {
-   list-style-type: none;
-   padding: 0;
-   margin: 0;
-   }
-   .pagination ul li {
-   display: inline;
-   margin-right: 5px;
-   }
-   .pagination ul li a,
-   .pagination ul li span {
-   padding: 5px 10px;
-   border: 1px solid #ccc;
-   text-decoration: none;
-   color: #333;
-   }
-   .pagination ul li.active a {
-   background-color: #007bff;
-   color: #fff;
-   border-color: #007bff;
-   }
-   .pagination ul li.disabled span {
-   color: #ccc;
-   }
-   img, svg {
-   vertical-align: middle;
-   width: 2%;
-   }
-   div.dataTables_wrapper div.dataTables_info {
-   display: none;
-   }
-   div.dataTables_wrapper div.dataTables_paginate ul.pagination{
-   display: none; 
-   }
-   .pagination .flex .flex{
-   display: none; 
-   }
+    .error-text {
+        color: red;
+        font-size: 12px;
+    }
+
+    .is-invalid {
+        border-color: red;
+    }
+
+    .is-valid {
+        border-color: green;
+    }
+
+    
+/* Pagination styles */
+.pagination {
+    margin: 20px 0;
+}
+
+.pagination ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.pagination ul li {
+    display: inline;
+    margin-right: 5px;
+}
+
+.pagination ul li a,
+.pagination ul li span {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    text-decoration: none;
+    color: #333;
+}
+
+.pagination ul li.active a {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+.pagination ul li.disabled span {
+    color: #ccc;
+}
+
+img, svg {
+    vertical-align: middle;
+    width: 2%;
+}
+
+div.dataTables_wrapper div.dataTables_info {
+    display: none;
+}
+div.dataTables_wrapper div.dataTables_paginate ul.pagination{
+    display: none; 
+}
+.pagination .flex .flex{
+    display: none; 
+}
+
+.btn_css:hover{
+    color: blue;
+}
 </style>
 <div class="main">
    <div class="inner-top container-fluid p-3">
@@ -90,94 +105,175 @@
          <!-- <button class="btn btn-white mx-2">
             <i class="bi bi-geo-alt-fill"></i>
             </button> -->
-      </div>
-   </div>
-   <!-- user requestion section  -->
-   <div class="user-request">
-      <div class="container-fluid px-3" id="search-results">
-         @foreach ($locations_data as $item)
-         <!-- User Request Box -->
-         <div class="user-request-box p-3 shadow rounded mb-3">
-            <!-- Top Row -->
-            <div class="d-flex justify-content-between align-items-center">
-               <!-- Left Section -->
-               <div>
-                  <div class="d-flex align-items-center">
-                     <span class="act-user me-2">{{ ($locations_data->currentPage() - 1) * $locations_data->perPage() + $loop->iteration }}) </span>
-                     <span class="act-user me-2">{{ $item->location }}</span>
-                  </div>
-                  <!-- <p class="mb-1">{{ $item->role }}</p> -->
-               </div>
-               <!-- Right Section -->
-               <div>
-                  <button class="btn btn-edit text-center shadow-sm edit-btn" data-id="{{ $item->id }}">
-                  <i class="bi bi-pencil-square"></i> <br />Edit
-                  </button>
-               </div>
+        </div>
+    </div>
+
+    <!-- user requestion section  -->
+    <div class="user-request">
+        <div class="container-fluid px-3" id="search-results">
+            @foreach ($locations_data as $item)
+                <!-- User Request Box -->
+                <div class="user-request-box p-3 shadow rounded mb-3">
+                    <!-- Top Row -->
+                    <div class="d-flex justify-content-between align-items-center">
+                        <!-- Left Section -->
+                        <div>
+                            <div class="d-flex align-items-center">
+
+                                <span class="act-user me-2">{{ ($locations_data->currentPage() - 1) * $locations_data->perPage() + $loop->iteration }}) </span>
+                                <span class="act-user me-2">{{ $item->location }}</span>
+                            </div>
+                            <!-- <p class="mb-1">{{ $item->role }}</p> -->
+                        </div>
+
+                        <!-- Right Section -->
+                        <div>
+                            <button class="btn btn-edit text-center shadow-sm edit-btn" data-id="{{ $item->id }}">
+                                <i class="bi bi-pencil-square"></i> <br />Edit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
+        <div class="mt-3">
+            <div class="col-md-8">
+                                                    <div class="pagination">
+                                                        @if ($locations_data->lastPage() > 1)
+                                                            <ul class="pagination">
+                                                                <li class="{{ ($locations_data->currentPage() == 1) ? ' disabled' : '' }}">
+                                                                    @if ($locations_data->currentPage() > 1)
+                                                                        <a href="{{ $locations_data->url($locations_data->currentPage() - 1) }}">Previous</a>
+                                                                    @else
+                                                                        <span>Previous</span>
+                                                                    @endif
+                                                                </li>
+                                                                @php
+                                                                    $currentPage = $locations_data->currentPage();
+                                                                    $lastPage = $locations_data->lastPage();
+                                                                    $startPage = max($currentPage - 5, 1);
+                                                                    $endPage = min($currentPage + 4, $lastPage);
+                                                                @endphp
+                                                                @if ($startPage > 1)
+                                                                    <li>
+                                                                        <a href="{{ $locations_data->url(1) }}">1</a>
+                                                                    </li>
+                                                                    @if ($startPage > 2)
+                                                                        <li>
+                                                                            <span>...</span>
+                                                                        </li>
+                                                                    @endif
+                                                                @endif
+                                                                @for ($i = $startPage; $i <= $endPage; $i++)
+                                                                    <li class="{{ ($currentPage == $i) ? ' active' : '' }}">
+                                                                        <a href="{{ $locations_data->url($i) }}">{{ $i }}</a>
+                                                                    </li>
+                                                                @endfor
+                                                                @if ($endPage < $lastPage)
+                                                                    @if ($endPage < $lastPage - 1)
+                                                                        <li>
+                                                                            <span>...</span>
+                                                                        </li>
+                                                                    @endif
+                                                                    <li>
+                                                                        <a href="{{ $locations_data->url($lastPage) }}">{{ $lastPage }}</a>
+                                                                    </li>
+                                                                @endif
+                                                                <li class="{{ ($currentPage == $lastPage) ? ' disabled' : '' }}">
+                                                                    @if ($currentPage < $lastPage)
+                                                                        <a href="{{ $locations_data->url($currentPage + 1) }}">Next</a>
+                                                                    @else
+                                                                        <span>Next</span>
+                                                                    @endif
+                                                                </li>
+                                                                <!-- <li>
+                                                                    <span>Page {{ $currentPage }}</span>
+                                                                </li> -->
+                                                            </ul>
+                                                        @endif
+                                                    </div>
+                                                </div><!-- Pagination for each category -->
+                    </div>
+        </div>
+        </div>
+    </div>
+    <!-- add popup -->
+
+    <div id="addPopup" class="popup-container">
+        <div class="popup-content">
+            <form class="forms-sample" id="frm_register_add" name="frm_register" method="post" role="form"
+                action="{{ route('add-locations') }}" enctype="multipart/form-data">
+                <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
+                <!-- Popup Title -->
+                <h4 class="popup-title">Add Location</h4>
+                <hr />
+
+                <!-- Input Field for Location Name -->
+                <div class="row mb-3">
+                    <label class="col-md-6 col-sm-12 col-lg-6 form-label">Location Name:</label>
+                    <div class="col-md-6 col-sm-12 col-lg-6">
+                        <input type="text" class="form-control" placeholder="Enter Location Name" name="location"
+                            value="{{ old('location') }}" style="text-transform: capitalize;" />
+                        @error('location')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+
+                <hr />
+                <div class="d-flex justify-content-around">
+                    <!-- <button class="btn btn-secondary btn-lg w-100 me-2">
+                        <i class="bi bi-x-circle"></i> Cancel
+                    </button> -->
+                    <a class="btn btn-secondary btn-lg w-100 me-2" id="closePopup">
+                        <i class="bi bi-x-circle"></i> Cancel
+                    </a>
+                    <button class="btn btn-success btn-lg w-100">
+                        <i class="bi bi-plus-circle"></i> Submit
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- close add popup -->
+
+
+
+    <div id="editPopupLocation" class="popup-container">
+   <div class="popup-content">
+      <form class="forms-sample" id="editLocationForm" name="editLocationForm" method="post" role="form"
+         action="{{ route('update-locations') }}" enctype="multipart/form-data">
+         <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
+         <!-- Popup Title -->
+         <h4 class="popup-title">Edit Location</h4>
+         <hr />
+         <!-- Select Options -->
+         <div class="row mb-3">
+            <label class="col-6 form-label">Select Location:</label>
+            <div class="col-6">
+               <input type="text" class="form-control" placeholder="Enter Location Name" name="location"
+                  id="edit-location" style="text-transform: capitalize;" />
+               <input type="hidden" class="form-control" placeholder="Enter Location Name" name="edit_id"
+                  id="edit-location-id" />
             </div>
          </div>
-         @endforeach
-      </div>
-      <div class="mt-3">
-         <div class="col-md-8">
-            <div class="pagination">
-               @if ($locations_data->lastPage() > 1)
-               <ul class="pagination">
-                  <li class="{{ ($locations_data->currentPage() == 1) ? ' disabled' : '' }}">
-                     @if ($locations_data->currentPage() > 1)
-                     <a href="{{ $locations_data->url($locations_data->currentPage() - 1) }}">Previous</a>
-                     @else
-                     <span>Previous</span>
-                     @endif
-                  </li>
-                  @php
-                  $currentPage = $locations_data->currentPage();
-                  $lastPage = $locations_data->lastPage();
-                  $startPage = max($currentPage - 5, 1);
-                  $endPage = min($currentPage + 4, $lastPage);
-                  @endphp
-                  @if ($startPage > 1)
-                  <li>
-                     <a href="{{ $locations_data->url(1) }}">1</a>
-                  </li>
-                  @if ($startPage > 2)
-                  <li>
-                     <span>...</span>
-                  </li>
-                  @endif
-                  @endif
-                  @for ($i = $startPage; $i <= $endPage; $i++)
-                  <li class="{{ ($currentPage == $i) ? ' active' : '' }}">
-                     <a href="{{ $locations_data->url($i) }}">{{ $i }}</a>
-                  </li>
-                  @endfor
-                  @if ($endPage < $lastPage)
-                  @if ($endPage < $lastPage - 1)
-                  <li>
-                     <span>...</span>
-                  </li>
-                  @endif
-                  <li>
-                     <a href="{{ $locations_data->url($lastPage) }}">{{ $lastPage }}</a>
-                  </li>
-                  @endif
-                  <li class="{{ ($currentPage == $lastPage) ? ' disabled' : '' }}">
-                     @if ($currentPage < $lastPage)
-                     <a href="{{ $locations_data->url($currentPage + 1) }}">Next</a>
-                     @else
-                     <span>Next</span>
-                     @endif
-                  </li>
-                  <!-- <li>
-                     <span>Page {{ $currentPage }}</span>
-                     </li> -->
-               </ul>
-               @endif
+         <div class="row mb-3">
+            <hr />
+            <div class="d-flex justify-content-around">
+               <a class="btn btn-outline-danger btn-delete btn-lg w-100 me-2">
+               <i class="bi bi-trash"></i> Delete
+               </a>
+               <button class="btn btn-danger btn-lg w-100">
+               <i class="bi bi-arrow-repeat"></i> Update
+               </button>
             </div>
-         </div>
-         <!-- Pagination for each category -->
+      </form>
       </div>
    </div>
+   <!-- Delete Confirmation Popup -->
+</div>
 </div>
 </div>
 <!-- add popup -->
@@ -265,17 +361,17 @@
    <!-- Delete Confirmation Popup -->
 </div>
 <div id="confirmPopup" class="confirm-popup-container" style="display:none">
-   <div class="confirm-popup-content">
-      <h4 class="confirm-popup-title">Please Confirm</h4>
-      <p class="confirm-popup-text">
-         Are you sure to delete this Location? <br />
-         this location will not recover back
-      </p>
-      <div class="d-flex justify-content-around mt-4 confrm">
-         <button id="cancelDelete" class="btn br">NO</button>
-         <button id="confirmDelete" class="btn">YES</button>
-      </div>
-   </div>
+    <div class="confirm-popup-content">
+        <h4 class="confirm-popup-title">Please Confirm</h4>
+        <p class="confirm-popup-text">
+            Are you sure to delete this Location? <br />
+            this location will not recover back
+        </p>
+        <div class="d-flex justify-content-around mt-4 confrm">
+            <button id="cancelDelete" class="btn br btn_css">NO</button>
+            <button id="confirmDelete" class="btn btn_css">YES</button>
+        </div>
+    </div>
 </div>
 <form method="POST" action="{{ url('/delete-locations') }}" id="deleteform">
    @csrf

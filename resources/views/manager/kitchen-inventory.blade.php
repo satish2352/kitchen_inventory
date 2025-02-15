@@ -13,10 +13,8 @@
                 </button>
             </a>
             <h5 class="sub-title">Update Kitchen Inventory</h5>
-            <a href="approve-users.html">
-                <button class="btn btn-light">
-                    <i class="bi bi-check2"></i>
-                </button>
+            <a href="#">
+                
             </a>
         </div>
     </div>

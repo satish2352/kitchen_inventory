@@ -175,7 +175,7 @@
 
 
 
-      @media only screen and (min-width: 320px) and (max-width: 375px) {
+      @media only screen and (min-width: 280px) and (max-width: 375px) {
         form {
           background-color: white;
           padding: 30px;
@@ -187,7 +187,69 @@
           position: relative;
           overflow: hidden;
         }
+        .eye_css {
+          margin-right: -2rem !important;
+        }
+        .pwa-button-container {
+          left: 44%;
+          top: 8%;
+        }
       }
+
+      /* @media only screen and (min-width: 280px) and (max-width: 375px) {
+        .eye_css {
+          margin-right: -2rem !important;
+        }
+        .pwa-button-container {
+          left: 56%;
+          top: 10%;
+        }
+      } */
+
+      .pwa-button-new {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+}
+
+.pwa-button-new button {
+    background-color: rgb(106, 95, 255);
+    color: white;
+    font-size: 16px;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+    animation: blink 1s linear infinite;
+}
+
+@keyframes blink {
+    0%, 100% { background-color: rgba(108, 230, 210, 0.62); }
+    50% { background-color: rgba(81, 255, 0, 0.66); }
+}
+
+.pwa-button-new button:hover {
+    background-color: #ff512f;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Adjust for small screens */
+@media only screen and (max-width: 768px) {
+    .pwa-button-new {
+        top: 5px;
+        right: 5px;
+    }
+
+    .pwa-button-new button {
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+}
+
+
+
     </style>
 
 @if (isset($return_data['msg_alert']) && $return_data['msg_alert'] == 'green')
@@ -208,9 +270,15 @@
     @endif
     
 
-    <div class="pwa-button-container">
+    <!-- <div class="pwa-button-container">
+        <button id="installPWA">Install This App</button>
+    </div> -->
+
+    <div class="pwa-button-new">
         <button id="installPWA">Install This App</button>
     </div>
+
+    
     <!-- <button id="installPWA">Install this app for a better experience.</button> -->
     <div class="container d-flex justify-content-center align-items-center min-vh-100 position-relative">
     <!-- Install PWA Button -->
@@ -227,7 +295,7 @@
             <div class="wrapper">
                 <i class="material-icons">alternate_email</i>
                 <input type="text" name="email" value="{{ old('email') }}"
-                       aria-describedby="usernameHelp" placeholder="Enter your email id">
+                       aria-describedby="usernameHelp" placeholder="Enter email id">
             </div>
             <div class="error-message">
                 @if ($errors->has('email'))
@@ -236,8 +304,8 @@
             </div>
             <div class="wrapper">
                 <i class="material-icons">lock</i> 
-                <input id="password" type="password" name="password" placeholder="Enter your password">
-                <i class="fas fa-eye position-absolute top-50 end-0 translate-middle-y me-3" id="togglePassword" style="cursor: pointer;"></i>
+                <input id="password" type="password" name="password" placeholder="Enter password">
+                <i class="fas fa-eye position-absolute top-50 end-0 translate-middle-y eye_css" id="togglePassword" style="cursor: pointer;"></i>
             </div>
             <div class="error-message">
                 @if ($errors->has('password')) 

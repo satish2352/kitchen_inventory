@@ -25,7 +25,7 @@
       <div class="user-request pb-3">
         <div class="container-fluid px-3">
           <!-- Section Title -->
-          <h3 class="mb-4">User Requests</h3>
+          <h3 class="mb-4 mt-3">User Requests</h3>
 
           @if (!empty($user_data) && count($user_data) > 0)
 

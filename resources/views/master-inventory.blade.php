@@ -79,27 +79,94 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
         padding: 5px;
         background: #fff;
     }
+.btn_css:hover{
+        color: blue;
+    }
+
+/* .master_inventory_css{
+    margin-left: 10px;
+}
+
+.copy_inventory_css{
+  margin-right: 7px;
+}
+
+@media only screen and (min-width: 0px) and (max-width: 557px) {
+    .master_inventory_css{
+      font-size: 18px;
+    }
+    }
+
+    @media (max-width: 330px) {
+  .inner-top .d-flex {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .inner-top .d-flex > * {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 5px;
+  }
+
+  .inner-top .d-flex > .d-flex {
+    flex-direction: row;
+    justify-content: center;
+    gap: 5px;
+  }
+}
+
+@media only screen and (min-width: 328px) and (max-width: 464px) {
+    .master_inventory_css{
+      font-size: 14px;
+    }
+    } */
+
+
+
+
+    @media (max-width: 460px) {
+  .top-bar {
+    flex-wrap: wrap;
+  }
+
+  .button-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 8px; /* Adjust spacing */
+  }
+}
+
+
 </style>
 
 <div class="main">
-      <div class="inner-top container-fluid p-3">
-        <!-- Top Bar -->
-        <div class="d-flex justify-content-between align-items-center">
-          <a href="{{ route('/dashboard') }}">
-            <button class="btn btn-light">
-              <i class="bi bi-arrow-90deg-left"></i>
-            </button>
-          </a>
-          <h5 class="sub-title">Master Inventory</h5>
+<div class="inner-top container-fluid p-3">
+  <!-- Top Bar -->
+  <div class="top-bar d-flex justify-content-between align-items-center flex-wrap">
+    <a href="{{ route('/dashboard') }}">
+      <button class="btn btn-light btn-sm">
+        <i class="bi bi-arrow-90deg-left"></i>
+      </button>
+    </a>
+    <h5 class="sub-title master_inventory_css text-center flex-grow-1 mb-0">Master Inventory</h5>
 
-          <button class="btn btn-light copy-inventory-btn">Copy Inventory
-          </button>
+    <!-- Buttons Wrapper -->
+    <div class="button-wrapper d-flex gap-2">
+      <button class="btn btn-light copy-inventory-btn copy_inventory_css">Copy Inventory</button>
+      <button class="btn btn-light add-btn">Add Inventory</button>
+    </div>
+  </div>
+</div>
 
-          <button class="btn btn-light add-btn">
-            Add Inventory
-          </button>
-        </div>
-      </div>
+
+
+      <!-- --------------------------- -->
+  
+
+
+
 <!-- 
       @if(session('alert_status'))
     <p>Session Status: {{ session('alert_status') }}</p>
@@ -165,8 +232,8 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
         <form id="locationForm" method="post" action="{{ route('location-selected-admin') }}">
                     @csrf
                     <div class="row mb-3">
-                        <label class="form-label col-6">Select Location</label>
-                        <div class="col-6">
+                        <label class="form-label col-md-6 col-sm-12 col-lg-6">Select Location</label>
+                        <div class="col-md-6 col-sm-12 col-lg-6">
                             <select class="form-select" name="location_selected" id="location_selected">
                                 <option value="">Select Location</option>
                                 @foreach ($locationsData as $locations)
@@ -215,7 +282,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
                                   @php $srNo = 1; @endphp
                                   @foreach ($items as $item)
                                       <tr>
-                                          <td>{{ $srNo++ }}</td>
+                                          <td>{{ $srNo++ }}.</td>
                                           <td>{{ $item->item_name }}</td>
                                           <td>{{ $item->quantity }}</td>
                                           <td>{{ $item->unit_name }}</td>
@@ -329,8 +396,8 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
           <hr />
 
           <div class="row mb-3">
-                    <label class="col-6 form-label">Select Location</label>
-                    <div class="col-6">
+                    <label class="col-md-6 col-sm-12 col-lg-6 form-label">Select Location</label>
+                    <div class="col-md-6 col-sm-12 col-lg-6">
                         <select class="form-select select2" name="location_id"
                             data-placeholder="Select Location" id="locationSelect">
                             <option value="">Select Location</option>
@@ -343,8 +410,8 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
 
 
           <div class="row mb-3">
-              <label class="col-6 form-label">Select Category</label>
-              <div class="col-6">
+              <label class="col-md-6 col-sm-12 col-lg-6 form-label">Select Category</label>
+              <div class="col-md-6 col-sm-12 col-lg-6">
                   <select class="form-select select2" name="category"
                       data-placeholder="Select Category">
                       <option value="">Select Category</option>
@@ -357,8 +424,8 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
 
 
           <div class="row mb-3">
-            <label class="form-label col-6">Item Name</label>
-            <div class="col-6">
+            <label class="form-label col-md-6 col-sm-12 col-lg-6">Item Name</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
               <input
                 type="text"
                 class="form-control"
@@ -368,8 +435,8 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
             </div>
           </div>
           <div class="row mb-3">
-            <label class="form-label col-6">Quantity</label>
-            <div class="col-6">
+            <label class="form-label col-md-6 col-sm-12 col-lg-6">Quantity</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
               <input
                 type="text"
                 class="form-control"
@@ -380,8 +447,8 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
           </div>
 
           <div class="row mb-3">
-              <label class="col-6 form-label">Select Unit</label>
-              <div class="col-6">
+              <label class="col-md-6 col-sm-12 col-lg-6 form-label">Select Unit</label>
+              <div class="col-md-6 col-sm-12 col-lg-6">
                   <select class="form-select select2" name="unit"
                       data-placeholder="Select Unit">
                       <option value="">Select Unit</option>
@@ -393,8 +460,8 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
           </div>
 
           <div class="row mb-3">
-            <label class="form-label col-6">Price</label>
-            <div class="col-6">
+            <label class="form-label col-md-6 col-sm-12 col-lg-6">Price</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
               <input
                 type="text"
                 class="form-control"
@@ -432,8 +499,8 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
           <input type="hidden" class="form-control" placeholder="Enter Location Name" name="edit_id" id="edit-item-id"/>
 
           <div class="row mb-3">
-            <label class="col-6 form-label">Select Location</label>
-            <div class="col-6">
+            <label class="col-md-6 col-sm-12 col-lg-6 form-label">Select Location</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
               <select class="form-select" name="location_id" id="location_id">
                 <option value="">Select Location</option>
                 @foreach ($locationsData as $locationItem)
@@ -445,8 +512,8 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
 
           <!-- Select Options -->
           <div class="row mb-3">
-            <label class="col-6 form-label">Select Category</label>
-            <div class="col-6">
+            <label class="col-md-6 col-sm-12 col-lg-6 form-label">Select Category</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
               <select class="form-select" name="category" id="category">
                 <option value="">Select Category</option>
                 @foreach ($categoryData as $categoryItem)
@@ -456,8 +523,8 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
             </div>
           </div>
           <div class="row mb-3">
-            <label class="form-label col-6">Item Name</label>
-            <div class="col-6">
+            <label class="form-label col-md-6 col-sm-12 col-lg-6">Item Name</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
               <input
                 type="text"
                 class="form-control" style="text-transform: capitalize;"
@@ -466,8 +533,8 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
             </div>
           </div>
           <div class="row mb-3">
-            <label class="form-label col-6">Quantity</label>
-            <div class="col-6">
+            <label class="form-label col-md-6 col-sm-12 col-lg-6">Quantity</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
               <input
                 type="text"
                 class="form-control"
@@ -477,8 +544,8 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
             </div>
           </div>
           <div class="row mb-3">
-            <label class="form-label col-6">Select Unit</label>
-            <div class="col-6">
+            <label class="form-label col-md-6 col-sm-12 col-lg-6">Select Unit</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
               <select class="form-select" name="unit" id="unit">
                 <option value="">Select Unit</option>
                 @foreach ($unitData as $unitItem)
@@ -488,8 +555,8 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
             </div>
           </div>
           <div class="row mb-3">
-            <label class="form-label col-6">Price</label>
-            <div class="col-6">
+            <label class="form-label col-md-6 col-sm-12 col-lg-6">Price</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
               <input
                 type="text"
                 class="form-control"
@@ -529,8 +596,8 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
           <hr />
 
                 <div class="row mb-3">
-                  <label class="col-6 form-label">Select From Location</label>
-                  <div class="col-6">
+                  <label class="col-md-6 col-sm-12 col-lg-6 form-label">Select From Location</label>
+                  <div class="col-md-6 col-sm-12 col-lg-6">
                       <select class="form-select select2" name="from_location_id"
                           data-placeholder="Select Location" id="FromLocationId">
                           <option value="">Select Location</option>
@@ -542,8 +609,8 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
                 </div>
 
                 <div class="row mb-3">
-                  <label class="col-6 form-label">Select To Location</label>
-                  <div class="col-6">
+                  <label class="col-md-6 col-sm-12 col-lg-6 form-label">Select To Location</label>
+                  <div class="col-md-6 col-sm-12 col-lg-6">
                       <select class="form-select select2" name="to_location_id"
                           data-placeholder="Select Location" id="ToLocationId">
                           <option value="">Select Location</option>
@@ -578,8 +645,8 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
             this Inventory will not recover back
           </p>
           <div class="d-flex justify-content-around mt-4 confrm">
-            <button id="cancelDeleteConfirm" class="btn br">NO</button>
-            <button id="confirmDeleteItem" class="btn">YES</button>
+            <button id="cancelDeleteConfirm" class="btn br btn_css">NO</button>
+            <button id="confirmDeleteItem" class="btn btn_css">YES</button>
           </div>
         </div>
       </div>

@@ -22,6 +22,10 @@
     transform: translateY(-50%);
     pointer-events: none;
 }
+
+.btn_css:hover{
+    color: blue;
+}
 </style>
 
 <div class="main">
@@ -183,8 +187,8 @@
 
           <!-- Select Options -->
           <!-- <div class="row mb-3">
-            <label class="col-6 form-label">Select Location</label>
-            <div class="col-6">
+            <label class="col-md-6 col-sm-12 col-lg-6 form-label">Select Location</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
               <select class="form-select" name="location">
               <option value="">Select Location</option>
               @foreach ($locationsData as $locationItem)
@@ -195,8 +199,8 @@
           </div> -->
 
           <!-- <div class="row mb-3">
-    <label class="col-6 form-label">Select Location</label>
-    <div class="col-6">
+    <label class="col-md-6 col-sm-12 col-lg-6 form-label">Select Location</label>
+    <div class="col-md-6 col-sm-12 col-lg-6">
         @foreach ($locationsData as $locationItem)
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" name="location[]" value="{{ $locationItem['id'] }}" id="location_{{ $locationItem['id'] }}">
@@ -211,8 +215,8 @@
 
           <!-- Select Options -->
           <!-- <div class="row mb-3">
-            <label class="col-6 form-label">Select Location</label>
-            <div class="col-6">
+            <label class="col-md-6 col-sm-12 col-lg-6 form-label">Select Location</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
               <select class="form-select select2" name="location[]" multiple>
                 <option value="" disabled>Select Location</option>
                 @foreach ($locationsData as $locationItem)
@@ -223,8 +227,8 @@
           </div> -->
 
       <div class="row mb-3">
-        <label class="col-6 form-label">Select Location</label>
-        <div class="col-6">
+        <label class="col-md-6 col-sm-12 col-lg-6 form-label">Select Location</label>
+        <div class="col-md-6 col-sm-12 col-lg-6">
             <select class="form-select select2" name="location[]" multiple data-placeholder="Select Location">
             <option disabled selected hidden>Select Location</option>
                 @foreach ($locationsData as $locationItem)
@@ -235,8 +239,8 @@
       </div>
 
           <div class="row mb-3">
-            <label class="form-label col-6">Select Role</label>
-            <div class="col-6">
+            <label class="form-label col-md-6 col-sm-12 col-lg-6">Select Role</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
               <select class="form-select" name="role">
               <option value="">Select Role</option>
               <!-- <option value="1">Super Admin</option> -->
@@ -246,8 +250,8 @@
             </div>
           </div>
           <div class="row mb-3">
-            <label class="form-label col-6">Enter User Name</label>
-            <div class="col-6">
+            <label class="form-label col-md-6 col-sm-12 col-lg-6">Enter User Name</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
               <input
                 type="text"
                 class="form-control"
@@ -258,8 +262,8 @@
             </div>
           </div>
           <div class="row mb-3">
-            <label class="form-label col-6">Enter Mobile Number</label>
-            <div class="col-6">
+            <label class="form-label col-md-6 col-sm-12 col-lg-6">Enter Mobile Number</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
               <input
                 type="text"
                 class="form-control"
@@ -273,8 +277,8 @@
             </div>
           </div>
           <div class="row mb-3">
-            <label class="form-label col-6">Enter Email Id</label>
-            <div class="col-6">
+            <label class="form-label col-md-6 col-sm-12 col-lg-6">Enter Email Id</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
               <input
                 type="text"
                 class="form-control"
@@ -290,8 +294,8 @@
             @endif
           </div>
           <div class="row mb-3">
-            <label class="form-label col-6">Enter password</label>
-            <div class="col-6">
+            <label class="form-label col-md-6 col-sm-12 col-lg-6">Enter password</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
               <input
                 type="text"
                 class="form-control"
@@ -333,8 +337,8 @@
 
           <!-- Select Options -->
           <!-- <div class="row mb-3">
-            <label class="col-6 form-label">Select Location</label>
-            <div class="col-6">
+            <label class="col-md-6 col-sm-12 col-lg-6 form-label">Select Location</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
               <select class="form-select" name="location" id="location">
               @foreach ($locationsData as $locationItem)
                 <option value="{{ $locationItem['id'] }}">{{ $locationItem['location'] }}</option>
@@ -345,8 +349,8 @@
 
           <!-- Select Options (with checkboxes) -->
 <!-- <div class="row mb-3">
-    <label class="col-6 form-label">Select Location</label>
-    <div class="col-6">
+    <label class="col-md-6 col-sm-12 col-lg-6 form-label">Select Location</label>
+    <div class="col-md-6 col-sm-12 col-lg-6">
         @foreach ($locationsData as $locationItem)
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" name="location[]" value="{{ $locationItem['id'] }}" 
@@ -360,8 +364,8 @@
 </div> -->
 
           <div class="row mb-3">
-            <label class="col-6 form-label">Select Location</label>
-            <div class="col-6">
+            <label class="col-md-6 col-sm-12 col-lg-6 form-label">Select Location</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
               <select class="form-select select2" name="location[]" id="location" multiple>
                 <option value="">Select Location</option>
                 @foreach ($locationsData as $locationItem)
@@ -372,8 +376,8 @@
           </div>
 
           <div class="row mb-3">
-            <label class="form-label col-6">Select Role</label>
-            <div class="col-6">
+            <label class="form-label col-md-6 col-sm-12 col-lg-6">Select Role</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
               <select class="form-select" name="role" id="role">
                 <option value="">Select Role</option>
                 <!-- <option value="1">Super Admin</option> -->
@@ -383,8 +387,8 @@
             </div>
           </div>
           <div class="row mb-3">
-            <label class="form-label col-6">Enter User Name</label>
-            <div class="col-6">
+            <label class="form-label col-md-6 col-sm-12 col-lg-6">Enter User Name</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
               <input
                 type="text"
                 class="form-control"
@@ -395,8 +399,8 @@
             </div>
           </div>
           <div class="row mb-3">
-            <label class="form-label col-6">Enter Mobile Number</label>
-            <div class="col-6">
+            <label class="form-label col-md-6 col-sm-12 col-lg-6">Enter Mobile Number</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
               <input
                 type="text"
                 class="form-control"
@@ -406,8 +410,8 @@
             </div>
           </div>
           <div class="row mb-3">
-            <label class="form-label col-6">Enter Email Id</label>
-            <div class="col-6">
+            <label class="form-label col-md-6 col-sm-12 col-lg-6">Enter Email Id</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
               <input
                 type="text"
                 class="form-control"
@@ -417,8 +421,8 @@
             </div>
           </div>
           <div class="row mb-3">
-            <label class="form-label col-6">Enter password</label>
-            <div class="col-6">
+            <label class="form-label col-md-6 col-sm-12 col-lg-6">Enter password</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
               <input
                 type="text"
                 class="form-control"
@@ -451,8 +455,8 @@
             this user wil not recover back
           </p>
           <div class="d-flex justify-content-around mt-4 confrm">
-            <button id="cancelDelete" class="btn br">NO</button>
-            <button id="confirmDeleteUser" class="btn">YES</button>
+            <button id="cancelDelete" class="btn br btn_css">NO</button>
+            <button id="confirmDeleteUser" class="btn btn_css">YES</button>
           </div>
         </div>
       </div>
