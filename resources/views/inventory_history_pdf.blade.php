@@ -58,6 +58,26 @@
       </div>
       <br>
       <br>
+
+      <div style="width: 100%;">
+         <div>
+<center>
+            <b>{{ session()->get('user_name') }}</b>
+            @if(session()->get('user_role') =='1')
+         ( Super Admin )
+         @elseif(session()->get('user_role') =='2')
+         ( Admin )
+         @elseif(session()->get('user_role') =='3')
+         ( Night Manager )
+         @endif
+         <center>
+         </div>
+         <!-- <div style="float: right;">
+        
+         </div> -->
+      </div>
+      <br>
+      <br>
       <table>
          <thead>
             <tr>

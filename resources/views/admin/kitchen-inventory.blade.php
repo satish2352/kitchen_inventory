@@ -247,7 +247,7 @@
       </div>
    </div>
 </div>
-<!-- <script>
+<script>
    document.getElementById('location_selected').addEventListener('change', function() {
        var locationId= this.value;
        if(locationId !='')
@@ -255,7 +255,7 @@
        document.getElementById('locationForm').submit();
    }
    });
-   </script> -->
+   </script>
 @extends('layouts.footer')
 <!-- <script>
    $(document).ready(function () {
