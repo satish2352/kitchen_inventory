@@ -49,7 +49,7 @@
          </center>
       </div>
       <div style="width: 100%;">
-         <div style="float: left;">
+         <div style="float: left;">a
             Location: {{ $location }}
          </div>
          <div style="float: right;">
@@ -58,23 +58,19 @@
       </div>
       <br>
       <br>
-
       <div style="width: 100%;">
-         <div>
-<center>
+         <div style="float: left;">
             <b>{{ session()->get('user_name') }}</b>
-            @if(session()->get('user_role') =='1')
-         ( Super Admin )
-         @elseif(session()->get('user_role') =='2')
-         ( Admin )
-         @elseif(session()->get('user_role') =='3')
-         ( Night Manager )
-         @endif
-         <center>
          </div>
-         <!-- <div style="float: right;">
-        
-         </div> -->
+         <div style="float: right;">
+            @if(session()->get('user_role') =='1')
+            Super Admin
+            @elseif(session()->get('user_role') =='2')
+            Admin
+            @elseif(session()->get('user_role') =='3')
+            Night Manager
+            @endif
+         </div>
       </div>
       <br>
       <br>
