@@ -2,6 +2,22 @@
 @include('layouts.sidebar')
 
 @yield('content')
+
+<style>
+    @media screen and (max-width: 768px) {
+    .table-responsive {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+        width: 100%;
+        min-width: 600px; /* Adjust as per your table content */
+    }
+}
+</style>
 <div class="main">
     <div class="inner-top container-fluid p-3">
         <!-- Top Bar -->
@@ -77,7 +93,7 @@
                 </div>
 
                 <!-- Table -->
-                <div class="table-responsive">
+                <div class="table-responsive" style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
                     <table class="table table-striped">
                         <!-- Table Head -->
                         <thead class="table-header">

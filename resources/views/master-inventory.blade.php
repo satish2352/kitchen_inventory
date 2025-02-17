@@ -120,7 +120,48 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
   }
 }
 
+    @media screen and (max-width: 768px) {
+    .table-responsive {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
 
+    table {
+        width: 100%;
+        min-width: 600px; /* Adjust as per your table content */
+    }
+}
+
+@media (max-width: 472px) {
+    .pagination ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 0;
+    }
+
+    .pagination ul li {
+        margin: 2px;
+    }
+
+    .pagination ul li:nth-child(n+1) {
+        margin-top: 15px;
+    }
+
+    .pagination ul li a,
+    .pagination ul li span {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+
+    .pagination ul li.active a {
+        background-color: #007bff;
+        color: #fff;
+        border-color: #007bff;
+    }
+}
 </style>
 
 <div class="main">
@@ -245,7 +286,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
                     </div>
 
                     <!-- Table -->
-                    <div class="table-responsive">
+                    <div class="table-responsive" style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
                         <table class="table table-striped">
                             <!-- Table Head -->
                             <thead class="table-header">
@@ -283,7 +324,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
 
                     <!-- Pagination for this category -->
                     <div class="d-flex justify-content-center">
-                    <div class="col-md-8">
+                    <div class="col-md-8 d-flex justify-content-center">
                                                     <div class="pagination">
                                                         @if ($items->lastPage() > 1)
                                                             <ul class="pagination">

@@ -3,6 +3,25 @@
 
 @yield('content')
 
+<style>
+    .submit_inventory_css{
+        margin-top: -12px;
+    }
+
+    @media screen and (max-width: 768px) {
+    .table-responsive {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+        width: 100%;
+        min-width: 600px; /* Adjust as per your table content */
+    }
+}
+</style>
 <div class="main">
     <div class="inner-top container-fluid p-3">
         <!-- Top Bar -->
@@ -82,7 +101,7 @@
                 </div>
 
                 <!-- Table -->
-                <div class="table-responsive">
+                <div class="table-responsive" style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
                     <table class="table table-striped">
                         <!-- Table Head -->
                         <thead class="table-header">
@@ -120,7 +139,7 @@
                 </div>
             </div>
             @endforeach
-            <div class="text-center mt-3">
+            <div class="text-center submit_inventory_css">
             <button type="submit" class="btn btn-success">Submit Inventory</button>
         </div>
         @else

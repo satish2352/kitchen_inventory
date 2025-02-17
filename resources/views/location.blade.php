@@ -22,6 +22,7 @@
 /* Pagination styles */
 .pagination {
     margin: 20px 0;
+    margin-left:17px;
 }
 
 .pagination ul {
@@ -70,6 +71,35 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
 
 .btn_css:hover{
     color: blue;
+}
+
+@media (max-width: 472px) {
+    .pagination ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 0;
+    }
+
+    .pagination ul li {
+        margin: 2px;
+    }
+
+    .pagination ul li:nth-child(n+1) {
+        margin-top: 15px;
+    }
+
+    .pagination ul li a,
+    .pagination ul li span {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+
+    .pagination ul li.active a {
+        background-color: #007bff;
+        color: #fff;
+        border-color: #007bff;
+    }
 }
 </style>
 <div class="main">
