@@ -152,30 +152,27 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
    <div class="user-request">
       @if(!empty($category_data) && count($category_data) > 0)
       <div class="container-fluid px-3" id="search-results">
-         @foreach ($category_data as $item)
-         <!-- User Request Box -->
-         <div class="user-request-box p-3 shadow rounded mb-2">
-            <!-- Top Row -->
-            <div class="d-flex justify-content-between align-items-center">
-               <!-- Left Section -->
-               <div>
-                  <div class="d-flex flex-column">
-                     <span class="act-user me-2">{{ $loop->iteration }}</span>
-                     <span class="act-user me-2">{{ $item->category_name }}</span>
-                  </div>
-                  <p class="mb-1 activity-p">{{ $item->created_at->format('Y-m-d') }}
-                  </p>
-               </div>
-               <!-- Right Section -->
-               <div>
-                  <button class="btn btn-edit text-center shadow-sm edit-btn-category" data-id="{{ $item->id }}">
-                  <i class="bi bi-pencil-square"></i> <br/>Edit
-                  </button>
-               </div>
+    @foreach ($category_data as $item)
+    <!-- User Request Box -->
+    <div class="user-request-box p-3 shadow rounded mb-2">
+        <!-- Top Row -->
+        <div class="d-flex justify-content-between align-items-center">
+            <!-- Left Section -->
+            <div class="d-flex align-items-center gap-2">
+                <span class="act-user">{{ ($category_data->currentPage() - 1) * $category_data->perPage() + $loop->iteration }})</span>
+                <span class="act-user">{{ $item->category_name }}</span>
             </div>
-         </div>
-         @endforeach
-      </div>
+            <!-- Right Section -->
+            <div>
+                <button class="btn btn-edit text-center shadow-sm edit-btn-category" data-id="{{ $item->id }}">
+                    <i class="bi bi-pencil-square"></i> <br/>Edit
+                </button>
+            </div>
+        </div>
+    </div>
+    @endforeach
+</div>
+
       <div class="mt-3">
          <div class="col-md-8">
             <div class="pagination">
@@ -554,7 +551,8 @@ document.getElementById('editPopupCategory').style.display = "flex";
    $(document).ready(function() {
     // alert('kkkkkkkkkkkkkk');
     // Open the popup when Edit button is clicked
-    $('.edit-btn-category').on('click', function() {
+    // $('.edit-btn-category').on('click', function() {
+      $(document).on('click', '.edit-btn-category', function() {
       var locationId = $(this).data('id'); // Get the location ID from the button
       
       // AJAX request to get location data

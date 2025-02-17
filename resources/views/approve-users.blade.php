@@ -48,7 +48,7 @@
      style="background-color:red; cursor:pointer; padding:8px 12px; border-radius:5px;"
      role="button" dataId="{{ $item->id }}">
     <i class="bi bi-check-circle-fill text-success me-1"></i>
-    <span style="color:white">Unapprove</span>
+    <span style="color:white">Unapproved</span>
 </div>
                 @endif  
                 </div>

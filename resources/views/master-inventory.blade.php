@@ -61,6 +61,24 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
     display: none; 
 }
 
+ /* Make table scrollable on small screens */
+    .table-container {
+        overflow-x: auto;
+        width: 100%;
+    }
+
+    /* Ensure table does not wrap text in cells */
+    .table-responsive table {
+        white-space: nowrap;
+    }
+
+    /* Optional: Add shadow and border for better visibility */
+    .table-responsive {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 5px;
+        background: #fff;
+    }
 .btn_css:hover{
         color: blue;
     }
@@ -838,7 +856,9 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
  $(document).ready(function() {
   // alert('kkkkkkkkkkkkkk');
   // Open the popup when Edit button is clicked
-  $('.edit-btn-item').on('click', function() {
+  // $('.edit-btn-item').on('click', function() {
+    $(document).on('click', '.edit-btn-item', function() {
+
     var locationId = $(this).data('id'); // Get the location ID from the button
     
     // AJAX request to get location data
