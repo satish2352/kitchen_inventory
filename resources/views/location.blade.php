@@ -447,7 +447,8 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
 <script>
    $(document).ready(function() {
        // Open the popup when Edit button is clicked
-       $('.edit-btn').on('click', function() {
+    //    $('.edit-btn').on('click', function() {
+        $(document).on('click', '.edit-btn', function() {
            var locationId = $(this).data('id'); // Get the location ID from the button
    
            // AJAX request to get location data

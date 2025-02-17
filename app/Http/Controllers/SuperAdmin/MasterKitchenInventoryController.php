@@ -215,6 +215,7 @@ class MasterKitchenInventoryController extends Controller {
             'master_kitchen_inventory.item_name',
             'master_kitchen_inventory.unit',
             'master_kitchen_inventory.price',
+            'master_kitchen_inventory.quantity',
             'master_kitchen_inventory.created_at',
             'category.category_name',
             'units.unit_name'

@@ -428,7 +428,9 @@ s unit? <br />
    $(document).ready(function() {
     // alert('kkkkkkkkkkkkkk');
     // Open the popup when Edit button is clicked
-    $('.edit-btn-unit').on('click', function() {
+   //  $('.edit-btn-unit').on('click', function() {
+      $(document).on('click', '.edit-btn-unit', function() {
+
       var locationId = $(this).data('id'); // Get the location ID from the button
       
       // AJAX request to get location data

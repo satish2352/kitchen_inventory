@@ -521,7 +521,8 @@ document.getElementById('editPopupCategory').style.display = "flex";
    $(document).ready(function() {
     // alert('kkkkkkkkkkkkkk');
     // Open the popup when Edit button is clicked
-    $('.edit-btn-category').on('click', function() {
+    // $('.edit-btn-category').on('click', function() {
+      $(document).on('click', '.edit-btn-category', function() {
       var locationId = $(this).data('id'); // Get the location ID from the button
       
       // AJAX request to get location data
