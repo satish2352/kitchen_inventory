@@ -182,7 +182,8 @@
 
 <script>
     document.getElementById('location_selected').addEventListener('change', function() {
-        var locationId= ('#location_selected').val();
+        // var locationId= ('#location_selected').val();
+        var locationId= this.value;
         if(locationId !='')
     {
         document.getElementById('locationForm').submit();

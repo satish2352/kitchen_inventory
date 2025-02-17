@@ -129,7 +129,10 @@
                                     <td>{{ $item['masterQuantity'] }}</td>
                                     <td>{{ $item['item_name'] }}</td>
                                     <td>
-                                        <input type="text" name="quantity[]" class="form-control qty-input-add" style="text-align: center;" placeholder="QTY" style="justify-self: center;">
+                                        <!-- <input type="text" name="quantity[]" class="form-control qty-input-add" style="text-align: center;" placeholder="QTY" style="justify-self: center;"> -->
+                                        <input type="text" name="quantity[]" class="form-control qty-input-add"
+       style="text-align: center;" placeholder="QTY"
+       inputmode="decimal" pattern="[0-9]+(\.[0-9]+)?" onkeypress="return isNumberKey(event)">
                                         <span class="error-message text-danger"></span>
                                     
                                     </td>
@@ -195,7 +198,10 @@
                               <td>{{ $item['masterQuantity'] }}</td>
                               <td>{{ $item['item_name'] }}</td>
                               <td>
-                                 <input type="text" name="quantity[]" class="form-control qty-input-edit" style="text-align: center;" value="{{ $item['quantity'] }}"  placeholder="QTY" />
+                                 <!-- <input type="text" name="quantity[]" class="form-control qty-input-edit" style="text-align: center;" value="{{ $item['quantity'] }}"  placeholder="QTY" /> -->
+                                 <input type="text" name="quantity[]" class="form-control qty-input-add" value="{{ $item['quantity'] }}"
+       style="text-align: center;" placeholder="QTY"
+       inputmode="decimal" pattern="[0-9]+(\.[0-9]+)?" onkeypress="return isNumberKey(event)">
                                  <span class="error-message text-danger"></span>
                               </td>
                               <td>{{ $item['unit_name'] }}</td>
@@ -400,4 +406,14 @@
            }
        });
    });
+</script>
+
+<script>
+function isNumberKey(evt) {
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+}
 </script>
