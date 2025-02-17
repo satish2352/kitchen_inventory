@@ -41,7 +41,7 @@
         <div class="shopping-list-row d-flex align-items-center p-3">
             <!-- Search Input -->
             <div class="input-group search-input">
-                <input type="text" class="form-control" placeholder="Search..." aria-label="Search" />
+                <input type="text" class="form-control" placeholder="Search..." aria-label="Search" id="search-query"/>
                 <button class="btn btn-srh" type="button">
                     <i class="bi bi-search"></i>
                 </button>
@@ -83,6 +83,8 @@
             @endif
 
 <!-- first if start -->
+<div class="border-box mb-4" id="search-results">
+ 
             @if(session()->get('location_selected_id') !='')
             <!-- <?php //print_r($InventoryData); die;?> -->
             <!-- second if start -->
@@ -94,7 +96,6 @@
             @if (!empty($InventoryData['data_location_wise_inventory']) && count($InventoryData['data_location_wise_inventory']) > 0)
             @foreach ($InventoryData['data_location_wise_inventory'] as $category => $items)
             <!-- Border Box -->
-            <div class="border-box mb-4" id="search-results">
                 <!-- Header Title -->
                 <div class="grid-header text-center">
                     <h6 class="m-0 text-white">{{ $category }}</h6>
@@ -249,10 +250,10 @@
                 <div class="grid-header text-center">
                     <h6 class="m-0 text-white">Please Select Location First</h6>
                 </div>
-            </div>    
-            <!-- first if end and else ens -->
+            
            @endif
-
+           </div>    
+           <!-- first if end and else ens -->
         </div>
     </div>
     <!-- Delete Confirmation Popup -->
@@ -424,4 +425,38 @@
   });
 });
 </script>  -->
+
+<script>
+   $(document).ready(function() {
+     var originalData = $('#search-results').html();
+       // Bind keyup event to the search input
+       $('#search-query').on('keyup', function() {
+           var query = $(this).val().trim();  // Get the value entered in the search box
+   
+           if (query.length > 0) {
+               $.ajax({
+                   url: "{{ route('search-update-kitchen-inventory-manager') }}",  // Define your search route here
+                   method: "GET",
+                   data: { query: query },
+                   success: function(response) {
+                     if(response.length > 0)
+                   {
+                       // Clear the previous results
+                       $('#search-results').html('');
+                       
+                       // Append the new search results
+                       $('#search-results').html(response);
+                   }else{
+                       $('#search-results').html('No Data Found');
+                   }
+                   }
+               });
+           } else {
+               // Clear the results if input is empty
+               // $('#search-results').html('');
+               $('#search-results').html(originalData);
+           }
+       });
+   });
+</script>
 @extends('layouts.footer')

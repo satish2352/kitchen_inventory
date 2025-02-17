@@ -1,39 +1,5 @@
 
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("installPWA").click();
-  });
-</script>
 
-
-<script>
-  let deferredPrompt;
-
-  window.addEventListener("beforeinstallprompt", (event) => {
-    event.preventDefault();
-    deferredPrompt = event; // Store the event for later use
-
-    // Enable the install button
-    document.getElementById("installPWA").style.display = "block";
-  });
-
-  document.getElementById("installPWA").addEventListener("click", () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt(); // Show the install prompt
-      deferredPrompt.userChoice.then((choiceResult) => {
-        if (choiceResult.outcome === "accepted") {
-          console.log("User accepted the install");
-        } else {
-          console.log("User dismissed the install");
-        }
-        deferredPrompt = null; // Reset so it doesn't prompt again
-      });
-    } 
-    // else {
-    //   alert("Install prompt is not available right now.");
-    // }
-  });
-</script>
 
 
 
@@ -193,12 +159,12 @@ document.getElementById('editPopup').style.display = "flex";
     });
 </script>
 
-<script>
+<!-- <script>
     document.getElementById("closePopup").addEventListener("click", function(event) {
         event.preventDefault(); // Prevent default link behavior
         document.getElementById("addPopup").style.display = "none"; // Hide the popup
     });
-</script>
+</script> -->
 
 
 
