@@ -125,6 +125,11 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
 .btn_css:hover{
     color: blue;
 }
+
+
+.select2-container--default .select2-selection--multiple .select2-selection__clear {
+    margin-right: 25px !important;
+}
 </style>
 <div class="main">
    <div class="inner-top container-fluid p-3">
