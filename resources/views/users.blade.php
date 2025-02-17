@@ -2,85 +2,129 @@
 @include('layouts.sidebar')
 @yield('content')
 <style>
-   .select2 {
-   width: 100% !important;
-   }
-   .select2-container--default .select2-selection--multiple {
-   border: var(--bs-border-width) solid var(--bs-border-color);
-   border-radius: var(--bs-border-radius);
-   }
-   .select2-container--default .select2-selection--multiple:after {
-   content: "⌄";
-   font-family: FontAwesome;
-   font-size: 16px;
-   position: absolute;
-   right: 10px;
-   top: 50%;
-   transform: translateY(-50%);
-   pointer-events: none;
-   }
-   /* Pagination styles */
-   .pagination {
-   margin: 20px 0;
-   }
-   .pagination ul {
-   list-style-type: none;
-   padding: 0;
-   margin: 0;
-   }
-   .pagination ul li {
-   display: inline;
-   margin-right: 5px;
-   }
-   .pagination ul li a,
-   .pagination ul li span {
-   padding: 5px 10px;
-   border: 1px solid #ccc;
-   text-decoration: none;
-   color: #333;
-   }
-   .pagination ul li.active a {
-   background-color: #007bff;
-   color: #fff;
-   border-color: #007bff;
-   }
-   .pagination ul li.disabled span {
-   color: #ccc;
-   }
-   img, svg {
-   vertical-align: middle;
-   width: 2%;
-   }
-   div.dataTables_wrapper div.dataTables_info {
-   display: none;
-   }
-   div.dataTables_wrapper div.dataTables_paginate ul.pagination{
-   display: none; 
-   }
-   .pagination .flex .flex{
-   display: none; 
-   }
-   @media only screen and (min-width: 373px) and (max-width: 544px) {
-   .added_by_css {
-   margin-top: 2.5rem;
-   margin-bottom: 0.3rem;
-   margin-left: -17.5rem !important;
-   }
-   }
-   @media only screen and (min-width: 278px) and (max-width: 282px) {
-   .added_by_css {
-   margin-top: 6rem;
-   margin-bottom: 0.2rem;
-   margin-left: -11.5rem !important;
-   }
-   .user_name_css{
-   word-break: break-word;
-   max-width: 100%;
-   }
-   }
-   .btn_css:hover{
-   color: blue;
-   }
+    .select2 {
+        width: 100% !important;
+    }
+
+    .select2-container--default .select2-selection--multiple {
+        border: var(--bs-border-width) solid var(--bs-border-color);
+        border-radius: var(--bs-border-radius);
+    }
+
+    .select2-container--default .select2-selection--multiple:after {
+        content: "⌄";
+        font-family: FontAwesome;
+        font-size: 16px;
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+    }
+
+
+/* Pagination styles */
+.pagination {
+    margin: 20px 0;
+    margin-left:17px;
+}
+
+.pagination ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.pagination ul li {
+    display: inline;
+    margin-right: 5px;
+}
+
+.pagination ul li a,
+.pagination ul li span {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    text-decoration: none;
+    color: #333;
+}
+
+.pagination ul li.active a {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+.pagination ul li.disabled span {
+    color: #ccc;
+}
+
+img, svg {
+    vertical-align: middle;
+    width: 2%;
+}
+
+div.dataTables_wrapper div.dataTables_info {
+    display: none;
+}
+div.dataTables_wrapper div.dataTables_paginate ul.pagination{
+    display: none; 
+}
+.pagination .flex .flex{
+    display: none; 
+}
+
+@media (max-width: 472px) {
+    .pagination ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 0;
+    }
+
+    .pagination ul li {
+        margin: 2px;
+    }
+
+    .pagination ul li:nth-child(n+1) {
+        margin-top: 15px;
+    }
+
+    .pagination ul li a,
+    .pagination ul li span {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+
+    .pagination ul li.active a {
+        background-color: #007bff;
+        color: #fff;
+        border-color: #007bff;
+    }
+}
+
+    @media only screen and (min-width: 373px) and (max-width: 544px) {
+    .added_by_css {
+        margin-top: 2.5rem;
+        margin-bottom: 0.3rem;
+        margin-left: -17.5rem !important;
+    }
+    }
+
+    @media only screen and (min-width: 278px) and (max-width: 282px) {
+    .added_by_css {
+        margin-top: 6rem;
+        margin-bottom: 0.2rem;
+        margin-left: -11.5rem !important;
+    }
+    .user_name_css{
+        word-break: break-word;
+        max-width: 100%;
+    }
+    }
+
+.btn_css:hover{
+    color: blue;
+}
 </style>
 <div class="main">
    <div class="inner-top container-fluid p-3">

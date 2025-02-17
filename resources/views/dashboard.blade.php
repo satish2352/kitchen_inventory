@@ -6,7 +6,7 @@
 <style>
    @media  (max-width: 440px) {
       .icon-box {
-      height: 63vh;
+      height: 31vh;
    }
    }
 
