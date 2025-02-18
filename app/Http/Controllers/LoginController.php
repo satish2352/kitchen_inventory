@@ -52,7 +52,6 @@ class LoginController extends Controller {
         try {
             // Fetch user details from the database
             $get_user = UsersData::where( 'email', $request[ 'email' ] )->first();
-            dd( $get_user );
             // dd( $get_user[ 'password' ] );
             if ( $get_user ) {
                 // The username exists, now verify the password
