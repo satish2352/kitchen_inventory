@@ -58,20 +58,17 @@ class DashboardController extends Controller
 
         $MasterInventoryCount = MasterKitchenInventory::where('is_deleted', '0')
         ->distinct('location_id')
-        ->whereIn('location_id', $userLocation)
         ->count('location_id');
 
     // dd($MasterInventoryCount);
 
         $ActivityLogCount = ActivityLog::count();
 
-        $Count = LocationWiseInventory::selectRaw('DATE(created_at) as date, COUNT(*) as count')
-        ->where('is_deleted', '0')
-        ->whereIn('location_id', $userLocation)
-        ->groupBy('date')
-        ->get();
+        $LocationWiseInventoryCount = LocationWiseInventory::select('DATE(created_at) as date')
+        ->distinct('location_id')
+        ->count('location_id');
+
         
-        $LocationWiseInventoryCount = $Count->count();
         // dd($LocationWiseInventoryCount);
 
         $CategoryCount = Category::where('is_deleted', '0')->count();

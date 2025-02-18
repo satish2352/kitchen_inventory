@@ -146,7 +146,7 @@
             @endforeach
             <div class="text-center submit_inventory_css">
             <button type="submit" class="btn btn-success">Submit Inventory</button>
-        </div>
+            </div>
         @else
         <div class="border-box mb-4" id="search-results">
                 <!-- Header Title -->

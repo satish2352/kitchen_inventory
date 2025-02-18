@@ -162,8 +162,8 @@
           <hr />
 
                 <div class="row mb-3">
-                    <label class="col-6 form-label">Select Location</label>
-                    <div class="col-6">
+                    <label class="col-md-6 col-sm-12 col-lg-6 form-label">Select Location</label>
+                    <div class="col-md-6 col-sm-12 col-lg-6">
                         <select class="form-select select2" name="location_id"
                             data-placeholder="Select Location" id="locationSelect">
                             <option value="">Select Location</option>
@@ -176,8 +176,8 @@
 
                 <!-- Date Picker Field -->
                 <div class="row mb-3">
-                    <label class="col-6 form-label">Select Date</label>
-                    <div class="col-6">
+                    <label class="col-md-6 col-sm-12 col-lg-6 form-label">Select Date</label>
+                    <div class="col-md-6 col-sm-12 col-lg-6">
                         <input type="date" class="form-control" name="inventory_date" id="datePicker" required />
                     </div>
                 </div>

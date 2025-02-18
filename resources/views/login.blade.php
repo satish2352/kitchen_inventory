@@ -432,3 +432,19 @@ document.addEventListener("DOMContentLoaded", function () {
     // }
   });
 </script>
+
+<script>
+  if ('getInstalledRelatedApps' in navigator) {
+  navigator.getInstalledRelatedApps().then((apps) => {
+    if (apps.length > 0) {
+      $('.pwa-button-new').css('display', 'none');
+    } else {
+      console.log('PWA is NOT installed.');
+    }
+  });
+} else {
+  console.log('getInstalledRelatedApps API is not supported.');
+}
+
+
+</script>

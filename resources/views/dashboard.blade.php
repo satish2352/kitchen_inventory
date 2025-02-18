@@ -130,7 +130,7 @@
                 </div>
                <h4 class="mt-2">{{ $return_data['LocationWiseInventoryCount'] }}</h4> <!-- Moved below the icon -->
                 <div class="icon-divider"></div>
-                <span class="mt-3">kitchen Inventory</span>
+                <span class="mt-3">For Update Kitchen Inventory</span>
              </div>
              </a>
           </div>
@@ -143,7 +143,7 @@
                 </div>
                <h4 class="mt-2">0</h4> <!-- Moved below the icon -->
                 <div class="icon-divider"></div>
-                <span class="mt-3">kitchen Inventory</span>
+                <span class="mt-3">For Update Kitchen Inventory</span>
              </div>
              </a>
           </div>
@@ -317,7 +317,7 @@
                <div class="icon-circle mb-3">
                      <i class="bi bi-share-fill"></i>
                </div>
-               <h4 class="mt-2">0</h4> <!-- Moved below the icon -->
+               <h4 class="mt-2">0</h4>
                <div class="icon-divider"></div>
                <span class="mt-3">Shopping List</span>
             </div>
@@ -335,7 +335,7 @@
                 </div>
                <h4 class="mt-2">{{ $return_data['LocationWiseInventoryCount'] }}</h4> <!-- Moved below the icon -->
                 <div class="icon-divider"></div>
-                <span class="mt-3">kitchen Inventory</span>
+                <span class="mt-3">For Update Kitchen Inventory</span>
              </div>
              </a>
           </div>
@@ -348,7 +348,7 @@
                 </div>
                <h4 class="mt-2">0</h4> <!-- Moved below the icon -->
                 <div class="icon-divider"></div>
-                <span class="mt-3">kitchen Inventory</span>
+                <span class="mt-3">For Update Kitchen Inventory</span>
              </div>
              </a>
           </div>
@@ -411,7 +411,7 @@
                 </div>
                <h4 class="mt-2">{{ $return_data['LocationWiseInventoryCount'] }}</h4> <!-- Moved below the icon -->
                 <div class="icon-divider"></div>
-                <span class="mt-3">kitchen Inventory</span>
+                <span class="mt-3">For Update Kitchen Inventory</span>
              </div>
              </a>
           </div>
@@ -424,7 +424,7 @@
                 </div>
                <h4 class="mt-2">0</h4> <!-- Moved below the icon -->
                 <div class="icon-divider"></div>
-                <span class="mt-3">kitchen Inventory</span>
+                <span class="mt-3">For Update Kitchen Inventory</span>
              </div>
              </a>
           </div>
