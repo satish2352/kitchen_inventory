@@ -6,18 +6,24 @@
 <style>
    @media  (min-width: 376px) and (max-width: 440px) {
       .icon-box {
-      height: 53vh;
+      height: 25vh;
    }
    }
 
    @media (max-width: 375px) {
       .icon-box {
-      height: 53vh;
+      height: 30vh;
    }
    }
 
    .icon-box {
    min-height: 205px !important;
+   }
+
+   @media  (min-width: 278px) and (max-width: 282px) {
+      .icon-box {
+      height: 35vh;
+   }
    }
 </style>
 
