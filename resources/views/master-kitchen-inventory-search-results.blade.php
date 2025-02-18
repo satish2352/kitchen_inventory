@@ -1,3 +1,5 @@
+@if(session()->get('location_selected_id') != '')
+@if (!empty($user_data) && count($user_data) > 0)
 @foreach ($user_data as $category => $items)
         <!-- Border Box -->
         <div class="border-box">
@@ -49,3 +51,21 @@
           </div>
         </div>
         @endforeach
+
+        @else
+            <div class="border-box mb-4" id="search-results">
+                <!-- Header Title -->
+                <div class="grid-header text-center">
+                    <h6 class="m-0 text-white">No Data Found</h6>
+                </div>
+            </div>  
+        @endif
+
+    @else
+        <div class="border-box mb-4" id="search-results">
+            <!-- Header Title -->
+            <div class="grid-header text-center">
+                <h6 class="m-0 text-white">Please Select Location First</h6>
+            </div>
+        </div>    
+    @endif
