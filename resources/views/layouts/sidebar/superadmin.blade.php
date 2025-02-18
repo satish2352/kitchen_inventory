@@ -36,32 +36,18 @@
           </div>
        </div>
        <div class="drawer-nav">
-          <a href="{{ route('/dashboard') }}" class="active"
-             ><i class="bi bi-house-door-fill"></i> Dashboard</a>
-          <a href="{{ route('list-approve-users') }}"
-             ><i class="bi bi-person-plus-fill"></i> Approve Users</a>
-          <a href="{{ route('get-submited-shopping-list-super-admin') }}"
-             ><i class="bi bi-share-fill"></i> Shopping List</a>
-          <a href="{{ route('get-activity-log') }}"><i class="bi bi-book"></i> Activity</a>
-          <a href="{{ route('list-users') }}"><i class="bi bi-person"></i> Manage User</a>
-          <a href="{{ route('list-locations') }}"
-             ><i class="bi bi-geo-alt-fill"></i>Manage Location</a>
-          <a href="{{ route('list-category') }}"
-             ><i class="bi bi-tag-fill"></i> Manage Category</a>
-          <a href="{{ route('list-units') }}"
-             ><i class="bi bi-kanban"></i> Manage Units</a>
-             <a href="{{ route('list-items') }}"
-             ><i class="bi bi-card-checklist"></i> Master Inventory</a>
-          <a href="{{ route('get-location-wise-inventory-sa') }}"
-             ><i class="bi bi-bag-plus-fill"></i>Update Kitchen Inventory</a>
-          <a href="{{ route('get-inventory-history-view') }}"
-             ><i class="bi bi-bag-plus-fill"></i>Inventory History</a>
-          
-          <!-- <a href="get-submited-shopping-list-super-admin"
-             ><i class="bi bi-cart3"></i> Submit Shopping list</a> -->
-
-             <!-- <a href="{{ route('logout') }}"
-             ><i class="bi bi-cart3"></i> Log Out</a> -->
+          <a href="{{ route('/dashboard') }}" class="active"><i class="bi bi-house-door-fill"></i> Dashboard</a>
+             <a href="{{ route('list-locations') }}"><i class="bi bi-geo-alt-fill"></i>Manage Location</a>
+             <a href="{{ route('list-units') }}"><i class="bi bi-kanban"></i> Manage Units</a>
+             <a href="{{ route('list-category') }}"><i class="bi bi-tag-fill"></i> Manage Category</a>
+             <a href="{{ route('list-items') }}"><i class="bi bi-card-checklist"></i> Master Inventory</a>
+             <a href="{{ route('list-users') }}"><i class="bi bi-person"></i> Manage User</a>
+             <a href="{{ route('list-approve-users') }}"><i class="bi bi-person-plus-fill"></i> Approve Users</a>
+             <a href="{{ route('get-activity-log') }}"><i class="bi bi-book"></i> Activity</a>
+             <a href="{{ route('get-location-wise-inventory-sa') }}"><i class="bi bi-bag-plus-fill"></i>Update Kitchen Inventory</a>
+             <a href="{{ route('get-submited-shopping-list-super-admin') }}"><i class="bi bi-share-fill"></i> Shopping List</a>
+             <a href="{{ route('get-inventory-history-view') }}"><i class="bi bi-bag-plus-fill"></i>Inventory History</a>
+       
              <a href="javascript:void(0);" id="logoutbtn">
                <i class="bi bi-box-arrow-right"></i> Log Out
             </a>
