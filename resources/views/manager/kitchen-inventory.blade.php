@@ -199,7 +199,7 @@
                                     <td>{{ $item['item_name'] }}</td>
                                     <td>
                                         <!-- <input type="text" name="quantity[]" class="form-control qty-input-edit" style="text-align: center;" value="{{ $item['quantity'] }}"  placeholder="QTY" /> -->
-                                        <input type="text" name="quantity[]" class="form-control qty-input-add"  value="{{ $item['quantity'] }}"
+                                        <input type="text" name="quantity[]" class="form-control qty-input-edit"  value="{{ $item['quantity'] }}"
        style="text-align: center;" placeholder="QTY"
        inputmode="decimal" pattern="[0-9]+(\.[0-9]+)?" onkeypress="return isNumberKey(event)">
 
