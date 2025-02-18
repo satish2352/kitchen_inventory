@@ -6,16 +6,19 @@
 <style>
    @media  (min-width: 376px) and (max-width: 440px) {
       .icon-box {
-      height: 22vh;
+      height: 53vh;
    }
    }
 
    @media (max-width: 375px) {
       .icon-box {
-      height: 28vh;
+      height: 53vh;
    }
    }
 
+   .icon-box {
+   min-height: 205px !important;
+   }
 </style>
 
 <div class="container-fluid p-3">
