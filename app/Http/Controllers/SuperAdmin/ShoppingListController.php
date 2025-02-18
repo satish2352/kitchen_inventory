@@ -596,9 +596,13 @@ class ShoppingListController extends Controller
             ->where('master_kitchen_inventory.location_id', $location_selected_id)
             ->where('master_kitchen_inventory.is_deleted', '0')
             ->whereDate('location_wise_inventory.created_at', now()->toDateString())
-            ->orWhere('master_kitchen_inventory.item_name', 'like', "%$query%")
-            ->orWhere('category.category_name', 'like', "%$query%")
-            ->orWhere('locations.location', 'like', "%$query%")
+            ->when($query, function ($q) use ($query) {
+                $q->where(function ($subQuery) use ($query) {
+                    $subQuery->orWhere('master_kitchen_inventory.item_name', 'like', "%$query%")
+                    ->orWhere('category.category_name', 'like', "%$query%")
+                    ->orWhere('locations.location', 'like', "%$query%");
+                });
+            })
             // ->where('location_wise_inventory.approved_by', '1')
             ->orderBy('category.category_name', 'asc') // Order by category name first
             ->orderBy('master_kitchen_inventory.item_name', 'asc') // Then order by item name

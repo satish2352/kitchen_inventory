@@ -147,6 +147,7 @@ class CategoryController extends Controller {
     
     // Modify the query to search users based on name, email, or phone
     $category_data = Category::where('category_name', 'like', "%$query%")
+                                ->where('is_deleted', '0')
                      ->get();
 
     // Return the user listing Blade with the search results (no full page reload)

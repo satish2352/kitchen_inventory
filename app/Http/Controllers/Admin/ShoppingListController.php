@@ -151,6 +151,7 @@ class ShoppingListController extends Controller
         $sess_user_id = session()->get('login_id');
         $location_selected_name = session()->get('location_selected_name');
         $location_selected_id = session()->get('location_selected_id');
+        $data_location_wise_inventory=array();
 
         if($location_selected_name !=''){
 
