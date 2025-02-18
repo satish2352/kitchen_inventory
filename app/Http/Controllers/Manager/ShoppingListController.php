@@ -69,7 +69,7 @@ class ShoppingListController extends Controller
                 ->groupBy('category_name');
 
 
-        // Fetch newly added items from master_kitchen_inventory that are NOT in location_wise_inventory
+            // Fetch newly added items from master_kitchen_inventory that are NOT in location_wise_inventory
             $new_master_inventory_items = MasterKitchenInventory::leftJoin('category', 'master_kitchen_inventory.category', '=', 'category.id')
             ->leftJoin('units', 'master_kitchen_inventory.unit', '=', 'units.id')
             ->leftJoin('locations', 'master_kitchen_inventory.location_id', '=', 'locations.id')
@@ -281,6 +281,7 @@ public function addKitchenInventoryByManager(Request $request)
         $sess_user_id = session()->get('login_id');
         $location_selected_name = session()->get('location_selected_name');
         $location_selected_id = session()->get('location_selected_id');
+        $data_location_wise_inventory=array();
 
         if($location_selected_name !=''){
 
@@ -409,5 +410,51 @@ public function addKitchenInventoryByManager(Request $request)
         ];
         
         return view('manager.update-kitchen-inventory-search-result', compact('InventoryData'))->render();
+    }
+
+    public function searchShoppingListManager(Request $request)
+    {
+        $query = $request->input('query');
+        $location_selected_id = session()->get('location_selected_id');
+        // Modify the query to search users based on name, email, or phone
+        // $user_data = UsersData::where('name', 'like', "%$query%")
+        //                  ->orWhere('email', 'like', "%$query%")
+        //                  ->orWhere('phone', 'like', "%$query%")
+        //                  ->get();
+
+        $data_location_wise_inventory = LocationWiseInventory::leftJoin('locations', 'location_wise_inventory.location_id', '=', 'locations.id')
+            ->leftJoin('master_kitchen_inventory', 'location_wise_inventory.inventory_id', '=', 'master_kitchen_inventory.id')
+            ->leftJoin('units', 'master_kitchen_inventory.unit', '=', 'units.id')
+            ->leftJoin('category', 'master_kitchen_inventory.category', '=', 'category.id')
+            ->select(
+                'master_kitchen_inventory.id',
+                'master_kitchen_inventory.category',
+                'master_kitchen_inventory.item_name',
+                'master_kitchen_inventory.unit',
+                'master_kitchen_inventory.price',
+                'location_wise_inventory.quantity',
+                'location_wise_inventory.created_at',
+                'location_wise_inventory.id as locationWiseId',
+                'category.category_name',
+                'units.unit_name',
+                'locations.location'
+            )
+            ->where('master_kitchen_inventory.location_id', $location_selected_id)
+            ->where('master_kitchen_inventory.is_deleted', '0')
+            ->whereDate('location_wise_inventory.created_at', now()->toDateString())
+            ->when($query, function ($q) use ($query) {
+                $q->where(function ($subQuery) use ($query) {
+                    $subQuery->orWhere('master_kitchen_inventory.item_name', 'like', "%$query%")
+                    ->orWhere('category.category_name', 'like', "%$query%")
+                    ->orWhere('locations.location', 'like', "%$query%");
+                });
+            })
+            ->orderBy('category.category_name', 'asc') // Order by category name first
+            ->orderBy('master_kitchen_inventory.item_name', 'asc') // Then order by item name
+            ->get()
+            ->groupBy('category_name');
+    
+        // Return the user listing Blade with the search results (no full page reload)
+        return view('manager.shopping-list-search-results-manager', compact('data_location_wise_inventory'))->render();
     }
 }

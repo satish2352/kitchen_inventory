@@ -142,6 +142,8 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('/search-update-kitchen-inventory-manager', ['as' => 'search-update-kitchen-inventory-manager', 'uses' => 'App\Http\Controllers\Manager\ShoppingListController@SearchUpdateKitchenInventoryManager']);
     Route::get('/search-update-kitchen-inventory-super-admin', ['as' => 'search-update-kitchen-inventory-super-admin', 'uses' => 'App\Http\Controllers\SuperAdmin\ShoppingListController@SearchUpdateKitchenInventorySuperAdmin']);
 
+    Route::get('/search-shopping-list-manager', ['as' => 'search-shopping-list-manager', 'uses' => 'App\Http\Controllers\Manager\ShoppingListController@searchShoppingListManager']);
+
 });
 
 
