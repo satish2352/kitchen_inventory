@@ -180,6 +180,12 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
         border-color: #007bff;
     }
 }
+
+.copy_inventory_css{
+  background-color: lightgrey;
+  border: 1px solid lightgrey;
+}
+
 </style>
 
 <div class="main">

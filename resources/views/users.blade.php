@@ -102,7 +102,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
     }
 }
 
-    @media only screen and (min-width: 373px) and (max-width: 544px) {
+    /* @media only screen and (min-width: 373px) and (max-width: 544px) {
     .added_by_css {
         margin-top: 2.5rem;
         margin-bottom: 0.3rem;
@@ -120,7 +120,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
         word-break: break-word;
         max-width: 100%;
     }
-    }
+    } */
 
 .btn_css:hover{
     color: blue;
@@ -129,6 +129,19 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
 
 .select2-container--default .select2-selection--multiple .select2-selection__clear {
     margin-right: 25px !important;
+}
+.added_by_css {
+    display: flex;
+    align-items: center;
+    margin-top: 0;
+}
+
+@media (max-width: 576px) {
+    .added_by_css {
+        justify-content: flex-start;
+        margin-top: 5px;
+    margin-bottom: 5px;
+    }
 }
 </style>
 <div class="main">
@@ -195,7 +208,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
             <div class="d-flex justify-content-between align-items-center">
                <!-- Left Section -->
                <div>
-                  <div class="d-flex">
+                  <div class="d-flex flex-wrap">
                      <span class="ur-user me-2 jost-font user_name_css">{{ $item->name }}
                      @if ($item->user_role == '1')
                      (Super Admin)

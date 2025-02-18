@@ -23,6 +23,11 @@
         min-width: 600px; /* Adjust as per your table content */
     }
 }
+
+.copy_inventory_css{
+  background-color: lightgrey;
+  border: 1px solid lightgrey;
+}
 </style>
 <!-- <style>
     /* Custom styling for select dropdown */
@@ -43,7 +48,7 @@
           </a>
           <h5 class="sub-title">Inventory History Details</h5>
 
-          <button class="btn btn-light add-btn">
+          <button class="btn btn-light add-btn copy_inventory_css">
                   Search History
                 </button>
         </div>

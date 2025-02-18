@@ -4,9 +4,15 @@
 @yield('content')
 
 <style>
-   @media  (max-width: 440px) {
+   @media  (min-width: 376px) and (max-width: 440px) {
       .icon-box {
-      height: 31vh;
+      height: 22vh;
+   }
+   }
+
+   @media (max-width: 375px) {
+      .icon-box {
+      height: 28vh;
    }
    }
 
