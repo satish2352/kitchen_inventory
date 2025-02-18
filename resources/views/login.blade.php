@@ -274,7 +274,7 @@
         <button id="installPWA">Install This App</button>
     </div> -->
 
-    <div class="pwa-button-new">
+    <div class="pwa-button-new" @if(isset($localStorageData)) style="displey:none" @endif>
         <button id="installPWA">Install This App</button>
     </div>
 
@@ -407,6 +407,26 @@ document.addEventListener("DOMContentLoaded", function () {
 <script>
   let deferredPrompt;
 
+  // if ('getInstalledRelatedApps' in navigator) {
+  //   navigator.getInstalledRelatedApps().then((apps) => {
+  //     alert(apps)
+  //     if (apps.length > 0) {
+  //       console.log("PWA is installed!");
+  //       $('.pwa-button-new').css('display', 'none');
+  //     } else {
+  //       console.log("PWA is NOT installed.");
+  //       $('.pwa-button-new').css('display', 'block');
+  //     }
+  //   }).catch((error) => {
+  //     console.error("Error checking installed apps:", error);
+  //   });
+  // } else {
+  //   console.log('getInstalledRelatedApps API is not supported.');
+  //   $('.pwa-button-new').css('display', 'block');
+  // }
+
+ 
+
   window.addEventListener("beforeinstallprompt", (event) => {
     event.preventDefault();
     deferredPrompt = event; // Store the event for later use
@@ -420,6 +440,7 @@ document.addEventListener("DOMContentLoaded", function () {
       deferredPrompt.prompt(); // Show the install prompt
       deferredPrompt.userChoice.then((choiceResult) => {
         if (choiceResult.outcome === "accepted") {
+          localStorage.setItem('pwaInstalled', 'yes');
           console.log("User accepted the install");
         } else {
           console.log("User dismissed the install");
@@ -434,17 +455,9 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 <script>
-  if ('getInstalledRelatedApps' in navigator) {
-  navigator.getInstalledRelatedApps().then((apps) => {
-    if (apps.length > 0) {
-      $('.pwa-button-new').css('display', 'none');
-    } else {
-      console.log('PWA is NOT installed.');
-    }
-  });
-} else {
-  console.log('getInstalledRelatedApps API is not supported.');
-}
-
-
+    // Get value from localStorage
+    var localStorageData = localStorage.getItem('pwaInstalled');
+    
+    // Set the value to the hidden input field (or update global variable)
+    document.getElementById('localStorageValue').value = localStorageData;
 </script>
