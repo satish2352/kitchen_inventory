@@ -80,6 +80,7 @@ class LoginController extends Controller
                     $request->session()->put('login_id', $get_user['id']);
                     $request->session()->put('user_role', $get_user['user_role']);
                     $request->session()->put('user_name', $get_user['name']);
+                    $request->session()->put('locations_all', $get_user['location']);
                     // if($get_user['user_role'] != 1) {
 
                         if($get_user['user_role'] != 1) {

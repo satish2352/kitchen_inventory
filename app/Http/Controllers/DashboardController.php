@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Crypt;  // For decryption
+use Illuminate\Support\Facades\Crypt;
+// For decryption
 // use App\Models\UsersData;
 use App\Models\ {
     Locations,
@@ -16,174 +17,101 @@ use App\Models\ {
     MasterKitchenInventory,
     ActivityLog,
     LocationWiseInventory
-};
+}
+;
 use Session;
 use Cookie;
 
-class DashboardController extends Controller
-{
-    public function __construct()
-    {
+class DashboardController extends Controller {
+    public function __construct() {
         // Constructor code here if necessary
     }
 
-    public function index(Request $request) 
-    {
-        $sess_user_id = session()->get('login_id');
-        $role_id = session()->get('user_role');
-        // dd($role_id);
-        $location_selected_name = session()->get('location_selected_name');
-        $location_selected_id = session()->get('location_selected_id');
+    public function index( Request $request ) {
+        $sess_user_id = session()->get( 'login_id' );
+        $role_id = session()->get( 'user_role' );
 
-        
-        if($role_id =='1'){
-        $userCount = UsersData::where('is_deleted', '0')->where('is_approved', '1')->count();
+        if ( $role_id == '1' ) {
+            $userCount = UsersData::where( 'is_deleted', '0' )->where( 'is_approved', '1' )->count();
 
-        // ---------------------------
-        $userLocationData = UsersData::where('is_deleted', '0')
-        // ->where('is_approved', '1')
-        ->where('id', $sess_user_id)
-        ->pluck('location')
-        ->toArray(); 
-        $userLocation = [];
-        foreach ($userLocationData as $location) {
-            $userLocation = array_merge($userLocation, explode(',', $location));
-        }
-        
-        // $MasterInventoryCount = MasterKitchenInventory::where('is_deleted', '0')
-        // ->whereIn('location_id', $userLocation)
-        // ->groupBy('location_id')
-        // ->count();
-        // ---------------------------
+            $MasterInventoryCount = MasterKitchenInventory::where( 'is_deleted', '0' )
+            ->distinct( 'location_id' )
+            ->count( 'location_id' );
 
-        $MasterInventoryCount = MasterKitchenInventory::where('is_deleted', '0')
-        ->distinct('location_id')
-        ->whereIn('location_id', $userLocation)
-        ->count('location_id');
+            $ActivityLogCount = ActivityLog::count();
 
-    // dd($MasterInventoryCount);
+            $LocationWiseInventoryCount = LocationWiseInventory::select( 'DATE(created_at) as date' )
+            ->distinct( 'location_id' )
+            ->count( 'location_id' );
 
-        $ActivityLogCount = ActivityLog::count();
+            $CategoryCount = Category::where( 'is_deleted', '0' )->count();
+            $LocationCount = Locations::where( 'is_deleted', '0' )->count();
 
-        $Count = LocationWiseInventory::selectRaw('DATE(created_at) as date, COUNT(*) as count')
-        ->where('is_deleted', '0')
-        ->whereIn('location_id', $userLocation)
-        ->groupBy('date')
-        ->get();
-        
-        $LocationWiseInventoryCount = $Count->count();
-        // dd($LocationWiseInventoryCount);
+            $return_data = [
+                'status' => 'true',
+                'message' => 'Counts retrieved successfully',
+                'users_count' => $userCount,
+                'master_inventory_count' => $MasterInventoryCount,
+                'ActivityLogCount' => $ActivityLogCount,
+                'LocationWiseInventoryCount' => $LocationWiseInventoryCount,
+                'CategoryCount' => $CategoryCount,
+                'LocationCount' => $LocationCount,
+                'role_id' => $role_id
 
-        $CategoryCount = Category::where('is_deleted', '0')->count();
-        $LocationCount = Locations::where('is_deleted', '0')->count();
+            ];
+            return view( 'dashboard', compact( 'return_data' ) );
 
-        $return_data = [
-            'status' => 'true',
-            'message' => 'Counts retrieved successfully',
-            'users_count' => $userCount,
-            'master_inventory_count' => $MasterInventoryCount,
-            'ActivityLogCount' => $ActivityLogCount,
-            'LocationWiseInventoryCount' => $LocationWiseInventoryCount,
-            'CategoryCount' => $CategoryCount,
-            'LocationCount' => $LocationCount,
-            'role_id' => $role_id
+        } else if ( $role_id == '2' ) {
 
-        ];
-        return view('dashboard',compact('return_data'));
+            $userCount = UsersData::where( 'is_deleted', '0' )
+            ->where( 'added_byId', $sess_user_id )
+            ->count();
 
-        }else if($role_id =='2'){
+            $alluserCount = UsersData::where( 'is_deleted', '0' )->where( 'added_byId', $sess_user_id )
+            ->count();
 
-        $userCount = UsersData::where('is_deleted', '0')
-        ->where('added_byId', $sess_user_id)
-        ->count();
+            $LocationWiseInventoryCount = LocationWiseInventory::selectRaw( 'DATE(created_at) as date, COUNT(*) as count' )
+            ->where( 'is_deleted', '0' )
+            ->whereIn( 'location_id',  explode( ',', session()->get( 'locations_all' ) ) )
+            ->groupBy( 'date' )
+            ->get()->count();
 
-        // dd($userCount);
-        $alluserCount = UsersData::where('is_deleted', '0')->where('added_byId', $sess_user_id)
-        ->count();
-        // dd($alluserCount);
-    
-        // ----------------------------
+            $return_data = [
+                'status' => 'true',
+                'message' => 'Counts retrieved successfully',
+                'users_count' => $userCount,
+                'LocationWiseInventoryCount' => $LocationWiseInventoryCount,
+                'role_id' => $role_id,
+                'alluserCount' => $alluserCount
 
-        $userLocationData = UsersData::where('is_deleted', '0')
-        ->where('id', $sess_user_id)
-        ->pluck('location')
-        ->toArray(); 
-        $userLocation = [];
-        foreach ($userLocationData as $location) {
-            $userLocation = array_merge($userLocation, explode(',', $location));
+            ];
+            return view( 'dashboard', compact( 'return_data' ) );
+        } else if ( $role_id == '3' ) {
+
+            $LocationWiseInventoryCount = LocationWiseInventory::selectRaw( 'DATE(created_at) as date, COUNT(*) as count' )
+            ->where( 'is_deleted', '0' )
+            ->whereIn( 'location_id', explode( ',', session()->get( 'locations_all' ) ) )
+            ->groupBy( 'date' )
+            ->get()->count();
+
+            $return_data = [
+                'status' => 'true',
+                'message' => 'Counts retrieved successfully',
+                'LocationWiseInventoryCount' => $LocationWiseInventoryCount,
+
+            ];
+            return view( 'dashboard', compact( 'return_data' ) );
         }
 
-    // --------------------------
-    $CountAdminShopingList = LocationWiseInventory::selectRaw('DATE(created_at) as date, COUNT(*) as count')
-        ->where('is_deleted', '0')
-        ->whereIn('location_id', $userLocation)
-        ->groupBy('date')
-        ->get();
-        
-        $LocationWiseInventoryCount = $CountAdminShopingList->count();
-
-        $return_data = [
-            'status' => 'true',
-            'message' => 'Counts retrieved successfully',
-            'users_count' => $userCount,
-            'LocationWiseInventoryCount' => $LocationWiseInventoryCount,
-            'role_id' => $role_id,
-            'alluserCount' => $alluserCount
-
-        ];
-        return view('dashboard',compact('return_data'));
-    }else if($role_id =='3'){
-
-        $userCount = UsersData::where('is_deleted', '0')
-        ->where('added_byId', $sess_user_id)
-        ->count();
-        // dd($userCount);
-
-        $alluserCount = UsersData::where('is_deleted', '0')
-        ->count();
-    
-        // ----------------------------
-
-        $userLocationData = UsersData::where('is_deleted', '0')
-        ->where('id', $sess_user_id)
-        ->pluck('location')
-        ->toArray(); 
-        $userLocation = [];
-        foreach ($userLocationData as $location) {
-            $userLocation = array_merge($userLocation, explode(',', $location));
-        }
-
-        $CountAdminShopingList = LocationWiseInventory::selectRaw('DATE(created_at) as date, COUNT(*) as count')
-        ->where('is_deleted', '0')
-        ->whereIn('location_id', $userLocation)
-        ->groupBy('date')
-        ->get();
-        
-        $LocationWiseInventoryCount = $CountAdminShopingList->count();
-
-
-        $return_data = [
-            'status' => 'true',
-            'message' => 'Counts retrieved successfully',
-            'users_count' => $userCount,
-            'LocationWiseInventoryCount' => $LocationWiseInventoryCount,
-            'role_id' => $role_id,
-            'alluserCount' => $alluserCount
-
-        ];
-        return view('dashboard',compact('return_data'));
-        }
-        
     }
 
-    public function logout(Request $request)
-    {
-       
-        $request->session()->forget('login_id');
-        $request->session()->forget('user_name');
+    public function logout( Request $request ) {
+
+        $request->session()->forget( 'login_id' );
+        $request->session()->forget( 'user_name' );
 
         $request->session()->flush();
 
-        return redirect('/');
+        return redirect( '/' );
     }
 }
