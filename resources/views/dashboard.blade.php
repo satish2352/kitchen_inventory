@@ -33,7 +33,7 @@
     <div class="container-fluid p-3">
        <div class="row d-flex g-2">
           <!-- Icon Box 1 -->
-          @if ($return_data['users_count'] > 0)
+         
           <div class="col-4">
             <a class="nav-link" href="{{ route('list-users') }}">
             <div class="icon-box text-center shadow">
@@ -46,24 +46,10 @@
             </div>
             </a>
          </div>
-          @elseif ($return_data['users_count'] == 0)
-          <div class="col-4">
-            <a class="nav-link" href="{{ route('list-users') }}">
-            <div class="icon-box text-center shadow">
-               <div class="icon-circle mb-3">
-                     <i class="bi bi-person-add"></i>
-               </div>
-               <h4 class="mt-2">0</h4> <!-- Moved below the icon -->
-               <div class="icon-divider"></div>
-               <span class="mt-3">All Users</span>
-            </div>
-            </a>
-         </div>
-         @endif
-          <!-- Icon Box 2 -->
+         
 
 
-          @if ($return_data['ActivityLogCount'] > 0)
+          
           <div class="col-4">
             <a class="nav-link" href="{{ route('get-activity-log') }}">
             <div class="icon-box text-center shadow">
@@ -76,23 +62,9 @@
             </div>
             </a>
          </div>
-          @elseif ($return_data['ActivityLogCount'] == 0)
-          <div class="col-4">
-            <a class="nav-link" href="{{ route('get-activity-log') }}">
-            <div class="icon-box text-center shadow">
-               <div class="icon-circle mb-3">
-                     <i class="bi bi-person-add"></i>
-               </div>
-               <h4 class="mt-2">0</h4> <!-- Moved below the icon -->
-               <div class="icon-divider"></div>
-               <span class="mt-3">Activity</span>
-            </div>
-            </a>
-         </div>
-          @endif
-
+         
           <!-- Icon Box 3 -->
-          @if ($return_data['LocationWiseInventoryCount'] > 0)
+         
           <div class="col-4">
             <a class="nav-link" href="{{ route('get-submited-shopping-list-super-admin') }}">
             <div class="icon-box text-center shadow">
@@ -105,23 +77,9 @@
             </div>
             </a>
          </div>
-          @elseif ($return_data['LocationWiseInventoryCount'] == 0)
-          <div class="col-4">
-            <a class="nav-link" href="{{ route('get-submited-shopping-list-super-admin') }}">
-            <div class="icon-box text-center shadow">
-               <div class="icon-circle mb-3">
-                     <i class="bi bi-share-fill"></i>
-               </div>
-               <h4 class="mt-2">0</h4> <!-- Moved below the icon -->
-               <div class="icon-divider"></div>
-               <span class="mt-3">Shopping List</span>
-            </div>
-            </a>
-         </div>
-          @endif
+         
 
           <!-- Icon Box 4 -->
-          @if ($return_data['LocationWiseInventoryCount'] > 0)
           <div class="col-4">
             <a class="nav-link" href="{{ route('get-location-wise-inventory-sa') }}">
              <div class="icon-box text-center shadow">
@@ -134,22 +92,8 @@
              </div>
              </a>
           </div>
-          @elseif ($return_data['LocationWiseInventoryCount'] == 0)
-          <div class="col-4">
-            <a class="nav-link" href="{{ route('get-location-wise-inventory-sa') }}">
-             <div class="icon-box text-center shadow">
-                <div class="icon-circle mb-3">
-                   <i class="bi bi-tools"></i>
-                </div>
-               <h4 class="mt-2">0</h4> <!-- Moved below the icon -->
-                <div class="icon-divider"></div>
-                <span class="mt-3">For Update Kitchen Inventory</span>
-             </div>
-             </a>
-          </div>
-          @endif
-          <!-- Icon Box 5 -->
-          @if ($return_data['master_inventory_count'] > 0)
+         
+          
           <div class="col-4">
             <a class="nav-link" href="{{ route('list-items') }}">
             <div class="icon-box text-center shadow">
@@ -162,23 +106,9 @@
             </div>
             </a>
          </div>
-          @elseif ($return_data['master_inventory_count'] == 0)
-          <div class="col-4">
-            <a class="nav-link" href="{{ route('list-items') }}">
-            <div class="icon-box text-center shadow">
-               <div class="icon-circle mb-3">
-                     <i class="bi bi-person-add"></i>
-               </div>
-               <h4 class="mt-2">0</h4> <!-- Moved below the icon -->
-               <div class="icon-divider"></div>
-               <span class="mt-3">Master Inventory</span>
-            </div>
-            </a>
-         </div>
-          @endif
+          
 
 
-          @if ($return_data['CategoryCount'] > 0)
           <div class="col-4">
             <a class="nav-link" href="{{ route('list-category') }}">
             <div class="icon-box text-center shadow">
@@ -191,22 +121,8 @@
             </div>
             </a>
          </div>
-          @elseif ($return_data['CategoryCount'] == 0)
-          <div class="col-4">
-            <a class="nav-link" href="{{ route('list-items') }}">
-            <div class="icon-box text-center shadow">
-               <div class="icon-circle mb-3">
-                     <i class="bi bi-person-add"></i>
-               </div>
-               <h4 class="mt-2">0</h4> <!-- Moved below the icon -->
-               <div class="icon-divider"></div>
-               <span class="mt-3">Category</span>
-            </div>
-            </a>
-         </div>
-          @endif
+         
 
-          @if ($return_data['LocationCount'] > 0)
           <div class="col-4">
             <a class="nav-link" href="{{ route('list-locations') }}">
             <div class="icon-box text-center shadow">
@@ -219,31 +135,9 @@
             </div>
             </a>
          </div>
-          @elseif ($return_data['LocationCount'] == 0)
-          <div class="col-4">
-            <a class="nav-link" href="{{ route('list-items') }}">
-            <div class="icon-box text-center shadow">
-               <div class="icon-circle mb-3">
-                     <i class="bi bi-person-add"></i>
-               </div>
-               <h4 class="mt-2">0</h4> <!-- Moved below the icon -->
-               <div class="icon-divider"></div>
-               <span class="mt-3">Locations</span>
-            </div>
-            </a>
-         </div>
-          @endif
+         
 
-          <!-- Icon Box 6 -->
-          <!-- <div class="col-4">
-             <div class="icon-box text-center shadow">
-                <div class="icon-circle mb-3">
-                   <i class="bi bi-cart3"></i>
-                </div>
-                <div class="icon-divider"></div>
-                <span class="mt-3">Submit Shopping list</span>
-             </div>
-          </div> -->
+          
        </div>
     </div>
  </div>
@@ -252,7 +146,6 @@
     <div class="container-fluid p-3">
        <div class="row d-flex g-2">
           <!-- Icon Box 1 -->
-          @if ($return_data['alluserCount'] > 0)
           <div class="col-4">
             <a class="nav-link" href="{{ route('list-admin-users') }}">
             <div class="icon-box text-center shadow">
@@ -265,21 +158,7 @@
             </div>
             </a>
          </div>
-          @elseif ($return_data['alluserCount'] == 0)
-          <div class="col-4">
-            <a class="nav-link" href="{{ route('list-admin-users') }}">
-            <div class="icon-box text-center shadow">
-               <div class="icon-circle mb-3">
-                     <i class="bi bi-person-add"></i>
-               </div>
-               <h4 class="mt-2">0</h4> <!-- Moved below the icon -->
-               <div class="icon-divider"></div>
-               <span class="mt-3">All Users</span>
-            </div>
-            </a>
-         </div>
-          @endif
-          <!-- Icon Box 2 -->
+         
 
           <!-- Icon Box 1 -->
           <!-- @if ($return_data['users_count'] > 0)
@@ -297,7 +176,6 @@
           <!-- Icon Box 2 -->
 
           <!-- Icon Box 3 -->
-          @if ($return_data['LocationWiseInventoryCount'] > 0)
           <div class="col-4">
             <a class="nav-link" href="{{ route('get-submited-shopping-list-admin') }}">
             <div class="icon-box text-center shadow">
@@ -310,23 +188,8 @@
             </div>
             </a>
          </div>
-          @elseif ($return_data['LocationWiseInventoryCount'] > 0)
-          <div class="col-4">
-            <a class="nav-link" href="{{ route('get-submited-shopping-list-admin') }}">
-            <div class="icon-box text-center shadow">
-               <div class="icon-circle mb-3">
-                     <i class="bi bi-share-fill"></i>
-               </div>
-               <h4 class="mt-2">0</h4>
-               <div class="icon-divider"></div>
-               <span class="mt-3">Shopping List</span>
-            </div>
-            </a>
-         </div>
-          @endif
-
+         
           <!-- Icon Box 4 -->
-          @if ($return_data['LocationWiseInventoryCount'] > 0)
           <div class="col-4">
                <a class="nav-link" href="{{ route('get-shopping-list-admin') }}">
              <div class="icon-box text-center shadow">
@@ -339,20 +202,6 @@
              </div>
              </a>
           </div>
-          @elseif ($return_data['LocationWiseInventoryCount'] == 0)
-          <div class="col-4">
-               <a class="nav-link" href="{{ route('get-shopping-list-admin') }}">
-             <div class="icon-box text-center shadow">
-                <div class="icon-circle mb-3">
-                   <i class="bi bi-tools"></i>
-                </div>
-               <h4 class="mt-2">0</h4> <!-- Moved below the icon -->
-                <div class="icon-divider"></div>
-                <span class="mt-3">For Update Kitchen Inventory</span>
-             </div>
-             </a>
-          </div>
-          @endif
           
           <!-- Icon Box 6 -->
           <!-- <div class="col-4">
@@ -373,7 +222,6 @@
        <div class="row d-flex g-2">
           
           <!-- Icon Box 3 -->
-          @if ($return_data['LocationWiseInventoryCount'] > 0)
           <div class="col-4">
           <a class="nav-link" href="{{ route('get-submited-shopping-list-manager') }}">
             <div class="icon-box text-center shadow">
@@ -386,23 +234,8 @@
             </div>
             </a>
          </div>
-          @elseif ($return_data['LocationWiseInventoryCount'] == 0)
-          <div class="col-4">
-          <a class="nav-link" href="{{ route('get-submited-shopping-list-manager') }}">
-            <div class="icon-box text-center shadow">
-               <div class="icon-circle mb-3">
-                     <i class="bi bi-share-fill"></i>
-               </div>
-               <h4 class="mt-2">0</h4> <!-- Moved below the icon -->
-               <div class="icon-divider"></div>
-               <span class="mt-3">Shopping List</span>
-            </div>
-            </a>
-         </div>
-          @endif
-
+        
           <!-- Icon Box 4 -->
-          @if ($return_data['LocationWiseInventoryCount'] > 0)
           <div class="col-4">
           <a class="nav-link" href="{{ route('get-location-wise-inventory') }}">
              <div class="icon-box text-center shadow">
@@ -415,20 +248,7 @@
              </div>
              </a>
           </div>
-          @elseif ($return_data['LocationWiseInventoryCount'] == 0)
-          <div class="col-4">
-          <a class="nav-link" href="{{ route('get-location-wise-inventory') }}">
-             <div class="icon-box text-center shadow">
-                <div class="icon-circle mb-3">
-                   <i class="bi bi-tools"></i>
-                </div>
-               <h4 class="mt-2">0</h4> <!-- Moved below the icon -->
-                <div class="icon-divider"></div>
-                <span class="mt-3">For Update Kitchen Inventory</span>
-             </div>
-             </a>
-          </div>
-          @endif
+         
           
           <!-- Icon Box 6 -->
           <!-- <div class="col-4">
