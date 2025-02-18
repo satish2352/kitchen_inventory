@@ -5,7 +5,7 @@
 
 <style>
     .submit_inventory_css{
-        margin-top: -12px;
+        margin-top: 12px;
     }
 
     @media screen and (max-width: 768px) {
