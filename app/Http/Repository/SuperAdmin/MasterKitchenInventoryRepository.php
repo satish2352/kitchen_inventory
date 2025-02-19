@@ -12,7 +12,8 @@ use App\Models\{
 	User,
 	Items,
 	MasterKitchenInventory,
-	ActivityLog
+	ActivityLog,
+	UsersData
 };
 use Illuminate\Support\Facades\Mail;
 
@@ -66,6 +67,24 @@ class MasterKitchenInventoryRepository
 public function getItemsList() 
 	{
 		$location_selected_id = session()->get('location_selected_id');
+		$sess_user_id = session()->get('login_id');
+
+		$userLocationData = UsersData::where('is_deleted', '0')
+        ->where('is_approved', '1')
+        ->where('id', $sess_user_id)
+        ->pluck('location')
+        ->toArray(); 
+
+        $userLocation = [];
+		$data_location=array();
+        foreach ($userLocationData as $location) {
+            $userLocation = array_merge($userLocation, explode(',', $location));
+        }
+
+		if (!in_array($location_selected_id, $userLocation)) {
+			// return response()->json(['error' => 'Selected location is not available in user locations'], 403);
+			return $data_location;
+		}else{
 		$data_location = MasterKitchenInventory::leftJoin('category', 'master_kitchen_inventory.category', '=', 'category.id')
 			->leftJoin('units', 'master_kitchen_inventory.unit', '=', 'units.id')
 			->leftJoin('locations', 'master_kitchen_inventory.location_id', '=', 'locations.id')
@@ -83,13 +102,15 @@ public function getItemsList()
 			)
 			->where('master_kitchen_inventory.is_deleted', '0')
 			->where('category.is_deleted', '0')
-			->where('master_kitchen_inventory.location_id', $location_selected_id)
+			// ->where('master_kitchen_inventory.location_id', $location_selected_id)
+			->whereIn('master_kitchen_inventory.location_id', $userLocation)
 			->orderBy('category.category_name', 'asc') // Order by category name first
 			->orderBy('master_kitchen_inventory.item_name', 'asc') // Then order by item name
 			->get()
 			->groupBy('category_name'); // Group items by category name
 	// dd($data_location);
 		return $data_location;
+			}
 	}
 
 	

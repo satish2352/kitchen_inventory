@@ -14,7 +14,8 @@ use App\Models\ {
     LocationWiseInventory,
     MasterKitchenInventory,
     ActivityLog,
-    InventoryHistory
+    InventoryHistory,
+    UsersData
 };
 use Session;
 use Cookie;
@@ -211,6 +212,19 @@ class ShoppingListController extends Controller
         $location_selected_name = session()->get('location_selected_name');
         $location_selected_id = session()->get('location_selected_id');
 
+
+        $userLocationData = UsersData::where('is_deleted', '0')
+        ->where('is_approved', '1')
+        ->where('id', $sess_user_id)
+        ->pluck('location')
+        ->toArray(); 
+
+        $userLocation = [];
+		$data_location=array();
+        foreach ($userLocationData as $location) {
+            $userLocation = array_merge($userLocation, explode(',', $location));
+        }
+
         $all_kitchen_inventory = Items::where('is_deleted', '0')
             ->select('*')
             ->get()
@@ -219,6 +233,7 @@ class ShoppingListController extends Controller
 
         $locationsData = Locations::where('is_active', '1')
                             ->where('is_deleted', '0')
+			                ->whereIn('id', $userLocation)
                             ->select('id','location')
                             ->orderBy('location', 'asc')
                             ->get()
