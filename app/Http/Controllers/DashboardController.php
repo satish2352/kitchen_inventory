@@ -93,12 +93,12 @@ class DashboardController extends Controller {
             ];
             return view( 'dashboard', compact( 'return_data' ) );
         } else if ( $role_id == '3' ) {
-
+            // dd(session()->get( 'locations_all' ));
+            // dd(explode( ',', session()->get( 'locations_all' ) ));
             $LocationWiseInventoryCount = LocationWiseInventory::selectRaw( 'DATE(created_at) as date, COUNT(*) as count' )
             ->where( 'is_deleted', '0' )
             ->whereIn( 'location_id', explode( ',', session()->get( 'locations_all' ) ) )
-            ->groupBy( 'date' )
-            ->get()->count();
+            ->groupBy( 'date' )->get()->count();
 
             $return_data = [
                 'status' => 'true',

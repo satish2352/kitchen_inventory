@@ -276,15 +276,11 @@
                @php $srNo = 1; @endphp
                @foreach ($items as $item)
                <tr>
-                  <td>{{ $srNo++ }}</td>
-                  <td>{{ $item->item_name }}</td>
-                  <!-- <td>
-                     <input type="text" name="quantity" class="form-control qty-input" />
-                     </td> -->
-                  <td>{{ $item->quantity }}</td>
-                  <td>{{ $item->unit_name }}</td>
-                  <!-- <td>7</td> -->
-                  <td>${{ $item->price }}</td>
+                  <td style="word-wrap: break-word; white-space: normal;">{{ $srNo++ }}</td>
+                  <td style="word-wrap: break-word; white-space: normal;">{{ $item->item_name }}</td>
+                  <td style="word-wrap: break-word; white-space: normal;">{{ $item->quantity }}</td>
+                  <td style="word-wrap: break-word; white-space: normal;">{{ $item->unit_name }}</td>
+                  <td style="word-wrap: break-word; white-space: normal;">${{ $item->price }}</td>
                   <td>
                      <div>
                         <button class="btn btn-edit text-center shadow-sm edit-btn-item" data-id="{{ $item->id }}">
