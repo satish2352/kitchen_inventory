@@ -40,9 +40,15 @@ class DashboardController extends Controller {
 
             $ActivityLogCount = ActivityLog::count();
 
-            $LocationWiseInventoryCount = LocationWiseInventory::select( 'DATE(created_at) as date' )
-            ->distinct( 'location_id' )
-            ->count( 'location_id' );
+            // $LocationWiseInventoryCount = LocationWiseInventory::select( 'DATE(created_at) as date' )
+            // ->distinct( 'location_id' )
+            // ->count( 'location_id' );
+
+            $LocationWiseInventoryCount = LocationWiseInventory::selectRaw( 'DATE(created_at) as date, COUNT(*) as count' )
+            ->where( 'is_deleted', '0' )
+            ->whereIn( 'location_id', explode( ',', session()->get( 'locations_all' ) ) )
+            ->groupBy( 'date' )
+            ->get()->count();
 
             $CategoryCount = Category::where( 'is_deleted', '0' )->count();
             $LocationCount = Locations::where( 'is_deleted', '0' )->count();

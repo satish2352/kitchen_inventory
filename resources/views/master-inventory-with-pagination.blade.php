@@ -248,17 +248,20 @@
    </form>
 </div>
 <div class="container-fluid px-3" id="search-results">
-   @if(session()->get('location_selected_id') !='')
+   @if(session()->get('location_selected_id') != '')
    @if (!empty($user_data) && count($user_data) > 0)
-   @foreach ($user_data as $category => $items)
+   @foreach ($user_data as $category_id => $items)
+   @php
+   $category = \App\Models\Category::find($category_id); // Get category name
+   @endphp
    <!-- Border Box -->
    <div class="border-box">
       <!-- Header Title -->
       <div class="grid-header text-center">
-         <h6 class="m-0 text-white">{{ $category }}</h6>
+         <h6 class="m-0 text-white">{{ $category->category_name ?? 'Unknown Category' }}</h6>
       </div>
       <!-- Table -->
-      <div class="table-responsive">
+      <div class="table-responsive" style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
          <table class="table table-striped">
             <!-- Table Head -->
             <thead class="table-header">
@@ -278,12 +281,8 @@
                <tr>
                   <td>{{ $srNo++ }}</td>
                   <td>{{ $item->item_name }}</td>
-                  <!-- <td>
-                     <input type="text" name="quantity" class="form-control qty-input" />
-                     </td> -->
                   <td>{{ $item->quantity }}</td>
                   <td>{{ $item->unit_name }}</td>
-                  <!-- <td>7</td> -->
                   <td>${{ $item->price }}</td>
                   <td>
                      <div>
@@ -297,13 +296,71 @@
             </tbody>
          </table>
       </div>
+      <!-- Pagination for this category -->
+      <!-- <div class="d-flex justify-content-center">
+         <div class="col-md-8 d-flex justify-content-center">
+            <div class="pagination">
+               @if ($items->lastPage() > 1)
+               <ul class="pagination">
+                  <li class="{{ ($items->currentPage() == 1) ? ' disabled' : '' }}">
+                     @if ($items->currentPage() > 1)
+                     <a href="{{ $items->url($items->currentPage() - 1) }}">Previous</a>
+                     @else
+                     <span>Previous</span>
+                     @endif
+                  </li>
+                  @php
+                  $currentPage = $items->currentPage();
+                  $lastPage = $items->lastPage();
+                  $startPage = max($currentPage - 5, 1);
+                  $endPage = min($currentPage + 4, $lastPage);
+                  @endphp
+                  @if ($startPage > 1)
+                  <li>
+                     <a href="{{ $items->url(1) }}">1</a>
+                  </li>
+                  @if ($startPage > 2)
+                  <li>
+                     <span>...</span>
+                  </li>
+                  @endif
+                  @endif
+                  @for ($i = $startPage; $i <= $endPage; $i++)
+                  <li class="{{ ($currentPage == $i) ? ' active' : '' }}">
+                     <a href="{{ $items->url($i) }}">{{ $i }}</a>
+                  </li>
+                  @endfor
+                  @if ($endPage < $lastPage)
+                  @if ($endPage < $lastPage - 1)
+                  <li>
+                     <span>...</span>
+                  </li>
+                  @endif
+                  <li>
+                     <a href="{{ $items->url($lastPage) }}">{{ $lastPage }}</a>
+                  </li>
+                  @endif
+                  <li class="{{ ($currentPage == $lastPage) ? ' disabled' : '' }}">
+                     @if ($currentPage < $lastPage)
+                     <a href="{{ $items->url($currentPage + 1) }}">Next</a>
+                     @else
+                     <span>Next</span>
+                     @endif
+                  </li>
+                 
+               </ul>
+               @endif
+            </div>
+         </div>
+ 
+      </div> -->
    </div>
    @endforeach
    @else
    <div class="border-box mb-4" id="search-results">
       <!-- Header Title -->
       <div class="grid-header text-center">
-         <h6 class="m-0 text-white">No Data Found</h6>
+         <h6 class="m-0 text-white">Please Add Inventory For This location</h6>
       </div>
    </div>
    @endif
