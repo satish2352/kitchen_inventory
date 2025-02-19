@@ -8,23 +8,169 @@
        overflow-y: auto !important; /* Enable scrolling */
    }
    </style> -->
+<style>
+   /* Pagination styles */
+   .pagination {
+   margin: 20px 0;
+   }
+   .pagination ul {
+   list-style-type: none;
+   padding: 0;
+   margin: 0;
+   }
+   .pagination ul li {
+   display: inline;
+   margin-right: 5px;
+   }
+   .pagination ul li a,
+   .pagination ul li span {
+   padding: 5px 10px;
+   border: 1px solid #ccc;
+   text-decoration: none;
+   color: #333;
+   }
+   .pagination ul li.active a {
+   background-color: #007bff;
+   color: #fff;
+   border-color: #007bff;
+   }
+   .pagination ul li.disabled span {
+   color: #ccc;
+   }
+   img, svg {
+   vertical-align: middle;
+   width: 2%;
+   }
+   div.dataTables_wrapper div.dataTables_info {
+   display: none;
+   }
+   div.dataTables_wrapper div.dataTables_paginate ul.pagination{
+   display: none; 
+   }
+   .pagination .flex .flex{
+   display: none; 
+   }
+   /* Make table scrollable on small screens */
+   .table-container {
+   overflow-x: auto;
+   width: 100%;
+   }
+   /* Ensure table does not wrap text in cells */
+   .table-responsive table {
+   white-space: nowrap;
+   }
+   /* Optional: Add shadow and border for better visibility */
+   .table-responsive {
+   border: 1px solid #ddd;
+   border-radius: 5px;
+   padding: 5px;
+   background: #fff;
+   }
+   .btn_css:hover{
+   color: blue;
+   }
+   /* .master_inventory_css{
+   margin-left: 10px;
+   }
+   .copy_inventory_css{
+   margin-right: 7px;
+   }
+   @media only screen and (min-width: 0px) and (max-width: 557px) {
+   .master_inventory_css{
+   font-size: 18px;
+   }
+   }
+   @media (max-width: 330px) {
+   .inner-top .d-flex {
+   flex-direction: column;
+   align-items: center;
+   }
+   .inner-top .d-flex > * {
+   width: 100%;
+   text-align: center;
+   margin-bottom: 5px;
+   }
+   .inner-top .d-flex > .d-flex {
+   flex-direction: row;
+   justify-content: center;
+   gap: 5px;
+   }
+   }
+   @media only screen and (min-width: 328px) and (max-width: 464px) {
+   .master_inventory_css{
+   font-size: 14px;
+   }
+   } */
+   @media (max-width: 460px) {
+   .top-bar {
+   flex-wrap: wrap;
+   }
+   .button-wrapper {
+   width: 100%;
+   display: flex;
+   justify-content: center;
+   margin-top: 8px; /* Adjust spacing */
+   }
+   }
+   @media screen and (max-width: 768px) {
+   .table-responsive {
+   display: block;
+   width: 100%;
+   overflow-x: auto;
+   -webkit-overflow-scrolling: touch;
+   }
+   table {
+   width: 100%;
+   min-width: 600px; /* Adjust as per your table content */
+   }
+   }
+   @media (max-width: 472px) {
+   .pagination ul {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+   padding: 0;
+   }
+   .pagination ul li {
+   margin: 2px;
+   }
+   .pagination ul li:nth-child(n+1) {
+   margin-top: 15px;
+   }
+   .pagination ul li a,
+   .pagination ul li span {
+   padding: 8px 12px;
+   font-size: 14px;
+   }
+   .pagination ul li.active a {
+   background-color: #007bff;
+   color: #fff;
+   border-color: #007bff;
+   }
+   }
+   .copy_inventory_css{
+   background-color: lightgrey;
+   border: 1px solid lightgrey;
+   }
+</style>
 <div class="main">
 <div class="inner-top container-fluid p-3">
    <!-- Top Bar -->
-   <div class="d-flex justify-content-between align-items-center">
+   <div class="top-bar d-flex justify-content-between align-items-center flex-wrap">
       <a href="{{ route('/dashboard') }}">
-      <button class="btn btn-light">
+      <button class="btn btn-light btn-sm">
       <i class="bi bi-arrow-90deg-left"></i>
       </button>
       </a>
-      <h5 class="sub-title">Master Inventory</h5>
-      <button class="btn btn-light copy-inventory-btn">Copy Inventory
-      </button>
-      <button class="btn btn-light add-btn">
-      <i class="bi bi-plus-lg">Add Inventory</i>
-      </button>
+      <h5 class="sub-title master_inventory_css text-center flex-grow-1 mb-0">Master Inventory</h5>
+      <!-- Buttons Wrapper -->
+      <div class="button-wrapper d-flex gap-2">
+         <button class="btn btn-light copy-inventory-btn copy_inventory_css">Copy Inventory</button>
+         <button class="btn btn-light add-btn">Add Inventory</button>
+      </div>
    </div>
 </div>
+<!-- --------------------------- -->
 <!-- 
    @if(session('alert_status'))
    <p>Session Status: {{ session('alert_status') }}</p>
@@ -87,8 +233,8 @@
    <form id="locationForm" method="post" action="{{ route('location-selected-admin') }}">
       @csrf
       <div class="row mb-3">
-         <label class="form-label col-6">Select Location</label>
-         <div class="col-6">
+         <label class="form-label col-md-6 col-sm-12 col-lg-6">Select Location</label>
+         <div class="col-md-6 col-sm-12 col-lg-6">
             <select class="form-select" name="location_selected" id="location_selected">
                <option value="">Select Location</option>
                @foreach ($locationsData as $locations)
@@ -102,17 +248,20 @@
    </form>
 </div>
 <div class="container-fluid px-3" id="search-results">
-   @if(session()->get('location_selected_id') !='')
+   @if(session()->get('location_selected_id') != '')
    @if (!empty($user_data) && count($user_data) > 0)
-   @foreach ($user_data as $category => $items)
+   @foreach ($user_data as $category_id => $items)
+   @php
+   $category = \App\Models\Category::find($category_id); // Get category name
+   @endphp
    <!-- Border Box -->
    <div class="border-box">
       <!-- Header Title -->
       <div class="grid-header text-center">
-         <h6 class="m-0 text-white">{{ $category }}</h6>
+         <h6 class="m-0 text-white">{{ $category->category_name ?? 'Unknown Category' }}</h6>
       </div>
       <!-- Table -->
-      <div class="table-responsive">
+      <div class="table-responsive" style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
          <table class="table table-striped">
             <!-- Table Head -->
             <thead class="table-header">
@@ -132,12 +281,8 @@
                <tr>
                   <td>{{ $srNo++ }}</td>
                   <td>{{ $item->item_name }}</td>
-                  <!-- <td>
-                     <input type="text" name="quantity" class="form-control qty-input" />
-                     </td> -->
                   <td>{{ $item->quantity }}</td>
                   <td>{{ $item->unit_name }}</td>
-                  <!-- <td>7</td> -->
                   <td>${{ $item->price }}</td>
                   <td>
                      <div>
@@ -151,6 +296,64 @@
             </tbody>
          </table>
       </div>
+      <!-- Pagination for this category -->
+      <!-- <div class="d-flex justify-content-center">
+         <div class="col-md-8 d-flex justify-content-center">
+            <div class="pagination">
+               @if ($items->lastPage() > 1)
+               <ul class="pagination">
+                  <li class="{{ ($items->currentPage() == 1) ? ' disabled' : '' }}">
+                     @if ($items->currentPage() > 1)
+                     <a href="{{ $items->url($items->currentPage() - 1) }}">Previous</a>
+                     @else
+                     <span>Previous</span>
+                     @endif
+                  </li>
+                  @php
+                  $currentPage = $items->currentPage();
+                  $lastPage = $items->lastPage();
+                  $startPage = max($currentPage - 5, 1);
+                  $endPage = min($currentPage + 4, $lastPage);
+                  @endphp
+                  @if ($startPage > 1)
+                  <li>
+                     <a href="{{ $items->url(1) }}">1</a>
+                  </li>
+                  @if ($startPage > 2)
+                  <li>
+                     <span>...</span>
+                  </li>
+                  @endif
+                  @endif
+                  @for ($i = $startPage; $i <= $endPage; $i++)
+                  <li class="{{ ($currentPage == $i) ? ' active' : '' }}">
+                     <a href="{{ $items->url($i) }}">{{ $i }}</a>
+                  </li>
+                  @endfor
+                  @if ($endPage < $lastPage)
+                  @if ($endPage < $lastPage - 1)
+                  <li>
+                     <span>...</span>
+                  </li>
+                  @endif
+                  <li>
+                     <a href="{{ $items->url($lastPage) }}">{{ $lastPage }}</a>
+                  </li>
+                  @endif
+                  <li class="{{ ($currentPage == $lastPage) ? ' disabled' : '' }}">
+                     @if ($currentPage < $lastPage)
+                     <a href="{{ $items->url($currentPage + 1) }}">Next</a>
+                     @else
+                     <span>Next</span>
+                     @endif
+                  </li>
+                 
+               </ul>
+               @endif
+            </div>
+         </div>
+ 
+      </div> -->
    </div>
    @endforeach
    @else
@@ -180,8 +383,8 @@
          <h4 class="popup-title">Add Master Inventory</h4>
          <hr />
          <div class="row mb-3">
-            <label class="col-6 form-label">Select Location</label>
-            <div class="col-6">
+            <label class="col-md-6 col-sm-12 col-lg-6 form-label">Select Location</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
                <select class="form-select select2" name="location_id"
                   data-placeholder="Select Location" id="locationSelect">
                   <option value="">Select Location</option>
@@ -192,8 +395,8 @@
             </div>
          </div>
          <div class="row mb-3">
-            <label class="col-6 form-label">Select Category</label>
-            <div class="col-6">
+            <label class="col-md-6 col-sm-12 col-lg-6 form-label">Select Category</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
                <select class="form-select select2" name="category"
                   data-placeholder="Select Category">
                   <option value="">Select Category</option>
@@ -204,8 +407,8 @@
             </div>
          </div>
          <div class="row mb-3">
-            <label class="form-label col-6">Item Name</label>
-            <div class="col-6">
+            <label class="form-label col-md-6 col-sm-12 col-lg-6">Item Name</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
                <input
                   type="text"
                   class="form-control"
@@ -215,8 +418,8 @@
             </div>
          </div>
          <div class="row mb-3">
-            <label class="form-label col-6">Quantity</label>
-            <div class="col-6">
+            <label class="form-label col-md-6 col-sm-12 col-lg-6">Quantity</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
                <input
                   type="text"
                   class="form-control"
@@ -226,8 +429,8 @@
             </div>
          </div>
          <div class="row mb-3">
-            <label class="col-6 form-label">Select Unit</label>
-            <div class="col-6">
+            <label class="col-md-6 col-sm-12 col-lg-6 form-label">Select Unit</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
                <select class="form-select select2" name="unit"
                   data-placeholder="Select Unit">
                   <option value="">Select Unit</option>
@@ -238,8 +441,8 @@
             </div>
          </div>
          <div class="row mb-3">
-            <label class="form-label col-6">Price</label>
-            <div class="col-6">
+            <label class="form-label col-md-6 col-sm-12 col-lg-6">Price</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
                <input
                   type="text"
                   class="form-control"
@@ -271,8 +474,8 @@
          <hr />
          <input type="hidden" class="form-control" placeholder="Enter Location Name" name="edit_id" id="edit-item-id"/>
          <div class="row mb-3">
-            <label class="col-6 form-label">Select Location</label>
-            <div class="col-6">
+            <label class="col-md-6 col-sm-12 col-lg-6 form-label">Select Location</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
                <select class="form-select" name="location_id" id="location_id">
                   <option value="">Select Location</option>
                   @foreach ($locationsData as $locationItem)
@@ -283,8 +486,8 @@
          </div>
          <!-- Select Options -->
          <div class="row mb-3">
-            <label class="col-6 form-label">Select Category</label>
-            <div class="col-6">
+            <label class="col-md-6 col-sm-12 col-lg-6 form-label">Select Category</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
                <select class="form-select" name="category" id="category">
                   <option value="">Select Category</option>
                   @foreach ($categoryData as $categoryItem)
@@ -294,8 +497,8 @@
             </div>
          </div>
          <div class="row mb-3">
-            <label class="form-label col-6">Item Name</label>
-            <div class="col-6">
+            <label class="form-label col-md-6 col-sm-12 col-lg-6">Item Name</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
                <input
                   type="text"
                   class="form-control" style="text-transform: capitalize;"
@@ -304,8 +507,8 @@
             </div>
          </div>
          <div class="row mb-3">
-            <label class="form-label col-6">Quantity</label>
-            <div class="col-6">
+            <label class="form-label col-md-6 col-sm-12 col-lg-6">Quantity</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
                <input
                   type="text"
                   class="form-control"
@@ -315,8 +518,8 @@
             </div>
          </div>
          <div class="row mb-3">
-            <label class="form-label col-6">Select Unit</label>
-            <div class="col-6">
+            <label class="form-label col-md-6 col-sm-12 col-lg-6">Select Unit</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
                <select class="form-select" name="unit" id="unit">
                   <option value="">Select Unit</option>
                   @foreach ($unitData as $unitItem)
@@ -326,8 +529,8 @@
             </div>
          </div>
          <div class="row mb-3">
-            <label class="form-label col-6">Price</label>
-            <div class="col-6">
+            <label class="form-label col-md-6 col-sm-12 col-lg-6">Price</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
                <input
                   type="text"
                   class="form-control"
@@ -362,8 +565,8 @@
          <h4 class="popup-title">Copy Master Inventory</h4>
          <hr />
          <div class="row mb-3">
-            <label class="col-6 form-label">Select From Location</label>
-            <div class="col-6">
+            <label class="col-md-6 col-sm-12 col-lg-6 form-label">Select From Location</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
                <select class="form-select select2" name="from_location_id"
                   data-placeholder="Select Location" id="FromLocationId">
                   <option value="">Select Location</option>
@@ -374,8 +577,8 @@
             </div>
          </div>
          <div class="row mb-3">
-            <label class="col-6 form-label">Select To Location</label>
-            <div class="col-6">
+            <label class="col-md-6 col-sm-12 col-lg-6 form-label">Select To Location</label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
                <select class="form-select select2" name="to_location_id"
                   data-placeholder="Select Location" id="ToLocationId">
                   <option value="">Select Location</option>
@@ -391,7 +594,7 @@
             <i class="bi bi-x-circle"></i> Cancel
             </a>
             <button class="btn btn-danger btn-lg w-100">
-            <i class="bi bi-plus-lg"></i> ADD
+            <i class="bi bi-plus-lg"></i> Copy
             </button>
          </div>
       </form>
@@ -406,8 +609,8 @@
          this Inventory will not recover back
       </p>
       <div class="d-flex justify-content-around mt-4 confrm">
-         <button id="cancelDeleteConfirm" class="btn br">NO</button>
-         <button id="confirmDeleteItem" class="btn">YES</button>
+         <button id="cancelDeleteConfirm" class="btn br btn_css">NO</button>
+         <button id="confirmDeleteItem" class="btn btn_css">YES</button>
       </div>
    </div>
 </div>
@@ -435,9 +638,9 @@
      const confirmPopup = document.getElementById("confirmPopup");
      const filterPopup = document.getElementById("filterPopup");
      const cancelSelectButton = document.getElementById("cancelDelete");
-     const confirmSelectButton = document.getElementById("confirmDelete");
-     const cancelcategory = document.getElementById("cancelcategory");
-     const confirmcategory = document.getElementById("confirmcategory");
+     const confirmSelectButton = document.getElementById("confirmDeleteItem");
+     // const cancelcategory = document.getElementById("cancelcategory");
+     // const confirmcategory = document.getElementById("confirmcategory");
    
    const deleteButton = document.querySelector(".btn-delete-item");
    
@@ -449,6 +652,7 @@
    const copyInventoryButton = document.querySelector(".copy-inventory-btn");
    const CopyInventoryPopup = document.getElementById("CopyInventoryPopup");
    const closePopupCopyInventory = document.getElementById("closePopupCopyInventory");
+   const closePopUpButton = document.getElementById("closePopup");
    
    
    
@@ -527,9 +731,9 @@
      // });
    
      // Close Confirmation Popup on Cancel
-     cancelSelectButton.addEventListener("click", () => {
-       confirmPopup.style.display = "none";
-     });
+     // cancelSelectButton.addEventListener("click", () => {
+     //   confirmPopup.style.display = "none";
+     // });
    
      // Perform Action on Confirm Delete
      confirmSelectButton.addEventListener("click", () => {
@@ -544,9 +748,9 @@
      // });
    
      // Close Category Popup on Cancel
-     cancelcategory.addEventListener("click", () => {
-       filterPopup.style.display = "none";
-     });
+     // cancelcategory.addEventListener("click", () => {
+     //   filterPopup.style.display = "none";
+     // });
    
      deleteButton.addEventListener("click", () => {
      popup.style.display = "none"; // Close the bottom popup
@@ -562,18 +766,20 @@
    });
    
      // Perform Action on Category
-     confirmcategory.addEventListener("click", () => {
-       filterPopup.style.display = "none";
-       // alert("User deleted successfully!");
-       // Add delete logic here
-     });
+     // confirmcategory.addEventListener("click", () => {
+     //   filterPopup.style.display = "none";
+     //   // alert("User deleted successfully!");
+     //   // Add delete logic here
+     // });
    });
 </script>
 <script>
    $(document).ready(function() {
     // alert('kkkkkkkkkkkkkk');
     // Open the popup when Edit button is clicked
-    $('.edit-btn-item').on('click', function() {
+    // $('.edit-btn-item').on('click', function() {
+      $(document).on('click', '.edit-btn-item', function() {
+   
       var locationId = $(this).data('id'); // Get the location ID from the button
       
       // AJAX request to get location data
@@ -743,36 +949,41 @@
        }
      });
    
+     $(document).ready(function () {
+     $.validator.addMethod("differentLocation", function (value, element) {
+         return $("#FromLocationId").val() !== $("#ToLocationId").val();
+     }, "From Location and To Location cannot be the same.");
+   
      $("#frm_copy_inventory").validate({
-       rules: {
-         from_location_id: {
-           required: true
-           // minlength: 3
+         rules: {
+             from_location_id: {
+                 required: true
+             },
+             to_location_id: {
+                 required: true,
+                 differentLocation: true // Custom rule
+             }
          },
-         to_location_id: {
-           required: true
-           // minlength: 3
-         }        
-       },
-       messages: {
-         from_location_id: {
-           required: "Please select the from Location"
-           // minlength: "Category name must be at least 3 characters long"
+         messages: {
+             from_location_id: {
+                 required: "Please select the from Location"
+             },
+             to_location_id: {
+                 required: "Please select the to Location",
+                 differentLocation: "The From location and To location must be different."
+             }
          },
-         to_location_id: {
-           required: "Please select the to Location"
-           // minlength: "Category name must be at least 3 characters long"
+         errorElement: "span",
+         errorClass: "error-text",
+         highlight: function (element) {
+             $(element).addClass("is-invalid").removeClass("is-valid");
+         },
+         unhighlight: function (element) {
+             $(element).addClass("is-valid").removeClass("is-invalid");
          }
-       },
-       errorElement: "span",
-       errorClass: "error-text",
-       highlight: function (element) {
-         $(element).addClass("is-invalid").removeClass("is-valid");
-       },
-       unhighlight: function (element) {
-         $(element).addClass("is-valid").removeClass("is-invalid");
-       }
      });
+   });
+   
    
    
    });

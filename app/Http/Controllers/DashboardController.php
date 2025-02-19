@@ -34,15 +34,24 @@ class DashboardController extends Controller {
         if ( $role_id == '1' ) {
             $userCount = UsersData::where( 'is_deleted', '0' )->where( 'is_approved', '1' )->count();
 
-            $MasterInventoryCount = MasterKitchenInventory::where( 'is_deleted', '0' )
-            ->distinct( 'location_id' )
-            ->count( 'location_id' );
+            $MasterInventoryCount = MasterKitchenInventory::leftJoin('locations', 'master_kitchen_inventory.location_id', '=', 'locations.id')
+            ->where( 'master_kitchen_inventory.is_deleted', '0')
+            ->where( 'locations.is_deleted', '0')
+            ->distinct( 'master_kitchen_inventory.location_id')
+            ->count( 'master_kitchen_inventory.location_id');
 
             $ActivityLogCount = ActivityLog::count();
 
-            $LocationWiseInventoryCount = LocationWiseInventory::select( 'DATE(created_at) as date' )
-            ->distinct( 'location_id' )
-            ->count( 'location_id' );
+            // $LocationWiseInventoryCount = LocationWiseInventory::select( 'DATE(created_at) as date' )
+            // ->distinct( 'location_id' )
+            // ->count( 'location_id' );
+
+            $LocationWiseInventoryCount = LocationWiseInventory::selectRaw( 'DATE(created_at) as date, COUNT(*) as count' )
+            ->where( 'is_deleted', '0' )
+            ->whereIn( 'location_id', explode( ',', session()->get( 'locations_all' ) ) )
+            ->whereDate('location_wise_inventory.created_at', now()->toDateString())
+            ->groupBy( 'date', 'location_id')
+            ->get()->count();
 
             $CategoryCount = Category::where( 'is_deleted', '0' )->count();
             $LocationCount = Locations::where( 'is_deleted', '0' )->count();
@@ -73,7 +82,8 @@ class DashboardController extends Controller {
             $LocationWiseInventoryCount = LocationWiseInventory::selectRaw( 'DATE(created_at) as date, COUNT(*) as count' )
             ->where( 'is_deleted', '0' )
             ->whereIn( 'location_id',  explode( ',', session()->get( 'locations_all' ) ) )
-            ->groupBy( 'date' )
+            ->whereDate('location_wise_inventory.created_at', now()->toDateString())
+            ->groupBy( 'date','location_id')
             ->get()->count();
 
             $return_data = [
@@ -92,7 +102,8 @@ class DashboardController extends Controller {
             $LocationWiseInventoryCount = LocationWiseInventory::selectRaw( 'DATE(created_at) as date, COUNT(*) as count' )
             ->where( 'is_deleted', '0' )
             ->whereIn( 'location_id', explode( ',', session()->get( 'locations_all' ) ) )
-            ->groupBy( 'date' )->get()->count();
+            ->whereDate('location_wise_inventory.created_at', now()->toDateString())
+            ->groupBy( 'date','location_id')->get()->count();
 
             $return_data = [
                 'status' => 'true',
