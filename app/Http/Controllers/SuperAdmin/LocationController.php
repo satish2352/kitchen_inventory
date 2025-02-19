@@ -30,7 +30,13 @@ class LocationController extends Controller {
 {
     try {
         $rules = [
-            'location' => 'required|unique:locations|max:255',
+            'location' => [
+            'required',
+            'max:255',
+            Rule::unique('locations')->where(function ($query) {
+                return $query->where('is_deleted', 0); // Only check uniqueness for non-deleted locations
+            }),
+        ],
         ];
 
         $messages = [

@@ -48,7 +48,7 @@ class DashboardController extends Controller {
             ->where( 'is_deleted', '0' )
             ->whereIn( 'location_id', explode( ',', session()->get( 'locations_all' ) ) )
             ->whereDate('location_wise_inventory.created_at', now()->toDateString())
-            ->groupBy( 'date' )
+            ->groupBy( 'date', 'location_id')
             ->get()->count();
 
             $CategoryCount = Category::where( 'is_deleted', '0' )->count();
@@ -81,7 +81,7 @@ class DashboardController extends Controller {
             ->where( 'is_deleted', '0' )
             ->whereIn( 'location_id',  explode( ',', session()->get( 'locations_all' ) ) )
             ->whereDate('location_wise_inventory.created_at', now()->toDateString())
-            ->groupBy( 'date' )
+            ->groupBy( 'date','location_id')
             ->get()->count();
 
             $return_data = [
@@ -101,7 +101,7 @@ class DashboardController extends Controller {
             ->where( 'is_deleted', '0' )
             ->whereIn( 'location_id', explode( ',', session()->get( 'locations_all' ) ) )
             ->whereDate('location_wise_inventory.created_at', now()->toDateString())
-            ->groupBy( 'date' )->get()->count();
+            ->groupBy( 'date','location_id')->get()->count();
 
             $return_data = [
                 'status' => 'true',
