@@ -48,7 +48,7 @@ class DashboardController extends Controller {
 
             $LocationWiseInventoryCount = LocationWiseInventory::selectRaw( 'DATE(created_at) as date, COUNT(*) as count' )
             ->where( 'is_deleted', '0' )
-            ->whereIn( 'location_id', explode( ',', session()->get( 'locations_all' ) ) )
+            // ->whereIn( 'location_id', explode( ',', session()->get( 'locations_all' ) ) )
             ->whereDate('location_wise_inventory.created_at', now()->toDateString())
             ->groupBy( 'date', 'location_id')
             ->get()->count();
