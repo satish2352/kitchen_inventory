@@ -30,17 +30,17 @@ class MasterKitchenInventoryController extends Controller {
 
         $sess_user_id = session()->get('login_id');
 
-        $userLocationData = UsersData::where('is_deleted', '0')
-        ->where('is_approved', '1')
-        ->where('id', $sess_user_id)
-        ->pluck('location')
-        ->toArray(); 
+        // $userLocationData = UsersData::where('is_deleted', '0')
+        // ->where('is_approved', '1')
+        // ->where('id', $sess_user_id)
+        // ->pluck('location')
+        // ->toArray(); 
 
-        $userLocation = [];
-		$data_location=array();
-        foreach ($userLocationData as $location) {
-            $userLocation = array_merge($userLocation, explode(',', $location));
-        }
+        // $userLocation = [];
+		// $data_location=array();
+        // foreach ($userLocationData as $location) {
+        //     $userLocation = array_merge($userLocation, explode(',', $location));
+        // }
 
 
         $user_data = $this->service->index();
@@ -59,7 +59,7 @@ class MasterKitchenInventoryController extends Controller {
 
         $locationsData = Locations::where('is_active', '1')
                             ->where('is_deleted', '0')
-			                ->whereIn('id', $userLocation)
+			                // ->whereIn('id', $userLocation)
                             ->select('id','location')
                             ->orderBy('location', 'asc')
                             ->get()
