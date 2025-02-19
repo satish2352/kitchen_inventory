@@ -5,6 +5,8 @@ namespace App\Http\Controllers\SuperAdmin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Services\SuperAdmin\LocationServices;
+use Illuminate\Validation\Rule;
+
 use App\Models\ {
     Locations
 };
