@@ -27,6 +27,10 @@
       .btn-submit {
         background: linear-gradient(to right, #a80403, #f88383);
       }
+
+      .btn-submit:hover {
+        background: #a80403;
+      }
       form {
         background-color: white;
         padding: 30px;
