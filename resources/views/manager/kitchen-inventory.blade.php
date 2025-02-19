@@ -5,7 +5,7 @@
 
 <style>
     .submit_inventory_css{
-        margin-top: -12px;
+        margin-top: 12px;
     }
 
     @media screen and (max-width: 768px) {
@@ -144,8 +144,8 @@
             </div>
             @endforeach
             <div class="text-center submit_inventory_css">
-            <button type="submit" class="btn btn-success">Submit Inventory</button>
-        </div>
+                <button type="submit" class="btn btn-success">Submit Inventory</button>
+            </div>
         @else
         <div class="border-box mb-4" id="search-results">
                 <!-- Header Title -->

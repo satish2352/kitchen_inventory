@@ -125,7 +125,7 @@
                             <input type="hidden" class="form-control" name="master_inventory_id[]" id="master_inventory_id" value="{{ $item['id'] }}"/>
 
                                 <tr>
-                                <td> {{ $srNo++ }} </td>
+                                    <td> {{ $srNo++ }} </td>
                                     <td>{{ $item['masterQuantity'] }}</td>
                                     <td>{{ $item['item_name'] }}</td>
                                     <td>
