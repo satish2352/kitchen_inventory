@@ -35,7 +35,7 @@ class DashboardController extends Controller {
             $userCount = UsersData::where( 'is_deleted', '0' )->where( 'is_approved', '1' )->count();
 
             $MasterInventoryCount = MasterKitchenInventory::leftJoin('locations', 'master_kitchen_inventory.location_id', '=', 'locations.id')
-            // ->where( 'master_kitchen_inventory.is_deleted', '0')
+            ->where( 'master_kitchen_inventory.is_deleted', '0')
             ->where( 'locations.is_deleted', '0')
             ->distinct( 'master_kitchen_inventory.location_id')
             ->count( 'master_kitchen_inventory.location_id');
@@ -46,11 +46,13 @@ class DashboardController extends Controller {
             // ->distinct( 'location_id' )
             // ->count( 'location_id' );
 
-            $LocationWiseInventoryCount = LocationWiseInventory::selectRaw( 'DATE(created_at) as date, COUNT(*) as count' )
-            ->where( 'is_deleted', '0' )
+            $LocationWiseInventoryCount = LocationWiseInventory::leftJoin('locations', 'location_wise_inventory.location_id', '=', 'locations.id')
+            ->selectRaw( 'DATE(location_wise_inventory.created_at) as date, COUNT(*) as count' )
+            ->where( 'location_wise_inventory.is_deleted', '0' )
+            ->where( 'locations.is_deleted', '0')
             // ->whereIn( 'location_id', explode( ',', session()->get( 'locations_all' ) ) )
             ->whereDate('location_wise_inventory.created_at', now()->toDateString())
-            ->groupBy( 'date', 'location_id')
+            ->groupBy( 'date', 'location_wise_inventory.location_id')
             ->get()->count();
 
             $CategoryCount = Category::where( 'is_deleted', '0' )->count();
@@ -79,11 +81,13 @@ class DashboardController extends Controller {
             $alluserCount = UsersData::where( 'is_deleted', '0' )->where( 'added_byId', $sess_user_id )
             ->count();
 
-            $LocationWiseInventoryCount = LocationWiseInventory::selectRaw( 'DATE(created_at) as date, COUNT(*) as count' )
-            ->where( 'is_deleted', '0' )
-            ->whereIn( 'location_id',  explode( ',', session()->get( 'locations_all' ) ) )
+            $LocationWiseInventoryCount = LocationWiseInventory::leftJoin('locations', 'location_wise_inventory.location_id', '=', 'locations.id')
+            ->selectRaw( 'DATE(location_wise_inventory.created_at) as date, COUNT(*) as count' )
+            ->where( 'location_wise_inventory.is_deleted', '0' )
+            ->where( 'locations.is_deleted', '0')
+            ->whereIn( 'location_wise_inventory.location_id',  explode( ',', session()->get( 'locations_all' ) ) )
             ->whereDate('location_wise_inventory.created_at', now()->toDateString())
-            ->groupBy( 'date','location_id')
+            ->groupBy( 'date','location_wise_inventory.location_id')
             ->get()->count();
 
             $return_data = [
@@ -99,11 +103,13 @@ class DashboardController extends Controller {
         } else if ( $role_id == '3' ) {
             // dd(session()->get( 'locations_all' ));
             // dd(explode( ',', session()->get( 'locations_all' ) ));
-            $LocationWiseInventoryCount = LocationWiseInventory::selectRaw( 'DATE(created_at) as date, COUNT(*) as count' )
-            ->where( 'is_deleted', '0' )
-            ->whereIn( 'location_id', explode( ',', session()->get( 'locations_all' ) ) )
+            $LocationWiseInventoryCount = LocationWiseInventory::leftJoin('locations', 'location_wise_inventory.location_id', '=', 'locations.id')
+            ->selectRaw( 'DATE(location_wise_inventory.created_at) as date, COUNT(*) as count' )
+            ->where( 'location_wise_inventory.is_deleted', '0' )
+            ->where( 'locations.is_deleted', '0')
+            ->whereIn( 'location_wise_inventory.location_id', explode( ',', session()->get( 'locations_all' ) ) )
             ->whereDate('location_wise_inventory.created_at', now()->toDateString())
-            ->groupBy( 'date','location_id')->get()->count();
+            ->groupBy( 'date','location_wise_inventory.location_id')->get()->count();
 
             $return_data = [
                 'status' => 'true',

@@ -80,12 +80,16 @@ class LoginController extends Controller {
 
                             if ( $get_user[ 'user_role' ] != 1 ) {
                                 if ( count( explode( ',', $get_user[ 'location' ] ) )  > 1 ) {
-                                    $final_location  = Locations::whereIn( 'id', explode( ',', $get_user[ 'location' ] ) )->get()->toArray();
+                                    $final_location  = Locations::whereIn( 'id', explode( ',', $get_user[ 'location' ] ) )
+                                    ->where('is_deleted', 0)
+                                    ->get()->toArray();
                                     $request->session()->put( 'location_for_user', $final_location );
                                 } else {
 
                                     $request->session()->put( 'location_selected', rtrim( $get_user[ 'location' ], ',' ) );
-                                    $final_location  = Locations::where( 'id', session( 'location_selected' ) )->first();
+                                    $final_location  = Locations::where( 'id', session( 'location_selected' ) )
+                                    ->where('is_deleted', 0)
+                                    ->first();
                                     $request->session()->put( 'location_selected_name', $final_location->location );
                                     $request->session()->put( 'location_selected_id', $final_location->id );
                                 }
@@ -137,12 +141,17 @@ class LoginController extends Controller {
 
                         if ( $get_user[ 'user_role' ] != 1 ) {
                             if ( count( explode( ',', $get_user[ 'location' ] ) )  > 1 ) {
-                                $final_location  = Locations::whereIn( 'id', explode( ',', $get_user[ 'location' ] ) )->get()->toArray();
+                                $final_location  = Locations::whereIn( 'id', explode( ',', $get_user[ 'location' ] ) )
+                                ->where('is_deleted', 0)
+                                ->get()->toArray();
+                                dd($final_location);
                                 $request->session()->put( 'location_for_user', $final_location );
                             } else {
 
                                 $request->session()->put( 'location_selected', rtrim( $get_user[ 'location' ], ',' ) );
-                                $final_location  = Locations::where( 'id', session( 'location_selected' ) )->first();
+                                $final_location  = Locations::where( 'id', session( 'location_selected' ) )
+                                ->where('is_deleted', 0)
+                                ->first();
                                 $request->session()->put( 'location_selected_name', $final_location->location );
                                 $request->session()->put( 'location_selected_id', $final_location->id );
                             }
