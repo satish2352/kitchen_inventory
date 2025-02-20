@@ -478,10 +478,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
+      const installButton = document.getElementById("installPWA");
         if (window.matchMedia('(display-mode: standalone)').matches) {
-            alert("✅ PWA is Installed!");
-        } else {
-            alert("❌ PWA is Not Installed!");
+            // alert("✅ PWA is Installed!");
+            installButton.style.display = "none";
         }
     });
 </script>
