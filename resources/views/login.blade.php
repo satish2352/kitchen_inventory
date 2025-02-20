@@ -475,3 +475,13 @@ document.addEventListener("DOMContentLoaded", function () {
     // Set the value to the hidden input field (or update global variable)
     document.getElementById('localStorageValue').value = localStorageData;
 </script> -->
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        if (window.matchMedia('(display-mode: standalone)').matches) {
+            alert("✅ PWA is Installed!");
+        } else {
+            alert("❌ PWA is Not Installed!");
+        }
+    });
+</script>
