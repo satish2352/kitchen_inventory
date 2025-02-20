@@ -279,7 +279,7 @@
     </div> -->
 
     <div class="pwa-button-new" @if(isset($localStorageData)) style="displey:none" @endif>
-        <button id="installPWA">Install This App</button>
+        <button id="installPWA" style="display: none;">Install This App</button>
     </div>
 
     <!-- <p id="pwa-status">Checking PWA status...</p> -->
