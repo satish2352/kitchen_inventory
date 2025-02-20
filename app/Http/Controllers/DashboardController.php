@@ -35,7 +35,7 @@ class DashboardController extends Controller {
             $userCount = UsersData::where( 'is_deleted', '0' )->where( 'is_approved', '1' )->count();
 
             $MasterInventoryCount = MasterKitchenInventory::leftJoin('locations', 'master_kitchen_inventory.location_id', '=', 'locations.id')
-            ->where( 'master_kitchen_inventory.is_deleted', '0')
+            // ->where( 'master_kitchen_inventory.is_deleted', '0')
             ->where( 'locations.is_deleted', '0')
             ->distinct( 'master_kitchen_inventory.location_id')
             ->count( 'master_kitchen_inventory.location_id');
