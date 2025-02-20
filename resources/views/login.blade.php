@@ -282,7 +282,7 @@
         <button id="installPWA">Install This App</button>
     </div>
 
-    <p id="pwa-status">Checking PWA status...</p>
+    <!-- <p id="pwa-status">Checking PWA status...</p> -->
     <!-- <button id="installPWA">Install this app for a better experience.</button> -->
     <div class="container d-flex justify-content-center align-items-center min-vh-100 position-relative">
     <!-- Install PWA Button -->
