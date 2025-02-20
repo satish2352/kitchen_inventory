@@ -144,7 +144,7 @@ class LoginController extends Controller {
                                 $final_location  = Locations::whereIn( 'id', explode( ',', $get_user[ 'location' ] ) )
                                 ->where('is_deleted', 0)
                                 ->get()->toArray();
-                                dd($final_location);
+                                // dd($final_location);
                                 $request->session()->put( 'location_for_user', $final_location );
                             } else {
 

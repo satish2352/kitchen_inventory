@@ -282,7 +282,7 @@
         <button id="installPWA">Install This App</button>
     </div>
 
-    
+    <p id="pwa-status">Checking PWA status...</p>
     <!-- <button id="installPWA">Install this app for a better experience.</button> -->
     <div class="container d-flex justify-content-center align-items-center min-vh-100 position-relative">
     <!-- Install PWA Button -->
@@ -459,9 +459,19 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        if (window.matchMedia('(display-mode: standalone)').matches) {
+            document.getElementById('pwa-status').innerText = "PWA is Installed";
+        } else {
+            document.getElementById('pwa-status').innerText = "PWA is Not Installed";
+        }
+    });
+</script>
+
+<!-- <script>
     // Get value from localStorage
     var localStorageData = localStorage.getItem('pwaInstalled');
     
     // Set the value to the hidden input field (or update global variable)
     document.getElementById('localStorageValue').value = localStorageData;
-</script>
+</script> -->
