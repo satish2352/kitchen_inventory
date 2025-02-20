@@ -476,7 +476,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('localStorageValue').value = localStorageData;
 </script> -->
 
-<script>
+<!-- <script>
     document.addEventListener("DOMContentLoaded", function () {
       const installButton = document.getElementById("installPWA");
         if (window.matchMedia('(display-mode: standalone)').matches) {
@@ -484,4 +484,4 @@ document.addEventListener("DOMContentLoaded", function () {
             installButton.style.display = "none";
         }
     });
-</script>
+</script> -->
