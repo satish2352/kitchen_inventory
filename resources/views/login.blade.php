@@ -407,29 +407,55 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 </script>
 
-
 <script>
+    let deferredPrompt;
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const installButton = document.getElementById("installPWA");
+
+        // Check if the PWA is already installed
+        if (window.matchMedia('(display-mode: standalone)').matches || localStorage.getItem('pwaInstalled') === 'yes') {
+            installButton.style.display = "none"; // Hide button if PWA is installed
+        }
+
+        // Listen for the beforeinstallprompt event
+        window.addEventListener("beforeinstallprompt", (event) => {
+            event.preventDefault();
+            deferredPrompt = event; // Store the event for later use
+            installButton.style.display = "block"; // Show install button
+        });
+
+        // Handle install button click
+        installButton.addEventListener("click", () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt(); // Show the install prompt
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === "accepted") {
+                        localStorage.setItem('pwaInstalled', 'yes');
+                        console.log("User accepted the install");
+                        installButton.style.display = "none"; // Hide button immediately
+                    } else {
+                        console.log("User dismissed the install");
+                    }
+                    deferredPrompt = null;
+                });
+            }
+        });
+
+        // Listen for the appinstalled event
+        window.addEventListener("appinstalled", () => {
+            console.log("PWA was installed");
+            localStorage.setItem('pwaInstalled', 'yes');
+            installButton.style.display = "none"; // Hide button immediately after install
+        });
+    });
+</script>
+
+
+
+
+<!-- <script>
   let deferredPrompt;
-
-  // if ('getInstalledRelatedApps' in navigator) {
-  //   navigator.getInstalledRelatedApps().then((apps) => {
-  //     alert(apps)
-  //     if (apps.length > 0) {
-  //       console.log("PWA is installed!");
-  //       $('.pwa-button-new').css('display', 'none');
-  //     } else {
-  //       console.log("PWA is NOT installed.");
-  //       $('.pwa-button-new').css('display', 'block');
-  //     }
-  //   }).catch((error) => {
-  //     console.error("Error checking installed apps:", error);
-  //   });
-  // } else {
-  //   console.log('getInstalledRelatedApps API is not supported.');
-  //   $('.pwa-button-new').css('display', 'block');
-  // }
-
- 
 
   window.addEventListener("beforeinstallprompt", (event) => {
     event.preventDefault();
@@ -456,9 +482,9 @@ document.addEventListener("DOMContentLoaded", function () {
     //   alert("Install prompt is not available right now.");
     // }
   });
-</script>
+</script> -->
 
-<script>
+<!-- <script>
     document.addEventListener("DOMContentLoaded", function () {
         if (window.matchMedia('(display-mode: standalone)').matches) {
             document.getElementById('pwa-status').innerText = "PWA is Installed";
@@ -466,7 +492,7 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById('pwa-status').innerText = "PWA is Not Installed";
         }
     });
-</script>
+</script> -->
 
 <!-- <script>
     // Get value from localStorage
@@ -475,8 +501,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // Set the value to the hidden input field (or update global variable)
     document.getElementById('localStorageValue').value = localStorageData;
 </script> -->
-
-<!-- <script>
+<!-- 
+<script>
     document.addEventListener("DOMContentLoaded", function () {
       const installButton = document.getElementById("installPWA");
         if (window.matchMedia('(display-mode: standalone)').matches) {
