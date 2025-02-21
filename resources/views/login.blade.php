@@ -282,24 +282,6 @@
         <button id="installPWA">Install This App</button>
     </div>
 
-    <!-- Install Button (Android Only) -->
-<!-- <button id="installPWA" style="display: none;">Install This App</button> -->
-
-<!-- iOS Manual Installation Instructions -->
-<div id="iosInstructions" style="padding: 10px; background: #ffeb3b; border-radius: 5px;">
-    <p>📲 To install this app on iPhone:</p>
-    <ol>
-        <li>Open this site in **Safari**.</li>
-        <!-- <li>Tap the **Share** button <img src="{{ asset('/img/next.png') }}" width="16">.</li>
-          -->
-        <li>Tap the <button id="shareButton" style="background: none; border: none; cursor: pointer;">
-            <img src="{{ asset('/img/next.png') }}" width="24" alt="Share">
-        </button></li>
-        <li>Scroll down and tap **"Add to Home Screen"**.</li>
-        <li>Tap **"Add"** in the top-right corner.</li>
-    </ol>
-</div>
-
     <!-- <p id="pwa-status">Checking PWA status...</p> -->
     <!-- <button id="installPWA">Install this app for a better experience.</button> -->
     <div class="container d-flex justify-content-center align-items-center min-vh-100 position-relative">
@@ -430,66 +412,42 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.addEventListener("DOMContentLoaded", function () {
         const installButton = document.getElementById("installPWA");
-        const iosInstructions = document.getElementById("iosInstructions");
-        const shareButton = document.getElementById("shareButton");
 
-        function isIOS() {
-            return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        // Check if the PWA is already installed
+        if (window.matchMedia('(display-mode: standalone)').matches || localStorage.getItem('pwaInstalled') === 'yes') {
+            installButton.style.display = "none"; // Hide button if PWA is installed
         }
 
-        function isPWAInstalled() {
-            return window.matchMedia('(display-mode: standalone)').matches || localStorage.getItem('pwaInstalled') === 'yes';
-        }
+        // Listen for the beforeinstallprompt event
+        window.addEventListener("beforeinstallprompt", (event) => {
+            event.preventDefault();
+            deferredPrompt = event; // Store the event for later use
+            installButton.style.display = "block"; // Show install button
+        });
 
-        if (isPWAInstalled()) {
-            installButton.style.display = "none";
-            iosInstructions.style.display = "none";
-        } else if (isIOS()) {
-            iosInstructions.style.display = "block"; // Show iOS instructions
-        } else {
-            // Listen for the beforeinstallprompt event (for Android/Chrome)
-            window.addEventListener("beforeinstallprompt", (event) => {
-                event.preventDefault();
-                deferredPrompt = event;
-                installButton.style.display = "block"; // Show install button
-            });
-
-            // Handle install button click
-            installButton.addEventListener("click", () => {
-                if (deferredPrompt) {
-                    deferredPrompt.prompt();
-                    deferredPrompt.userChoice.then((choiceResult) => {
-                        if (choiceResult.outcome === "accepted") {
-                            localStorage.setItem('pwaInstalled', 'yes');
-                            console.log("User accepted the install");
-                            installButton.style.display = "none"; // Hide button immediately
-                        } else {
-                            console.log("User dismissed the install");
-                        }
-                        deferredPrompt = null;
-                    });
-                }
-            });
-        }
+        // Handle install button click
+        installButton.addEventListener("click", () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt(); // Show the install prompt
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === "accepted") {
+                        localStorage.setItem('pwaInstalled', 'yes');
+                        console.log("User accepted the install");
+                        installButton.style.display = "none"; // Hide button immediately
+                    } else {
+                        console.log("User dismissed the install");
+                    }
+                    deferredPrompt = null;
+                });
+            }
+        });
 
         // Listen for the appinstalled event
         window.addEventListener("appinstalled", () => {
             console.log("PWA was installed");
             localStorage.setItem('pwaInstalled', 'yes');
-            installButton.style.display = "none";
+            installButton.style.display = "none"; // Hide button immediately after install
         });
-
-        // iOS Share Button Handling
-        if (navigator.share) {
-            shareButton.addEventListener("click", () => {
-                navigator.share({
-                    title: document.title,
-                    url: window.location.href
-                }).catch((error) => console.log("Sharing failed", error));
-            });
-        } else {
-            shareButton.style.display = "none"; // Hide button if not supported
-        }
     });
 </script>
 
