@@ -282,6 +282,20 @@
         <button id="installPWA">Install This App</button>
     </div>
 
+    <!-- Install Button (Android Only) -->
+<!-- <button id="installPWA" style="display: none;">Install This App</button> -->
+
+<!-- iOS Manual Installation Instructions -->
+<div id="iosInstructions" style="display: none; padding: 10px; background: #ffeb3b; border-radius: 5px;">
+    <p>📲 To install this app on iPhone:</p>
+    <ol>
+        <li>Open this site in **Safari**.</li>
+        <li>Tap the **Share** button <img src="{{ asset('/img/next.png') }}" width="16">.</li>
+        <li>Scroll down and tap **"Add to Home Screen"**.</li>
+        <li>Tap **"Add"** in the top-right corner.</li>
+    </ol>
+</div>
+
     <!-- <p id="pwa-status">Checking PWA status...</p> -->
     <!-- <button id="installPWA">Install this app for a better experience.</button> -->
     <div class="container d-flex justify-content-center align-items-center min-vh-100 position-relative">
@@ -412,11 +426,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.addEventListener("DOMContentLoaded", function () {
         const installButton = document.getElementById("installPWA");
+        const iosInstructions = document.getElementById("iosInstructions");
 
-        // Check if the PWA is already installed
-        if (window.matchMedia('(display-mode: standalone)').matches || localStorage.getItem('pwaInstalled') === 'yes') {
-            installButton.style.display = "none"; // Hide button if PWA is installed
+        function isIOS() {
+            return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
         }
+
+        function isPWAInstalled() {
+            return window.matchMedia('(display-mode: standalone)').matches || localStorage.getItem('pwaInstalled') === 'yes';
+        }
+
+        if (isPWAInstalled()) {
+            installButton.style.display = "none";
+            iosInstructions.style.display = "none";
+        }
+
+        
+        if (isIOS()) {
+            iosInstructions.style.display = "block"; // Show iOS instructions
+        } else {
+        // Check if the PWA is already installed
+        // if (window.matchMedia('(display-mode: standalone)').matches || localStorage.getItem('pwaInstalled') === 'yes') {
+        //     installButton.style.display = "none"; // Hide button if PWA is installed
+        // }
 
         // Listen for the beforeinstallprompt event
         window.addEventListener("beforeinstallprompt", (event) => {
@@ -441,7 +473,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
             }
         });
-
+      }
         // Listen for the appinstalled event
         window.addEventListener("appinstalled", () => {
             console.log("PWA was installed");
