@@ -299,7 +299,7 @@
             <div class="wrapper">
                 <i class="material-icons">alternate_email</i>
                 <input type="text" name="email" value="{{ old('email') }}"
-                       aria-describedby="usernameHelp" placeholder="Enter email id">
+                       aria-describedby="usernameHelp" placeholder="Enter Email ID">
             </div>
             <div class="error-message">
                 @if ($errors->has('email'))
@@ -308,7 +308,7 @@
             </div>
             <div class="wrapper">
                 <i class="material-icons">lock</i> 
-                <input id="password" type="password" name="password" placeholder="Enter password">
+                <input id="password" type="password" name="password" placeholder="Enter Password">
                 <i class="fas fa-eye position-absolute top-50 end-0 translate-middle-y eye_css" id="togglePassword" style="cursor: pointer;"></i>
             </div>
             <div class="error-message">
