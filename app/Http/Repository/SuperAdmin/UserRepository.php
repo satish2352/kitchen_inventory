@@ -75,6 +75,7 @@ class UserRepository
 		$user_data->added_by = 1;
 		$user_data->is_approved = 1;
 		$user_data->added_byId = $sess_user_id;
+		$user_data->created_at = Carbon::now('America/New_York');
 		// $user_data->save();
 
 		 // Save selected locations as a comma-separated string
@@ -93,6 +94,7 @@ class UserRepository
 		$ActivityLogData = new ActivityLog();
 		$ActivityLogData->user_id = $sess_user_id;
 		$ActivityLogData->activity_message = $FinalLogMessage;
+		$ActivityLogData->created_at = Carbon::now('America/New_York');
 		$ActivityLogData->save();
 		}
 
@@ -112,6 +114,8 @@ class UserRepository
 							'phone' => $request['phone'],
 							'email' => $request['email'],
 							'password' => $request['password'],
+							'updated_at' => Carbon::now('America/New_York')
+
 						]);
 
 		$sess_user_id = session()->get('login_id');
@@ -124,6 +128,7 @@ class UserRepository
 		$ActivityLogData = new ActivityLog();
 		$ActivityLogData->user_id = $sess_user_id;
 		$ActivityLogData->activity_message = $FinalLogMessage;
+		$ActivityLogData->created_at = Carbon::now('America/New_York');
 		$ActivityLogData->save();
 		// dd($user_data);
 		return $request->edit_id;
@@ -171,6 +176,7 @@ class UserRepository
 		$ActivityLogData = new ActivityLog();
 		$ActivityLogData->user_id = $sess_user_id;
 		$ActivityLogData->activity_message = $FinalLogMessage;
+		$ActivityLogData->created_at = Carbon::now('America/New_York');
 		$ActivityLogData->save();
 		// }
 
@@ -217,6 +223,7 @@ class UserRepository
 				$ActivityLogData = new ActivityLog();
 				$ActivityLogData->user_id = $sess_user_id;
 				$ActivityLogData->activity_message = $FinalLogMessage;
+				$ActivityLogData->created_at = Carbon::now('America/New_York');
 				$ActivityLogData->save();
                 return [
                     'msg' => 'User Approved successfully.',
@@ -248,6 +255,8 @@ class UserRepository
 							'phone' => $request['phone'],
 							'email' => $request['email'],
 							'password' => $request['password'],
+							'updated_at' => Carbon::now('America/New_York')
+
 						]);
 
 		$sess_user_id = session()->get('login_id');
@@ -260,6 +269,7 @@ class UserRepository
 		$ActivityLogData = new ActivityLog();
 		$ActivityLogData->user_id = $sess_user_id;
 		$ActivityLogData->activity_message = $FinalLogMessage;
+		$ActivityLogData->created_at = Carbon::now('America/New_York');
 		$ActivityLogData->save();
 		// dd($user_data);
 		return $request->edit_id;
@@ -286,6 +296,7 @@ class UserRepository
 		$ActivityLogData = new ActivityLog();
 		$ActivityLogData->user_id = $sess_user_id;
 		$ActivityLogData->activity_message = $FinalLogMessage;
+		$ActivityLogData->created_at = Carbon::now('America/New_York');
 		$ActivityLogData->save();			
 
         return $student_data;
