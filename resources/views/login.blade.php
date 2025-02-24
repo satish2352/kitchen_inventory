@@ -278,7 +278,11 @@
         <button id="installPWA">Install This App</button>
     </div> -->
 
-    <div class="pwa-button-new" @if(isset($localStorageData)) style="displey:none" @endif>
+    <!-- <div class="pwa-button-new" @if(isset($localStorageData)) style="displey:none" @endif>
+        <button id="installPWA">Install This App</button>
+    </div> -->
+
+    <div class="pwa-button-new">
         <button id="installPWA">Install This App</button>
     </div>
 
@@ -286,19 +290,7 @@
 <!-- <button id="installPWA" style="display: none;">Install This App</button> -->
 
 <!-- iOS Manual Installation Instructions -->
-<div id="iosInstructions" style="padding: 10px; background: #ffeb3b; border-radius: 5px;">
-    <p>📲 To install this app on iPhone:</p>
-    <ol>
-        <li>Open this site in **Safari**.</li>
-        <!-- <li>Tap the **Share** button <img src="{{ asset('/img/next.png') }}" width="16">.</li>
-          -->
-        <li>Tap the <button id="shareButton" style="background: none; border: none; cursor: pointer;">
-            <img src="{{ asset('/img/next.png') }}" width="24" alt="Share">
-        </button></li>
-        <li>Scroll down and tap **"Add to Home Screen"**.</li>
-        <li>Tap **"Add"** in the top-right corner.</li>
-    </ol>
-</div>
+
 
     <!-- <p id="pwa-status">Checking PWA status...</p> -->
     <!-- <button id="installPWA">Install this app for a better experience.</button> -->
@@ -425,17 +417,17 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 </script>
 
-<script>
+<!-- <script>
     let deferredPrompt;
 
     document.addEventListener("DOMContentLoaded", function () {
         const installButton = document.getElementById("installPWA");
-        const iosInstructions = document.getElementById("iosInstructions");
+        // const iosInstructions = document.getElementById("iosInstructions");
         const shareButton = document.getElementById("shareButton");
 
-        function isIOS() {
-            return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-        }
+        // function isIOS() {
+        //     return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        // }
 
         function isPWAInstalled() {
             return window.matchMedia('(display-mode: standalone)').matches || localStorage.getItem('pwaInstalled') === 'yes';
@@ -443,10 +435,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (isPWAInstalled()) {
             installButton.style.display = "none";
-            iosInstructions.style.display = "none";
-        } else if (isIOS()) {
-            iosInstructions.style.display = "block"; // Show iOS instructions
-        } else {
+            // iosInstructions.style.display = "none";
+        // } else if (isIOS()) {
+        //     iosInstructions.style.display = "block"; // Show iOS instructions
+        // } 
+        else {
             // Listen for the beforeinstallprompt event (for Android/Chrome)
             window.addEventListener("beforeinstallprompt", (event) => {
                 event.preventDefault();
@@ -491,12 +484,12 @@ document.addEventListener("DOMContentLoaded", function () {
             shareButton.style.display = "none"; // Hide button if not supported
         }
     });
-</script>
+</script> -->
 
 
 
 
-<!-- <script>
+<script>
   let deferredPrompt;
 
   window.addEventListener("beforeinstallprompt", (event) => {
@@ -508,6 +501,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   document.getElementById("installPWA").addEventListener("click", () => {
+    alert('llllllllllllllll');
     if (deferredPrompt) {
       deferredPrompt.prompt(); // Show the install prompt
       deferredPrompt.userChoice.then((choiceResult) => {
@@ -524,32 +518,4 @@ document.addEventListener("DOMContentLoaded", function () {
     //   alert("Install prompt is not available right now.");
     // }
   });
-</script> -->
-
-<!-- <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        if (window.matchMedia('(display-mode: standalone)').matches) {
-            document.getElementById('pwa-status').innerText = "PWA is Installed";
-        } else {
-            document.getElementById('pwa-status').innerText = "PWA is Not Installed";
-        }
-    });
-</script> -->
-
-<!-- <script>
-    // Get value from localStorage
-    var localStorageData = localStorage.getItem('pwaInstalled');
-    
-    // Set the value to the hidden input field (or update global variable)
-    document.getElementById('localStorageValue').value = localStorageData;
-</script> -->
-<!-- 
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const installButton = document.getElementById("installPWA");
-        if (window.matchMedia('(display-mode: standalone)').matches) {
-            // alert("✅ PWA is Installed!");
-            installButton.style.display = "none";
-        }
-    });
-</script> -->
+</script>
