@@ -56,6 +56,7 @@ class ShoppingListRepository
 		$LocationWiseInventoryData->location_id = $sess_location_id;
 		$LocationWiseInventoryData->quantity = $quantities[$index];
 		$LocationWiseInventoryData->approved_by = 3;
+		$LocationWiseInventoryData->created_at = Carbon::now('America/New_York');
 		$LocationWiseInventoryData->save();
 		$last_insert_id = $LocationWiseInventoryData->id;
 		}
@@ -68,6 +69,7 @@ class ShoppingListRepository
 		$ActivityLogData = new ActivityLog();
 		$ActivityLogData->user_id = $sess_user_id;
 		$ActivityLogData->activity_message = $FinalLogMessage;
+		$ActivityLogData->created_at = Carbon::now('America/New_York');
 		$ActivityLogData->save();
 		}
 
@@ -79,6 +81,7 @@ class ShoppingListRepository
 		$InventoryHistoryData->location_id = $sess_location_id;
 		$InventoryHistoryData->quantity = $quantities[$index];
 		$InventoryHistoryData->approved_by = 3;
+		$InventoryHistoryData->created_at = Carbon::now('America/New_York');
 		$InventoryHistoryData->save();
 
 		$LocationsData = Locations::find($sess_location_id);
@@ -140,6 +143,8 @@ class ShoppingListRepository
 				->update([
 					'quantity' => $quantities[$index],
 					'approved_by' => '3',
+					'updated_at' => Carbon::now('America/New_York')
+
 				]);
 			}else {
 				// Insert new inventory if not exists
@@ -160,6 +165,7 @@ class ShoppingListRepository
 				$LocationWiseInventoryData->location_id = $sess_location_id;
 				$LocationWiseInventoryData->quantity = $quantities[$index];
 				$LocationWiseInventoryData->approved_by = 3;
+				$LocationWiseInventoryData->created_at = Carbon::now('America/New_York');
 				// dd($LocationWiseInventoryData);
 				$LocationWiseInventoryData->save();
 				$last_insert_id = $LocationWiseInventoryData->id;
@@ -187,6 +193,7 @@ class ShoppingListRepository
 		$ActivityLogData = new ActivityLog();
 		$ActivityLogData->user_id = $sess_user_id;
 		$ActivityLogData->activity_message = $FinalLogMessage;
+		$ActivityLogData->created_at = Carbon::now('America/New_York');
 		$ActivityLogData->save();
 	
 		$data =array();
@@ -197,6 +204,7 @@ class ShoppingListRepository
 		$InventoryHistoryData->location_id = $sess_location_id;
 		$InventoryHistoryData->quantity = $quantities[$index];
 		$InventoryHistoryData->approved_by = 3;
+		$InventoryHistoryData->created_at = Carbon::now('America/New_York');
 		$InventoryHistoryData->save();
 
 		$LocationsData = Locations::find($sess_location_id);

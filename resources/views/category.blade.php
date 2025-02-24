@@ -138,9 +138,9 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
                aria-label="Search"
                id="search-query"
                />
-            <button class="btn btn-srh" type="button">
+            <!-- <button class="btn btn-srh" type="button">
             <i class="bi bi-search"></i>
-            </button>
+            </button> -->
          </div>
          <!-- Location Icon -->
          <!-- <button class="btn btn-white mx-2">

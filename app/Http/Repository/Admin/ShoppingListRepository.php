@@ -56,6 +56,7 @@ class ShoppingListRepository
 		$LocationWiseInventoryData->location_id = $sess_location_id;
 		$LocationWiseInventoryData->quantity = $quantities[$index];
 		$LocationWiseInventoryData->approved_by = 2;
+		$LocationWiseInventoryData->created_at = Carbon::now('America/New_York');
 		$LocationWiseInventoryData->save();
 		$last_insert_id = $LocationWiseInventoryData->id;
 		}
@@ -68,6 +69,7 @@ class ShoppingListRepository
 		$ActivityLogData = new ActivityLog();
 		$ActivityLogData->user_id = $sess_user_id;
 		$ActivityLogData->activity_message = $FinalLogMessage;
+		$ActivityLogData->created_at = Carbon::now('America/New_York');
 		$ActivityLogData->save();
 		}
 
@@ -79,6 +81,7 @@ class ShoppingListRepository
 		$InventoryHistoryData->location_id = $sess_location_id;
 		$InventoryHistoryData->quantity = $quantities[$index];
 		$InventoryHistoryData->approved_by = 2;
+		$InventoryHistoryData->created_at = Carbon::now('America/New_York');
 		$InventoryHistoryData->save();
 
 		$LocationsData = Locations::find($sess_location_id);
@@ -141,6 +144,7 @@ public function updateKitchenInventoryByAdmin($request) {
 				->update([
 					'quantity' => $quantities[$index],
 					'approved_by' => '2',
+					'updated_at' => Carbon::now('America/New_York')
 				]);
 			}else {
 				$LocationWiseInventoryData = new LocationWiseInventory();
@@ -149,6 +153,7 @@ public function updateKitchenInventoryByAdmin($request) {
 				$LocationWiseInventoryData->location_id = $sess_location_id;
 				$LocationWiseInventoryData->quantity = $quantities[$index];
 				$LocationWiseInventoryData->approved_by = 2;
+				$LocationWiseInventoryData->created_at = Carbon::now('America/New_York');
 				// dd($LocationWiseInventoryData);
 				$LocationWiseInventoryData->save();
 				$last_insert_id = $LocationWiseInventoryData->id;
@@ -178,6 +183,7 @@ public function updateKitchenInventoryByAdmin($request) {
 		$ActivityLogData = new ActivityLog();
 		$ActivityLogData->user_id = $sess_user_id;
 		$ActivityLogData->activity_message = $FinalLogMessage;
+		$ActivityLogData->created_at = Carbon::now('America/New_York');
 		$ActivityLogData->save();
 	
 		$data =array();
@@ -188,6 +194,7 @@ public function updateKitchenInventoryByAdmin($request) {
 		$InventoryHistoryData->location_id = $sess_location_id;
 		$InventoryHistoryData->quantity = $quantities[$index];
 		$InventoryHistoryData->approved_by = 2;
+		$InventoryHistoryData->created_at = Carbon::now('America/New_York');
 		$InventoryHistoryData->save();
 
 		$LocationsData = Locations::find($sess_location_id);

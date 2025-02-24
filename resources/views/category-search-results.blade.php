@@ -1,3 +1,4 @@
+@if(!empty($category_data) && count($category_data) > 0)
 @foreach ($category_data as $item)
           <!-- User Request Box -->
           <div class="user-request-box p-3 shadow rounded mb-2">
