@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Services\Admin\ShoppingListServices;
 use Illuminate\Support\Facades\DB;
 use App\Models\ {
-    Items,
+    // Items,
     Locations,
     LocationWiseInventory,
     MasterKitchenInventory,
@@ -31,10 +31,10 @@ class ShoppingListController extends Controller
         $location_selected_name = session()->get('location_selected_name');
         $location_selected_id = session()->get('location_selected_id');
 
-        $all_kitchen_inventory = Items::where('is_deleted', '0')
-            ->select('*')
-            ->get()
-            ->toArray();
+        // $all_kitchen_inventory = Items::where('is_deleted', '0')
+        //     ->select('*')
+        //     ->get()
+        //     ->toArray();
         $InventoryData=array();
 
         if($location_selected_name !=''){
@@ -143,7 +143,8 @@ class ShoppingListController extends Controller
             }
         }    
         // dd($data_location_wise_inventory);
-        return view('admin.kitchen-inventory', compact('all_kitchen_inventory','InventoryData'));
+        // return view('admin.kitchen-inventory', compact('all_kitchen_inventory','InventoryData'));
+        return view('admin.kitchen-inventory', compact('InventoryData'));
     }
 
     public function getSubmitedShopppingListAdmin(Request $request) 

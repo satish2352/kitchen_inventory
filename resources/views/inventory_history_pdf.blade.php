@@ -89,11 +89,14 @@
          </thead>
          <tbody>
             @php 
-            $srNo = 1; @endphp
+            $srNo = 1; 
+            $finalPrice = 0
+            @endphp
             @foreach ($historyData as $data)
             @php
             $buyQty = $data['master_qty'] - $data['quantity'];
             @endphp
+            @if($buyQty  > 0 )
             <tr>
                <td>{{ $srNo++ }}</td>
                <td>{{ $data['master_qty'] }}</td>
@@ -101,10 +104,19 @@
                <td>{{ $data['quantity'] }}</td>
                <td>{{ $buyQty }}</td>
                @if(session()->get('user_role') =='1')
-               <td>$ {{ $buyQty * $data['price'] }}</td>
+               <td>
+                  @php 
+                  $finalPrice = $finalPrice + $buyQty * $data['price'];
+                  @endphp
+                  $ {{ $buyQty * $data['price'] }}</td>
                @endif
             </tr>
+            @endif
             @endforeach
+            @if(session()->get('user_role') =='1')
+            <td colspan="5"></td>
+               <td>$ {{ $finalPrice }}</td>
+               @endif
          </tbody>
       </table>
    </body>

@@ -84,9 +84,12 @@
             @csrf
             @if (!empty($data_location_wise_inventory) && count($data_location_wise_inventory) > 0)
             <div class="border-box mb-4" id="search-results">
+            @php $srNo = 1;
+                        $finalPrice = 0;
+                        @endphp
             @foreach ($data_location_wise_inventory as $category => $items)
             <!-- Border Box -->
-            
+
                 <!-- Header Title -->
                 <div class="grid-header text-center">
                     <h6 class="m-0 text-white">{{ $category }}</h6>
@@ -99,34 +102,58 @@
                         <thead class="table-header">
                             <tr>
                                 <th><b>Sr. No.</b></th>
-                                <th><b>Item</b></th>
-                                <th><b>Available Qty</b></th>
-                                <th><b>Unit</b></th>
+                                <th><b>Master  Qty</b></th>
+                                <th><b>Item Name</b></th>
+                                <th><b>Present Qty</b></th>
+                                <th><b>Buy Qty</b></th>
+                                <th><b>Total Price</b></th>
                             </tr>
                         </thead>
                         <!-- Table Body -->
                         <tbody>
-                        @php $srNo = 1; @endphp
+                        @php $srNo = 1;
+                        @endphp
                             @foreach ($items as $item)
+                            @php $buy_qty  = $item['master_quantity'] - $item['quantity']; @endphp
                             <input type="hidden" class="form-control" name="master_inventory_id[]" id="master_inventory_id" value="{{ $item['id'] }}"/>
-
+                                @if( $buy_qty > 0 )
                                 <tr>
                                     <td> {{ $srNo++ }} </td>
+                                    <td>{{ $item['master_quantity'] }}</td>
                                     <td>{{ $item['item_name'] }}</td>
-                                    <td>{{ $item['quantity'] }}</td>
+                                    <td>{{ $item['quantity'] }} {{ $item['unit_name'] }}</td>
+                                    <td>@if($buy_qty > 0 ) {{ $buy_qty }} {{ $item['unit_name'] }} @else {{"0"}} @endif</td>
+                                    <td>
+                                    @php
+                                    $finalPrice =    $finalPrice  + (  $buy_qty * $item['price'] ) ;
+                                    @endphp
+                                    {{ $buy_qty * $item['price']  }}</td>
+
                                     <!-- <td>
                                         <input type="text" name="quantity[]" class="form-control qty-input" value="{{ $item['quantity'] }}" placeholder="QTY" />
                                     </td> -->
-                                    <td>{{ $item['unit_name'] }}</td>
-                                    
+
                                 </tr>
+                                @else
+                                <td>No items were found</td>
+                                @endif
                             @endforeach
+
                             <tr>
+
                         </tbody>
                     </table>
                 </div>
-            
+                
             @endforeach
+
+            
+            </div>
+            <div class="border-box mb-4" id="search-results">
+                <!-- Header Title -->
+                <div class="grid-header text-center">
+                <h6 class="m-0 text-white"> Total Price :  $ {{$finalPrice}}</h6>
+                </div>
             </div>
             <!-- <div class="text-center mt-3">
             <a type="submit" class="btn btn-success submitInventory">Submit Inventory</a>
@@ -137,10 +164,10 @@
                 <div class="grid-header text-center">
                     <h6 class="m-0 text-white">No Data Found</h6>
                 </div>
-            </div>  
+            </div>
         @endif
             <!-- Submit Button -->
-        
+
 
             </form>
            @else
@@ -149,7 +176,7 @@
                 <div class="grid-header text-center">
                     <h6 class="m-0 text-white">Please Select Location First</h6>
                 </div>
-            </div>    
+            </div>
            @endif
 
         </div>
@@ -188,7 +215,7 @@
         {
             document.getElementById('locationForm').submit();
         }
-       
+
     });
 </script>
 
@@ -198,7 +225,7 @@
        // Bind keyup event to the search input
        $('#search-query').on('keyup', function() {
            var query = $(this).val().trim();  // Get the value entered in the search box
-   
+
            if (query.length > 0) {
                $.ajax({
                    url: "{{ route('search-sopping-list') }}",  // Define your search route here
@@ -206,7 +233,7 @@
                    data: { query: query },
                    success: function(response) {
                     console.log('pppppppppppppppp',response);
-                    
+
                         if (response.length > 0) {
                             // Clear the previous results
                             $('#search-results').html('');
