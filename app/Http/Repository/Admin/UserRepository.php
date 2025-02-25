@@ -15,6 +15,7 @@ use App\Models\{
 };
 use Illuminate\Support\Facades\Mail;
 
+
 class UserRepository
 {
     public function getUsersList() {
@@ -82,18 +83,24 @@ class UserRepository
 			}
 			$user_data->save();
 
-			$email_data = [
-				'email' => $request['email'],				
-				'password' => $request['password'],
+			try {
+				$email_data = [
+					'email' => $request['email'],				
+					'password' => $request['password'],
+	
+				];
+				$toEmail = $request['email'];
+				$senderSubject = 'Credentials for the Buffalo Boss login' . date('d-m-Y H:i:s');
+				$fromEmail = env('MAIL_USERNAME');
+				Mail::send('user_added_mail', ['email_data' => $email_data], function ($message) use ($toEmail, $fromEmail, $senderSubject) {
+					$message->to($toEmail)->subject($senderSubject);
+					$message->from($fromEmail, ' Buffalo Boss');
+				});
 
-			];
-			$toEmail = $request['email'];
-			$senderSubject = 'Credentials for the Buffalo Boss login' . date('d-m-Y H:i:s');
-			$fromEmail = env('MAIL_USERNAME');
-			Mail::send('user_added_mail', ['email_data' => $email_data], function ($message) use ($toEmail, $fromEmail, $senderSubject) {
-				$message->to($toEmail)->subject($senderSubject);
-				$message->from($fromEmail, ' Buffalo Boss');
-			});
+			} catch (\Exception $e) {
+				Log::error('Mail sending error: '.$e->getMessage());
+				info($e->getMessage());  // Keep dd to see the error in debugging, or just Log it
+			}
 
 			$sess_user_name = session()->get('user_name');
 			$sess_location_id = session()->get('location_selected_id');
@@ -107,7 +114,7 @@ class UserRepository
 			return $last_insert_id;
 
 		} catch (\Exception $e) {
-			info($e);
+			info($e->getMessage());
 		}
 
 	}
