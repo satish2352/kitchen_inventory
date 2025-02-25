@@ -490,45 +490,31 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 <script>
-      let deferredPrompt;
+  let deferredPrompt;
 
-document.addEventListener("DOMContentLoaded", function () {
-    const installButton = document.getElementById("installPWA");
+  window.addEventListener("beforeinstallprompt", (event) => {
+    event.preventDefault();
+    deferredPrompt = event; // Store the event for later use
 
-    // Check if the PWA is already installed
-    if (window.matchMedia('(display-mode: standalone)').matches || localStorage.getItem('pwaInstalled') === 'yes') {
-        installButton.style.display = "none"; // Hide button if PWA is installed
-    }
+    // Enable the install button
+    document.getElementById("installPWA").style.display = "block";
+  });
 
-    // Listen for the beforeinstallprompt event
-    window.addEventListener("beforeinstallprompt", (event) => {
-        event.preventDefault();
-        deferredPrompt = event; // Store the event for later use
-        installButton.style.display = "block"; // Show install button
-    });
-
-    // Handle install button click
-    installButton.addEventListener("click", () => {
-        if (deferredPrompt) {
-            deferredPrompt.prompt(); // Show the install prompt
-            deferredPrompt.userChoice.then((choiceResult) => {
-                if (choiceResult.outcome === "accepted") {
-                    localStorage.setItem('pwaInstalled', 'yes');
-                    console.log("User accepted the install");
-                    installButton.style.display = "none"; // Hide button immediately
-                } else {
-                    console.log("User dismissed the install");
-                }
-                deferredPrompt = null;
-            });
+  document.getElementById("installPWA").addEventListener("click", () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt(); // Show the install prompt
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === "accepted") {
+          localStorage.setItem('pwaInstalled', 'yes');
+          console.log("User accepted the install");
+        } else {
+          console.log("User dismissed the install");
         }
-    });
-
-    // Listen for the appinstalled event
-    window.addEventListener("appinstalled", () => {
-        console.log("PWA was installed");
-        localStorage.setItem('pwaInstalled', 'yes');
-        installButton.style.display = "none"; // Hide button immediately after install
-    });
-});
+        deferredPrompt = null; // Reset so it doesn't prompt again
+      });
+    } 
+    // else {
+    //   alert("Install prompt is not available right now.");
+    // }
+  });
 </script>
