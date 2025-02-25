@@ -102,9 +102,11 @@
                         <thead class="table-header">
                             <tr>
                                 <th onclick="sortTable('sortableTable_{{ $loop->index }}', 0)"><b>Sr. No. <i class="bi bi-arrow-up" id="arrow-0-{{ $loop->index }}"></i></b></th>
-                                <th onclick="sortTable('sortableTable_{{ $loop->index }}', 1)"><b>Item <i class="bi bi-arrow-up" id="arrow-1-{{ $loop->index }}"></i></b></th>
-                                <th onclick="sortTable('sortableTable_{{ $loop->index }}', 2)"><b>Available Qty <i class="bi bi-arrow-up" id="arrow-2-{{ $loop->index }}"></i></b></th>
-                                <th onclick="sortTable('sortableTable_{{ $loop->index }}', 3)"><b>Unit <i class="bi bi-arrow-up" id="arrow-3-{{ $loop->index }}"></i></b></th>
+                                <th onclick="sortTable('sortableTable_{{ $loop->index }}', 1)"><b>Master Qty <i class="bi bi-arrow-up" id="arrow-1-{{ $loop->index }}"></i></b></th>
+                                <th onclick="sortTable('sortableTable_{{ $loop->index }}', 2)"><b>Item Name<i class="bi bi-arrow-up" id="arrow-1-{{ $loop->index }}"></i></b></th>
+                                <th onclick="sortTable('sortableTable_{{ $loop->index }}', 3)"><b>Available Qty <i class="bi bi-arrow-up" id="arrow-2-{{ $loop->index }}"></i></b></th>
+                                <th onclick="sortTable('sortableTable_{{ $loop->index }}', 4)"><b>Buy Qty <i class="bi bi-arrow-up" id="arrow-3-{{ $loop->index }}"></i></b></th>
+                                <th onclick="sortTable('sortableTable_{{ $loop->index }}', 5)"><b>Price <i class="bi bi-arrow-up" id="arrow-3-{{ $loop->index }}"></i></b></th>
                             </tr>
                         </thead>
                         <!-- Table Body -->
@@ -126,22 +128,11 @@
                                     $finalPrice =    $finalPrice  + (  $buy_qty * $item['price'] ) ;
                                     @endphp
                                     {{ $buy_qty * $item['price']  }}</td>
-
-                                    <!-- <td>
-                                        <input type="text" name="quantity[]" class="form-control qty-input" value="{{ $item['quantity'] }}" placeholder="QTY" />
-                                    </td> -->
-
                                 </tr>
                                 @else
                                 <td>No items were found</td>
                                 @endif
                             @endforeach
-<<<<<<< HEAD
-=======
-
-                            <tr>
-
->>>>>>> b53fbe3cb76dba984db1ac396734f066b0a2402d
                         </tbody>
                     </table>
                 </div>
