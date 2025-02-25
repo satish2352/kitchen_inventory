@@ -69,9 +69,7 @@
 
 
             @if (session()->get('location_selected_id') != '')
-                <form action="{{ route('update-kitchen-inventory-by-admin') }}" id="updateKitchenInventory"
-                    method="POST">
-                    @csrf
+              
                     @if (!empty($data_location_wise_inventory) && count($data_location_wise_inventory) > 0)
                         <div class="border-box mb-4" id="search-results">
                             @php 
@@ -172,10 +170,6 @@
                             </div>
                         </div>
                     @endif
-                    <!-- Submit Button -->
-
-
-                </form>
             @else
                 <div class="border-box mb-4">
                     <!-- Header Title -->

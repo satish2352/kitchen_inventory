@@ -46,18 +46,6 @@ public function searchActivityLog(Request $request)
             ->where('activity_message', 'like', "%$query%")
         ->orderBy('created_at', 'desc') // Optional: Sort by latest first
         ->paginate(10);
-
-
-    // Modify the query to search users based on name, email, or phone
-    // $ActiviyLogData = UsersData::where('added_byId', $sess_user_id)
-    //                  ->where(function ($q) use ($query) {  // Group the OR conditions
-    //                      $q->where('name', 'like', "%$query%")
-    //                        ->orWhere('email', 'like', "%$query%")
-    //                        ->orWhere('phone', 'like', "%$query%");
-    //                  })
-    //                  ->get();
-                   
-    // Return the user listing Blade with the search results (no full page reload)
     return view('activity-search-results', compact('ActiviyLogData'))->render();
 }
 

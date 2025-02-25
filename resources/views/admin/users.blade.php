@@ -485,44 +485,36 @@
 </script>
 
 <script>
-    $(document).ready(function() {
-        $('.edit-btn-user').on('click', function() {
-            click('kkkkkkkkkkkkkk');
-            var locationId = $(this).data('id'); // Get the location ID from the button
+$(document).ready(function() {
+    $(document).on('click', '.edit-btn-user', function() {
+        var locationId = $(this).data('id'); // Get the location ID from the button
 
-            // AJAX request to get location data
-            $.ajax({
-                url: '{{ route('edit-admin-users') }}', // Your route to fetch the location data
-                type: 'GET',
-                data: {
-                    locationId: locationId
-                },
-                success: function(response) {
-                    $('#name').val(response.user_data.name);
-                    $('#role').val(response.user_data.user_role);
-                    $('#email').val(response.user_data.email);
-                    // $('#phone').val(response.user_data.phone); 
-                    $('#password').val(response.user_data.password);
-                    $('#edit-user-id').val(response.user_data.id);
+        $.ajax({
+            url: '{{ route('edit-admin-users') }}', // Your route to fetch the location data
+            type: 'GET',
+            data: {
+                locationId: locationId
+            },
+            success: function(response) {
+                $('#name').val(response.user_data.name);
+                $('#role').val(response.user_data.user_role);
+                $('#email').val(response.user_data.email);
+                $('#password').val(response.user_data.password);
+                $('#edit-user-id').val(response.user_data.id);
 
-                    var selectedLocations = response.user_data.location.split(
-                        ',');
-                    $('#location').val(selectedLocations)
-                        .change();
+                var selectedLocations = response.user_data.location.split(',');
+                $('#location').val(selectedLocations).change();
 
-
-                    // Show the popup
-                    $('#editPopupUser').show();
-
-                    // Add the CSS property for flex display
-                    document.getElementById('editPopupUser').style.display = "flex";
-                },
-                error: function() {
-                    alert('Failed to load location data.');
-                }
-            });
+                // Show the popup
+                $('#editPopupUser').css('display', 'flex');
+            },
+            error: function() {
+                alert('Failed to load location data.');
+            }
         });
     });
+});
+
 </script>
 
 <script type="text/javascript">

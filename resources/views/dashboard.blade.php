@@ -172,7 +172,7 @@
          
           <!-- Icon Box 4 -->
           <div class="col-4">
-               <a class="nav-link" href="{{ route('get-shopping-list-admin') }}">
+               <a class="nav-link" href="{{ route('get-submited-shopping-list-super-admin') }}">
              <div class="icon-box text-center shadow">
                 <div class="icon-circle mb-3">
                    <i class="bi bi-tools"></i>
@@ -218,7 +218,7 @@
         
           <!-- Icon Box 4 -->
           <div class="col-4">
-          <a class="nav-link" href="{{ route('get-location-wise-inventory') }}">
+          <a class="nav-link" href="{{ route('get-location-wise-inventory-sa') }}">
              <div class="icon-box text-center shadow">
                 <div class="icon-circle mb-3">
                    <i class="bi bi-tools"></i>

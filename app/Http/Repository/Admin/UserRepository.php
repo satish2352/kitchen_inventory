@@ -19,46 +19,54 @@ use Illuminate\Support\Facades\Mail;
 class UserRepository
 {
     public function getUsersList() {
-		$sess_user_id = session()->get('login_id');
-        $data_location = UsersData::select('id','name','location','user_role','email','password','created_at','email','phone',
-		'is_approved','added_by','user_role')
-							->where('is_deleted', '0')
-							->where('added_by', 2)
-							->where('added_byId', $sess_user_id)
-							->orderBy('created_at', 'desc')
-							->paginate(10);
-							// ->get();
+		try {
+			$sess_user_id = session()->get('login_id');
+			$data_location = UsersData::select('id','name','location','user_role','email','password','created_at','email','phone',
+			'is_approved','added_by','user_role')
+								->where('is_deleted', '0')
+								->where('added_by', 2)
+								->where('added_byId', $sess_user_id)
+								->orderBy('created_at', 'desc')
+								->paginate(10);
+								// ->get();
 
-							  // Fetch locations for each user
-    $data_location->each(function ($user_data) {
-        $locationIds = explode(',', $user_data->location);
-        $user_data->locations = Locations::whereIn('id', $locationIds)->pluck('location')->toArray();
-    });
-// dd($data_location);
-    // return $users;
-							
-		return $data_location;
+								// Fetch locations for each user
+			$data_location->each(function ($user_data) {
+				$locationIds = explode(',', $user_data->location);
+				$user_data->locations = Locations::whereIn('id', $locationIds)->pluck('location')->toArray();
+			});
+			return $data_location;
+		} catch (\Exception $e) {
+			
+			info($e->getMessage());
+		}
 	}
 
     public function addLocationCheck($request)
 	{
-		return Locations::where('location', '=', $request['location'])
-			// ->orWhere('u_uname','=',$request['u_uname'])
-			->select('id')->get();
+		try {
+			return Locations::where('location', '=', $request['location'])
+				// ->orWhere('u_uname','=',$request['u_uname'])
+				->select('id')->get();
+		} catch (\Exception $e) {
+			
+			info($e->getMessage());
+		}
 	}
 
     public function editUser($reuest)
 	{
-
-		// $data_district = [];
-
-		$data_users_data = UsersData::where('users_data.id', '=', $reuest->locationId)
-			->select('users_data.*')->get()
-			->toArray();
-						
-		$data_location = $data_users_data[0];
-		// dd($data_location);
-		return $data_location;
+		try{
+			$data_users_data = UsersData::where('users_data.id', '=', $reuest->locationId)
+				->select('users_data.*')->get()
+				->toArray();
+							
+			$data_location = $data_users_data[0];
+			return $data_location;
+		} catch (\Exception $e) {
+			
+			info($e->getMessage());
+		}
 	}
 
     public function addUser($request)
@@ -124,56 +132,38 @@ class UserRepository
 
     public function updateUser($request)
 	{
+		try {
 
-		$locations = implode(',', $request['location']); // Implode the array into a string (e.g., "1,2,3")
-		$user_data = UsersData::where('id',$request['edit_id']) 
-						->update([
-							'name' => ucwords(strtolower($request['name'])),
-							'location' => $locations,
-							'user_role' => $request['role'],
-							'phone' => $request['phone'],
-							'email' => $request['email'],
-							'password' => $request['password'],
-						]);
-		// dd($user_data);
-		return $request->edit_id;
+			$locations = implode(',', $request['location']); // Implode the array into a string (e.g., "1,2,3")
+			$user_data = UsersData::where('id',$request['edit_id']) 
+							->update([
+								'name' => ucwords(strtolower($request['name'])),
+								'location' => $locations,
+								'user_role' => $request['role'],
+								'phone' => isset($request['phone']) ? $request['phone'] :'1234567890',
+								'email' => $request['email'],
+								'password' => $request['password'],
+							]);
+			return $request->edit_id;
+		} catch (\Exception $e) {
+			
+			info($e->getMessage());
+		}
 	}
 
-    // public function deleteLocation($id)
-    // {
-    //     try {
-    //         $user = Locations::find($id);
-    //         if ($user) {
-              
-    //             $user->delete();
-               
-    //             return $user;
-    //         } else {
-    //             return null;
-    //         }
-    //     } catch (\Exception $e) {
-    //         return $e;
-    //     }
-    // }
 
     public function deleteUser($id)
     {
-        $all_data=[];
-
-        $student_data = UsersData::find($id);
-// dd($student_data);
-                // Delete the record from the database
-                $is_deleted = $student_data->is_deleted == 1 ? 0 : 1;
-                $student_data->is_deleted = $is_deleted;
-                $student_data->save();
-
-        return $student_data;
-
-            // }
-            // return response()->json([
-            //     'status' => 'error',
-            //     'message' => 'Intern ID Card details not found.',
-            // ], 404);
+		try {
+			$student_data = UsersData::find($id);
+			$is_deleted = $student_data->is_deleted == 1 ? 0 : 1;
+			$student_data->is_deleted = $is_deleted;
+			$student_data->save();
+			return $student_data;
+		} catch (\Exception $e) {
+			
+			info($e->getMessage());
+		}
 
     }
 }

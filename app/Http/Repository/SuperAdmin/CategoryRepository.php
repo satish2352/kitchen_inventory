@@ -16,14 +16,15 @@ use Illuminate\Support\Facades\Mail;
 class CategoryRepository
 {
     public function getCategoryList() {
-        $data_location = Category::select('id','category_name','created_at'
-							)
-							->where('is_deleted', '0')
-							->orderBy('category_name', 'asc')
-							->paginate(10);
-							// ->get();
-							
-		return $data_location;
+		try {
+			$data_location = Category::select('id','category_name','created_at', 'priority')
+								->where('is_deleted', '0')
+								->orderBy('category_name', 'asc')
+								->paginate(10);
+			return $data_location;
+		} catch (\Exception $e) {	
+			info($e->getMessage());
+		}
 	}
 
     public function addLocationCheck($request)
@@ -36,62 +37,73 @@ class CategoryRepository
     public function editCategory($reuest)
 	{
 
-		// $data_district = [];
-
-		$data_users_data = Category::where('id', '=', $reuest->locationId)
-			->select(
-				'category_name','id'
-			)->get()
-			->toArray();
-						
-		$data_location = $data_users_data[0];
-		return $data_location;
+		try {
+			$data_users_data = Category::where('id', '=', $reuest->edit_id)
+				->select(
+					'category_name','id','priority'
+				)->get()
+				->toArray();
+							
+			$data_location = $data_users_data[0];
+			return $data_location;
+		} catch (\Exception $e) {
+			info($e->getMessage());
+		}
 	}
 
     public function addCategory($request)
 	{
-		$data =array();
-		$location_data = new Category();
-		$location_data->category_name = ucwords(strtolower($request['category_name']));
-		$location_data->save();
-		$last_insert_id = $location_data->id;
 
-		$sess_user_id = session()->get('login_id');
-		$sess_user_name = session()->get('user_name');
-		$sess_location_id = session()->get('location_selected_id');
-				
-		$LogMsg= config('constants.SUPER_ADMIN.1119');
+		try {
+			$location_data = new Category();
+			$location_data->category_name = ucwords(strtolower($request['category_name']));
+			$location_data->priority = $request['priority'];
+			$location_data->save();
+			$last_insert_id = $location_data->id;
 
-		$FinalLogMessage = $sess_user_name.' '.$LogMsg;
-		$ActivityLogData = new ActivityLog();
-		$ActivityLogData->user_id = $sess_user_id;
-		$ActivityLogData->activity_message = $FinalLogMessage;
-		$ActivityLogData->save();	
+			$sess_user_id = session()->get('login_id');
+			$sess_user_name = session()->get('user_name');
+			$sess_location_id = session()->get('location_selected_id');
+					
+			$LogMsg= config('constants.SUPER_ADMIN.1119');
 
-        return $last_insert_id;
+			$FinalLogMessage = $sess_user_name.' '.$LogMsg;
+			$ActivityLogData = new ActivityLog();
+			$ActivityLogData->user_id = $sess_user_id;
+			$ActivityLogData->activity_message = $FinalLogMessage;
+			$ActivityLogData->save();	
+
+			return $last_insert_id;
+		} catch (\Exception $e) {
+			info($e->getMessage());
+		}
 
 	}
 
     public function updateCategory($request)
 	{
-		$user_data = Category::where('id',$request['edit_id']) 
-						->update([
-							'category_name' => ucwords(strtolower($request['category_name']))
-						]);
+		try {
+			$user_data = Category::where('id',$request['edit_id']) 
+							->update([
+								'category_name' => ucwords(strtolower($request['category_name'])),
+								'priority' => $request['priority']
+							]);
 
-						$sess_user_id = session()->get('login_id');
-		$sess_user_name = session()->get('user_name');
-		$sess_location_id = session()->get('location_selected_id');
-				
-		$LogMsg= config('constants.SUPER_ADMIN.1120');
+							$sess_user_id = session()->get('login_id');
+			$sess_user_name = session()->get('user_name');
+			$sess_location_id = session()->get('location_selected_id');
+					
+			$LogMsg= config('constants.SUPER_ADMIN.1120');
 
-		$FinalLogMessage = $sess_user_name.' '.$LogMsg;
-		$ActivityLogData = new ActivityLog();
-		$ActivityLogData->user_id = $sess_user_id;
-		$ActivityLogData->activity_message = $FinalLogMessage;
-		$ActivityLogData->save();
-		// dd($user_data);
-		return $request->edit_id;
+			$FinalLogMessage = $sess_user_name.' '.$LogMsg;
+			$ActivityLogData = new ActivityLog();
+			$ActivityLogData->user_id = $sess_user_id;
+			$ActivityLogData->activity_message = $FinalLogMessage;
+			$ActivityLogData->save();
+			return $request->edit_id;
+		} catch (\Exception $e) {
+			info($e->getMessage());
+		}
 	}
 
     public function deleteCategory($id)

@@ -114,7 +114,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'location' => 'required',
             'role' => 'required',
-            'phone' => 'required|string|max:15',
+            // 'phone' => 'required|string|max:15',
             'email' => 'required|email|max:255',
             'password' => 'required',
         ];
@@ -125,13 +125,13 @@ class UserController extends Controller
             'name.max' => 'First Name should not exceed 255 characters.',
             'location.required' => 'Location is required.',
             'role.required' => 'Role is required.',
-            'phone.required' => 'Contact Details are required.',
-            'phone.string' => 'Contact Details must be a string.',
-            'phone.max' => 'Contact Details should not exceed 15 characters.',
+            // 'phone.required' => 'Contact Details are required.',
+            // 'phone.string' => 'Contact Details must be a string.',
+            // 'phone.max' => 'Contact Details should not exceed 15 characters.',
             'email.required' => 'Email is required.',
             'email.email' => 'Email must be a valid email address.',
             'email.max' => 'Email should not exceed 255 characters.',
-            'password.required' => 'Please  enter category_name name.',
+            'password.required' => 'Please  enter password name.',
         ];
         try {
             $validation = Validator::make($request->all(), $rules, $messages);

@@ -69,9 +69,12 @@ class CategoryController extends Controller {
     
 
     public function editCategory(Request $request){
+        try {
         $category_data = $this->service->editCategory($request);
-        // Log::info('This is an informational message.',$category_data);
         return response()->json(['category_data' => $category_data]);
+        } catch (\Exception $e) {
+            info($e->getMessage());
+        }
     }
 
     public function updateCategory(Request $request){

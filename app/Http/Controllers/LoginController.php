@@ -134,6 +134,19 @@ class LoginController extends Controller {
         return redirect('/' )->with(['success' => 'Password chnage successfully please login again to use service ']);
 
     }
+
+    public function getLocationSelectedAdmin(Request $request)
+    {
+        try {
+            $request->session()->put('location_selected', $request->location_selected);
+            $final_location = Locations::where('id', session('location_selected'))->where('is_deleted', '0')->first();
+            $request->session()->put('location_selected_name', $final_location->location);
+            $request->session()->put('location_selected_id', $final_location->id);
+            return \Redirect::back();
+        } catch (\Exception $e) {
+           info($e->getMessage());
+        }
+    }
 }
 
    

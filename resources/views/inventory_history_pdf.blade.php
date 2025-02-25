@@ -112,9 +112,9 @@
                 <th>Item Name</th>
                 <th>Present Qty</th>
                 <th>Buy Qty</th>
-                @if (session()->get('user_role') == '1')
+                {{-- @if (session()->get('user_role') == '1') --}}
                     <th>Total Price</th>
-                @endif
+                {{-- @endif --}}
             </tr>
         </thead>
         <tbody>
@@ -133,20 +133,20 @@
                         <td>{{ $data['inventory_id'] }}</td>
                         <td>{{ $data['quantity'] }}</td>
                         <td>{{ $buyQty }}</td>
-                        @if (session()->get('user_role') == '1')
+                        {{-- @if (session()->get('user_role') == '1') --}}
                             <td>
                                 @php
                                     $finalPrice = $finalPrice + $buyQty * $data['price'];
                                 @endphp
                                 $ {{ $buyQty * $data['price'] }}</td>
-                        @endif
+                        {{-- @endif --}}
                     </tr>
                 @endif
             @endforeach
-            @if (session()->get('user_role') == '1')
-                <td colspan="5"></td>
+            {{-- @if (session()->get('user_role') == '1') --}}
+                <td colspan="5">Total Price: </td>
                 <td>$ {{ $finalPrice }}</td>
-            @endif
+            {{-- @endif --}}
         </tbody>
     </table>
 </body>

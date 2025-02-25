@@ -80,50 +80,53 @@ class ShoppingListController extends Controller
 
     public function getSubmitedShopppingListSuperAdmin(Request $request) 
     {
-        $sess_user_id = session()->get('login_id');
-        $location_selected_name = session()->get('location_selected_name');
-        $location_selected_id = session()->get('location_selected_id');
-        $data_location_wise_inventory=array();
-        $locationsData = Locations::where('is_active', '1')
-                            ->where('is_deleted', '0')
-                            ->select('id','location')
-                            ->orderBy('location', 'asc')
-                            ->get()
-                            ->toArray();
+        try {
+            $sess_user_id = session()->get('login_id');
+            $location_selected_name = session()->get('location_selected_name');
+            $location_selected_id = session()->get('location_selected_id');
+            $data_location_wise_inventory=array();
+            $locationsData = Locations::where('is_active', '1')
+                                ->where('is_deleted', '0')
+                                ->select('id','location')
+                                ->orderBy('location', 'asc')
+                                ->get()
+                                ->toArray();
 
-        if($location_selected_name !=''){
+            if($location_selected_name !=''){
 
-            $data_location_wise_inventory = LocationWiseInventory::leftJoin('locations', 'location_wise_inventory.location_id', '=', 'locations.id')
-            ->leftJoin('master_kitchen_inventory', 'location_wise_inventory.inventory_id', '=', 'master_kitchen_inventory.id')
-            ->leftJoin('units', 'master_kitchen_inventory.unit', '=', 'units.id')
-            ->leftJoin('category', 'master_kitchen_inventory.category', '=', 'category.id')
-            ->select(
-                'master_kitchen_inventory.id',
-                'master_kitchen_inventory.category',
-                'master_kitchen_inventory.item_name',
-                'master_kitchen_inventory.unit',
-                'master_kitchen_inventory.price',
-                'location_wise_inventory.quantity',
-                'location_wise_inventory.created_at',                
-                'location_wise_inventory.master_quantity',
-                'location_wise_inventory.master_price',
-                'location_wise_inventory.id as locationWiseId',
-                'category.category_name',
-                'units.unit_name',
-                'locations.location'
-            )
-            ->where('master_kitchen_inventory.location_id', $location_selected_id)
-            ->where('master_kitchen_inventory.is_deleted', '0')
-            ->whereDate('location_wise_inventory.created_at', now()->toDateString())
-            ->orderBy('category.category_name', 'asc') 
-            ->orderBy('master_kitchen_inventory.priority', 'asc') 
-            ->get()
-            ->groupBy('category_name');
+                $data_location_wise_inventory = LocationWiseInventory::leftJoin('locations', 'location_wise_inventory.location_id', '=', 'locations.id')
+                ->leftJoin('master_kitchen_inventory', 'location_wise_inventory.inventory_id', '=', 'master_kitchen_inventory.id')
+                ->leftJoin('units', 'master_kitchen_inventory.unit', '=', 'units.id')
+                ->leftJoin('category', 'master_kitchen_inventory.category', '=', 'category.id')
+                ->select(
+                    'master_kitchen_inventory.id',
+                    'master_kitchen_inventory.category',
+                    'master_kitchen_inventory.item_name',
+                    'master_kitchen_inventory.unit',
+                    'master_kitchen_inventory.price',
+                    'location_wise_inventory.quantity',
+                    'location_wise_inventory.created_at',                
+                    'location_wise_inventory.master_quantity',
+                    'location_wise_inventory.master_price',
+                    'location_wise_inventory.id as locationWiseId',
+                    'category.category_name',
+                    'units.unit_name',
+                    'locations.location'
+                )
+                ->where('master_kitchen_inventory.location_id', $location_selected_id)
+                ->where('master_kitchen_inventory.is_deleted', '0')
+                ->whereDate('location_wise_inventory.created_at', now()->toDateString())
+                ->orderBy('category.category_name', 'asc') 
+                ->orderBy('master_kitchen_inventory.priority', 'asc') 
+                ->get()
+                ->groupBy('category_name');
 
-        }    
-        return view('kitchen-inventory-submited', compact('locationsData','data_location_wise_inventory'));
+            }    
+            return view('kitchen-inventory-submited', compact('locationsData','data_location_wise_inventory'));
+        } catch (\Exception $e) {
+            info($e->getMessage());
+        }
     }
-
     public function updateShoppingListManager(Request $request) 
     {
         // Define the validation rules
@@ -208,119 +211,124 @@ class ShoppingListController extends Controller
 
     public function getLocationWiseInventorySA(Request $request) 
     {
-        $sess_user_id = session()->get('login_id');
-        $location_selected_name = session()->get('location_selected_name');
-        $location_selected_id = session()->get('location_selected_id');
-       
-        $InventoryData=array();
+        try {
+            $sess_user_id = session()->get('login_id');
+            $location_selected_name = session()->get('location_selected_name');
+            $location_selected_id = session()->get('location_selected_id');
+        
+            $InventoryData=array();
 
-        $locationsData = Locations::where('is_active', '1')
-                            ->where('is_deleted', '0')
-                            ->select('id','location')
-                            ->orderBy('location', 'asc')
-                            ->get()
-                            ->toArray();
+            $locationsData = Locations::where('is_active', '1')
+                                ->where('is_deleted', '0')
+                                ->select('id','location')
+                                ->orderBy('location', 'asc')
+                                ->get()
+                                ->toArray();
 
-        if($location_selected_name !='') {
+            if($location_selected_name !='') {
 
-            $data_location_wise_inventory_new = LocationWiseInventory::leftJoin('locations', 'location_wise_inventory.location_id', '=', 'locations.id')
-                ->leftJoin('master_kitchen_inventory', 'location_wise_inventory.inventory_id', '=', 'master_kitchen_inventory.id')
+                $data_location_wise_inventory_new = LocationWiseInventory::leftJoin('locations', 'location_wise_inventory.location_id', '=', 'locations.id')
+                    ->leftJoin('master_kitchen_inventory', 'location_wise_inventory.inventory_id', '=', 'master_kitchen_inventory.id')
+                    ->leftJoin('units', 'master_kitchen_inventory.unit', '=', 'units.id')
+                    ->leftJoin('category', 'master_kitchen_inventory.category', '=', 'category.id')
+                    ->select(
+                        'location_wise_inventory.id',
+                        'master_kitchen_inventory.category',
+                        'master_kitchen_inventory.item_name',
+                        'master_kitchen_inventory.unit',
+                        'master_kitchen_inventory.price',
+                        'master_kitchen_inventory.quantity as masterQuantity',
+                        'location_wise_inventory.quantity',
+                        'location_wise_inventory.created_at',
+                        'location_wise_inventory.id as locationWiseId',
+                        'location_wise_inventory.inventory_id as masterInventoryId',
+                        'category.category_name',
+                        'units.unit_name',
+                        'locations.location'
+                    )
+                    ->where('master_kitchen_inventory.location_id', $location_selected_id)
+                    ->where('master_kitchen_inventory.is_deleted', '0')
+                    ->whereDate('location_wise_inventory.created_at', now()->toDateString())
+                    ->orderBy('category.category_name', 'asc')
+                    ->orderBy('master_kitchen_inventory.item_name', 'asc')
+                    ->get()
+                    ->groupBy('category_name');
+
+
+            // Fetch newly added items from master_kitchen_inventory that are NOT in location_wise_inventory
+                $new_master_inventory_items = MasterKitchenInventory::leftJoin('category', 'master_kitchen_inventory.category', '=', 'category.id')
                 ->leftJoin('units', 'master_kitchen_inventory.unit', '=', 'units.id')
-                ->leftJoin('category', 'master_kitchen_inventory.category', '=', 'category.id')
+                ->leftJoin('locations', 'master_kitchen_inventory.location_id', '=', 'locations.id')
                 ->select(
-                    'location_wise_inventory.id',
+                    'master_kitchen_inventory.id as masterInventoryId',
                     'master_kitchen_inventory.category',
                     'master_kitchen_inventory.item_name',
                     'master_kitchen_inventory.unit',
                     'master_kitchen_inventory.price',
                     'master_kitchen_inventory.quantity as masterQuantity',
-                    'location_wise_inventory.quantity',
-                    'location_wise_inventory.created_at',
-                    'location_wise_inventory.id as locationWiseId',
-                    'location_wise_inventory.inventory_id as masterInventoryId',
+                    DB::raw('NULL as quantity'), // New items won't have quantity yet
                     'category.category_name',
                     'units.unit_name',
                     'locations.location'
                 )
                 ->where('master_kitchen_inventory.location_id', $location_selected_id)
                 ->where('master_kitchen_inventory.is_deleted', '0')
-                ->whereDate('location_wise_inventory.created_at', now()->toDateString())
+                ->whereNotIn('master_kitchen_inventory.id', function ($query) use ($location_selected_id) {
+                    $query->select('inventory_id')
+                        ->from('location_wise_inventory')
+                        ->where('location_id', $location_selected_id);
+                })
                 ->orderBy('category.category_name', 'asc')
                 ->orderBy('master_kitchen_inventory.item_name', 'asc')
                 ->get()
-                ->groupBy('category_name');
+                ->groupBy('category_name');        
 
+                
+            if(!empty($data_location_wise_inventory_new) && count($data_location_wise_inventory_new) > 0)
+            {
 
-        // Fetch newly added items from master_kitchen_inventory that are NOT in location_wise_inventory
-            $new_master_inventory_items = MasterKitchenInventory::leftJoin('category', 'master_kitchen_inventory.category', '=', 'category.id')
-            ->leftJoin('units', 'master_kitchen_inventory.unit', '=', 'units.id')
-            ->leftJoin('locations', 'master_kitchen_inventory.location_id', '=', 'locations.id')
-            ->select(
-                'master_kitchen_inventory.id as masterInventoryId',
-                'master_kitchen_inventory.category',
-                'master_kitchen_inventory.item_name',
-                'master_kitchen_inventory.unit',
-                'master_kitchen_inventory.price',
-                'master_kitchen_inventory.quantity as masterQuantity',
-                DB::raw('NULL as quantity'), // New items won't have quantity yet
-                'category.category_name',
-                'units.unit_name',
-                'locations.location'
-            )
-            ->where('master_kitchen_inventory.location_id', $location_selected_id)
-            ->where('master_kitchen_inventory.is_deleted', '0')
-            ->whereNotIn('master_kitchen_inventory.id', function ($query) use ($location_selected_id) {
-                $query->select('inventory_id')
-                    ->from('location_wise_inventory')
-                    ->where('location_id', $location_selected_id);
-            })
-            ->orderBy('category.category_name', 'asc')
-            ->orderBy('master_kitchen_inventory.item_name', 'asc')
-            ->get()
-            ->groupBy('category_name');        
-
-            
-        if(!empty($data_location_wise_inventory_new) && count($data_location_wise_inventory_new) > 0)
-        {
-
-            foreach ($new_master_inventory_items as $category => $items) {
-                if (isset($data_location_wise_inventory_new[$category])) {
-                    $data_location_wise_inventory_new[$category] = $data_location_wise_inventory_new[$category]->merge($items);
-                } else {
-                    $data_location_wise_inventory_new[$category] = $items;
+                foreach ($new_master_inventory_items as $category => $items) {
+                    if (isset($data_location_wise_inventory_new[$category])) {
+                        $data_location_wise_inventory_new[$category] = $data_location_wise_inventory_new[$category]->merge($items);
+                    } else {
+                        $data_location_wise_inventory_new[$category] = $items;
+                    }
                 }
-            }
-            
-            $InventoryData['data_location_wise_inventory'] = $data_location_wise_inventory_new;
-            $InventoryData['DataType'] = 'LocationWiseData';
-        }else{
-            $data_location_wise_inventory = MasterKitchenInventory::leftJoin('category', 'master_kitchen_inventory.category', '=', 'category.id')
-			->leftJoin('units', 'master_kitchen_inventory.unit', '=', 'units.id')
-			->leftJoin('locations', 'master_kitchen_inventory.location_id', '=', 'locations.id')
-			->select(
-				'master_kitchen_inventory.id',
-				'master_kitchen_inventory.category',
-				'master_kitchen_inventory.item_name',
-				'master_kitchen_inventory.unit',
-				'master_kitchen_inventory.price',
-                'master_kitchen_inventory.quantity as masterQuantity',
-				'master_kitchen_inventory.created_at',
-				'category.category_name',
-				'units.unit_name',
-				'locations.location'
-			)
-			->where('master_kitchen_inventory.location_id', $location_selected_id)
-			->where('master_kitchen_inventory.is_deleted', '0')
-			->orderBy('category.category_name', 'asc') // Order by category name first
-			->orderBy('master_kitchen_inventory.item_name', 'asc') // Then order by item name
-			->get()
-			->groupBy('category_name');
-            $InventoryData['data_location_wise_inventory']=$data_location_wise_inventory;
-            $InventoryData['DataType']='MasterData';
+                
+                $InventoryData['data_location_wise_inventory'] = $data_location_wise_inventory_new;
+                $InventoryData['DataType'] = 'LocationWiseData';
+            }else{
+                $data_location_wise_inventory = MasterKitchenInventory::leftJoin('category', 'master_kitchen_inventory.category', '=', 'category.id')
+                ->leftJoin('units', 'master_kitchen_inventory.unit', '=', 'units.id')
+                ->leftJoin('locations', 'master_kitchen_inventory.location_id', '=', 'locations.id')
+                ->select(
+                    'master_kitchen_inventory.id',
+                    'master_kitchen_inventory.category',
+                    'master_kitchen_inventory.item_name',
+                    'master_kitchen_inventory.unit',
+                    'master_kitchen_inventory.price',
+                    'master_kitchen_inventory.quantity as masterQuantity',
+                    'master_kitchen_inventory.created_at',
+                    'category.category_name',
+                    'units.unit_name',
+                    'locations.location'
+                )
+                ->where('master_kitchen_inventory.location_id', $location_selected_id)
+                ->where('master_kitchen_inventory.is_deleted', '0')
+                ->orderBy('category.category_name', 'asc') // Order by category name first
+                ->orderBy('master_kitchen_inventory.item_name', 'asc') // Then order by item name
+                ->get()
+                ->groupBy('category_name');
+                $InventoryData['data_location_wise_inventory']=$data_location_wise_inventory;
+                $InventoryData['DataType']='MasterData';
 
-            }
-        }    
-        return view('kitchen-inventory', compact('InventoryData','locationsData'));
+                }
+            }    
+            return view('kitchen-inventory', compact('InventoryData','locationsData'));
+
+        } catch (\Exception $e) {
+            info($e->getMessage());
+        }
     }
 
     public function addKitchenInventoryBySuperAdmin(Request $request)

@@ -160,7 +160,8 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
             <!-- Left Section -->
             <div class="d-flex align-items-center gap-2">
                 <span class="act-user">{{ ($category_data->currentPage() - 1) * $category_data->perPage() + $loop->iteration }})</span>
-                <span class="act-user">{{ $item->category_name }}</span>
+                <span class="act-user">Name :{{ $item->category_name }}</span>
+                <span class="act-user">Priority :{{ $item->priority }}</span>
             </div>
             <!-- Right Section -->
             <div>
@@ -267,7 +268,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
          </div>
 
           <div class="row mb-3">
-            <label class="form-label col-md-6 col-sm-12 col-lg-6">Priority
+            <label class="form-label col-md-6 col-sm-12 col-lg-6">priority
             </label>
             <div class="col-md-6 col-sm-12 col-lg-6">
                <input
@@ -316,7 +317,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
           </div>
 
           <div class="row mb-3">
-            <label class="form-label col-md-6 col-sm-12 col-lg-6">Priority
+            <label class="form-label col-md-6 col-sm-12 col-lg-6">priority
             </label>
             <div class="col-md-6 col-sm-12 col-lg-6">
                <input
@@ -324,6 +325,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
                   class="form-control"
                   placeholder=""
                   name="priority"
+                  id="priority"
                   value="0"
                   />
             </div>
@@ -450,47 +452,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
       });
     });
  </script>
- <script>
- $(document).ready(function() {
-  // alert('kkkkkkkkkkkkkk');
-  // Open the popup when Edit button is clicked
-  $('.edit-btn-category').on('click', function() {
-    var locationId = $(this).data('id'); // Get the location ID from the button
-    
-    // AJAX request to get location data
-    $.ajax({
-      url: '{{ route('edit-category') }}', // Your route to fetch the location data
-      type: 'GET',
-      data: {
-                locationId: locationId
-            },
-      success: function(response) {
-        // console.log('responseresponseresponseresponse',response.location_data);
-        // alert('ppppppppppppppppppp');
-        // Populate the popup with the fetched data
-        $('#category_id').val(response.category_data.category_name); // Set location value
-        $('#edit-category-id').val(response.category_data.id); // Set role value
-
-        
-        // Show the popup
-        $('#editPopupCategory').show();
-
-// Add the CSS property for flex display
-document.getElementById('editPopupCategory').style.display = "flex";
-      },
-      error: function() {
-        alert('Failed to load location data.');
-      }
-    });
-  });
-  // Close the popup if clicked outside (optional)
-  // $(document).on('click', function(event) {
-  //   if (!$(event.target).closest('#editPopup, .edit-btn').length) {
-  //     $('#editPopup').hide();
-  //   }
-  // });
-});
-</script> 
+ 
 
 <script type="text/javascript">
    document.addEventListener("DOMContentLoaded", () => {
@@ -577,44 +539,30 @@ document.getElementById('editPopupCategory').style.display = "flex";
 </script>
 <script>
    $(document).ready(function() {
-    // alert('kkkkkkkkkkkkkk');
-    // Open the popup when Edit button is clicked
-    // $('.edit-btn-category').on('click', function() {
       $(document).on('click', '.edit-btn-category', function() {
-      var locationId = $(this).data('id'); // Get the location ID from the button
+      var edit_id = $(this).data('id'); // Get the location ID from the button
       
-      // AJAX request to get location data
       $.ajax({
         url: '{{ route('edit-category') }}', // Your route to fetch the location data
         type: 'GET',
         data: {
-                  locationId: locationId
+                  edit_id: edit_id
               },
         success: function(response) {
-          // console.log('responseresponseresponseresponse',response.location_data);
-          // alert('ppppppppppppppppppp');
-          // Populate the popup with the fetched data
+          $('#priority').val(response.category_data.priority); // Set location value
           $('#category_id').val(response.category_data.category_name); // Set location value
           $('#edit-category-id').val(response.category_data.id); // Set role value
    
-          
-          // Show the popup
           $('#editPopupCategory').show();
    
-   // Add the CSS property for flex display
-   document.getElementById('editPopupCategory').style.display = "flex";
+          document.getElementById('editPopupCategory').style.display = "flex";
         },
         error: function() {
           alert('Failed to load location data.');
         }
       });
     });
-    // Close the popup if clicked outside (optional)
-    // $(document).on('click', function(event) {
-    //   if (!$(event.target).closest('#editPopup, .edit-btn').length) {
-    //     $('#editPopup').hide();
-    //   }
-    // });
+  
    });
 </script> 
 <script type="text/javascript">
