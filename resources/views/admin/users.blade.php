@@ -182,8 +182,10 @@
       <div id="addPopup" class="popup-container">
         <div class="popup-content">
 
-        <form class="forms-sample" id="frm_register" name="frm_register" method="post" role="form"
-          action="{{ route('add-admin-users') }}" enctype="multipart/form-data">
+        <!-- <form class="forms-sample" id="frm_register" name="frm_register" method="post" role="form"
+          action="{{ route('add-admin-users') }}" enctype="multipart/form-data"> -->
+          <form class="forms-sample" id="frm_register" name="frm_register" method="post" enctype="multipart/form-data">
+
           <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
           <!-- Popup Title -->
           <h4 class="popup-title">Add User Details</h4>
@@ -289,6 +291,10 @@
                 placeholder="Enter Email Id"
                 name="email"
               />
+
+              @if ($errors->has('email'))
+               <span class="red-text"><?php echo $errors->first('email', ':message'); ?></span>
+               @endif
             </div>
             <!-- @error('email')
                     <div class="alert alert-danger">{{ $message }}</div>
@@ -601,87 +607,80 @@ $.validator.addMethod("passwordStrength", function(value, element) {
 
     // Initialize validation for the add form
     $("#frm_register").validate({
-      rules: {
-       "location[]": {
-      required: function() {
-        return $("#frm_register select[name='location[]'] option:selected").length === 0;
-      }
-    },
-        role: {
-          required: true
-          // minlength: 3
+        rules: {
+            "location[]": {
+                required: function() {
+                    return $("#frm_register select[name='location[]'] option:selected").length === 0;
+                }
+            },
+            role: { required: true },
+            name: { required: true },
+            phone: {
+                required: true,
+                minlength: 10,
+                maxlength: 10
+            },
+            email: { required: true, email: true },
+            password: { required: true, minlength: 6 }
         },
-        name: {
-          required: true
-          // minlength: 3
+        messages: {
+            "location[]": { required: "Please select at least one location." },
+            role: { required: "Please select the role name" },
+            name: { required: "Please enter user name" },
+            phone: {
+                required: "Please enter mobile number",
+                minlength: "Mobile number must be exactly 10 digits.",
+                maxlength: "Mobile number must be exactly 10 digits."
+            },
+            email: { required: "Please enter email ID", email: "Please enter a valid email" },
+            password: { required: "Password is required", minlength: "Password must be at least 6 characters long" }
         },
-        phone: {
-          required: true,
-          // number:true,
-          minlength: 10,
-          maxlength: 10,
-          validPhone: true
-          // pattern: /^[6-9]\d{9}$/
-          // minlength: 3
+        errorElement: "span",
+        errorClass: "error-text",
+        highlight: function(element) {
+            $(element).addClass("is-invalid").removeClass("is-valid");
         },
-        email: {
-          required: true,
-          email:true,
-          // minlength: 3
+        unhighlight: function(element) {
+            $(element).addClass("is-valid").removeClass("is-invalid");
         },
-        password: {
-            required: true,
-            minlength: 6,
-            passwordStrength: true
+        errorPlacement: function(error, element) {
+            if (element.attr("name") === "location[]") {
+                error.insertAfter(element.closest(".form-select"));
+            } else {
+                error.insertAfter(element);
+            }
+        },
+        submitHandler: function(form) {
+            // AJAX submission only if frontend validation passes
+            let formData = new FormData(form);
+
+            $.ajax({
+                url: "{{ route('add-admin-users') }}", // Define the route directly here
+                method: "POST", 
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    if (response.status == 'success') {
+                        location.reload(); // Refresh the page or handle success response
+                    }
+                },
+                error: function (xhr) {
+                    var errors = xhr.responseJSON.errors;
+                    $('.error-text').remove(); // Remove old errors
+
+                    if (errors) {
+                        $.each(errors, function (key, value) {
+                            let inputField = $('[name="' + key + '"]');
+                            inputField.after('<span class="error-text">' + value[0] + '</span>');
+                            inputField.addClass("is-invalid");
+                        });
+                    }
+                }
+            });
+
+            return false; // Prevent default form submission
         }
-        
-      },
-      messages: {
-        "location[]": {
-      required: "Please select at least one location."
-    },
-        role: {
-          required: "Please select the role name"
-          // minlength: "Category name must be at least 3 characters long"
-        },
-        name: {
-          required: "Please enter user name"
-          // minlength: "Category name must be at least 3 characters long"
-        },
-        phone: {
-          required: "Please enter mobile number",
-          // number:"Please enter valid mobile number",
-          minlength: "Phone number min length must be exactly 10 digits.",
-          maxlength: "Phone number max length must be exactly 10 digits.",
-          pattern: "Please enter a valid 10-digit mobile number starting with 6-9."
-          // minlength: "Category name must be at least 3 characters long"
-        },
-        email: {
-          required: "Please enter email ID",
-          required: "Please Enter valid email"
-          // minlength: "Category name must be at least 3 characters long"
-        },
-        password: {
-            required: "Password is required",
-            minlength: "Password must be at least 6 characters long",
-            passwordStrength: "Password must contain at least 5 letters, 1 number, and 1 special character"
-        }
-      },
-      errorElement: "span",
-      errorClass: "error-text",
-      highlight: function (element) {
-        $(element).addClass("is-invalid").removeClass("is-valid");
-      },
-      unhighlight: function (element) {
-        $(element).addClass("is-valid").removeClass("is-invalid");
-      },
-      errorPlacement: function(error, element) {
-        if (element.attr("name") === "location[]") {
-            error.insertAfter(element.closest(".form-select")); // Places the error message below the select field
-        } else {
-            error.insertAfter(element);
-        }
-    }
     });
 
     // Initialize validation for the edit form

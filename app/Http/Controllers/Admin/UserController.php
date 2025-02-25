@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Services\Admin\UserServices;
+use Illuminate\Validation\Rule;
 use App\Models\ {
     Locations,
     Category,
@@ -61,65 +62,132 @@ class UserController extends Controller {
         return view('admin.users',compact('user_data','locationsData'));
     }
 
+    // public function addUser(Request $request)
+    // {
+
+    //     try {
+
+    //         $rules = [
+    //             'name' => 'required|string|max:255',
+    //             'location' => 'required|array',
+    //             'role' => 'required',
+    //             'phone' => 'required|string|max:15',
+    //             'email' => [
+    //                     'required',
+    //                     'email',
+    //                     Rule::unique('users_data')->where(function ($query) {
+    //                         return $query->where('is_deleted', 0);
+    //                     }),
+    //                 ],
+    //             'password' => 'required',
+    //         ];
+    //         $messages = [
+
+    //             // Custom validation messages
+    //         'name.required' => 'First Name is required.',
+    //         'name.string' => 'First Name must be a string.',
+    //         'name.max' => 'First Name should not exceed 255 characters.',
+            
+    //         'location.required' => 'Location is required.',
+    //         'location.array' => 'Invalid location format.',
+    //         'role.required' => 'Role is required.',
+
+    //         'phone.required' => 'Contact Details are required.',
+    //         'phone.string' => 'Contact Details must be a string.',
+    //         'phone.max' => 'Contact Details should not exceed 15 characters.',
+            
+    //         'email.required' => 'Email is required.',
+    //         'email.unique' => 'This email is already registered and active.',
+
+
+    //         'password.required' => 'Please  enter category_name name.',
+    //         ];
+
+    //         $validation = Validator::make($request->all(), $rules, $messages);
+    //         if ($validation->fails()) {
+    //             return redirect('list-admin-users')
+    //                 ->withInput()
+    //                 ->withErrors($validation);
+    //         } else {
+    //             $add_role = $this->service->addUser($request);
+    //             if ($add_role) {
+    //                 $msg = $add_role['msg'];
+    //                 $status = $add_role['status'];
+    //                 session()->flash('alert_status', $status);
+    //                 session()->flash('alert_msg', $msg);
+    //                 if ($status == 'success') {
+    //                     return redirect('list-admin-users');
+    //                 } else {
+    //                     return redirect('list-admin-users')->withInput();
+    //                 }
+    //             }
+
+    //         }
+    //     } catch (Exception $e) {
+    //         return redirect('list-admin-users')->withInput()->with(['msg' => $e->getMessage(), 'status' => 'error']);
+    //     }
+    // }
+
     public function addUser(Request $request)
-    {
+{
+    try {
+        $rules = [
+            'name' => 'required|string|max:255',
+            'location' => 'required|array',
+            'role' => 'required',
+            'phone' => 'required|string|max:15',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users_data')->where(function ($query) {
+                    return $query->where('is_deleted', 0);
+                }),
+            ],
+            'password' => 'required',
+        ];
 
-        try {
-
-            $rules = [
-                'name' => 'required|string|max:255',
-                'location' => 'required|array',
-                'role' => 'required',
-                'phone' => 'required|string|max:15',
-                'email' => 'required|email|max:255',
-                'password' => 'required',
-            ];
-            $messages = [
-
-                // Custom validation messages
+        $messages = [
             'name.required' => 'First Name is required.',
-            'name.string' => 'First Name must be a string.',
-            'name.max' => 'First Name should not exceed 255 characters.',
-            
             'location.required' => 'Location is required.',
-            'location.array' => 'Invalid location format.',
             'role.required' => 'Role is required.',
-
             'phone.required' => 'Contact Details are required.',
-            'phone.string' => 'Contact Details must be a string.',
-            'phone.max' => 'Contact Details should not exceed 15 characters.',
-            
             'email.required' => 'Email is required.',
-            'email.email' => 'Email must be a valid email address.',
-            'email.max' => 'Email should not exceed 255 characters.',
+            'email.unique' => 'This email is already registered and active.',
+            'password.required' => 'Password is required.',
+        ];
 
-            'password.required' => 'Please  enter category_name name.',
-            ];
+        $validation = Validator::make($request->all(), $rules, $messages);
 
-            $validation = Validator::make($request->all(), $rules, $messages);
-            if ($validation->fails()) {
-                return redirect('list-admin-users')
-                    ->withInput()
-                    ->withErrors($validation);
-            } else {
-                $add_role = $this->service->addUser($request);
-                if ($add_role) {
-                    $msg = $add_role['msg'];
-                    $status = $add_role['status'];
-                    session()->flash('alert_status', $status);
-                    session()->flash('alert_msg', $msg);
-                    if ($status == 'success') {
-                        return redirect('list-admin-users');
-                    } else {
-                        return redirect('list-admin-users')->withInput();
-                    }
-                }
-
-            }
-        } catch (Exception $e) {
-            return redirect('list-admin-users')->withInput()->with(['msg' => $e->getMessage(), 'status' => 'error']);
+        if ($validation->fails()) {
+            // Stop execution and return validation errors
+            return response()->json([
+                'status' => 'error',
+                'errors' => $validation->errors()
+            ], 422);
         }
+
+        // Validation passed, insert into database
+        $add_role = $this->service->addUser($request);
+
+        if ($add_role) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'User added successfully!'
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Something went wrong.'
+        ], 500);
+
+    } catch (Exception $e) {
+        return response()->json([
+            'status' => 'error',
+            'message' => $e->getMessage()
+        ], 500);
     }
+}
 
     public function editUser(Request $request){
         $user_data = $this->service->editUser($request);

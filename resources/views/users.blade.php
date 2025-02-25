@@ -325,8 +325,11 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
    <!-- add popup  -->
    <div id="addPopup" class="popup-container">
       <div class="popup-content">
-         <form class="forms-sample" id="frm_register_add" name="frm_register" method="post" role="form"
-            action="{{ route('add-users') }}" enctype="multipart/form-data">
+         <!-- <form class="forms-sample" id="frm_register_add" name="frm_register" method="post" role="form"
+            action="{{ route('add-users') }}" enctype="multipart/form-data"> -->
+
+            <form class="forms-sample" id="frm_register_add" name="frm_register" method="post" enctype="multipart/form-data">
+
             <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
             <!-- Popup Title -->
             <h4 class="popup-title">Add User Details</h4>
@@ -469,6 +472,9 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
                <div class="col-md-6 col-sm-12 col-lg-6">
                   <input type="text" class="form-control" placeholder="Enter Email Id" name="email"
                      id="email" />
+                     @error('email')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                </div>
             </div>
             <div class="row mb-3">
@@ -602,92 +608,86 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
        }, "Password must contain at least 5 letters, 1 number, and 1 special character");
    
    
-       // Initialize validation for the add form
-       $("#frm_register_add").validate({
-           rules: {
-               "location[]": {
-                   required: function() {
-                       return $("#frm_register_add select[name='location[]'] option:selected")
-                           .length === 0;
-                   }
-               },
-               role: {
-                   required: true
-                   // minlength: 3
-               },
-               name: {
-                   required: true
-                   // minlength: 3
-               },
-               phone: {
-                   required: true,
-                   // number:true,
-                   minlength: 10,
-                   maxlength: 10,
-                   validPhone: true
-                   // pattern: /^[6-9]\d{9}$/
-                   // minlength: 3
-               },
-               email: {
-                   required: true,
-                   email: true,
-                   // minlength: 3
-               },
-               password: {
-                   required: true,
-                   minlength: 6,
-                   passwordStrength: true
-               }
-   
-           },
-           messages: {
-               "location[]": {
-                   required: "Please select at least one location."
-               },
-               role: {
-                   required: "Please select the role name"
-                   // minlength: "Category name must be at least 3 characters long"
-               },
-               name: {
-                   required: "Please enter user name"
-                   // minlength: "Category name must be at least 3 characters long"
-               },
-               phone: {
-                   required: "Please enter mobile number",
-                   // number:"Please enter valid mobile number",
-                   minlength: "Mobile number min length must be exactly 10 digits.",
-                   maxlength: "Mobile number max length must be exactly 10 digits.",
-                   pattern: "Please enter a valid 10-digit mobile number starting with 6-9."
-                   // minlength: "Category name must be at least 3 characters long"
-               },
-               email: {
-                   required: "Please enter email ID",
-                   required: "Please Enter valid email"
-                   // minlength: "Category name must be at least 3 characters long"
-               },
-               password: {
-                   required: "Password is required",
-                   minlength: "Password must be at least 6 characters long",
-                   passwordStrength: "Password must contain at least 5 letters, 1 number, and 1 special character"
-               }
-           },
-           errorElement: "span",
-           errorClass: "error-text",
-           highlight: function(element) {
-               $(element).addClass("is-invalid").removeClass("is-valid");
-           },
-           unhighlight: function(element) {
-               $(element).addClass("is-valid").removeClass("is-invalid");
-           },
-           errorPlacement: function(error, element) {
-               if (element.attr("name") === "location[]") {
-                   error.insertAfter(element.closest(
-                   ".form-select")); // Places the error message below the select field
-               } else {
-                   error.insertAfter(element);
-               }
-           }
-       });
+    //    $(document).ready(function () {
+    // Initialize validation for the add form
+    $("#frm_register_add").validate({
+        rules: {
+            "location[]": {
+                required: function() {
+                    return $("#frm_register_add select[name='location[]'] option:selected").length === 0;
+                }
+            },
+            role: { required: true },
+            name: { required: true },
+            phone: {
+                required: true,
+                minlength: 10,
+                maxlength: 10
+            },
+            email: { required: true, email: true },
+            password: { required: true, minlength: 6 }
+        },
+        messages: {
+            "location[]": { required: "Please select at least one location." },
+            role: { required: "Please select the role name" },
+            name: { required: "Please enter user name" },
+            phone: {
+                required: "Please enter mobile number",
+                minlength: "Mobile number must be exactly 10 digits.",
+                maxlength: "Mobile number must be exactly 10 digits."
+            },
+            email: { required: "Please enter email ID", email: "Please enter a valid email" },
+            password: { required: "Password is required", minlength: "Password must be at least 6 characters long" }
+        },
+        errorElement: "span",
+        errorClass: "error-text",
+        highlight: function(element) {
+            $(element).addClass("is-invalid").removeClass("is-valid");
+        },
+        unhighlight: function(element) {
+            $(element).addClass("is-valid").removeClass("is-invalid");
+        },
+        errorPlacement: function(error, element) {
+            if (element.attr("name") === "location[]") {
+                error.insertAfter(element.closest(".form-select"));
+            } else {
+                error.insertAfter(element);
+            }
+        },
+        submitHandler: function(form) {
+            // AJAX submission only if frontend validation passes
+            let formData = new FormData(form);
+
+            $.ajax({
+                url: "{{ route('add-users') }}", // Define the route directly here
+                method: "POST", 
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    if (response.status == 'success') {
+                        location.reload(); // Refresh the page or handle success response
+                    }
+                },
+                error: function (xhr) {
+                    var errors = xhr.responseJSON.errors;
+                    $('.error-text').remove(); // Remove old errors
+
+                    if (errors) {
+                        $.each(errors, function (key, value) {
+                            let inputField = $('[name="' + key + '"]');
+                            inputField.after('<span class="error-text">' + value[0] + '</span>');
+                            inputField.addClass("is-invalid");
+                        });
+                    }
+                }
+            });
+
+            return false; // Prevent default form submission
+        }
+    });
+// });
+
    
        // Initialize validation for the edit form
        // Initialize validation for the add form
@@ -844,3 +844,43 @@ $(document).ready(function() {
     });
 });
 </script>
+
+<!-- <script>
+   $(document).ready(function () {
+       $('#frm_register_add').submit(function (event) {
+           event.preventDefault(); // Prevent the form from submitting the traditional way
+   
+           let form = $(this);
+           let formData = new FormData(form[0]); // Collect form data
+   
+           $.ajax({
+               url: "{{ route('add-users') }}",  // Define the route directly here
+               method: "POST", // POST method for form submission
+               data: formData,
+               processData: false,
+               contentType: false,
+               success: function (response) {
+                   if (response.status == 'success') {
+                    location.reload();
+                       
+                   }
+               },
+               error: function (xhr) {
+                   // Handle validation errors here
+                   var errors = xhr.responseJSON.errors;
+   
+                   // Clear previous errors
+                   $('.text-danger').remove();
+   
+                   // Display new errors
+                   $.each(errors, function (key, messages) {
+                        $('input[name="' + key + '"], select[name="' + key + '"]').after('<span class="text-danger">' + messages[0] + '</span>');
+                    });
+   
+                   // Keep the popup open
+                   $('#addPopup').show();
+               }
+           });
+       });
+   });
+</script> -->
