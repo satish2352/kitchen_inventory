@@ -501,7 +501,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   document.getElementById("installPWA").addEventListener("click", () => {
-    alert('llllllllllllllll');
     if (deferredPrompt) {
       deferredPrompt.prompt(); // Show the install prompt
       deferredPrompt.userChoice.then((choiceResult) => {
