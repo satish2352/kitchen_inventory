@@ -15,6 +15,8 @@ return new class extends Migration {
             $table->foreignId('user_id');
             $table->foreignId('inventory_id');
             $table->foreignId('location_id');
+            $table->float('master_quantity')->default(0);            
+            $table->float('master_price')->default(0);  
             $table->float('quantity');
             $table->integer('is_active')->default(true);
             $table->integer('is_deleted')->default(false);

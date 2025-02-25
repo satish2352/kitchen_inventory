@@ -138,12 +138,14 @@ public function updateKitchenInventoryBySuperAdmin($request) {
 		foreach ($inventoryIds as $index => $inventoryId) {
 			$existingInventory = LocationWiseInventory::where('id', $inventoryId)
 			->first();
-
+			$MasterInventoryData = MasterKitchenInventory::find((int) $MasterInventoryIds[$index]);
 			if ($existingInventory) {
 
 			LocationWiseInventory::where('id', $inventoryId)
 				->update([
 					'quantity' => $quantities[$index],
+					'master_quantity' => $MasterInventoryData->quantity,
+					'master_price' => $MasterInventoryData->price,
 					'approved_by' => '1',
 					'updated_at' => Carbon::now('America/New_York')
 
@@ -152,7 +154,9 @@ public function updateKitchenInventoryBySuperAdmin($request) {
 				$LocationWiseInventoryData = new LocationWiseInventory();
 				$LocationWiseInventoryData->user_id = $sess_user_id;
 				$LocationWiseInventoryData->inventory_id = (int) $MasterInventoryIds[$index];
-				$LocationWiseInventoryData->location_id = $sess_location_id;
+				$LocationWiseInventoryData->location_id = $sess_location_id;				
+				$LocationWiseInventoryData->master_quantity = $MasterInventoryData->quantity;
+				$LocationWiseInventoryData->master_price = $MasterInventoryData->price;
 				$LocationWiseInventoryData->quantity = $quantities[$index];
 				$LocationWiseInventoryData->approved_by = 2;
 				$LocationWiseInventoryData->created_at = Carbon::now('America/New_York');

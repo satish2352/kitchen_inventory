@@ -13,6 +13,7 @@ return new class extends Migration {
         Schema::create('inventory_history', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
+            $table->float('master_qty')->default(0);           
             $table->foreignId('inventory_id');
             $table->foreignId('location_id');
             $table->integer('quantity');
