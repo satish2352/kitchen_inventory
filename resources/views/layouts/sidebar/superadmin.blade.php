@@ -84,6 +84,7 @@
              <a href="{{ route('get-location-wise-inventory-sa') }}"><i class="bi bi-bag-plus-fill"></i>Update Kitchen Inventory</a>
              <a href="{{ route('get-submited-shopping-list-super-admin') }}"><i class="bi bi-share-fill"></i> Shopping List</a>
              <a href="{{ route('get-inventory-history-view') }}"><i class="bi bi-bag-plus-fill"></i>Inventory History</a>
+             <a href="{{ route('list-change-password') }}"><i class="bi bi-bag-plus-fill"></i>Change Password</a>
        
              <a href="javascript:void(0);" id="logoutbtn">
                <i class="bi bi-box-arrow-right"></i> Log Out

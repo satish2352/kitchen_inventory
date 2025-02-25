@@ -144,6 +144,12 @@ Route::group(['middleware' => ['admin']], function () {
 
     Route::get('/search-shopping-list-manager', ['as' => 'search-shopping-list-manager', 'uses' => 'App\Http\Controllers\Manager\ShoppingListController@searchShoppingListManager']);
 
+    Route::get('/list-change-password', ['as' => 'list-change-password', 'uses' => 'App\Http\Controllers\SuperAdmin\ChangePasswordController@index']);
+
+    Route::get('/admin-list-change-password', ['as' => 'admin-list-change-password', 'uses' => 'App\Http\Controllers\Admin\ChangePasswordController@index']);
+
+    Route::get('/night-manager-list-change-password', ['as' => 'night-manager-list-change-password', 'uses' => 'App\Http\Controllers\Manager\ChangePasswordController@index']);
+    
 });
 
 

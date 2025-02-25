@@ -105,15 +105,15 @@
 
                 <!-- Table -->
                 <div class="table-responsive" style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
-                    <table class="table table-striped">
+                    <table class="table table-striped" id="sortableTable_{{ $loop->index }}">
                         <!-- Table Head -->
                         <thead class="table-header">
                             <tr>
-                                <th><b>Sr. No.</b></th>
-                                <th><b>Req. Qty For This Location</b></th>
-                                <th><b>Item</b></th>
-                                <th><b>Available Qty</b></th>
-                                <th><b>Unit</b></th>
+                                <th onclick="sortTable('sortableTable_{{ $loop->index }}', 0)"><b>Sr. No. <i class="bi bi-arrow-up" id="arrow-0-{{ $loop->index }}"></i></b></th>
+                                <th onclick="sortTable('sortableTable_{{ $loop->index }}', 1)"><b>Req. Qty For This Location <i class="bi bi-arrow-up" id="arrow-1-{{ $loop->index }}"></i></b></th>
+                                <th onclick="sortTable('sortableTable_{{ $loop->index }}', 2)"><b>Item <i class="bi bi-arrow-up" id="arrow-2-{{ $loop->index }}"></i></b></th>
+                                <th onclick="sortTable('sortableTable_{{ $loop->index }}', 3)"><b>Available Qty <i class="bi bi-arrow-up" id="arrow-3-{{ $loop->index }}"></i></b></th>
+                                <th onclick="sortTable('sortableTable_{{ $loop->index }}', 4)"><b>Unit <i class="bi bi-arrow-up" id="arrow-4-{{ $loop->index }}"></i></b></th>
                                 <!-- <th><b>Price</b></th> -->
                             </tr>
                         </thead>
@@ -138,7 +138,6 @@
                                     <!-- <td>{{ $item['price'] }}</td>   -->
                                 </tr>
                             @endforeach
-                            <tr>
                         </tbody>
                     </table>
                 </div>
@@ -176,15 +175,15 @@
 
                 <!-- Table -->
                 <div class="table-responsive" style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
-                    <table class="table table-striped">
+                    <table class="table table-striped" id="sortableTable_{{ $loop->index }}">
                         <!-- Table Head -->
                         <thead class="table-header">
                             <tr>
-                                <th><b>Sr. No.</b></th>
-                                <th><b>Req. Qty For This Location</b></th>
-                                <th><b>Item</b></th>
-                                <th><b>Available Qty</b></th>
-                                <th><b>Unit</b></th>
+                                <th onclick="sortTable('sortableTable_{{ $loop->index }}', 0)"><b>Sr. No. <i class="bi bi-arrow-up" id="arrow-0-{{ $loop->index }}"></i></b></th>
+                                <th onclick="sortTable('sortableTable_{{ $loop->index }}', 1)"><b>Req. Qty For This Location <i class="bi bi-arrow-up" id="arrow-1-{{ $loop->index }}"></i></b></th>
+                                <th onclick="sortTable('sortableTable_{{ $loop->index }}', 2)"><b>Item <i class="bi bi-arrow-up" id="arrow-2-{{ $loop->index }}"></i></b></th>
+                                <th onclick="sortTable('sortableTable_{{ $loop->index }}', 3)"><b>Available Qty <i class="bi bi-arrow-up" id="arrow-3-{{ $loop->index }}"></i></b></th>
+                                <th onclick="sortTable('sortableTable_{{ $loop->index }}', 4)"><b>Unit <i class="bi bi-arrow-up" id="arrow-4-{{ $loop->index }}"></i></b></th>
                                 <!-- <th><b>Price</b></th> -->
                             </tr>
                         </thead>
@@ -210,7 +209,6 @@
                                     <!-- <td>{{ $item['price'] }}</td> -->
                                 </tr>
                             @endforeach
-                            <tr>
                         </tbody>
                     </table>
                 </div>
@@ -599,4 +597,65 @@ function isNumberKey(evt) {
     }
     return true;
 }
+</script>
+
+
+<script>
+   // Store sort directions for each table by its ID
+   var sortDirections = {};
+
+   function sortTable(tableId, columnIndex) {
+       var table = document.getElementById(tableId);
+       var tbody = table.querySelector('tbody');
+       var rows = Array.from(tbody.querySelectorAll('tr'));
+
+       // Initialize sort directions for the table if not set yet
+       if (!sortDirections[tableId]) {
+           // Assuming 5 sortable columns
+           sortDirections[tableId] = [true, true, true, true, true];
+       }
+       var ascending = sortDirections[tableId][columnIndex];
+
+       rows.sort(function(rowA, rowB) {
+           var cellA = rowA.getElementsByTagName('td')[columnIndex].innerText.trim();
+           var cellB = rowB.getElementsByTagName('td')[columnIndex].innerText.trim();
+
+           // Check if numeric sort
+           if (!isNaN(parseFloat(cellA)) && !isNaN(parseFloat(cellB))) {
+               return ascending ? cellA - cellB : cellB - cellA;
+           }
+           // Otherwise, do text sort
+           return ascending ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
+       });
+
+       // Clear and re-append sorted rows
+       tbody.innerHTML = '';
+       rows.forEach(function(row) {
+           tbody.appendChild(row);
+       });
+
+       // Toggle sort direction for this column in this table
+       sortDirections[tableId][columnIndex] = !ascending;
+       updateArrows(tableId, columnIndex, ascending);
+   }
+
+   function updateArrows(tableId, columnIndex, ascending) {
+       var table = document.getElementById(tableId);
+       // Reset all arrow icons in the table header
+       var headerIcons = table.querySelectorAll('thead th i');
+       headerIcons.forEach(function(icon) {
+           icon.classList.remove('bi-arrow-up', 'bi-arrow-down');
+           icon.classList.add('bi-arrow-up');
+       });
+
+       // Extract unique table index from the tableId (assuming format sortableTable_INDEX)
+       var parts = tableId.split('_');
+       var tableIndex = parts[1];
+       var arrowId = 'arrow-' + columnIndex + '-' + tableIndex;
+       var arrow = document.getElementById(arrowId);
+       if (arrow) {
+           arrow.classList.toggle('bi-arrow-up', ascending);
+           arrow.classList.toggle('bi-arrow-down', !ascending);
+       }
+   }
 </script>
