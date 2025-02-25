@@ -39,66 +39,70 @@ class UserController extends Controller {
         return view('users',compact('user_data','locationsData'));
     }
 
-    public function addUser(Request $request)
-{
-    try {
-        $rules = [
-            'name' => 'required|string|max:255',
-            'location' => 'required|array',
-            'role' => 'required',
-            'phone' => 'required|string|max:15',
-            'email' => [
-                'required',
-                'email',
-                Rule::unique('users_data')->where(function ($query) {
-                    return $query->where('is_deleted', 0);
-                }),
-            ],
-            'password' => 'required',
-        ];
+        public function addUser(Request $request)
+    {
+        try {
+            $rules = [
+                'name' => 'required|string|max:255',
+                'location' => 'required|array',
+                'role' => 'required',
+                'phone' => 'required|string|max:15',
+                'email' => [
+                    'required',
+                    'email',
+                    Rule::unique('users_data')->where(function ($query) {
+                        return $query->where('is_deleted', 0);
+                    }),
+                ],
+                'password' => 'required',
+            ];
 
-        $messages = [
-            'name.required' => 'First Name is required.',
-            'location.required' => 'Location is required.',
-            'role.required' => 'Role is required.',
-            'phone.required' => 'Contact Details are required.',
-            'email.required' => 'Email is required.',
-            'email.unique' => 'This email is already registered and active.',
-            'password.required' => 'Password is required.',
-        ];
+            $messages = [
+                'name.required' => 'First Name is required.',
+                'location.required' => 'Location is required.',
+                'role.required' => 'Role is required.',
+                'phone.required' => 'Contact Details are required.',
+                'email.required' => 'Email is required.',
+                'email.unique' => 'This email is already registered and active.',
+                'password.required' => 'Password is required.',
+            ];
 
-        $validation = Validator::make($request->all(), $rules, $messages);
+            $validation = Validator::make($request->all(), $rules, $messages);
 
-        if ($validation->fails()) {
-            // Stop execution and return validation errors
+            if ($validation->fails()) {
+                // Stop execution and return validation errors
+                return response()->json([
+                    'status' => 'error',
+                    'errors' => $validation->errors()
+                ], 422);
+            }
+
+            // Validation passed, insert into database
+            $add_role = $this->service->addUser($request);
+
+            if ($add_role) {
+                $msg = $add_role['msg'];
+                    $status = $add_role['status'];
+                    session()->flash('alert_status', $status);
+                    session()->flash('alert_msg', $msg);
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'User added successfully!'
+                ]);
+            }
+
             return response()->json([
                 'status' => 'error',
-                'errors' => $validation->errors()
-            ], 422);
-        }
+                'message' => 'Something went wrong.'
+            ], 500);
 
-        // Validation passed, insert into database
-        $add_role = $this->service->addUser($request);
-
-        if ($add_role) {
+        } catch (Exception $e) {
             return response()->json([
-                'status' => 'success',
-                'message' => 'User added successfully!'
-            ]);
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], 500);
         }
-
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Something went wrong.'
-        ], 500);
-
-    } catch (Exception $e) {
-        return response()->json([
-            'status' => 'error',
-            'message' => $e->getMessage()
-        ], 500);
     }
-}
 
 
     public function editUser(Request $request){

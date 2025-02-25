@@ -593,7 +593,13 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
                            // Append the new search results
                            $('#search-results').html(response);
                        } else {
-                           $('#search-results').html('No Data Found');
+                           $('#search-results').html(`
+                            <div class="border-box mb-4" id="search-results">
+                                <div class="grid-header text-center">
+                                    <h6 class="m-0 text-white">No Data Found</h6>
+                                </div>
+                            </div>
+                        `);
                        }
                    }
                });

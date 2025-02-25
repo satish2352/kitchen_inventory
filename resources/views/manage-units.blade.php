@@ -246,7 +246,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
       <div id="addPopup" class="popup-container">
    <div class="popup-content">
       <form class="forms-sample" id="frm_register" name="frm_register" method="post" role="form"
-         action="{{ route('add-units') }}" enctype="multipart/form-data">
+          enctype="multipart/form-data">
          <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
          <!-- Popup Title -->
          <h4 class="popup-title">Add Unit</h4>
@@ -262,6 +262,9 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
                   name="unit_name"
                   style="text-transform: capitalize;"
                   />
+                  @error('unit_name')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                <!-- <select class="form-select">
                   <option value="1">1</option>
                   <option value="1">1</option>
@@ -377,21 +380,13 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
          <h4 class="confirm-popup-title">Please Confirm</h4>
          <p class="confirm-popup-text">
             Are you sure to delete this unit? <br />
-            this unit will not recover back
-<<<          </p>
+            this unit will not recover back</p>
           <div class="d-flex justify-content-around mt-4 confrm">
             <button id="cancelDelete" class="btn br btn_css">NO</button>
             <button id="confirmDeleteUnit" class="btn btn_css">YES</button>
           </div>
         </div>
-s unit? <br />
-            this unit will not recover back
-         </p>
-         <div class="d-flex justify-content-around mt-4 confrm">
-            <button id="cancelDelete" class="btn br">NO</button>
-            <button id="confirmDeleteUnit" class="btn">YES</button>
-         </div>
-      </div>
+       <br/>
    </div>
 </div>
 <form method="POST" action="{{ url('/delete-units') }}" id="deleteform">
@@ -409,6 +404,7 @@ s unit? <br />
      const confirmPopupUnit = document.getElementById("confirmPopupUnit");
      const confirmDeleteUnit = document.getElementById("confirmDeleteUnit");
      const cancelDeleteButton = document.getElementById("cancelDelete");
+     const closePopUpButton = document.getElementById("closePopup");
    
    
      // Close Popup when clicking outside
@@ -422,6 +418,11 @@ s unit? <br />
        if (e.target === popupadd) {
          popupadd.style.display = "none";
        }
+     });
+
+     // // Close Popup
+     closePopUpButton.addEventListener("click", () => {
+       popupadd.style.display = "none";
      });
    
      // // Open Popup
@@ -519,7 +520,42 @@ s unit? <br />
        },
        unhighlight: function (element) {
          $(element).addClass("is-valid").removeClass("is-invalid");
-       }
+       },
+       submitHandler: function(form) {
+            // AJAX submission only if frontend validation passes
+            let formData = new FormData(form);
+
+            $.ajax({
+               url: "{{ route('add-units') }}",  // Define the route directly here
+               method: "POST", // POST method for form submission
+               data: formData,
+               processData: false,
+               contentType: false,
+               success: function (response) {
+                   if (response.status == 'success') {
+                       location.reload();
+                       
+                   }
+               },
+               error: function (xhr) {
+                   // Handle validation errors here
+                   var errors = xhr.responseJSON.errors;
+   
+                   // Clear previous errors
+                   $('.text-danger').remove();
+   
+                   // Display new errors
+                   if (errors.unit_name) {
+                       $('input[name="unit_name"]').after('<span class="text-danger">' + errors.unit_name[0] + '</span>');
+                   }
+   
+                   // Keep the popup open
+                   $('#addPopup').show();
+               }
+           });
+
+            return false; // Prevent default form submission
+        }
      });
    
      // Initialize validation for the edit form
@@ -572,7 +608,13 @@ s unit? <br />
                          $('#search-results').html(response);
                        }else{
                          // Clear the previous results
-                         $('#search-results').html('No Data Found');
+                         $('#search-results').html(`
+                            <div class="border-box mb-4" id="search-results">
+                                <div class="grid-header text-center">
+                                    <h6 class="m-0 text-white">No Data Found</h6>
+                                </div>
+                            </div>
+                        `);
                        }
                        
                    }
@@ -585,3 +627,4 @@ s unit? <br />
        });
    });
 </script>
+
