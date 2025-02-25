@@ -140,13 +140,13 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
          <!-- Table -->
          <div class="table-responsive">
             @if (!empty($unit_data) && count($unit_data) > 0)
-            <table class="table table-striped">
+            <table class="table table-striped" id="inventoryTable">
                <!-- Table Head -->
                <thead class="table-header">
                   <tr>
-                     <th><b>Sr. No.</b></th>
+                     <th onclick="sortTable('inventoryTable', 0)"><b>Sr. No. <i class="bi bi-arrow-up" id="arrow-0"></i></b></th>
                      <!-- <th><b>Date</b></th> -->
-                     <th><b>Units</b></th>
+                     <th onclick="sortTable('inventoryTable', 1)"><b>Units <i class="bi bi-arrow-up" id="arrow-1"></i></b></th>
                      <th><b>Action</b></th>
                   </tr>
                </thead>
@@ -628,3 +628,51 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
    });
 </script>
 
+
+<script>
+    var sortDirections = {};
+
+    function sortTable(tableId, columnIndex) {
+        var table = document.getElementById(tableId);
+        var tbody = table.querySelector('tbody');
+        var rows = Array.from(tbody.querySelectorAll('tr'));
+
+        if (!sortDirections[tableId]) {
+            sortDirections[tableId] = [true, true, true, true, true];
+        }
+        var ascending = sortDirections[tableId][columnIndex];
+
+        rows.sort(function(rowA, rowB) {
+            var cellA = rowA.getElementsByTagName('td')[columnIndex].innerText.trim();
+            var cellB = rowB.getElementsByTagName('td')[columnIndex].innerText.trim();
+
+            if (!isNaN(parseFloat(cellA)) && !isNaN(parseFloat(cellB))) {
+                return ascending ? cellA - cellB : cellB - cellA;
+            }
+            return ascending ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
+        });
+
+        tbody.innerHTML = '';
+        rows.forEach(function(row) {
+            tbody.appendChild(row);
+        });
+
+        sortDirections[tableId][columnIndex] = !ascending;
+        updateArrows(tableId, columnIndex, ascending);
+    }
+
+    function updateArrows(tableId, columnIndex, ascending) {
+        var table = document.getElementById(tableId);
+        var headerIcons = table.querySelectorAll('thead th i');
+        headerIcons.forEach(function(icon) {
+            icon.classList.remove('bi-arrow-up', 'bi-arrow-down');
+        });
+
+        var arrowId = `arrow-${columnIndex}`;
+        var arrow = document.getElementById(arrowId);
+        if (arrow) {
+            arrow.classList.toggle('bi-arrow-up', ascending);
+            arrow.classList.toggle('bi-arrow-down', !ascending);
+        }
+    }
+</script>
