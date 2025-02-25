@@ -104,9 +104,9 @@ Route::group(['middleware' => ['admin']], function () {
 
     Route::get('/get-shopping-list-admin', ['as' => 'get-shopping-list-admin', 'uses' => 'App\Http\Controllers\Admin\ShoppingListController@getShopppingListAdmin']);
     Route::post('/location-selected-admin', ['as' => 'location-selected-admin', 'uses' => 'App\Http\Controllers\Admin\ShoppingListController@getLocationSelectedAdmin']);
-    Route::post('/add-kitchen-inventory-by-admin', ['as' => 'add-kitchen-inventory-by-admin', 'uses' => 'App\Http\Controllers\Admin\ShoppingListController@addKitchenInventoryByAdmin']);
+    // Route::post('/add-kitchen-inventory-by-admin', ['as' => 'add-kitchen-inventory-by-admin', 'uses' => 'App\Http\Controllers\Admin\ShoppingListController@addKitchenInventoryByAdmin']);
     Route::post('/update-kitchen-inventory-by-admin', ['as' => 'update-kitchen-inventory-by-admin', 'uses' => 'App\Http\Controllers\Admin\ShoppingListController@updateKitchenInventoryByAdmin']);
-    Route::get('/get-submited-shopping-list-admin', ['as' => 'get-submited-shopping-list-admin', 'uses' => 'App\Http\Controllers\Admin\ShoppingListController@getSubmitedShopppingListAdmin']);
+    // Route::get('/get-submited-shopping-list-admin', ['as' => 'get-submited-shopping-list-admin', 'uses' => 'App\Http\Controllers\Admin\ShoppingListController@getSubmitedShopppingListAdmin']);
 
     Route::get('/list-admin-users', ['as' => 'list-admin-users', 'uses' => 'App\Http\Controllers\Admin\UserController@index']);
     Route::post('/add-admin-users', ['as' => 'add-admin-users', 'uses' => 'App\Http\Controllers\Admin\UserController@addUser']);

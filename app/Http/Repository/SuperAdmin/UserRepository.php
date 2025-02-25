@@ -21,6 +21,7 @@ class UserRepository
     public function getUsersList() {
         $data_location = UsersData::select('id','name','location','user_role','email','password','created_at','email','phone','is_approved','added_by','user_role')
 							->where('is_deleted', '0')
+							->where('user_role','<>', 1)
 							->where('is_approved', '1')
 							->orderBy('created_at', 'desc')
 							->paginate(10);
@@ -67,7 +68,7 @@ class UserRepository
 		$user_data = new UsersData();
 		$user_data->name = ucwords(strtolower($request['name']));
 		$user_data->user_role = $request['role'];
-		$user_data->phone = $request['phone'];
+		$user_data->phone = isset($request['phone']) ? $request['phone'] :'1234567890';
 		$user_data->email = $request['email'];
 		$user_data->password = $request['password'];
 		$user_data->added_by = 1;

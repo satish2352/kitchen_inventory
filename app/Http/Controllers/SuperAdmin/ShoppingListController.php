@@ -115,9 +115,8 @@ class ShoppingListController extends Controller
             ->where('master_kitchen_inventory.location_id', $location_selected_id)
             ->where('master_kitchen_inventory.is_deleted', '0')
             ->whereDate('location_wise_inventory.created_at', now()->toDateString())
-            // ->where('location_wise_inventory.approved_by', '1')
-            ->orderBy('category.category_name', 'asc') // Order by category name first
-            ->orderBy('master_kitchen_inventory.item_name', 'asc') // Then order by item name
+            ->orderBy('category.category_name', 'asc') 
+            ->orderBy('master_kitchen_inventory.priority', 'asc') 
             ->get()
             ->groupBy('category_name');
 
@@ -212,11 +211,7 @@ class ShoppingListController extends Controller
         $sess_user_id = session()->get('login_id');
         $location_selected_name = session()->get('location_selected_name');
         $location_selected_id = session()->get('location_selected_id');
-
-        // $all_kitchen_inventory = Items::where('is_deleted', '0')
-        //     ->select('*')
-        //     ->get()
-        //     ->toArray();
+       
         $InventoryData=array();
 
         $locationsData = Locations::where('is_active', '1')
@@ -226,7 +221,7 @@ class ShoppingListController extends Controller
                             ->get()
                             ->toArray();
 
-        if($location_selected_name !=''){
+        if($location_selected_name !='') {
 
             $data_location_wise_inventory_new = LocationWiseInventory::leftJoin('locations', 'location_wise_inventory.location_id', '=', 'locations.id')
                 ->leftJoin('master_kitchen_inventory', 'location_wise_inventory.inventory_id', '=', 'master_kitchen_inventory.id')
@@ -298,9 +293,6 @@ class ShoppingListController extends Controller
             
             $InventoryData['data_location_wise_inventory'] = $data_location_wise_inventory_new;
             $InventoryData['DataType'] = 'LocationWiseData';
-                // $InventoryData['data_location_wise_inventory']=$data_location_wise_inventory_new;
-                // $InventoryData['DataType']='LocationWiseData';
-            // dd($InventoryData);
         }else{
             $data_location_wise_inventory = MasterKitchenInventory::leftJoin('category', 'master_kitchen_inventory.category', '=', 'category.id')
 			->leftJoin('units', 'master_kitchen_inventory.unit', '=', 'units.id')
@@ -322,16 +314,12 @@ class ShoppingListController extends Controller
 			->orderBy('category.category_name', 'asc') // Order by category name first
 			->orderBy('master_kitchen_inventory.item_name', 'asc') // Then order by item name
 			->get()
-            // dd($data_location);
 			->groupBy('category_name');
             $InventoryData['data_location_wise_inventory']=$data_location_wise_inventory;
             $InventoryData['DataType']='MasterData';
-            // dd($InventoryData);
 
             }
         }    
-        // dd($InventoryData);
-        // return view('kitchen-inventory', compact('all_kitchen_inventory','InventoryData','locationsData'));
         return view('kitchen-inventory', compact('InventoryData','locationsData'));
     }
 

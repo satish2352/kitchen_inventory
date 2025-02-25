@@ -195,6 +195,12 @@
         z-index: 1000;
     }
 
+    .session-data {
+        position: fixed;
+        top: 10px;
+        z-index: 1000;
+    }
+
     .pwa-button-new button {
         background-color: rgb(106, 95, 255);
         color: white;
@@ -244,17 +250,18 @@
     </div>
 @endif
 
-@if (session('error'))
-    <div class="alert alert-danger" role="alert">
-        <p>{{ session()->get('error') }} </p>
-    </div>
-@endif
-@if (session('success'))
-    <div class="alert alert-danger" role="alert">
-        <p> {{ session('success') }} </p>
-    </div>
-@endif
-
+<div class="session-data">
+    @if (session('error'))
+        <div class="alert alert-danger" role="alert">
+            <p>{{ session()->get('error') }} </p>
+        </div>
+    @endif
+    @if (session('success'))
+        <div class="alert alert-success" role="alert">
+            <p> {{ session('success') }} </p>
+        </div>
+    @endif
+</div>
 
 <div class="pwa-button-new">
     <button id="installPWA">Install This App</button>

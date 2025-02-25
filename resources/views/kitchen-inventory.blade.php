@@ -4,23 +4,24 @@
 @yield('content')
 
 <style>
-    .submit_inventory_css{
+    .submit_inventory_css {
         margin-top: 12px;
     }
 
     @media screen and (max-width: 768px) {
-    .table-responsive {
-        display: block;
-        width: 100%;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }
+        .table-responsive {
+            display: block;
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
 
-    table {
-        width: 100%;
-        min-width: 600px; /* Adjust as per your table content */
+        table {
+            width: 100%;
+            min-width: 600px;
+            /* Adjust as per your table content */
+        }
     }
-}
 </style>
 <div class="main">
     <div class="inner-top container-fluid p-3">
@@ -43,7 +44,8 @@
         <div class="shopping-list-row d-flex align-items-center p-3">
             <!-- Search Input -->
             <div class="input-group search-input">
-                <input type="text" class="form-control" placeholder="Search..." aria-label="Search" id="search-query"/>
+                <input type="text" class="form-control" placeholder="Search..." aria-label="Search"
+                    id="search-query" />
                 <button class="btn btn-srh" type="button">
                     <i class="bi bi-search"></i>
                 </button>
@@ -65,200 +67,208 @@
                     Show last submitted Kitchen list
                 </button>
             </a> -->
-               
 
-                <form id="locationForm" method="post" action="{{ route('location-selected-admin') }}">
-                    @csrf
-                    <div class="row mb-3">
-                        <label class="form-label col-md-6 col-sm-12 col-lg-6">Select Location</label>
-                        <div class="col-md-6 col-sm-12 col-lg-6">
-                            <select class="form-select" name="location_selected" id="location_selected">
-                                <option value="">Select Location</option>
-                                @foreach ($locationsData as $locations)
-                                    <option value="{{ $locations['id'] }}"
-                                        @if (session('location_selected') == $locations['id']) selected @endif>{{ $locations['location'] }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                </form>
-
-<!-- first if start -->
-<div class="border-box mb-4" id="search-results">
-            @if(session()->get('location_selected_id') !='')
-            <!-- <?php //print_r($InventoryData); die;?> -->
-            <!-- second if start -->
-            @if($InventoryData['DataType']=='MasterData')
-
-            <form action="{{ route('add-kitchen-inventory-by-sa') }}" id="frm_register_add" method="POST">
-            @csrf
-            
-            @if (!empty($InventoryData['data_location_wise_inventory']) && count($InventoryData['data_location_wise_inventory']) > 0)
-            @foreach ($InventoryData['data_location_wise_inventory'] as $category => $items)
-            <!-- Border Box -->
-            
-                <!-- Header Title -->
-                <div class="grid-header text-center">
-                    <h6 class="m-0 text-white">{{ $category }}</h6>
-                </div>
-
-                <!-- Table -->
-                <div class="table-responsive" style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
-                    <table class="table table-striped" id="sortableTable_{{ $loop->index }}">
-                        <!-- Table Head -->
-                        <thead class="table-header">
-                            <tr>
-                                <th onclick="sortTable('sortableTable_{{ $loop->index }}', 0)"><b>Sr. No. <i class="bi bi-arrow-up" id="arrow-0-{{ $loop->index }}"></i></b></th>
-                                <th onclick="sortTable('sortableTable_{{ $loop->index }}', 1)"><b>Req. Qty For This Location <i class="bi bi-arrow-up" id="arrow-1-{{ $loop->index }}"></i></b></th>
-                                <th onclick="sortTable('sortableTable_{{ $loop->index }}', 2)"><b>Item <i class="bi bi-arrow-up" id="arrow-2-{{ $loop->index }}"></i></b></th>
-                                <th onclick="sortTable('sortableTable_{{ $loop->index }}', 3)"><b>Available Qty <i class="bi bi-arrow-up" id="arrow-3-{{ $loop->index }}"></i></b></th>
-                                <th onclick="sortTable('sortableTable_{{ $loop->index }}', 4)"><b>Unit <i class="bi bi-arrow-up" id="arrow-4-{{ $loop->index }}"></i></b></th>
-                                <!-- <th><b>Price</b></th> -->
-                            </tr>
-                        </thead>
-                        <!-- Table Body -->
-                        <tbody>
-                        @php $srNo = 1; @endphp
-                            @foreach ($items as $item)
-                            <input type="hidden" class="form-control" name="master_inventory_id[]" id="master_inventory_id" value="{{ $item['id'] }}"/>
-
-                                <tr>
-                                    <td> {{ $srNo++ }} </td>
-                                    <td>{{ $item['masterQuantity'] }}</td>
-                                    <td>{{ $item['item_name'] }}</td>
-                                    <td>
-                                        <!-- <input type="text" name="quantity[]" class="form-control qty-input-add" style="text-align: center;" placeholder="QTY" min="1" max="5"/> -->
-                                        <input type="text" name="quantity[]" class="form-control qty-input-add"
-       style="text-align: center;" placeholder="QTY"
-       inputmode="decimal" pattern="[0-9]+(\.[0-9]+)?" onkeypress="return isNumberKey(event)">
-                                        <span class="error-message text-danger"></span>
-                                    </td>
-                                    <td>{{ $item['unit_name'] }}</td>
-                                    <!-- <td>{{ $item['price'] }}</td>   -->
-                                </tr>
+            @if(session()->get( 'user_role') == 1)
+            <form id="locationForm" method="post" action="{{ route('location-selected-admin') }}">
+                @csrf
+                <div class="row mb-3">
+                    <label class="form-label col-md-6 col-sm-12 col-lg-6">Select Location</label>
+                    <div class="col-md-6 col-sm-12 col-lg-6">
+                        <select class="form-select" name="location_selected" id="location_selected">
+                            <option value="">Select Location</option>
+                            @foreach ($locationsData as $locations)
+                                <option value="{{ $locations['id'] }}"
+                                    @if (session('location_selected') == $locations['id']) selected @endif>{{ $locations['location'] }}
+                                </option>
                             @endforeach
-                        </tbody>
-                    </table>
+                        </select>
+                    </div>
                 </div>
+            </form>
+            @endif
+            <!-- first if start -->
+            <div class="border-box mb-4" id="search-results">
+                @if (session()->get('location_selected_id') != '')
+                    <!-- <?php //print_r($InventoryData); die;
+                    ?> -->
+                    <!-- second if start -->
+                    @if ($InventoryData['DataType'] == 'MasterData')
+
+                        <form action="{{ route('add-kitchen-inventory-by-sa') }}" id="frm_register_add" method="POST">
+                            @csrf
+
+                            @if (!empty($InventoryData['data_location_wise_inventory']) && count($InventoryData['data_location_wise_inventory']) > 0)
+                                @foreach ($InventoryData['data_location_wise_inventory'] as $category => $items)
+                                    <!-- Border Box -->
+
+                                    <!-- Header Title -->
+                                    <div class="grid-header text-center">
+                                        <h6 class="m-0 text-white">{{ $category }}</h6>
+                                    </div>
+
+                                    <!-- Table -->
+                                    <div class="table-responsive"
+                                        style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+                                        <table class="table table-striped" id="sortableTable_{{ $loop->index }}">
+                                            <!-- Table Head -->
+                                            <thead class="table-header">
+                                                <tr>
+                                                    <th onclick="sortTable('sortableTable_{{ $loop->index }}', 0)">
+                                                        <b>Sr. No. <i class="bi bi-arrow-up"
+                                                                id="arrow-0-{{ $loop->index }}"></i></b></th>
+                                                    <th onclick="sortTable('sortableTable_{{ $loop->index }}', 1)">
+                                                        <b>Req. Qty For This Location <i class="bi bi-arrow-up"
+                                                                id="arrow-1-{{ $loop->index }}"></i></b></th>
+                                                    <th onclick="sortTable('sortableTable_{{ $loop->index }}', 2)">
+                                                        <b>Item <i class="bi bi-arrow-up"
+                                                                id="arrow-2-{{ $loop->index }}"></i></b></th>
+                                                    <th onclick="sortTable('sortableTable_{{ $loop->index }}', 3)">
+                                                        <b>Available Qty <i class="bi bi-arrow-up"
+                                                                id="arrow-3-{{ $loop->index }}"></i></b></th>
+                                                    <th onclick="sortTable('sortableTable_{{ $loop->index }}', 4)">
+                                                        <b>Unit <i class="bi bi-arrow-up"
+                                                                id="arrow-4-{{ $loop->index }}"></i></b></th>
+                                                    <!-- <th><b>Price</b></th> -->
+                                                </tr>
+                                            </thead>
+                                            <!-- Table Body -->
+                                            <tbody>
+                                                @php $srNo = 1; @endphp
+                                                @foreach ($items as $item)
+                                                    <input type="hidden" class="form-control"
+                                                        name="master_inventory_id[]" id="master_inventory_id"
+                                                        value="{{ $item['id'] }}" />
+
+                                                    <tr>
+                                                        <td> {{ $srNo++ }} </td>
+                                                        <td>{{ $item['masterQuantity'] }}</td>
+                                                        <td>{{ $item['item_name'] }}</td>
+                                                        <td>
+                                                            <!-- <input type="text" name="quantity[]" class="form-control qty-input-add" style="text-align: center;" placeholder="QTY" min="1" max="5"/> -->
+                                                            <input type="text" name="quantity[]"
+                                                                class="form-control qty-input-add"
+                                                                style="text-align: center;" placeholder="QTY"
+                                                                inputmode="decimal" pattern="[0-9]+(\.[0-9]+)?"
+                                                                onkeypress="return isNumberKey(event)">
+                                                            <span class="error-message text-danger"></span>
+                                                        </td>
+                                                        <td>{{ $item['unit_name'] }}</td>
+                                                        <!-- <td>{{ $item['price'] }}</td>   -->
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
             </div>
             @endforeach
             <div class="text-center submit_inventory_css">
-            <button type="submit" class="btn btn-success">Submit Inventory</button>
+                <button type="submit" class="btn btn-success">Submit Inventory</button>
             </div>
         @else
-        <div class="border-box mb-4" id="search-results">
-                <!-- Header Title -->
-                <div class="grid-header text-center">
-                    <h6 class="m-0 text-white">Please Add Inventory For This location</h6>
-                </div>
-            </div>  
-        @endif
-            <!-- Submit Button -->
-        
-
-            </form>
-
-
-            <!-- second if end and else start -->
-            @elseif($InventoryData['DataType']=='LocationWiseData')
-            <form action="{{ route('update-kitchen-inventory-by-super-admin') }}" id="frm_register_edit" method="POST">
-            @csrf
-            @if (!empty($InventoryData['data_location_wise_inventory']) && count($InventoryData['data_location_wise_inventory']) > 0)
-            @foreach ($InventoryData['data_location_wise_inventory'] as $category => $items)
-            <!-- Border Box -->
             <div class="border-box mb-4" id="search-results">
                 <!-- Header Title -->
                 <div class="grid-header text-center">
-                    <h6 class="m-0 text-white">{{ $category }}</h6>
-                </div>
-
-                <!-- Table -->
-                <div class="table-responsive" style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
-                    <table class="table table-striped" id="sortableTable_{{ $loop->index }}">
-                        <!-- Table Head -->
-                        <thead class="table-header">
-                            <tr>
-                                <th onclick="sortTable('sortableTable_{{ $loop->index }}', 0)"><b>Sr. No. <i class="bi bi-arrow-up" id="arrow-0-{{ $loop->index }}"></i></b></th>
-                                <th onclick="sortTable('sortableTable_{{ $loop->index }}', 1)"><b>Req. Qty For This Location <i class="bi bi-arrow-up" id="arrow-1-{{ $loop->index }}"></i></b></th>
-                                <th onclick="sortTable('sortableTable_{{ $loop->index }}', 2)"><b>Item <i class="bi bi-arrow-up" id="arrow-2-{{ $loop->index }}"></i></b></th>
-                                <th onclick="sortTable('sortableTable_{{ $loop->index }}', 3)"><b>Available Qty <i class="bi bi-arrow-up" id="arrow-3-{{ $loop->index }}"></i></b></th>
-                                <th onclick="sortTable('sortableTable_{{ $loop->index }}', 4)"><b>Unit <i class="bi bi-arrow-up" id="arrow-4-{{ $loop->index }}"></i></b></th>
-                                <!-- <th><b>Price</b></th> -->
-                            </tr>
-                        </thead>
-                        <!-- Table Body -->
-                        <tbody>
-                            @php $srNo = 1; @endphp
-                            @foreach ($items as $item)
-                            <input type="hidden" class="form-control" name="location_wise_inventory_id[]" id="location_wise_inventory_id" value="{{ $item['locationWiseId'] }}"/>
-                            <input type="hidden" class="form-control" name="master_inventory_id[]" id="master_inventory_id" value="{{ $item['masterInventoryId'] }}"/>
-
-                                <tr>
-                                <td> {{ $srNo++ }} </td>
-                                <td>{{ $item['masterQuantity'] }}</td>
-                                    <td>{{ $item['item_name'] }}</td>
-                                    <td>
-                                        <!-- <input type="text" name="quantity[]" class="form-control qty-input-edit" style="text-align: center;" value="{{ $item['quantity'] }}"  placeholder="QTY" min="1" max="5"/> -->
-                                        <input type="text" name="quantity[]" class="form-control qty-input-edit" value="{{ $item['quantity'] }}"
-       style="text-align: center;" placeholder="QTY"
-       inputmode="decimal" pattern="[0-9]+(\.[0-9]+)?" onkeypress="return isNumberKey(event)">
-                                        <span class="error-message text-danger"></span>
-                                    </td>
-                                    <td>{{ $item['unit_name'] }}</td>
-                                    <!-- <td>{{ $item['price'] }}</td> -->
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            @endforeach
-            <div class="text-center submit_inventory_css">
-            <button type="submit" class="btn btn-success">Submit Inventory</button>
-        </div>
-        @else
-        <div class="border-box mb-4" id="search-results">
-                <!-- Header Title -->
-                <div class="grid-header text-center">
                     <h6 class="m-0 text-white">Please Add Inventory For This location</h6>
                 </div>
-            </div>  
-        @endif
-            <!-- Submit Button -->
-        
-
+            </div>
+            @endif
             </form>
 
+            <!-- second if end and else start -->
+        @elseif($InventoryData['DataType'] == 'LocationWiseData')
+            <form action="{{ route('update-kitchen-inventory-by-super-admin') }}" id="frm_register_edit"
+                method="POST">
+                @csrf
+                @if (!empty($InventoryData['data_location_wise_inventory']) && count($InventoryData['data_location_wise_inventory']) > 0)
+                    @foreach ($InventoryData['data_location_wise_inventory'] as $category => $items)
+                        <!-- Border Box -->
+                        <div class="border-box mb-4" id="search-results">
+                            <!-- Header Title -->
+                            <div class="grid-header text-center">
+                                <h6 class="m-0 text-white">{{ $category }}</h6>
+                            </div>
 
+                            <!-- Table -->
+                            <div class="table-responsive"
+                                style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+                                <table class="table table-striped" id="sortableTable_{{ $loop->index }}">
+                                    <!-- Table Head -->
+                                    <thead class="table-header">
+                                        <tr>
+                                            <th onclick="sortTable('sortableTable_{{ $loop->index }}', 0)"><b>Sr. No.
+                                                    <i class="bi bi-arrow-up"
+                                                        id="arrow-0-{{ $loop->index }}"></i></b></th>
+                                            <th onclick="sortTable('sortableTable_{{ $loop->index }}', 1)"><b>Req.
+                                                    Qty For This Location <i class="bi bi-arrow-up"
+                                                        id="arrow-1-{{ $loop->index }}"></i></b></th>
+                                            <th onclick="sortTable('sortableTable_{{ $loop->index }}', 2)"><b>Item <i
+                                                        class="bi bi-arrow-up"
+                                                        id="arrow-2-{{ $loop->index }}"></i></b></th>
+                                            <th onclick="sortTable('sortableTable_{{ $loop->index }}', 3)">
+                                                <b>Available Qty <i class="bi bi-arrow-up"
+                                                        id="arrow-3-{{ $loop->index }}"></i></b></th>
+                                            <th onclick="sortTable('sortableTable_{{ $loop->index }}', 4)"><b>Unit <i
+                                                        class="bi bi-arrow-up"
+                                                        id="arrow-4-{{ $loop->index }}"></i></b></th>
+                                            <!-- <th><b>Price</b></th> -->
+                                        </tr>
+                                    </thead>
+                                    <!-- Table Body -->
+                                    <tbody>
+                                        @php $srNo = 1; @endphp
+                                        @foreach ($items as $item)
+                                            <input type="hidden" class="form-control"
+                                                name="location_wise_inventory_id[]" id="location_wise_inventory_id"
+                                                value="{{ $item['locationWiseId'] }}" />
+                                            <input type="hidden" class="form-control" name="master_inventory_id[]"
+                                                id="master_inventory_id" value="{{ $item['masterInventoryId'] }}" />
 
-
-<!-- second if close -->
+                                            <tr>
+                                                <td> {{ $srNo++ }} </td>
+                                                <td>{{ $item['masterQuantity'] }}</td>
+                                                <td>{{ $item['item_name'] }}</td>
+                                                <td>
+                                                    <!-- <input type="text" name="quantity[]" class="form-control qty-input-edit" style="text-align: center;" value="{{ $item['quantity'] }}"  placeholder="QTY" min="1" max="5"/> -->
+                                                    <input type="text" name="quantity[]"
+                                                        class="form-control qty-input-edit"
+                                                        value="{{ $item['quantity'] }}" style="text-align: center;"
+                                                        placeholder="QTY" inputmode="decimal"
+                                                        pattern="[0-9]+(\.[0-9]+)?"
+                                                        onkeypress="return isNumberKey(event)">
+                                                    <span class="error-message text-danger"></span>
+                                                </td>
+                                                <td>{{ $item['unit_name'] }}</td>
+                                                <!-- <td>{{ $item['price'] }}</td> -->
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    @endforeach
+                    <div class="text-center submit_inventory_css">
+                        <button type="submit" class="btn btn-success">Update Inventory</button>
+                    </div>
+                @else
+                    <div class="border-box mb-4" id="search-results">
+                        <!-- Header Title -->
+                        <div class="grid-header text-center">
+                            <h6 class="m-0 text-white">Please Add Inventory For This location</h6>
+                        </div>
+                    </div>
+                @endif
+            </form>
             @endif
-
-
-
-
-            
-
-
-
-
-
-
-
-
-            <!-- first if end and else stat -->
-           @else
-           <div class="border-box mb-4" id="search-results">
+        @else
+            <div class="border-box mb-4" id="search-results">
                 <!-- Header Title -->
                 <div class="grid-header text-center">
                     <h6 class="m-0 text-white">Please Select Location First</h6>
                 </div>
-            
-           @endif
-           </div>    
-           <!-- first if end and else ens -->
+
+                @endif
+            </div>
+            <!-- first if end and else ens -->
         </div>
     </div>
     <!-- Delete Confirmation Popup -->
@@ -275,9 +285,8 @@
 
 <script>
     document.getElementById('location_selected').addEventListener('change', function() {
-        var locationId= this.value;
-        if(locationId !='')
-        {
+        var locationId = this.value;
+        if (locationId != '') {
             document.getElementById('locationForm').submit();
         }
     });
@@ -368,111 +377,111 @@
 </script>
 
 <script type="text/javascript">
-// $(document).ready(function () {
-//     $("#frm_register").validate({
-//         ignore: [], // Ensure jQuery Validate doesn't ignore hidden fields
-//         rules: {
-//             "quantity[]": {
-//                 required: true,  // Each field is required
-//                 number: true,    // Must be a valid number
-//                 min: 1           // Minimum value should be 1
-//             }
-//         },
-//         messages: {
-//             "quantity[]": {
-//                 required: "This field is required.",
-//                 number: "Please enter a valid number.",
-//                 min: "Quantity must be at least 1."
-//             }
-//         },
-//         errorElement: "span",
-//         errorClass: "error-text",
-//         highlight: function (element) {
-//             $(element).addClass("is-invalid").removeClass("is-valid");
-//         },
-//         unhighlight: function (element) {
-//             $(element).addClass("is-valid").removeClass("is-invalid");
-//         },
-//         errorPlacement: function (error, element) {
-//             error.insertAfter(element);
-//         },
-//         submitHandler: function (form) {
-//             let allFilled = true;
-//             var abc=1;
-//             $("input[name='quantity[]']").each(function () {
-//                 alert('ggggggggg',abc);
-//                 console.log('hhhhhhhhhh',$(this).val());
-                
-//                 if ($(this).val().trim() === "" || $(this).val() <= 0) {
-//                     allFilled = false;
-//                     $(this).addClass("is-invalid").removeClass("is-valid");
-//                     $(this).after('<span class="error-text">This field is required and must be at least 1.</span>');
-//                 } else {
-//                     $(this).removeClass("is-invalid").addClass("is-valid");
-//                     $(this).next(".error-text").remove();
-//                 }
-//             });
+    // $(document).ready(function () {
+    //     $("#frm_register").validate({
+    //         ignore: [], // Ensure jQuery Validate doesn't ignore hidden fields
+    //         rules: {
+    //             "quantity[]": {
+    //                 required: true,  // Each field is required
+    //                 number: true,    // Must be a valid number
+    //                 min: 1           // Minimum value should be 1
+    //             }
+    //         },
+    //         messages: {
+    //             "quantity[]": {
+    //                 required: "This field is required.",
+    //                 number: "Please enter a valid number.",
+    //                 min: "Quantity must be at least 1."
+    //             }
+    //         },
+    //         errorElement: "span",
+    //         errorClass: "error-text",
+    //         highlight: function (element) {
+    //             $(element).addClass("is-invalid").removeClass("is-valid");
+    //         },
+    //         unhighlight: function (element) {
+    //             $(element).addClass("is-valid").removeClass("is-invalid");
+    //         },
+    //         errorPlacement: function (error, element) {
+    //             error.insertAfter(element);
+    //         },
+    //         submitHandler: function (form) {
+    //             let allFilled = true;
+    //             var abc=1;
+    //             $("input[name='quantity[]']").each(function () {
+    //                 alert('ggggggggg',abc);
+    //                 console.log('hhhhhhhhhh',$(this).val());
 
-//             if (allFilled) {
-//                 form.submit(); // Submit only if all quantity fields are valid
-//             }
-//         }
-//     });
+    //                 if ($(this).val().trim() === "" || $(this).val() <= 0) {
+    //                     allFilled = false;
+    //                     $(this).addClass("is-invalid").removeClass("is-valid");
+    //                     $(this).after('<span class="error-text">This field is required and must be at least 1.</span>');
+    //                 } else {
+    //                     $(this).removeClass("is-invalid").addClass("is-valid");
+    //                     $(this).next(".error-text").remove();
+    //                 }
+    //             });
 
-//     // Trigger validation when a user types or changes the quantity fields
-//     $(document).on("input", "input[name='quantity[]']", function () {
-//         $(this).valid(); // Validate the specific field
-//     });
-// });
+    //             if (allFilled) {
+    //                 form.submit(); // Submit only if all quantity fields are valid
+    //             }
+    //         }
+    //     });
 
-
+    //     // Trigger validation when a user types or changes the quantity fields
+    //     $(document).on("input", "input[name='quantity[]']", function () {
+    //         $(this).valid(); // Validate the specific field
+    //     });
+    // });
 
 
 
 
-//   $(document).ready(function () {  
+
+
+    //   $(document).ready(function () {  
     // Initialize validation for the add form
-//     $("#frm_register").validate({
-//         rules: {
-//         "quantity[]": {
-//             required: function(element) {
-//                 let isValid = true;
-//                 $("input[name='quantity[]']").each(function() {
-//                     // alert('kkkkkkkkkkkkk');
-//                     if ($(this).val() === "" || $(this).val() <= 0) {
-//                         isValid = true;
-//                     }
-//                 });
-//                 return isValid;
-//             },
-//             number: true,  // Must be a valid number
-//             min: 1         // Minimum value should be 1
-//         }
-//     },
-//         messages: {
-//             "quantity[]": {
-//                 required: "All quantity fields are required",
-//                 number: "Please enter a valid number.",
-//                 // min: "Quantity must be at least 1."
-//             }
-//         },
-//         errorElement: "span",
-//         errorClass: "error-text",
-//         highlight: function (element) {
-//             $(element).addClass("is-invalid").removeClass("is-valid");
-//         },
-//         unhighlight: function (element) {
-//             $(element).addClass("is-valid").removeClass("is-invalid");
-//         },
-//         errorPlacement: function(error, element) {
-//             error.insertAfter(element); // Places error message directly after the input
-//         }
-//     });
+    //     $("#frm_register").validate({
+    //         rules: {
+    //         "quantity[]": {
+    //             required: function(element) {
+    //                 let isValid = true;
+    //                 $("input[name='quantity[]']").each(function() {
+    //                     // alert('kkkkkkkkkkkkk');
+    //                     if ($(this).val() === "" || $(this).val() <= 0) {
+    //                         isValid = true;
+    //                     }
+    //                 });
+    //                 return isValid;
+    //             },
+    //             number: true,  // Must be a valid number
+    //             min: 1         // Minimum value should be 1
+    //         }
+    //     },
+    //         messages: {
+    //             "quantity[]": {
+    //                 required: "All quantity fields are required",
+    //                 number: "Please enter a valid number.",
+    //                 // min: "Quantity must be at least 1."
+    //             }
+    //         },
+    //         errorElement: "span",
+    //         errorClass: "error-text",
+    //         highlight: function (element) {
+    //             $(element).addClass("is-invalid").removeClass("is-valid");
+    //         },
+    //         unhighlight: function (element) {
+    //             $(element).addClass("is-valid").removeClass("is-invalid");
+    //         },
+    //         errorPlacement: function(error, element) {
+    //             error.insertAfter(element); // Places error message directly after the input
+    //         }
+    //     });
 
-//     $(document).on('change', '.qty-input', function() {
-//     // Trigger validation for all quantity[] fields
-//     $("#frm_register").valid(); // Validates the entire form
-// });
+    //     $(document).on('change', '.qty-input', function() {
+    //     // Trigger validation for all quantity[] fields
+    //     $("#frm_register").valid(); // Validates the entire form
+    // });
 
     // Initialize validation for the edit form
     // Initialize validation for the add form
@@ -508,7 +517,7 @@
     //       required: true
     //       // minlength: 3
     //     }
-        
+
     //   },
     //   messages: {
     //     location: {
@@ -552,110 +561,111 @@
     // });
 
 
-//   });
+    //   });
 </script>
 
 <script>
-   $(document).ready(function() {
-     var originalData = $('#search-results').html();
-       // Bind keyup event to the search input
-       $('#search-query').on('keyup', function() {
-           var query = $(this).val().trim();  // Get the value entered in the search box
-   
-           if (query.length > 0) {
-               $.ajax({
-                   url: "{{ route('search-update-kitchen-inventory-super-admin') }}",  // Define your search route here
-                   method: "GET",
-                   data: { query: query },
-                   success: function(response) {
-                     if(response.length > 0)
-                   {
-                       // Clear the previous results
-                       $('#search-results').html('');
-                       
-                       // Append the new search results
-                       $('#search-results').html(response);
-                   }else{
-                       $('#search-results').html('No Data Found');
-                   }
-                   }
-               });
-           } else {
-               // Clear the results if input is empty
-               // $('#search-results').html('');
-               $('#search-results').html(originalData);
-           }
-       });
-   });
+    $(document).ready(function() {
+        var originalData = $('#search-results').html();
+        // Bind keyup event to the search input
+        $('#search-query').on('keyup', function() {
+            var query = $(this).val().trim(); // Get the value entered in the search box
+
+            if (query.length > 0) {
+                $.ajax({
+                    url: "{{ route('search-update-kitchen-inventory-super-admin') }}", // Define your search route here
+                    method: "GET",
+                    data: {
+                        query: query
+                    },
+                    success: function(response) {
+                        if (response.length > 0) {
+                            // Clear the previous results
+                            $('#search-results').html('');
+
+                            // Append the new search results
+                            $('#search-results').html(response);
+                        } else {
+                            $('#search-results').html('No Data Found');
+                        }
+                    }
+                });
+            } else {
+                // Clear the results if input is empty
+                // $('#search-results').html('');
+                $('#search-results').html(originalData);
+            }
+        });
+    });
 </script>
 
 <script>
-function isNumberKey(evt) {
-    var charCode = (evt.which) ? evt.which : evt.keyCode;
-    if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
-        return false;
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
     }
-    return true;
-}
 </script>
 
 
 <script>
-   // Store sort directions for each table by its ID
-   var sortDirections = {};
+    // Store sort directions for each table by its ID
+    var sortDirections = {};
 
-   function sortTable(tableId, columnIndex) {
-       var table = document.getElementById(tableId);
-       var tbody = table.querySelector('tbody');
-       var rows = Array.from(tbody.querySelectorAll('tr'));
+    function sortTable(tableId, columnIndex) {
+        var table = document.getElementById(tableId);
+        var tbody = table.querySelector('tbody');
+        var rows = Array.from(tbody.querySelectorAll('tr'));
 
-       // Initialize sort directions for the table if not set yet
-       if (!sortDirections[tableId]) {
-           // Assuming 5 sortable columns
-           sortDirections[tableId] = [true, true, true, true, true];
-       }
-       var ascending = sortDirections[tableId][columnIndex];
+        // Initialize sort directions for the table if not set yet
+        if (!sortDirections[tableId]) {
+            // Assuming 5 sortable columns
+            sortDirections[tableId] = [true, true, true, true, true];
+        }
+        var ascending = sortDirections[tableId][columnIndex];
 
-       rows.sort(function(rowA, rowB) {
-           var cellA = rowA.getElementsByTagName('td')[columnIndex].innerText.trim();
-           var cellB = rowB.getElementsByTagName('td')[columnIndex].innerText.trim();
+        rows.sort(function(rowA, rowB) {
+            var cellA = rowA.getElementsByTagName('td')[columnIndex].innerText.trim();
+            var cellB = rowB.getElementsByTagName('td')[columnIndex].innerText.trim();
 
-           // Check if numeric sort
-           if (!isNaN(parseFloat(cellA)) && !isNaN(parseFloat(cellB))) {
-               return ascending ? cellA - cellB : cellB - cellA;
-           }
-           // Otherwise, do text sort
-           return ascending ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
-       });
+            // Check if numeric sort
+            if (!isNaN(parseFloat(cellA)) && !isNaN(parseFloat(cellB))) {
+                return ascending ? cellA - cellB : cellB - cellA;
+            }
+            // Otherwise, do text sort
+            return ascending ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
+        });
 
-       // Clear and re-append sorted rows
-       tbody.innerHTML = '';
-       rows.forEach(function(row) {
-           tbody.appendChild(row);
-       });
+        // Clear and re-append sorted rows
+        tbody.innerHTML = '';
+        rows.forEach(function(row) {
+            tbody.appendChild(row);
+        });
 
-       // Toggle sort direction for this column in this table
-       sortDirections[tableId][columnIndex] = !ascending;
-       updateArrows(tableId, columnIndex, ascending);
-   }
+        // Toggle sort direction for this column in this table
+        sortDirections[tableId][columnIndex] = !ascending;
+        updateArrows(tableId, columnIndex, ascending);
+    }
 
-   function updateArrows(tableId, columnIndex, ascending) {
-       var table = document.getElementById(tableId);
-       // Reset all arrow icons in the table header
-       var headerIcons = table.querySelectorAll('thead th i');
-       headerIcons.forEach(function(icon) {
-           icon.classList.remove('bi-arrow-up', 'bi-arrow-down');
-           icon.classList.add('bi-arrow-up');
-       });
+    function updateArrows(tableId, columnIndex, ascending) {
+        var table = document.getElementById(tableId);
+        // Reset all arrow icons in the table header
+        var headerIcons = table.querySelectorAll('thead th i');
+        headerIcons.forEach(function(icon) {
+            icon.classList.remove('bi-arrow-up', 'bi-arrow-down');
+            icon.classList.add('bi-arrow-up');
+        });
 
-       // Extract unique table index from the tableId (assuming format sortableTable_INDEX)
-       var parts = tableId.split('_');
-       var tableIndex = parts[1];
-       var arrowId = 'arrow-' + columnIndex + '-' + tableIndex;
-       var arrow = document.getElementById(arrowId);
-       if (arrow) {
-           arrow.classList.toggle('bi-arrow-up', ascending);
-           arrow.classList.toggle('bi-arrow-down', !ascending);
-       }
-   }
+        // Extract unique table index from the tableId (assuming format sortableTable_INDEX)
+        var parts = tableId.split('_');
+        var tableIndex = parts[1];
+        var arrowId = 'arrow-' + columnIndex + '-' + tableIndex;
+        var arrow = document.getElementById(arrowId);
+        if (arrow) {
+            arrow.classList.toggle('bi-arrow-up', ascending);
+            arrow.classList.toggle('bi-arrow-down', !ascending);
+        }
+    }
 </script>

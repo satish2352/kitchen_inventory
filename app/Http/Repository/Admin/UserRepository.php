@@ -71,12 +71,12 @@ class UserRepository
 			$user_data = new UsersData();
 			$user_data->name = ucwords(strtolower($request['name']));
 			$user_data->user_role = $request['role'];
-			$user_data->phone = $request['phone'];
+			$user_data->phone = isset($request['phone']) ? $request['phone'] :'1234567890';
 			$user_data->email = $request['email'];
 			$user_data->password = $request['password'];
 			$user_data->added_by = 2;
+			$user_data->is_approved = 1;
 			$user_data->added_byId = $sess_user_id;
-			$user_data->is_approved = 0;
 
 			if ($request->has('location')) {
 				$user_data->location = implode(',', $request['location']); // Join values with commas

@@ -28,21 +28,12 @@
 </style>
 
 <div class="container-fluid p-3">
-    <!-- Dashboard Title -->
     <h1 class="mb-3 fw-bold">Dashboard</h1>
-    <!-- Gradient Background Box -->
  </div>
- <!-- box content -->
-
- <!-- <img src="{{ asset('/img/main_logo.png') }}" alt="Company Logo dsds"> -->
-
- <!-- <img src="{{ asset('/img/main_logo.png') }}" alt="Company Logo" /> -->
  @if (session()->get('user_role') =='1')
  <div class="service-box jost-font">
     <div class="container-fluid p-3">
        <div class="row d-flex g-2">
-          <!-- Icon Box 1 -->
-         
           <div class="col-4">
             <a class="nav-link" href="{{ route('list-users') }}">
             <div class="icon-box text-center shadow">
@@ -56,9 +47,6 @@
             </a>
          </div>
          
-
-
-          
           <div class="col-4">
             <a class="nav-link" href="{{ route('get-activity-log') }}">
             <div class="icon-box text-center shadow">
@@ -167,26 +155,10 @@
             </div>
             </a>
          </div>
-         
-
-          <!-- Icon Box 1 -->
-          <!-- @if ($return_data['users_count'] > 0)
-          <div class="col-4">
-            <div class="icon-box text-center shadow">
-               <div class="icon-circle mb-3">
-                     <i class="bi bi-person-add"></i>
-               </div>
-               <h4 class="mt-2">{{ $return_data['users_count'] }}</h4> 
-               <div class="icon-divider"></div>
-               <span class="mt-3">Approve Users</span>
-            </div>
-         </div>
-          @endif -->
-          <!-- Icon Box 2 -->
 
           <!-- Icon Box 3 -->
           <div class="col-4">
-            <a class="nav-link" href="{{ route('get-submited-shopping-list-admin') }}">
+            <a class="nav-link" href="{{ route('get-submited-shopping-list-super-admin') }}">
             <div class="icon-box text-center shadow">
                <div class="icon-circle mb-3">
                      <i class="bi bi-share-fill"></i>
@@ -232,7 +204,7 @@
           
           <!-- Icon Box 3 -->
           <div class="col-4">
-          <a class="nav-link" href="{{ route('get-submited-shopping-list-manager') }}">
+          <a class="nav-link" href="{{ route('get-submited-shopping-list-super-admin') }}">
             <div class="icon-box text-center shadow">
                <div class="icon-circle mb-3">
                      <i class="bi bi-share-fill"></i>

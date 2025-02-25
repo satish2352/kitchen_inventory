@@ -32,10 +32,8 @@ class UserController extends Controller {
                             ->where('is_deleted', '0')
                             ->select('id','location')
                             ->orderBy('location', 'asc')
-                            // ->get()
                             ->paginate(10);
-                            // ->toArray();
-        // dd($projects);
+                            
         return view('users',compact('user_data','locationsData'));
     }
 
@@ -46,7 +44,7 @@ class UserController extends Controller {
             'name' => 'required|string|max:255',
             'location' => 'required|array',
             'role' => 'required',
-            'phone' => 'required|string|max:15',
+            // 'phone' => 'required|string|max:15',
             'email' => [
                 'required',
                 'email',
@@ -61,7 +59,7 @@ class UserController extends Controller {
             'name.required' => 'First Name is required.',
             'location.required' => 'Location is required.',
             'role.required' => 'Role is required.',
-            'phone.required' => 'Contact Details are required.',
+            // 'phone.required' => 'Contact Details are required.',
             'email.required' => 'Email is required.',
             'email.unique' => 'This email is already registered and active.',
             'password.required' => 'Password is required.',

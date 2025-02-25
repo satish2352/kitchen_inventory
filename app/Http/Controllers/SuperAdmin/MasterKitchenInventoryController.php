@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\SuperAdmin;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Services\SuperAdmin\MasterKitchenInventoryServices;
-use App\Models\ {
+use App\Models\{
     Locations,
     Category,
     Unit,
@@ -14,12 +13,13 @@ use App\Models\ {
     MasterKitchenInventory,
     UsersData
 };
-use Validator;
-use session;
+use Illuminate\Http\Request;
 use Config;
+use session;
+use Validator;
 
-class MasterKitchenInventoryController extends Controller {
-
+class MasterKitchenInventoryController extends Controller
+{
     public function __construct()
     {
         $this->service = new MasterKitchenInventoryServices();
@@ -27,52 +27,34 @@ class MasterKitchenInventoryController extends Controller {
 
     public function index()
     {
-
         $sess_user_id = session()->get('login_id');
-
-        // $userLocationData = UsersData::where('is_deleted', '0')
-        // ->where('is_approved', '1')
-        // ->where('id', $sess_user_id)
-        // ->pluck('location')
-        // ->toArray(); 
-
-        // $userLocation = [];
-		// $data_location=array();
-        // foreach ($userLocationData as $location) {
-        //     $userLocation = array_merge($userLocation, explode(',', $location));
-        // }
-
-
         $user_data = $this->service->index();
 
         $categoryData = Category::where('is_active', '1')
-                            ->where('is_deleted', '0')
-                            ->select('id','category_name')
-                            ->get()
-                            ->toArray();
+            ->where('is_deleted', '0')
+            ->select('id', 'category_name')
+            ->get()
+            ->toArray();
 
         $unitData = Unit::where('is_active', '1')
-                            ->where('is_deleted', '0')
-                            ->select('id','unit_name')
-                            ->get()
-                            ->toArray();
+            ->where('is_deleted', '0')
+            ->select('id', 'unit_name')
+            ->get()
+            ->toArray();
 
         $locationsData = Locations::where('is_active', '1')
-                            ->where('is_deleted', '0')
-			                // ->whereIn('id', $userLocation)
-                            ->select('id','location')
-                            ->orderBy('location', 'asc')
-                            ->get()
-                            ->toArray();
-        // dd($projects);
-        return view('master-inventory',compact('user_data','unitData','categoryData','locationsData'));
+            ->where('is_deleted', '0')
+            ->select('id', 'location')
+            ->orderBy('location', 'asc')
+            ->get()
+            ->toArray();
+            
+        return view('master-inventory', compact('user_data', 'unitData', 'categoryData', 'locationsData'));
     }
 
     public function addItem(Request $request)
     {
-
         try {
-
             $rules = [
                 'item_name' => 'required|string|max:255',
                 'category' => 'required',
@@ -81,18 +63,14 @@ class MasterKitchenInventoryController extends Controller {
                 'price' => 'required'
             ];
             $messages = [
-
                 // Custom validation messages
-            'item_name.required' => 'First item_name is required.',
-            'item_name.string' => 'First item_name must be a string.',
-            'item_name.max' => 'First item_name should not exceed 255 characters.',
-            
-            'category.required' => 'Location is required.',
-            // 'quantity.required' => 'Role is required.',
-
-            'unit.required' => 'Contact Details are required.',
-            
-            'price.required' => 'Email is required.'
+                'item_name.required' => 'First item_name is required.',
+                'item_name.string' => 'First item_name must be a string.',
+                'item_name.max' => 'First item_name should not exceed 255 characters.',
+                'category.required' => 'Location is required.',
+                // 'quantity.required' => 'Role is required.',
+                'unit.required' => 'Contact Details are required.',
+                'price.required' => 'Email is required.'
             ];
 
             $validation = Validator::make($request->all(), $rules, $messages);
@@ -106,29 +84,30 @@ class MasterKitchenInventoryController extends Controller {
                     $msg = $add_role['msg'];
                     $status = $add_role['status'];
 
-                     // Store SweetAlert data in session for flashing
-                session()->flash('alert_status', $status);
-                session()->flash('alert_msg', $msg);
+                    // Store SweetAlert data in session for flashing
+                    session()->flash('alert_status', $status);
+                    session()->flash('alert_msg', $msg);
                     if ($status == 'success') {
                         return redirect('list-items');
                     } else {
                         return redirect('list-items')->withInput();
                     }
                 }
-
             }
         } catch (Exception $e) {
             return redirect('list-items')->withInput()->with(['msg' => $e->getMessage(), 'status' => 'error']);
         }
     }
 
-    public function editItem(Request $request){
+    public function editItem(Request $request)
+    {
         $user_data = $this->service->editItem($request);
         // Log::info('This is an informational message.',$user_data);
         return response()->json(['user_data' => $user_data]);
     }
 
-    public function updateItem(Request $request){
+    public function updateItem(Request $request)
+    {
         $rules = [
             'item_name' => 'required|string|max:255',
             'category' => 'required',
@@ -137,55 +116,49 @@ class MasterKitchenInventoryController extends Controller {
             'price' => 'required'
         ];
         $messages = [
-
             // Custom validation messages
             'item_name.required' => 'First item_name is required.',
             'item_name.string' => 'First item_name must be a string.',
             'item_name.max' => 'First item_name should not exceed 255 characters.',
-            
             'category.required' => 'Location is required.',
             // 'quantity.required' => 'Role is required.',
-
             'unit.required' => 'Contact Details are required.',
-            
             'price.required' => 'Email is required.'
         ];
         try {
-            $validation = Validator::make($request->all(),$rules, $messages);
+            $validation = Validator::make($request->all(), $rules, $messages);
             if ($validation->fails()) {
-                return redirect()->back()
+                return redirect()
+                    ->back()
                     ->withInput()
                     ->withErrors($validation);
             } else {
                 $register_user = $this->service->updateItem($request);
 
-                if($register_user)
-                {
-                
+                if ($register_user) {
                     $msg = $register_user['msg'];
                     $status = $register_user['status'];
 
-                     // Store SweetAlert data in session for flashing
-                session()->flash('alert_status', $status);
-                session()->flash('alert_msg', $msg);
-                    if($status=='success') {
+                    // Store SweetAlert data in session for flashing
+                    session()->flash('alert_status', $status);
+                    session()->flash('alert_msg', $msg);
+                    if ($status == 'success') {
                         return redirect('list-items');
-                    }
-                    else {
+                    } else {
                         return redirect('list-items')->withInput();
                     }
-                }  
+                }
             }
-
         } catch (Exception $e) {
-            return redirect()->back()
+            return redirect()
+                ->back()
                 ->withInput()
                 ->with(['msg' => $e->getMessage(), 'status' => 'error']);
         }
-
     }
 
-    public function deleteItem(Request $request){
+    public function deleteItem(Request $request)
+    {
         try {
             // dd($request);
             $delete = $this->service->deleteItem($request->delete_id);
@@ -193,11 +166,11 @@ class MasterKitchenInventoryController extends Controller {
                 $msg = $delete['msg'];
                 $status = $delete['status'];
 
-                 // Store SweetAlert data in session
-            session()->flash('alert_status', $status);
-            session()->flash('alert_msg', $msg);
+                // Store SweetAlert data in session
+                session()->flash('alert_status', $status);
+                session()->flash('alert_msg', $msg);
 
-            return redirect('list-items');
+                return redirect('list-items');
 
                 // if ($status == 'success') {
                 //     return redirect('list-items')->with(compact('msg', 'status'));
@@ -209,9 +182,9 @@ class MasterKitchenInventoryController extends Controller {
             }
         } catch (\Exception $e) {
             session()->flash('alert_status', 'error');
-        session()->flash('alert_msg', $e->getMessage());
+            session()->flash('alert_msg', $e->getMessage());
 
-        return redirect()->back();
+            return redirect()->back();
             // return $e;
         }
     }
@@ -219,77 +192,78 @@ class MasterKitchenInventoryController extends Controller {
     public function searchMasterKitchenInventory(Request $request)
     {
         $query = $request->input('query');
-        
+
         // Modify the query to search users based on name, email, or phone
         // $unit_data = Unit::where('unit_name', 'like', "%$query%")
         //                     ->where('is_deleted', '0')
         //                 ->get();
 
-    $user_data = MasterKitchenInventory::leftJoin('category', 'master_kitchen_inventory.category', '=', 'category.id')
-        ->leftJoin('units', 'master_kitchen_inventory.unit', '=', 'units.id')
-        ->select(
-            'master_kitchen_inventory.id',
-            'master_kitchen_inventory.category',
-            'master_kitchen_inventory.item_name',
-            'master_kitchen_inventory.unit',
-            'master_kitchen_inventory.price',
-            'master_kitchen_inventory.quantity',
-            'master_kitchen_inventory.created_at',
-            'category.category_name',
-            'units.unit_name'
-        )
-        ->where('master_kitchen_inventory.is_deleted', '0')
-        ->when($query, function ($q) use ($query) {
-            $q->where(function ($subQuery) use ($query) {
-                $subQuery->where('master_kitchen_inventory.item_name', 'like', "%$query%")
-                    ->orWhere('category.category_name', 'like', "%$query%")
-                    ->orWhere('units.unit_name', 'like', "%$query%");
-            });
-        })
-        ->orderBy('category.category_name', 'asc') // Order by category name first
-        ->orderBy('master_kitchen_inventory.item_name', 'asc') // Then order by item name
-        ->get()
-        ->groupBy('category_name'); // Group items by category name
+        $user_data = MasterKitchenInventory::leftJoin('category', 'master_kitchen_inventory.category', '=', 'category.id')
+            ->leftJoin('units', 'master_kitchen_inventory.unit', '=', 'units.id')
+            ->select(
+                'master_kitchen_inventory.id',
+                'master_kitchen_inventory.category',
+                'master_kitchen_inventory.item_name',
+                'master_kitchen_inventory.unit',
+                'master_kitchen_inventory.price',
+                'master_kitchen_inventory.quantity',
+                'master_kitchen_inventory.created_at',
+                'category.category_name',
+                'units.unit_name'
+            )
+            ->where('master_kitchen_inventory.is_deleted', '0')
+            ->when($query, function ($q) use ($query) {
+                $q->where(function ($subQuery) use ($query) {
+                    $subQuery
+                        ->where('master_kitchen_inventory.item_name', 'like', "%$query%")
+                        ->orWhere('category.category_name', 'like', "%$query%")
+                        ->orWhere('units.unit_name', 'like', "%$query%");
+                });
+            })
+            ->orderBy('category.category_name', 'asc')  // Order by category name first
+            ->orderBy('master_kitchen_inventory.item_name', 'asc')  // Then order by item name
+            ->get()
+            ->groupBy('category_name');  // Group items by category name
 
         // Return the user listing Blade with the search results (no full page reload)
         return view('master-kitchen-inventory-search-results', compact('user_data'))->render();
     }
 
     public function copyMasterInventory(Request $request)
-{
-    $rules = [
-        'from_location_id' => 'required',
-        'to_location_id' => 'required'
-    ];
-    $messages = [
-        'from_location_id.required' => 'From location is required.',
-        'to_location_id.required' => 'To location is required.'
-    ];
+    {
+        $rules = [
+            'from_location_id' => 'required',
+            'to_location_id' => 'required'
+        ];
+        $messages = [
+            'from_location_id.required' => 'From location is required.',
+            'to_location_id.required' => 'To location is required.'
+        ];
 
-    try {
-        $validation = Validator::make($request->all(), $rules, $messages);
-        if ($validation->fails()) {
-            return redirect()->back()
+        try {
+            $validation = Validator::make($request->all(), $rules, $messages);
+            if ($validation->fails()) {
+                return redirect()
+                    ->back()
+                    ->withInput()
+                    ->withErrors($validation);
+            }
+
+            $register_user = $this->service->copyMasterInventory($request);
+
+            session()->flash('alert_status', $register_user['status']);
+            session()->flash('alert_msg', $register_user['msg']);
+
+            if ($register_user['status'] === 'success') {
+                return redirect('list-items');
+            } else {
+                return redirect()->back()->withInput();
+            }
+        } catch (Exception $e) {
+            return redirect()
+                ->back()
                 ->withInput()
-                ->withErrors($validation);
+                ->with(['msg' => $e->getMessage(), 'status' => 'error']);
         }
-
-        $register_user = $this->service->copyMasterInventory($request);
-
-        session()->flash('alert_status', $register_user['status']);
-        session()->flash('alert_msg', $register_user['msg']);
-
-        if ($register_user['status'] === 'success') {
-            return redirect('list-items');
-        } else {
-            return redirect()->back()->withInput();
-        }
-    } catch (Exception $e) {
-        return redirect()->back()
-            ->withInput()
-            ->with(['msg' => $e->getMessage(), 'status' => 'error']);
     }
-}
-
-
 }

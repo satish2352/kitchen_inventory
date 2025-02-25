@@ -15,7 +15,8 @@ class CreateCategoryTable extends Migration
     {
         Schema::create('category', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('category_name');
+            $table->string('category_name');            
+            $table->integer('priority')->default(0);
             $table->integer('is_active')->default(true);
             $table->integer('is_deleted')->default(false);
             $table->timestamps(); // Automatically includes created_at and updated_at
