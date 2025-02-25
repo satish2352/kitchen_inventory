@@ -265,6 +265,20 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
                   />
             </div>
          </div>
+
+          <div class="row mb-3">
+            <label class="form-label col-md-6 col-sm-12 col-lg-6">Priority
+            </label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
+               <input
+                  type="text"
+                  class="form-control"
+                  placeholder=""
+                  name="priority"
+                  value="0"
+                  />
+            </div>
+          </div>
          <hr />
          <div class="d-flex justify-content-around">
             <a class="btn btn-secondary btn-lg w-100 me-2" id="closePopup">
@@ -299,7 +313,21 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
                   />
                <input type="hidden" class="form-control" placeholder="Enter Location Name" name="edit_id" id="edit-category-id"/>
             </div>
-         </div>
+          </div>
+
+          <div class="row mb-3">
+            <label class="form-label col-md-6 col-sm-12 col-lg-6">Priority
+            </label>
+            <div class="col-md-6 col-sm-12 col-lg-6">
+               <input
+                  type="text"
+                  class="form-control"
+                  placeholder=""
+                  name="priority"
+                  value="0"
+                  />
+            </div>
+          </div>
          <hr />
          <div class="d-flex justify-content-around">
             <!-- <button class="btn btn-outline-danger btn-delete btn-lg w-100 me-2">
