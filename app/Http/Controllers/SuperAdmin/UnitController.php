@@ -5,6 +5,8 @@ namespace App\Http\Controllers\SuperAdmin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Services\SuperAdmin\UnitServices;
+use Illuminate\Validation\Rule;
+
 use App\Models\ {
     Locations,
     Category,
@@ -29,45 +31,60 @@ class UnitController extends Controller {
     }
 
     public function AddUnit(Request $request)
-    {
+{
+    try {
+        $rules = [
+            'unit_name' => [
+                'required',
+                'max:255',
+                Rule::unique('units')->where(function ($query) {
+                    return $query->where('is_deleted', 0);
+                }),
+            ],
+        ];
 
-        try {
+        $messages = [
+            'unit_name.required' => 'Please enter Unit Name.',
+            'unit_name.max' => 'Unit Name should not exceed 255 characters.',
+            'unit_name.unique' => 'Unit Name already exists.'
+        ];
 
-            $rules = [
-                'unit_name' => 'required|unique:units|max:255'
-            ];
-            $messages = [
-                'unit_name.required' => 'Please  enter category_name name.',
-                'unit_name.max' => 'Please  enter text length upto 255 character only.',
-                'unit_name.unique' => 'Title already exist.'
-            ];
+        $validation = Validator::make($request->all(), $rules, $messages);
 
-            $validation = Validator::make($request->all(), $rules, $messages);
-            if ($validation->fails()) {
-                return redirect('list-units')
-                    ->withInput()
-                    ->withErrors($validation);
-            } else {
-                $add_role = $this->service->addUnit($request);
-                if ($add_role) {
-                    $msg = $add_role['msg'];
-                    $status = $add_role['status'];
+        if ($validation->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'errors' => $validation->errors()
+            ], 422);
+        }
 
+        // Validation passed, insert into database
+        $add_unit = $this->service->addUnit($request);
+
+        if ($add_unit) {
+            $msg = $add_unit['msg'];
+                    $status = $add_unit['status'];
                     session()->flash('alert_status', $status);
                     session()->flash('alert_msg', $msg);
-
-                    if ($status == 'success') {
-                        return redirect('list-units');
-                    } else {
-                        return redirect('list-units')->withInput();
-                    }
-                }
-
-            }
-        } catch (Exception $e) {
-            return redirect('list-units')->withInput()->with(['msg' => $e->getMessage(), 'status' => 'error']);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Unit added successfully!'
+            ]);
         }
+
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Something went wrong.'
+        ], 500);
+
+    } catch (Exception $e) {
+        return response()->json([
+            'status' => 'error',
+            'message' => $e->getMessage()
+        ], 500);
     }
+}
+
 
     public function editUnit(Request $request){
         $unit_data = $this->service->editUnit($request);
