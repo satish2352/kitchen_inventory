@@ -15,6 +15,7 @@ use App\Models\{
 };
 use Illuminate\Support\Facades\Mail;
 
+
 class UserRepository
 {
     public function getUsersList() {
@@ -62,55 +63,64 @@ class UserRepository
 
     public function addUser($request)
 	{
-		// dd($request);
-		$sess_user_id = session()->get('login_id');
+		try {
+			
+			$sess_user_id = session()->get('login_id');
 
-		$data =array();
-		$user_data = new UsersData();
-		$user_data->name = ucwords(strtolower($request['name']));
-		// $user_data->location = $request['location'];
-		$user_data->user_role = $request['role'];
-		$user_data->phone = $request['phone'];
-		$user_data->email = $request['email'];
-		$user_data->password = $request['password'];
-		$user_data->added_by = 2;
-		$user_data->added_byId = $sess_user_id;
-		// $user_data->save();
+			$data =array();
+			$user_data = new UsersData();
+			$user_data->name = ucwords(strtolower($request['name']));
+			$user_data->user_role = $request['role'];
+			$user_data->phone = $request['phone'];
+			$user_data->email = $request['email'];
+			$user_data->password = $request['password'];
+			$user_data->added_by = 2;
+			$user_data->added_byId = $sess_user_id;
+			$user_data->is_approved = 1;
 
-		// dd(json_encode($request['location']));
-		// // Store selected locations as a JSON array
-		// if ($request->has('location')) {
-		// 	$user_data->location = json_encode($request['location']); // Store as JSON
-		// }
+			if ($request->has('location')) {
+				$user_data->location = implode(',', $request['location']); // Join values with commas
+			}
+			$user_data->save();
 
-		 // Save selected locations as a comma-separated string
-		 if ($request->has('location')) {
-			$user_data->location = implode(',', $request['location']); // Join values with commas
+			try {
+				$email_data = [
+					'email' => $request['email'],				
+					'password' => $request['password'],
+	
+				];
+				$toEmail = $request['email'];
+				$senderSubject = 'Credentials for the Buffalo Boss login' . date('d-m-Y H:i:s');
+				$fromEmail = env('MAIL_USERNAME');
+				Mail::send('user_added_mail', ['email_data' => $email_data], function ($message) use ($toEmail, $fromEmail, $senderSubject) {
+					$message->to($toEmail)->subject($senderSubject);
+					$message->from($fromEmail, ' Buffalo Boss');
+				});
+
+			} catch (\Exception $e) {
+				Log::error('Mail sending error: '.$e->getMessage());
+				info($e->getMessage());  // Keep dd to see the error in debugging, or just Log it
+			}
+
+			$sess_user_name = session()->get('user_name');
+			$sess_location_id = session()->get('location_selected_id');
+			$LogMsg= config('constants.ADMIN.1113');
+			$FinalLogMessage = $sess_user_name.' '.$LogMsg;
+			$ActivityLogData = new ActivityLog();
+			$ActivityLogData->user_id = $sess_user_id;
+			$ActivityLogData->activity_message = $FinalLogMessage;
+			$ActivityLogData->save();
+			$last_insert_id = $user_data->id;
+			return $last_insert_id;
+
+		} catch (\Exception $e) {
+			info($e->getMessage());
 		}
-		$user_data->save();
-
-		// if($last_insert_id)
-		// {
-
-		$sess_user_id = session()->get('login_id');
-		$sess_user_name = session()->get('user_name');
-		$sess_location_id = session()->get('location_selected_id');
-
-
-		$LogMsg= config('constants.ADMIN.1113');
-
-		$FinalLogMessage = $sess_user_name.' '.$LogMsg;
-		$ActivityLogData = new ActivityLog();
-		$ActivityLogData->user_id = $sess_user_id;
-		$ActivityLogData->activity_message = $FinalLogMessage;
-		$ActivityLogData->save();
-		// }
-		// dd($user_data);
-		$last_insert_id = $user_data->id;
-// dd($user_data);
-        return $last_insert_id;
 
 	}
+
+
+	
 
     public function updateUser($request)
 	{

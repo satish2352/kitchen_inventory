@@ -9,7 +9,7 @@ use App\Http\Services\SuperAdmin\ShoppingListServices;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\ {
-    Items,
+    // Items,
     Locations,
     LocationWiseInventory,
     MasterKitchenInventory,
@@ -33,10 +33,10 @@ class ShoppingListController extends Controller
         $location_selected_name = session()->get('location_selected_name');
         $location_selected_id = session()->get('location_selected_id');
 
-        $all_kitchen_inventory = Items::where('is_deleted', '0')
-            ->select('*')
-            ->get()
-            ->toArray();
+        // $all_kitchen_inventory = Items::where('is_deleted', '0')
+        //     ->select('*')
+        //     ->get()
+        //     ->toArray();
         $data_location_wise_inventory=array();
 
         $locationsData = Locations::where('is_active', '1')
@@ -104,7 +104,9 @@ class ShoppingListController extends Controller
                 'master_kitchen_inventory.unit',
                 'master_kitchen_inventory.price',
                 'location_wise_inventory.quantity',
-                'location_wise_inventory.created_at',
+                'location_wise_inventory.created_at',                
+                'location_wise_inventory.master_quantity',
+                'location_wise_inventory.master_price',
                 'location_wise_inventory.id as locationWiseId',
                 'category.category_name',
                 'units.unit_name',
@@ -211,10 +213,10 @@ class ShoppingListController extends Controller
         $location_selected_name = session()->get('location_selected_name');
         $location_selected_id = session()->get('location_selected_id');
 
-        $all_kitchen_inventory = Items::where('is_deleted', '0')
-            ->select('*')
-            ->get()
-            ->toArray();
+        // $all_kitchen_inventory = Items::where('is_deleted', '0')
+        //     ->select('*')
+        //     ->get()
+        //     ->toArray();
         $InventoryData=array();
 
         $locationsData = Locations::where('is_active', '1')
@@ -329,7 +331,8 @@ class ShoppingListController extends Controller
             }
         }    
         // dd($InventoryData);
-        return view('kitchen-inventory', compact('all_kitchen_inventory','InventoryData','locationsData'));
+        // return view('kitchen-inventory', compact('all_kitchen_inventory','InventoryData','locationsData'));
+        return view('kitchen-inventory', compact('InventoryData','locationsData'));
     }
 
     public function addKitchenInventoryBySuperAdmin(Request $request)

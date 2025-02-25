@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->string('location_id');
             $table->string('unit'); // Unit (e.g., kg, pcs, liters)
             $table->float('price'); // Price with 2 decimal places
+            $table->integer('priority')->default(0);
             $table->integer('is_active')->default(true);
             $table->integer('is_deleted')->default(false);
             $table->timestamps(); // Created at & Updated at
@@ -29,7 +30,7 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('master_inventory');
+        Schema::dropIfExists('master_kitchen_inventory');
     }
 };
 

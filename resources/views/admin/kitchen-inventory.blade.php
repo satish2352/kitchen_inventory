@@ -293,85 +293,85 @@
    });
    </script> -->
 <script>
-   $(document).ready(function () {
-       $("#frm_register_add").on("submit", function (e) {
-           let isValid = true;
+//    $(document).ready(function () {
+//        $("#frm_register_add").on("submit", function (e) {
+//            let isValid = true;
    
-           // Loop through each quantity[] field and validate
-           $(".qty-input-add").each(function () {
-               let quantity = $(this).val().trim();
-               let errorSpan = $(this).siblings(".error-message");
-               let masterQuantity = parseFloat($(this).closest("tr").find("td:nth-child(2)").text().trim()) || 0; // Getting masterQuantity
+//            // Loop through each quantity[] field and validate
+//            $(".qty-input-add").each(function () {
+//                let quantity = $(this).val().trim();
+//                let errorSpan = $(this).siblings(".error-message");
+//                let masterQuantity = parseFloat($(this).closest("tr").find("td:nth-child(2)").text().trim()) || 0; // Getting masterQuantity
    
-               if (quantity === "" || isNaN(quantity) || parseFloat(quantity) < 0) {
-                   errorSpan.text("Please enter a valid quantity (greater than 0).");
-                   isValid = false;
-               } else if (quantity.length > 5) {
-                   errorSpan.text("Quantity cannot be more than 5 digits.");
-                   isValid = false;
-               } else if (parseFloat(quantity) > masterQuantity) {
-                   errorSpan.text("Entered quantity cannot exceed required quantity!");
-                   isValid = false;
-               } else {
-                   errorSpan.text(""); // Clear the error message
-               }
-           });
+//                if (quantity === "" || isNaN(quantity) || parseFloat(quantity) < 0) {
+//                    errorSpan.text("Please enter a valid quantity (greater than 0).");
+//                    isValid = false;
+//                } else if (quantity.length > 5) {
+//                    errorSpan.text("Quantity cannot be more than 5 digits.");
+//                    isValid = false;
+//                } else if (parseFloat(quantity) > masterQuantity) {
+//                    errorSpan.text("Entered quantity cannot exceed required quantity!");
+//                    isValid = false;
+//                } else {
+//                    errorSpan.text(""); // Clear the error message
+//                }
+//            });
    
-           if (!isValid) {
-               e.preventDefault(); // Prevent form submission if validation fails
-           }
-       });
+//            if (!isValid) {
+//                e.preventDefault(); // Prevent form submission if validation fails
+//            }
+//        });
    
-        // Clear error when user starts typing
-        $(".qty-input-add").on("input", function () {
-           let quantity = $(this).val().trim();
-           let errorSpan = $(this).siblings(".error-message");
+//         // Clear error when user starts typing
+//         $(".qty-input-add").on("input", function () {
+//            let quantity = $(this).val().trim();
+//            let errorSpan = $(this).siblings(".error-message");
    
-           if (quantity !== "" && !isNaN(quantity)) {
-               if (quantity.length > 5) {
-                   errorSpan.text("Quantity cannot be more than 5 digits.");
-               } else {
-                   errorSpan.text(""); // Clear the error message
-               }
-           }
-       });
-   });
+//            if (quantity !== "" && !isNaN(quantity)) {
+//                if (quantity.length > 5) {
+//                    errorSpan.text("Quantity cannot be more than 5 digits.");
+//                } else {
+//                    errorSpan.text(""); // Clear the error message
+//                }
+//            }
+//        });
+//    });
 </script>
 <script>
-   $(document).ready(function () {
-       $("#frm_register_edit").on("submit", function (e) {
-           let isValid = true;
+//    $(document).ready(function () {
+//        $("#frm_register_edit").on("submit", function (e) {
+//            let isValid = true;
    
-           // Loop through each quantity[] field and validate
-           $(".qty-input-edit").each(function () {
-               let quantity = $(this).val().trim();
-               let errorSpan = $(this).siblings(".error-message");
-               let masterQuantity = parseFloat($(this).closest("tr").find("td:nth-child(2)").text().trim()) || 0; // Getting masterQuantity
+//            // Loop through each quantity[] field and validate
+//            $(".qty-input-edit").each(function () {
+//                let quantity = $(this).val().trim();
+//                let errorSpan = $(this).siblings(".error-message");
+//                let masterQuantity = parseFloat($(this).closest("tr").find("td:nth-child(2)").text().trim()) || 0; // Getting masterQuantity
    
-               if (quantity === "" || isNaN(quantity) || parseFloat(quantity) < 0) {
-                   errorSpan.text("Please enter a valid quantity (greater than 0).");
-                   isValid = false;
-               } else if (quantity.length > 5) {
-                   errorSpan.text("Quantity cannot be more than 5 digits.");
-                   isValid = false;
-               } else if (parseFloat(quantity) > masterQuantity) {
-                   errorSpan.text("Entered quantity cannot exceed required quantity!");
-                   isValid = false;
-               } else {
-                   errorSpan.text(""); // Clear the error message
-               }
-           });
+//                if (quantity === "" || isNaN(quantity) || parseFloat(quantity) < 0) {
+//                    errorSpan.text("Please enter a valid quantity (greater than 0).");
+//                    isValid = false;
+//                } else if (quantity.length > 5) {
+//                    errorSpan.text("Quantity cannot be more than 5 digits.");
+//                    isValid = false;
+//                } else if (parseFloat(quantity) > masterQuantity) {
+//                    errorSpan.text("Entered quantity cannot exceed required quantity!");
+//                    isValid = false;
+//                } else {
+//                    errorSpan.text(""); // Clear the error message
+//                }
+//            });
    
-           if (!isValid) {
-               e.preventDefault(); // Prevent form submission if validation fails
-           }
-       });
+//            if (!isValid) {
+//                e.preventDefault(); // Prevent form submission if validation fails
+//            }
+//        });
    
-       // Clear error when user starts typing
-       $(".qty-input-edit").on("input", function () {
-           $(this).siblings(".error-message").text("");
-       });
-   });
+//        // Clear error when user starts typing
+//        $(".qty-input-edit").on("input", function () {
+//            $(this).siblings(".error-message").text("");
+//        });
+//    });
 </script>
 <script>
    $(document).ready(function() {
