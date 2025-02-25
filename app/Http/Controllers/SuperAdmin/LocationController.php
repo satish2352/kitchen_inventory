@@ -156,6 +156,7 @@ class LocationController extends Controller {
 
     // Search locations with pagination (10 items per page)
     $locations_data = Locations::where('location', 'like', "%$query%")
+                                ->where('is_deleted', 0)
                         ->paginate(10);
 
     // Return the updated view with search results and pagination

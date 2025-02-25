@@ -170,6 +170,10 @@ class UserController extends Controller {
         $add_role = $this->service->addUser($request);
 
         if ($add_role) {
+            $msg = $add_role['msg'];
+                    $status = $add_role['status'];
+                    session()->flash('alert_status', $status);
+                    session()->flash('alert_msg', $msg);
             return response()->json([
                 'status' => 'success',
                 'message' => 'User added successfully!'
