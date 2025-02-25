@@ -207,5 +207,29 @@ class LoginController extends Controller {
         $request->session()->flush();
 
         return redirect('/' );
-        }
     }
+
+    public function change_password_get()
+    {
+        return view('change-password');
+    }
+
+
+
+    public function change_password_post(Request $request)
+    {
+        UsersData::where( 'id', '=',  session()->get( 'login_id'))->update([
+            'password'=>$request['confirm_password']
+        ]);
+
+        $request->session()->forget('login_id');
+        $request->session()->forget('user_name');
+
+        $request->session()->flush();
+
+        return redirect('/' )->with(['success' => 'Password chnage successfully please login again to use service ']);
+
+    }
+}
+
+   

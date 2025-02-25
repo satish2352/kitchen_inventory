@@ -75,7 +75,8 @@
          <!-- <a href="{{ route('get-inventory-history-manager') }}"
             ><i class="bi bi-house-door-fill"></i>Inventory History List</a>    -->
 
-            <a href="{{ route('night-manager-list-change-password') }}"><i class="bi bi-bag-plus-fill"></i>Change Password</a>
+            <a href="{{ route('change-password') }}"><i class="bi bi-bag-plus-fill"></i>Change Password</a>
+       
 
             <a href="javascript:void(0);" id="logoutbtn">
                   <i class="bi bi-box-arrow-right"></i> Log Out
