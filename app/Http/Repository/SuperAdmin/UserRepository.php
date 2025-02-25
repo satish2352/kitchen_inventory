@@ -63,11 +63,9 @@ class UserRepository
 		$sess_user_name = session()->get('user_name');
 		$sess_location_id = session()->get('location_selected_id');
 
-		// dd($request);
 		$data =array();
 		$user_data = new UsersData();
 		$user_data->name = ucwords(strtolower($request['name']));
-		// $user_data->location = $request['location'];
 		$user_data->user_role = $request['role'];
 		$user_data->phone = $request['phone'];
 		$user_data->email = $request['email'];
@@ -76,13 +74,30 @@ class UserRepository
 		$user_data->is_approved = 1;
 		$user_data->added_byId = $sess_user_id;
 		$user_data->created_at = Carbon::now('America/New_York');
-		// $user_data->save();
 
-		 // Save selected locations as a comma-separated string
 		 if ($request->has('location')) {
 			$user_data->location = implode(',', $request['location']); // Join values with commas
 		}
 		$user_data->save();
+
+		try {
+			$email_data = [
+				'email' => $request['email'],				
+				'password' => $request['password'],
+
+			];
+			$toEmail = $request['email'];
+			$senderSubject = 'Credentials for the Buffalo Boss login' . date('d-m-Y H:i:s');
+			$fromEmail = env('MAIL_USERNAME');
+			Mail::send('user_added_mail', ['email_data' => $email_data], function ($message) use ($toEmail, $fromEmail, $senderSubject) {
+				$message->to($toEmail)->subject($senderSubject);
+				$message->from($fromEmail, ' Buffalo Boss');
+			});
+
+		} catch (\Exception $e) {
+			Log::error('Mail sending error: '.$e->getMessage());
+			info($e->getMessage());  // Keep dd to see the error in debugging, or just Log it
+		}
 
 		$last_insert_id = $user_data->id;
 
