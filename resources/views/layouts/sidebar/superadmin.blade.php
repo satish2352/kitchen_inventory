@@ -79,7 +79,7 @@
              <a href="{{ route('list-category') }}"><i class="bi bi-tag-fill"></i> Manage Category</a>
              <a href="{{ route('list-items') }}"><i class="bi bi-card-checklist"></i> Master Inventory</a>
              <a href="{{ route('list-users') }}"><i class="bi bi-person"></i> Manage User</a>
-             <a href="{{ route('list-approve-users') }}"><i class="bi bi-person-plus-fill"></i> Approve Users</a>
+             {{-- <a href="{{ route('list-approve-users') }}"><i class="bi bi-person-plus-fill"></i> Approve Users</a> --}}
              <a href="{{ route('get-activity-log') }}"><i class="bi bi-book"></i> Activity</a>
              <a href="{{ route('get-location-wise-inventory-sa') }}"><i class="bi bi-bag-plus-fill"></i>Update Kitchen Inventory</a>
              <a href="{{ route('get-submited-shopping-list-super-admin') }}"><i class="bi bi-share-fill"></i> Shopping List</a>
