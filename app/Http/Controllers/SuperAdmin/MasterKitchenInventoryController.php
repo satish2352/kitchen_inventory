@@ -3,12 +3,14 @@ namespace App\Http\Controllers\SuperAdmin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Services\SuperAdmin\MasterKitchenInventoryServices;
-use App\Models\Category;
-use App\Models\Locations;
-use App\Models\MasterKitchenInventory;
-use App\Models\Unit;
-use session;
-use Validator;
+use App\Models\ {
+    Category,
+    Locations,
+    MasterKitchenInventory,
+    Unit
+};
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class MasterKitchenInventoryController extends Controller
 {

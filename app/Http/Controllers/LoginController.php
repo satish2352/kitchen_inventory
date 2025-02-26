@@ -2,9 +2,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-
-// For decryption
-use Illuminate\Http\Request;use Illuminate\Support\Facades\Validator;
+use App\Models\UsersData;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use App\Models\ {
+    Locations,
+};
 
 class LoginController extends Controller
 {

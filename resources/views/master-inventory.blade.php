@@ -166,7 +166,7 @@
 @endif -->
     <div class="filter">
         <div class="shopping-list-row d-flex align-items-center p-3">
-           
+
             <div class="input-group search-input">
                 <input type="text" class="form-control" placeholder="Search..." aria-label="Search"
                     id="search-query" />
@@ -174,7 +174,7 @@
                     <i class="bi bi-search"></i>
                 </button>
             </div>
-           
+
         </div>
     </div>
     <div class="container-fluid px-3">
@@ -436,12 +436,13 @@
                 </div>
 
                 <div class="row mb-3">
-                  <label class="form-label col-md-6 col-sm-12 col-lg-6">Priority
-                  </label>
-                  <div class="col-md-6 col-sm-12 col-lg-6">
-                      <input type="text" class="form-control" placeholder="" id="priority" name="priority" value="0" />
-                  </div>
-              </div>
+                    <label class="form-label col-md-6 col-sm-12 col-lg-6">Priority
+                    </label>
+                    <div class="col-md-6 col-sm-12 col-lg-6">
+                        <input type="text" class="form-control" placeholder="" id="priority" name="priority"
+                            value="0" />
+                    </div>
+                </div>
 
                 <hr />
                 <div class="d-flex justify-content-around">
@@ -528,8 +529,6 @@
     </script>
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", () => {
-            // const selectButton = document.querySelector(".btn-select");
-            // const selectcategory = document.querySelector(".btn-category");
             const editButton = document.querySelector(".edit-btn-item");
             const editButtons = document.querySelectorAll(".edit-btn-item");
             const popup = document.getElementById("editPopup");
@@ -537,8 +536,6 @@
             const filterPopup = document.getElementById("filterPopup");
             const cancelSelectButton = document.getElementById("cancelDelete");
             const confirmSelectButton = document.getElementById("confirmDeleteItem");
-            // const cancelcategory = document.getElementById("cancelcategory");
-            // const confirmcategory = document.getElementById("confirmcategory");
 
             const deleteButton = document.querySelector(".btn-delete-item");
 
@@ -587,10 +584,6 @@
                 });
             }
 
-            // Open Popup
-            // editButton.addEventListener("click", () => {
-            //   popup.style.display = "flex";
-            // });
 
             addButton.addEventListener("click", () => {
                 popupadd.style.display = "flex";
@@ -622,33 +615,11 @@
                 }
             });
 
-            // Show Confirmation Popup
-            // selectButton.addEventListener("click", () => {
-            //   popup.style.display = "none"; // Close the bottom popup
-            //   confirmPopup.style.display = "flex"; // Show the confirmation popup
-            // });
-
-            // Close Confirmation Popup on Cancel
-            // cancelSelectButton.addEventListener("click", () => {
-            //   confirmPopup.style.display = "none";
-            // });
 
             // Perform Action on Confirm Delete
             confirmSelectButton.addEventListener("click", () => {
                 confirmPopup.style.display = "none";
-                // alert("User deleted successfully!");
-                // Add delete logic here
             });
-            // Show Category Popup
-            // selectcategory.addEventListener("click", () => {
-            //   popup.style.display = "none"; // Close the bottom popup
-            //   filterPopup.style.display = "flex"; // Show the confirmation popup
-            // });
-
-            // Close Category Popup on Cancel
-            // cancelcategory.addEventListener("click", () => {
-            //   filterPopup.style.display = "none";
-            // });
 
             deleteButton.addEventListener("click", () => {
                 popup.style.display = "none"; // Close the bottom popup
@@ -659,16 +630,7 @@
                 confirmPopupDelete.style.display = "none";
                 $("#delete_id").val($("#edit-item-id").val());
                 $("#deleteform").submit();
-                // alert("Item deleted successfully!");
-                // Add delete logic here
             });
-
-            // Perform Action on Category
-            // confirmcategory.addEventListener("click", () => {
-            //   filterPopup.style.display = "none";
-            //   // alert("User deleted successfully!");
-            //   // Add delete logic here
-            // });
         });
     </script>
     <script>
@@ -682,14 +644,13 @@
                         locationId: locationId
                     },
                     success: function(response) {
-                        $('#category').val(response.user_data.category); 
-                        $('#item_name').val(response.user_data.item_name); 
-                        $('#unit').val(response.user_data.unit); 
-                        $('#price').val(response.user_data.price);                         
-                        $('#priority').val(response.user_data.priority); 
+                        $('#category').val(response.user_data.category);
+                        $('#item_name').val(response.user_data.item_name);
+                        $('#unit').val(response.user_data.unit);
+                        $('#price').val(response.user_data.price);
+                        $('#priority').val(response.user_data.priority);
                         $('#quantity').val(response.user_data.quantity);
-                        $('#location_id').val(response.user_data
-                            .location_id); 
+                        $('#location_id').val(response.user_data.location_id);
                         $('#edit-item-id').val(response.user_data.id);
                         $('#editPopup').show();
                         document.getElementById('editPopup').style.display = "flex";
@@ -773,8 +734,6 @@
                 }
             });
 
-            // Initialize validation for the edit form
-            // Initialize validation for the add form
             $("#editUserForm").validate({
                 rules: {
                     location: {

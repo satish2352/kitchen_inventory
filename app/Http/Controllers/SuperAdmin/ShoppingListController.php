@@ -3,7 +3,14 @@ namespace App\Http\Controllers\SuperAdmin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Services\SuperAdmin\ShoppingListServices;
-use App\Models\MasterKitchenInventory;use Cookie;use Illuminate\Http\Request;use Illuminate\Support\Facades\DB;
+use App\Models\
+{   MasterKitchenInventory,
+    Locations,
+    LocationWiseInventory
+};
+    
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class ShoppingListController extends Controller
