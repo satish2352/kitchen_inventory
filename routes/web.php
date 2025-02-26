@@ -3,6 +3,13 @@
 use Illuminate\Support\Facades\Route;
 
 
+Route::get('/clear-cache', function () {
+    Artisan::call('route:clear');
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+
+    return 'Cache, route, and config cleared!';
+});
 
 Route::get('/', ['as' => '/', 'uses' => 'App\Http\Controllers\LoginController@index']);
 
