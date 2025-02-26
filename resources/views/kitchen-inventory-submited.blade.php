@@ -28,7 +28,7 @@
                     <i class="bi bi-arrow-90deg-left"></i>
                 </button>
             </a>
-            <h5 class="sub-title">Submit Shopping List</h5>
+            <h5 class="sub-title">Submitted Shopping List</h5>
             <a href="#">
           
             </a>

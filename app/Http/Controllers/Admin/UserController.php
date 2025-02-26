@@ -6,8 +6,8 @@ use App\Http\Services\Admin\UserServices;
 use App\Models\Locations;
 use App\Models\UsersData;
 use Illuminate\Validation\Rule;
-use session;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {

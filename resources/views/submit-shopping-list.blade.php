@@ -11,7 +11,7 @@
               <i class="bi bi-arrow-90deg-left"></i>
             </button>
           </a>
-          <h5 class="sub-title">Submit Shopping list</h5>
+          <h5 class="sub-title">Submitted Shopping list</h5>
 
           <button class="btn btn-light">
             <i class="bi bi-check2"></i>

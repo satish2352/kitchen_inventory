@@ -7,6 +7,7 @@ use App\Models\Locations;
 use App\Models\UsersData;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {

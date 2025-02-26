@@ -109,7 +109,6 @@ class UserRepository
 				});
 
 			} catch (\Exception $e) {
-				Log::error('Mail sending error: ' . $e->getMessage());
 				info($e->getMessage());  // Keep dd to see the error in debugging, or just Log it
 			}
 
