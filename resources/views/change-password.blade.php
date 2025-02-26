@@ -161,7 +161,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
             <div class="user-request-box p-3 shadow rounded mb-3">
                 <!-- Top Row -->
                 <div class="row mb-3">
-                    <form method="POST" action="{{ url('/change-password') }}" id="change_password_add">
+                    <form method="POST" action="{{ url('/change-password-post') }}" id="change_password_add">
                         @csrf
                         <div class="col-md-5 col-sm-6 col-lg-5">
                             <label class="form-label">Change Password:</label>
