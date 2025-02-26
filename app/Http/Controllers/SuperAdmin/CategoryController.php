@@ -3,8 +3,8 @@ namespace App\Http\Controllers\SuperAdmin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Services\SuperAdmin\CategoryServices;
-use App\Models\Locations;use Illuminate\Http\Request;
-use session;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {

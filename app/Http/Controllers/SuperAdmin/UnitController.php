@@ -3,9 +3,10 @@ namespace App\Http\Controllers\SuperAdmin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Services\SuperAdmin\UnitServices;
-use App\Models\Unit;use Config;use Illuminate\Http\Request;
+use App\Models\Unit;
+use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use session;
+use Illuminate\Support\Facades\Validator;
 
 class UnitController extends Controller
 {

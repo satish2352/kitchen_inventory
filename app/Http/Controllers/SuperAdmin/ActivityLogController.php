@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\{
     ActivityLog
 };
+use Illuminate\Support\Facades\Validator;
 
 class ActivityLogController extends Controller
 {

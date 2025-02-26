@@ -19,7 +19,7 @@ Route::post('/submitLogin', ['as' => 'submitLogin', 'uses' => 'App\Http\Controll
 Route::group(['middleware' => ['admin']], function () {
     Route::get('/logout', ['as' => 'logout', 'uses' => 'App\Http\Controllers\LoginController@logout']);
     Route::get('/change-password', ['as' => 'change-password', 'uses' => 'App\Http\Controllers\LoginController@change_password_get']);
-    Route::post('/change-password', ['as' => 'change-password', 'uses' => 'App\Http\Controllers\LoginController@change_password_post']);
+    Route::post('/change-password-post', ['as' => 'change-password-post', 'uses' => 'App\Http\Controllers\LoginController@change_password_post']);
     Route::get('/dashboard', ['as' => '/dashboard', 'uses' => 'App\Http\Controllers\DashboardController@index']);
 
     Route::post('/location-selected-admin', ['as' => 'location-selected-admin', 'uses' => 'App\Http\Controllers\LoginController@getLocationSelectedAdmin']);

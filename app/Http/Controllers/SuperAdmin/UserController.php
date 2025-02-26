@@ -6,8 +6,7 @@ use App\Http\Services\SuperAdmin\UserServices;
 use App\Models\Locations;
 use App\Models\UsersData;
 use Illuminate\Validation\Rule;
-use session;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {

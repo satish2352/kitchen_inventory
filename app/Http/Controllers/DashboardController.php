@@ -2,15 +2,17 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\ActivityLog;
-use App\Models\Category;
-use App\Models\Locations;
-// For decryption
-// use App\Models\UsersData;
+use App\Models\
+{   
+    ActivityLog,
+    Category,
+    Locations,
+    LocationWiseInventory,
+    MasterKitchenInventory,
+    UsersData
+};
+use Illuminate\Http\Request;
 
-use App\Models\LocationWiseInventory;
-use App\Models\MasterKitchenInventory;
-use App\Models\UsersData;use Illuminate\Http\Request;use Illuminate\Support\Facades\Crypt;use Session;
 
 class DashboardController extends Controller
 {

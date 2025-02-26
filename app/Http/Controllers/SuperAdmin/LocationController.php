@@ -5,7 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Services\SuperAdmin\LocationServices;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use session;
+use Illuminate\Support\Facades\Validator;
 
 class LocationController extends Controller
 {
