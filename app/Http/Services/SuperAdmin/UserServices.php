@@ -3,32 +3,32 @@ namespace App\Http\Services\SuperAdmin;
 
 use App\Http\Repository\SuperAdmin\UserRepository;
 
-
-use App\Models\
-{ User };
-use Carbon\Carbon;
-use Config;
-use Storage;
-
 class UserServices
 {
 
-	protected $repo;
+    protected $repo;
 
     /**
      * TopicService constructor.
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->repo = new UserRepository();
     }
 
-    public function index() {
-        $data_users = $this->repo->getUsersList();
-        // dd($data_users);
-        return $data_users;
+    public function index()
+    {
+        try {
+            $data_users = $this->repo->getUsersList();
+            // dd($data_users);
+            return $data_users;
+        } catch (\Exception $e) {
+            info($e->getMessage());
+        }
     }
 
-    public function addUser($request){
+    public function addUser($request)
+    {
         try {
 
             // $chk_dup = $this->repo->addLocationCheck($request);
@@ -38,70 +38,96 @@ class UserServices
             // }
             // else
             // {
-                $last_id = $this->repo->addUser($request);
-                // dd($last_id);
-                if ($last_id) {
-                    return ['status' => 'success', 'msg' => 'User Added Successfully.'];
-                } else {
-                    return ['status' => 'error', 'msg' => 'User get Not Added.'];
-                }  
+            $last_id = $this->repo->addUser($request);
+            // dd($last_id);
+            if ($last_id) {
+                return ['status' => 'success', 'msg' => 'User Added Successfully.'];
+            } else {
+                return ['status' => 'error', 'msg' => 'User get Not Added.'];
+            }
             // }
 
         } catch (Exception $e) {
             return ['status' => 'error', 'msg' => $e->getMessage()];
-            }      
+        }
     }
 
-    public function editUser($request) {
-        $data_location = $this->repo->editUser($request);
-        // dd($data_location);
-        return $data_location;
+    public function editUser($request)
+    {
+        try {
+            $data_location = $this->repo->editUser($request);
+            // dd($data_location);
+            return $data_location;
+        } catch (\Exception $e) {
+            info($e->getMessage());
+        }
     }
 
-    public function updateUser($request) {
-        $user_register_id = $this->repo->updateUser($request);
-        return ['status'=>'success','msg'=>'User Updated Successfully.'];
+    public function updateUser($request)
+    {
+        try {
+            $user_register_id = $this->repo->updateUser($request);
+            return ['status' => 'success', 'msg' => 'User Updated Successfully.'];
+        } catch (\Exception $e) {
+            info($e->getMessage());
+        }
     }
 
-    public function deleteUser($id){
+    public function deleteUser($id)
+    {
         try {
             $delete = $this->repo->deleteUser($id);
             if ($delete) {
                 return ['status' => 'success', 'msg' => 'User Deleted Successfully.'];
             } else {
                 return ['status' => 'error', 'msg' => 'User Not Deleted.'];
-            }  
+            }
         } catch (Exception $e) {
             return ['status' => 'error', 'msg' => $e->getMessage()];
-        } 
+        }
     }
 
-    public function getApproveUsers() {
-        $data_users = $this->repo->getApproveUsers();
-        // dd($data_users);
-        return $data_users;
+    public function getApproveUsers()
+    {
+        try {
+            $data_users = $this->repo->getApproveUsers();
+            // dd($data_users);
+            return $data_users;
+        } catch (\Exception $e) {
+            info($e->getMessage());
+        }
     }
 
     public function updateOne($id)
     {
-        return $this->repo->updateOne($id);
+        try {
+            return $this->repo->updateOne($id);
+        } catch (\Exception $e) {
+            info($e->getMessage());
+        }
     }
 
-    public function updateApproveUserAllData($request) {
-        $user_register_id = $this->repo->updateApproveUserAllData($request);
-        return ['status'=>'success','msg'=>'User Updated Successfully.'];
+    public function updateApproveUserAllData($request)
+    {
+        try {
+            $user_register_id = $this->repo->updateApproveUserAllData($request);
+            return ['status' => 'success', 'msg' => 'User Updated Successfully.'];
+        } catch (\Exception $e) {
+            info($e->getMessage());
+        }
     }
 
-    public function deleteApproveUser($id){
+    public function deleteApproveUser($id)
+    {
         try {
             $delete = $this->repo->deleteApproveUser($id);
             if ($delete) {
                 return ['status' => 'success', 'msg' => 'User Deleted Successfully.'];
             } else {
                 return ['status' => 'error', 'msg' => 'User Not Deleted.'];
-            }  
+            }
         } catch (Exception $e) {
             return ['status' => 'error', 'msg' => $e->getMessage()];
-        } 
+        }
     }
-}    
+}

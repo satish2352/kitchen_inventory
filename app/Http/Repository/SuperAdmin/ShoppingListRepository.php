@@ -1,220 +1,224 @@
 <?php
 namespace App\Http\Repository\SuperAdmin;
 
-use App\Models\{
-	Locations,
-	Category,
-	Unit,
-	User,
-	Items,
-	MasterKitchenInventory,
-	LocationWiseInventory,
-	ActivityLog,
-	InventoryHistory
-};
-use Illuminate\Database\QueryException;
-use Illuminate\Support\Carbon;
-use Config;
-use DB;
-use Session;
+use App\Models\ActivityLog;
+use App\Models\InventoryHistory;
+use App\Models\Locations;
+use App\Models\LocationWiseInventory;
+use App\Models\MasterKitchenInventory;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use Config;
+use Illuminate\Support\Carbon;
+use Session;
 
 class ShoppingListRepository
 {
-	public function editItem($reuest)
-	{
-		// $data_district = [];
+    public function editItem($reuest)
+    {
+        try {
+            // $data_district = [];
 
-		$data_users_data = MasterKitchenInventory::where('master_kitchen_inventory.id', '=', $reuest->locationId)
-			->select('master_kitchen_inventory.*')
-			->get()
-			->toArray();
+            $data_users_data = MasterKitchenInventory::where('master_kitchen_inventory.id', '=', $reuest->locationId)
+                ->select('master_kitchen_inventory.*')
+                ->get()
+                ->toArray();
 
-		$data_location = $data_users_data[0];
-		return $data_location;
-	}
+            $data_location = $data_users_data[0];
+            return $data_location;
+        } catch (\Exception $e) {
+            info($e->getMessage());
+        }
+    }
 
-	public function addKitchenInventoryBySuperAdmin($request)
-	{
-		$sess_user_id = session()->get('login_id');
-		$sess_user_name = session()->get('user_name');
-		$sess_location_id = session()->get('location_selected_id');
-		$inventoryIds = $request->input('master_inventory_id');
-		$quantities = $request->input('quantity');
+    public function addKitchenInventoryBySuperAdmin($request)
+    {
+        try {
+            $sess_user_id     = session()->get('login_id');
+            $sess_user_name   = session()->get('user_name');
+            $sess_location_id = session()->get('location_selected_id');
+            $inventoryIds     = $request->input('master_inventory_id');
+            $quantities       = $request->input('quantity');
 
-		$data = array();
-		foreach ($inventoryIds as $index => $inventoryId) {
-			$MasterInventoryData = MasterKitchenInventory::find($inventoryIds[$index]);
-			$LocationWiseInventoryData = new LocationWiseInventory();
-			$LocationWiseInventoryData->user_id = $sess_user_id;
-			$LocationWiseInventoryData->inventory_id = $inventoryIds[$index];
-			$LocationWiseInventoryData->location_id = $sess_location_id;
-			$LocationWiseInventoryData->quantity = $quantities[$index];
+            $data = [];
+            foreach ($inventoryIds as $index => $inventoryId) {
+                $MasterInventoryData                     = MasterKitchenInventory::find($inventoryIds[$index]);
+                $LocationWiseInventoryData               = new LocationWiseInventory();
+                $LocationWiseInventoryData->user_id      = $sess_user_id;
+                $LocationWiseInventoryData->inventory_id = $inventoryIds[$index];
+                $LocationWiseInventoryData->location_id  = $sess_location_id;
+                $LocationWiseInventoryData->quantity     = $quantities[$index];
 
-			$LocationWiseInventoryData->master_quantity = $MasterInventoryData->quantity;
-			$LocationWiseInventoryData->master_price = $MasterInventoryData->price;
-				
-			$LocationWiseInventoryData->approved_by = 1;
-			$LocationWiseInventoryData->created_at = Carbon::now('America/New_York');
-			$LocationWiseInventoryData->save();
-			$last_insert_id = $LocationWiseInventoryData->id;
-		}
+                $LocationWiseInventoryData->master_quantity = $MasterInventoryData->quantity;
+                $LocationWiseInventoryData->master_price    = $MasterInventoryData->price;
 
-		if ($last_insert_id) {
-			$LogMsg = config('constants.MANAGER.1111');
+                $LocationWiseInventoryData->approved_by = 1;
+                $LocationWiseInventoryData->created_at  = Carbon::now('America/New_York');
+                $LocationWiseInventoryData->save();
+                $last_insert_id = $LocationWiseInventoryData->id;
+            }
 
-			$FinalLogMessage = $sess_user_name . ' ' . $LogMsg;
-			$ActivityLogData = new ActivityLog();
-			$ActivityLogData->user_id = $sess_user_id;
-			$ActivityLogData->activity_message = $FinalLogMessage;
-			$ActivityLogData->created_at = Carbon::now('America/New_York');
-			$ActivityLogData->save();
-		}
+            if ($last_insert_id) {
+                $LogMsg = config('constants.MANAGER.1111');
 
-		$data = array();
-		foreach ($inventoryIds as $index => $inventoryId) {
-			$InventoryHistoryData = new InventoryHistory();
-			$InventoryHistoryData->user_id = $sess_user_id;
-			$InventoryHistoryData->inventory_id = $inventoryIds[$index];
-			$InventoryHistoryData->location_id = $sess_location_id;
-			$InventoryHistoryData->quantity = $quantities[$index];
-			$InventoryHistoryData->approved_by = 1;
-			$InventoryHistoryData->created_at = Carbon::now('America/New_York');
-			$InventoryHistoryData->save();
+                $FinalLogMessage                   = $sess_user_name . ' ' . $LogMsg;
+                $ActivityLogData                   = new ActivityLog();
+                $ActivityLogData->user_id          = $sess_user_id;
+                $ActivityLogData->activity_message = $FinalLogMessage;
+                $ActivityLogData->created_at       = Carbon::now('America/New_York');
+                $ActivityLogData->save();
+            }
 
-			$LocationsData = Locations::find($sess_location_id);
-			$MasterInventoryData = MasterKitchenInventory::find($inventoryIds[$index]);
+            $data = [];
+            foreach ($inventoryIds as $index => $inventoryId) {
+                $InventoryHistoryData               = new InventoryHistory();
+                $InventoryHistoryData->user_id      = $sess_user_id;
+                $InventoryHistoryData->inventory_id = $inventoryIds[$index];
+                $InventoryHistoryData->location_id  = $sess_location_id;
+                $InventoryHistoryData->quantity     = $quantities[$index];
+                $InventoryHistoryData->approved_by  = 1;
+                $InventoryHistoryData->created_at   = Carbon::now('America/New_York');
+                $InventoryHistoryData->save();
 
-			$logoPath = asset('/img/main_logo.png');
-			$logoBase64 = base64_encode(file_get_contents($logoPath));
+                $LocationsData       = Locations::find($sess_location_id);
+                $MasterInventoryData = MasterKitchenInventory::find($inventoryIds[$index]);
 
-			// Store data for PDF
-			$historyData[] = [
-				'master_qty' => $MasterInventoryData->quantity,
-				'inventory_id' => $MasterInventoryData->item_name,
-				'quantity' => $quantities[$index],
-				'location_id' => $LocationsData->location,
-				'price' => $MasterInventoryData->price,
-				'logimg' => $logoBase64
-				// 'approved_by' => 1,
-			];
-		}
+                $logoPath   = asset('/img/main_logo.png');
+                $logoBase64 = base64_encode(file_get_contents($logoPath));
 
-		// Generate PDF
-		$htmlContent = view('inventory_history_pdf', ['historyData' => $historyData,
-			'location' => $LocationsData->location,
-			'currentDate' => now()->toDateString()])->render();
-		$pdf = PDF::loadHTML($htmlContent);
-		$pdfData = $pdf->output();  // Get raw PDF data
+                // Store data for PDF
+                $historyData[] = [
+                    'master_qty'   => $MasterInventoryData->quantity,
+                    'inventory_id' => $MasterInventoryData->item_name,
+                    'quantity'     => $quantities[$index],
+                    'location_id'  => $LocationsData->location,
+                    'price'        => $MasterInventoryData->price,
+                    'logimg'       => $logoBase64,
+                    // 'approved_by' => 1,
+                ];
+            }
 
-		// Encode PDF data to Base64
-		$pdfBase64 = base64_encode($pdfData);
+            // Generate PDF
+            $htmlContent = view('inventory_history_pdf', ['historyData' => $historyData,
+                'location'                                                  => $LocationsData->location,
+                'currentDate'                                               => now()->toDateString()])->render();
+            $pdf     = PDF::loadHTML($htmlContent);
+            $pdfData = $pdf->output(); // Get raw PDF data
 
-		// Prepare the response data
-		$responseData = [
-			'pdf' => $pdfBase64,
-			'location' => $LocationsData->location,
-			'currentDate' => now()->toDateString(),
-		];
+            // Encode PDF data to Base64
+            $pdfBase64 = base64_encode($pdfData);
 
-		// Return the response with the PDF and additional data
-		return $responseData;
-	}
+            // Prepare the response data
+            $responseData = [
+                'pdf'         => $pdfBase64,
+                'location'    => $LocationsData->location,
+                'currentDate' => now()->toDateString(),
+            ];
 
-	public function updateKitchenInventoryBySuperAdmin($request)
-	{
-		$sess_user_id = session()->get('login_id');
-		$sess_user_name = session()->get('user_name');
-		$sess_location_id = session()->get('location_selected_id');
-		$inventoryIds = $request->input('location_wise_inventory_id');
-		$quantities = $request->input('quantity');
-		$MasterInventoryIds = $request->input('master_inventory_id');
+            // Return the response with the PDF and additional data
+            return $responseData;
+        } catch (\Exception $e) {
+            info($e->getMessage());
+        }
+    }
 
-		foreach ($inventoryIds as $index => $inventoryId) {
-			$existingInventory = LocationWiseInventory::where('id', $inventoryId)
-				->first();
-			$MasterInventoryData = MasterKitchenInventory::find((int) $MasterInventoryIds[$index]);
-			if ($existingInventory) {
-				LocationWiseInventory::where('id', $inventoryId)
-					->update([
-						'quantity' => $quantities[$index],
-						'master_quantity' => $MasterInventoryData->quantity,
-						'master_price' => $MasterInventoryData->price,
-						'approved_by' => '1',
-						'updated_at' => Carbon::now('America/New_York')
-					]);
-			} else {
-				$LocationWiseInventoryData = new LocationWiseInventory();
-				$LocationWiseInventoryData->user_id = $sess_user_id;
-				$LocationWiseInventoryData->inventory_id = (int) $MasterInventoryIds[$index];
-				$LocationWiseInventoryData->location_id = $sess_location_id;
-				$LocationWiseInventoryData->master_quantity = $MasterInventoryData->quantity;
-				$LocationWiseInventoryData->master_price = $MasterInventoryData->price;
-				$LocationWiseInventoryData->quantity = $quantities[$index];
-				$LocationWiseInventoryData->approved_by = 2;
-				$LocationWiseInventoryData->created_at = Carbon::now('America/New_York');
-				$LocationWiseInventoryData->save();
-				$last_insert_id = $LocationWiseInventoryData->id;
-			}
+    public function updateKitchenInventoryBySuperAdmin($request)
+    {
+        try {
+            $sess_user_id       = session()->get('login_id');
+            $sess_user_name     = session()->get('user_name');
+            $sess_location_id   = session()->get('location_selected_id');
+            $inventoryIds       = $request->input('location_wise_inventory_id');
+            $quantities         = $request->input('quantity');
+            $MasterInventoryIds = $request->input('master_inventory_id');
 
-			$LocationsData = Locations::find($sess_location_id);
-			$MasterInventoryData = MasterKitchenInventory::find((int) $MasterInventoryIds[$index]);
+            foreach ($inventoryIds as $index => $inventoryId) {
+                $existingInventory = LocationWiseInventory::where('id', $inventoryId)
+                    ->first();
+                $MasterInventoryData = MasterKitchenInventory::find((int) $MasterInventoryIds[$index]);
+                if ($existingInventory) {
+                    LocationWiseInventory::where('id', $inventoryId)
+                        ->update([
+                            'quantity'        => $quantities[$index],
+                            'master_quantity' => $MasterInventoryData->quantity,
+                            'master_price'    => $MasterInventoryData->price,
+                            'approved_by'     => '1',
+                            'updated_at'      => Carbon::now('America/New_York'),
+                        ]);
+                } else {
+                    $LocationWiseInventoryData                  = new LocationWiseInventory();
+                    $LocationWiseInventoryData->user_id         = $sess_user_id;
+                    $LocationWiseInventoryData->inventory_id    = (int) $MasterInventoryIds[$index];
+                    $LocationWiseInventoryData->location_id     = $sess_location_id;
+                    $LocationWiseInventoryData->master_quantity = $MasterInventoryData->quantity;
+                    $LocationWiseInventoryData->master_price    = $MasterInventoryData->price;
+                    $LocationWiseInventoryData->quantity        = $quantities[$index];
+                    $LocationWiseInventoryData->approved_by     = 2;
+                    $LocationWiseInventoryData->created_at      = Carbon::now('America/New_York');
+                    $LocationWiseInventoryData->save();
+                    $last_insert_id = $LocationWiseInventoryData->id;
+                }
 
-			$logoPath = asset('/img/main_logo.png');
-			$logoBase64 = base64_encode(file_get_contents($logoPath));
+                $LocationsData       = Locations::find($sess_location_id);
+                $MasterInventoryData = MasterKitchenInventory::find((int) $MasterInventoryIds[$index]);
 
-			$historyData[] = [
-				'master_qty' => $MasterInventoryData->quantity,
-				'inventory_id' => $MasterInventoryData->item_name,
-				'quantity' => $quantities[$index],
-				'location_id' => $LocationsData->location,
-				'price' => $MasterInventoryData->price,
-				'logimg' => $logoBase64
-				// 'approved_by' => 1,
-			];
-		}
+                $logoPath   = asset('/img/main_logo.png');
+                $logoBase64 = base64_encode(file_get_contents($logoPath));
 
-		$LogMsg = config('constants.SUPER_ADMIN.1112');
-		$FinalLogMessage = $sess_user_name . ' ' . $LogMsg;
-		$ActivityLogData = new ActivityLog();
-		$ActivityLogData->user_id = $sess_user_id;
-		$ActivityLogData->activity_message = $FinalLogMessage;
-		$ActivityLogData->created_at = Carbon::now('America/New_York');
-		$ActivityLogData->save();
+                $historyData[] = [
+                    'master_qty'   => $MasterInventoryData->quantity,
+                    'inventory_id' => $MasterInventoryData->item_name,
+                    'quantity'     => $quantities[$index],
+                    'location_id'  => $LocationsData->location,
+                    'price'        => $MasterInventoryData->price,
+                    'logimg'       => $logoBase64,
+                    // 'approved_by' => 1,
+                ];
+            }
 
-		$data = array();
-		foreach ($inventoryIds as $index => $inventoryId) {
-			$InventoryHistoryData = new InventoryHistory();
-			$InventoryHistoryData->user_id = $sess_user_id;
-			$InventoryHistoryData->inventory_id = (int) $MasterInventoryIds[$index];
-			$InventoryHistoryData->location_id = $sess_location_id;
-			$InventoryHistoryData->quantity = $quantities[$index];
-			$InventoryHistoryData->approved_by = 1;
-			$InventoryHistoryData->created_at = Carbon::now('America/New_York');
-			$InventoryHistoryData->save();
+            $LogMsg                            = config('constants.SUPER_ADMIN.1112');
+            $FinalLogMessage                   = $sess_user_name . ' ' . $LogMsg;
+            $ActivityLogData                   = new ActivityLog();
+            $ActivityLogData->user_id          = $sess_user_id;
+            $ActivityLogData->activity_message = $FinalLogMessage;
+            $ActivityLogData->created_at       = Carbon::now('America/New_York');
+            $ActivityLogData->save();
 
-			$LocationsData = Locations::find($sess_location_id);
-			$MasterInventoryData = MasterKitchenInventory::find((int) $MasterInventoryIds[$index]);
-		}
+            $data = [];
+            foreach ($inventoryIds as $index => $inventoryId) {
+                $InventoryHistoryData               = new InventoryHistory();
+                $InventoryHistoryData->user_id      = $sess_user_id;
+                $InventoryHistoryData->inventory_id = (int) $MasterInventoryIds[$index];
+                $InventoryHistoryData->location_id  = $sess_location_id;
+                $InventoryHistoryData->quantity     = $quantities[$index];
+                $InventoryHistoryData->approved_by  = 1;
+                $InventoryHistoryData->created_at   = Carbon::now('America/New_York');
+                $InventoryHistoryData->save();
 
-		// Generate PDF
-		$htmlContent = view('inventory_history_pdf', ['historyData' => $historyData,
-			'location' => $LocationsData->location,
-			'currentDate' => now()->toDateString()])->render();
-		$pdf = PDF::loadHTML($htmlContent);
-		$pdfData = $pdf->output();  // Get raw PDF data
+                $LocationsData       = Locations::find($sess_location_id);
+                $MasterInventoryData = MasterKitchenInventory::find((int) $MasterInventoryIds[$index]);
+            }
 
-		// Encode PDF data to Base64
-		$pdfBase64 = base64_encode($pdfData);
+            // Generate PDF
+            $htmlContent = view('inventory_history_pdf', ['historyData' => $historyData,
+                'location'                                                  => $LocationsData->location,
+                'currentDate'                                               => now()->toDateString()])->render();
+            $pdf     = PDF::loadHTML($htmlContent);
+            $pdfData = $pdf->output(); // Get raw PDF data
 
-		// Prepare the response data
-		$responseData = [
-			'pdf' => $pdfBase64,
-			'location' => $LocationsData->location,
-			'currentDate' => now()->toDateString(),
-		];
+            // Encode PDF data to Base64
+            $pdfBase64 = base64_encode($pdfData);
 
-		// Return the response with the PDF and additional data
-		return $responseData;
-	}
+            // Prepare the response data
+            $responseData = [
+                'pdf'         => $pdfBase64,
+                'location'    => $LocationsData->location,
+                'currentDate' => now()->toDateString(),
+            ];
+
+            // Return the response with the PDF and additional data
+            return $responseData;
+        } catch (\Exception $e) {
+            info($e->getMessage());
+        }
+    }
 }

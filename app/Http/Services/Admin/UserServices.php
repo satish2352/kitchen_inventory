@@ -2,10 +2,6 @@
 namespace App\Http\Services\Admin;
 
 use App\Http\Repository\Admin\UserRepository;
-use App\Models\{User};
-use Carbon\Carbon;
-use Config;
-use Storage;
 
 class UserServices
 {
@@ -21,15 +17,19 @@ class UserServices
 
     public function index()
     {
-        $data_users = $this->repo->getUsersList();
-        // dd($data_users);
-        return $data_users;
+        try {
+            $data_users = $this->repo->getUsersList();
+            // dd($data_users);
+            return $data_users;
+        } catch (\Exception $e) {
+            info($e->getMessage());
+        }
     }
 
     public function addUser($request)
     {
         try {
-           
+
             $last_id = $this->repo->addUser($request);
             if ($last_id) {
                 return ['status' => 'success', 'msg' => 'User Added Successfully.'];
@@ -44,15 +44,23 @@ class UserServices
 
     public function editUser($request)
     {
-        $data_location = $this->repo->editUser($request);
-        // dd($data_location);
-        return $data_location;
+        try {
+            $data_location = $this->repo->editUser($request);
+            // dd($data_location);
+            return $data_location;
+        } catch (\Exception $e) {
+            info($e->getMessage());
+        }
     }
 
     public function updateUser($request)
     {
-        $user_register_id = $this->repo->updateUser($request);
-        return ['status' => 'success', 'msg' => 'User Updated Successfully.'];
+        try {
+            $user_register_id = $this->repo->updateUser($request);
+            return ['status' => 'success', 'msg' => 'User Updated Successfully.'];
+        } catch (\Exception $e) {
+            info($e->getMessage());
+        }
     }
 
     public function deleteUser($id)
