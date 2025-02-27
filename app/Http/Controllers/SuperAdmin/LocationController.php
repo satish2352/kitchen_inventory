@@ -6,6 +6,9 @@ use App\Http\Services\SuperAdmin\LocationServices;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
+use App\Models\{
+    Locations
+};
 
 class LocationController extends Controller
 {

@@ -5,6 +5,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Services\SuperAdmin\CategoryServices;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Models\ {
+    Locations,
+    Category
+};
 
 class CategoryController extends Controller
 {

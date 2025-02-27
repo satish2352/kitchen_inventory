@@ -570,8 +570,6 @@
                     }
                 });
             } else {
-                // Clear the results if input is empty
-                // $('#search-results').html('');
                 $('#search-results').html(originalData);
             }
         });

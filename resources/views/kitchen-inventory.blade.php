@@ -51,62 +51,40 @@
                 </button>
             </div>
 
-            <!-- Location Icon -->
-            <!-- <button class="btn btn-white mx-2">
-                <i class="bi bi-geo-alt-fill"></i>
-            </button> -->
 
-            <!-- Bar Grid Icon -->
-            <!-- <button class="btn btn-white btn-delete">
-                <i class="bi bi-filter"></i>
-            </button> -->
         </div>
         <div class="container-fluid px-3">
-            <!-- <a href="#">
-                <button type="button" class="btn btn-outline-danger fs-6">
-                    Show last submitted Kitchen list
-                </button>
-            </a> -->
-
-            @if(session()->get( 'user_role') == 1)
-            <form id="locationForm" method="post" action="{{ route('location-selected-admin') }}">
-                @csrf
-                <div class="row mb-3">
-                    <label class="form-label col-md-6 col-sm-12 col-lg-6">Select Location</label>
-                    <div class="col-md-6 col-sm-12 col-lg-6">
-                        <select class="form-select" name="location_selected" id="location_selected">
-                            <option value="">Select Location</option>
-                            @foreach ($locationsData as $locations)
-                                <option value="{{ $locations['id'] }}"
-                                    @if (session('location_selected') == $locations['id']) selected @endif>{{ $locations['location'] }}
-                                </option>
-                            @endforeach
-                        </select>
+            @if (session()->get('user_role') == 1)
+                <form id="locationForm" method="post" action="{{ route('location-selected-admin') }}">
+                    @csrf
+                    <div class="row mb-3">
+                        <label class="form-label col-md-6 col-sm-12 col-lg-6">Select Location</label>
+                        <div class="col-md-6 col-sm-12 col-lg-6">
+                            <select class="form-select" name="location_selected" id="location_selected">
+                                <option value="">Select Location</option>
+                                @foreach ($locationsData as $locations)
+                                    <option value="{{ $locations['id'] }}"
+                                        @if (session('location_selected') == $locations['id']) selected @endif>{{ $locations['location'] }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
             @endif
             <!-- first if start -->
             <div class="border-box mb-4" id="search-results">
                 @if (session()->get('location_selected_id') != '')
-                    <!-- <?php //print_r($InventoryData); die;
-                    ?> -->
-                    <!-- second if start -->
                     @if ($InventoryData['DataType'] == 'MasterData')
-
                         <form action="{{ route('add-kitchen-inventory-by-sa') }}" id="frm_register_add" method="POST">
                             @csrf
 
                             @if (!empty($InventoryData['data_location_wise_inventory']) && count($InventoryData['data_location_wise_inventory']) > 0)
                                 @foreach ($InventoryData['data_location_wise_inventory'] as $category => $items)
-                                    <!-- Border Box -->
-
-                                    <!-- Header Title -->
                                     <div class="grid-header text-center">
                                         <h6 class="m-0 text-white">{{ $category }}</h6>
                                     </div>
 
-                                    <!-- Table -->
                                     <div class="table-responsive"
                                         style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
                                         <table class="table table-striped" id="sortableTable_{{ $loop->index }}">
@@ -115,23 +93,27 @@
                                                 <tr>
                                                     <th onclick="sortTable('sortableTable_{{ $loop->index }}', 0)">
                                                         <b>Sr. No. <i class="bi bi-arrow-up"
-                                                                id="arrow-0-{{ $loop->index }}"></i></b></th>
+                                                                id="arrow-0-{{ $loop->index }}"></i></b>
+                                                    </th>
                                                     <th onclick="sortTable('sortableTable_{{ $loop->index }}', 1)">
                                                         <b>Req. Qty For This Location <i class="bi bi-arrow-up"
-                                                                id="arrow-1-{{ $loop->index }}"></i></b></th>
+                                                                id="arrow-1-{{ $loop->index }}"></i></b>
+                                                    </th>
                                                     <th onclick="sortTable('sortableTable_{{ $loop->index }}', 2)">
                                                         <b>Item <i class="bi bi-arrow-up"
-                                                                id="arrow-2-{{ $loop->index }}"></i></b></th>
+                                                                id="arrow-2-{{ $loop->index }}"></i></b>
+                                                    </th>
                                                     <th onclick="sortTable('sortableTable_{{ $loop->index }}', 3)">
                                                         <b>Available Qty <i class="bi bi-arrow-up"
-                                                                id="arrow-3-{{ $loop->index }}"></i></b></th>
+                                                                id="arrow-3-{{ $loop->index }}"></i></b>
+                                                    </th>
                                                     <th onclick="sortTable('sortableTable_{{ $loop->index }}', 4)">
                                                         <b>Unit <i class="bi bi-arrow-up"
-                                                                id="arrow-4-{{ $loop->index }}"></i></b></th>
+                                                                id="arrow-4-{{ $loop->index }}"></i></b>
+                                                    </th>
                                                     <!-- <th><b>Price</b></th> -->
                                                 </tr>
                                             </thead>
-                                            <!-- Table Body -->
                                             <tbody>
                                                 @php $srNo = 1; @endphp
                                                 @foreach ($items as $item)
@@ -144,7 +126,6 @@
                                                         <td>{{ $item['masterQuantity'] }}</td>
                                                         <td>{{ $item['item_name'] }}</td>
                                                         <td>
-                                                            <!-- <input type="text" name="quantity[]" class="form-control qty-input-add" style="text-align: center;" placeholder="QTY" min="1" max="5"/> -->
                                                             <input type="text" name="quantity[]"
                                                                 class="form-control qty-input-add"
                                                                 style="text-align: center;" placeholder="QTY"
@@ -159,112 +140,121 @@
                                             </tbody>
                                         </table>
                                     </div>
-            </div>
-            @endforeach
-            <div class="text-center submit_inventory_css">
-                <button type="submit" class="btn btn-success">Submit Inventory</button>
-            </div>
-        @else
-            <div class="border-box mb-4" id="search-results">
-                <!-- Header Title -->
-                <div class="grid-header text-center">
-                    <h6 class="m-0 text-white">Please Add Inventory For This location</h6>
-                </div>
-            </div>
-            @endif
-            </form>
+                                @endforeach
+                                <div class="text-center submit_inventory_css">
+                                    <button type="submit" class="btn btn-success">Submit Inventory</button>
+                                </div>
+                            @else
+                                <div class="border-box mb-4" id="search-results">
+                                    <!-- Header Title -->
+                                    <div class="grid-header text-center">
+                                        <h6 class="m-0 text-white">Please Add Inventory For This location</h6>
+                                    </div>
+                                </div>
+                            @endif
+                        </form>
 
-            <!-- second if end and else start -->
-        @elseif($InventoryData['DataType'] == 'LocationWiseData')
-            <form action="{{ route('update-kitchen-inventory-by-super-admin') }}" id="frm_register_edit"
-                method="POST">
-                @csrf
-                @if (!empty($InventoryData['data_location_wise_inventory']) && count($InventoryData['data_location_wise_inventory']) > 0)
-                    @foreach ($InventoryData['data_location_wise_inventory'] as $category => $items)
-                        <!-- Border Box -->
-                        <div class="border-box mb-4" id="search-results">
-                            <!-- Header Title -->
-                            <div class="grid-header text-center">
-                                <h6 class="m-0 text-white">{{ $category }}</h6>
-                            </div>
+                        <!-- second if end and else start -->
+                    @elseif($InventoryData['DataType'] == 'LocationWiseData')
+                        <form action="{{ route('update-kitchen-inventory-by-super-admin') }}" id="frm_register_edit"
+                            method="POST">
+                            @csrf
+                            @if (!empty($InventoryData['data_location_wise_inventory']) && count($InventoryData['data_location_wise_inventory']) > 0)
+                                @foreach ($InventoryData['data_location_wise_inventory'] as $category => $items)
+                                    <!-- Border Box -->
+                                    <div class="border-box mb-4" id="search-results">
+                                        <!-- Header Title -->
+                                        <div class="grid-header text-center">
+                                            <h6 class="m-0 text-white">{{ $category }}</h6>
+                                        </div>
 
-                            <!-- Table -->
-                            <div class="table-responsive"
-                                style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
-                                <table class="table table-striped" id="sortableTable_{{ $loop->index }}">
-                                    <!-- Table Head -->
-                                    <thead class="table-header">
-                                        <tr>
-                                            <th onclick="sortTable('sortableTable_{{ $loop->index }}', 0)"><b>Sr. No.
-                                                    <i class="bi bi-arrow-up"
-                                                        id="arrow-0-{{ $loop->index }}"></i></b></th>
-                                            <th onclick="sortTable('sortableTable_{{ $loop->index }}', 1)"><b>Req.
-                                                    Qty For This Location <i class="bi bi-arrow-up"
-                                                        id="arrow-1-{{ $loop->index }}"></i></b></th>
-                                            <th onclick="sortTable('sortableTable_{{ $loop->index }}', 2)"><b>Item <i
-                                                        class="bi bi-arrow-up"
-                                                        id="arrow-2-{{ $loop->index }}"></i></b></th>
-                                            <th onclick="sortTable('sortableTable_{{ $loop->index }}', 3)">
-                                                <b>Available Qty <i class="bi bi-arrow-up"
-                                                        id="arrow-3-{{ $loop->index }}"></i></b></th>
-                                            <th onclick="sortTable('sortableTable_{{ $loop->index }}', 4)"><b>Unit <i
-                                                        class="bi bi-arrow-up"
-                                                        id="arrow-4-{{ $loop->index }}"></i></b></th>
-                                            <!-- <th><b>Price</b></th> -->
-                                        </tr>
-                                    </thead>
-                                    <!-- Table Body -->
-                                    <tbody>
-                                        @php $srNo = 1; @endphp
-                                        @foreach ($items as $item)
-                                            <input type="hidden" class="form-control"
-                                                name="location_wise_inventory_id[]" id="location_wise_inventory_id"
-                                                value="{{ $item['locationWiseId'] }}" />
-                                            <input type="hidden" class="form-control" name="master_inventory_id[]"
-                                                id="master_inventory_id" value="{{ $item['masterInventoryId'] }}" />
+                                        <!-- Table -->
+                                        <div class="table-responsive"
+                                            style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+                                            <table class="table table-striped" id="sortableTable_{{ $loop->index }}">
+                                                <!-- Table Head -->
+                                                <thead class="table-header">
+                                                    <tr>
+                                                        <th
+                                                            onclick="sortTable('sortableTable_{{ $loop->index }}', 0)">
+                                                            <b>Sr. No.
+                                                                <i class="bi bi-arrow-up"
+                                                                    id="arrow-0-{{ $loop->index }}"></i></b></th>
+                                                        <th
+                                                            onclick="sortTable('sortableTable_{{ $loop->index }}', 1)">
+                                                            <b>Req.
+                                                                Qty For This Location <i class="bi bi-arrow-up"
+                                                                    id="arrow-1-{{ $loop->index }}"></i></b></th>
+                                                        <th
+                                                            onclick="sortTable('sortableTable_{{ $loop->index }}', 2)">
+                                                            <b>Item <i class="bi bi-arrow-up"
+                                                                    id="arrow-2-{{ $loop->index }}"></i></b></th>
+                                                        <th
+                                                            onclick="sortTable('sortableTable_{{ $loop->index }}', 3)">
+                                                            <b>Available Qty <i class="bi bi-arrow-up"
+                                                                    id="arrow-3-{{ $loop->index }}"></i></b>
+                                                        </th>
+                                                        <th
+                                                            onclick="sortTable('sortableTable_{{ $loop->index }}', 4)">
+                                                            <b>Unit <i class="bi bi-arrow-up"
+                                                                    id="arrow-4-{{ $loop->index }}"></i></b></th>
+                                                        <!-- <th><b>Price</b></th> -->
+                                                    </tr>
+                                                </thead>
+                                                <!-- Table Body -->
+                                                <tbody>
+                                                    @php $srNo = 1; @endphp
+                                                    @foreach ($items as $item)
+                                                        <input type="hidden" class="form-control"
+                                                            name="location_wise_inventory_id[]"
+                                                            id="location_wise_inventory_id"
+                                                            value="{{ $item['locationWiseId'] }}" />
+                                                        <input type="hidden" class="form-control"
+                                                            name="master_inventory_id[]" id="master_inventory_id"
+                                                            value="{{ $item['masterInventoryId'] }}" />
 
-                                            <tr>
-                                                <td> {{ $srNo++ }} </td>
-                                                <td>{{ $item['masterQuantity'] }}</td>
-                                                <td>{{ $item['item_name'] }}</td>
-                                                <td>
-                                                    <!-- <input type="text" name="quantity[]" class="form-control qty-input-edit" style="text-align: center;" value="{{ $item['quantity'] }}"  placeholder="QTY" min="1" max="5"/> -->
-                                                    <input type="text" name="quantity[]"
-                                                        class="form-control qty-input-edit"
-                                                        value="{{ $item['quantity'] }}" style="text-align: center;"
-                                                        placeholder="QTY" inputmode="decimal"
-                                                        pattern="[0-9]+(\.[0-9]+)?"
-                                                        onkeypress="return isNumberKey(event)">
-                                                    <span class="error-message text-danger"></span>
-                                                </td>
-                                                <td>{{ $item['unit_name'] }}</td>
-                                                <!-- <td>{{ $item['price'] }}</td> -->
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    @endforeach
-                    <div class="text-center submit_inventory_css">
-                        <button type="submit" class="btn btn-success">Update Inventory</button>
-                    </div>
+                                                        <tr>
+                                                            <td> {{ $srNo++ }} </td>
+                                                            <td>{{ $item['masterQuantity'] }}</td>
+                                                            <td>{{ $item['item_name'] }}</td>
+                                                            <td>
+                                                                <!-- <input type="text" name="quantity[]" class="form-control qty-input-edit" style="text-align: center;" value="{{ $item['quantity'] }}"  placeholder="QTY" min="1" max="5"/> -->
+                                                                <input type="text" name="quantity[]"
+                                                                    class="form-control qty-input-edit"
+                                                                    value="{{ $item['quantity'] }}"
+                                                                    style="text-align: center;" placeholder="QTY"
+                                                                    inputmode="decimal" pattern="[0-9]+(\.[0-9]+)?"
+                                                                    onkeypress="return isNumberKey(event)">
+                                                                <span class="error-message text-danger"></span>
+                                                            </td>
+                                                            <td>{{ $item['unit_name'] }}</td>
+                                                            <!-- <td>{{ $item['price'] }}</td> -->
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                @endforeach
+                                <div class="text-center submit_inventory_css">
+                                    <button type="submit" class="btn btn-success">Update Inventory</button>
+                                </div>
+                            @else
+                                <div class="border-box mb-4" id="search-results">
+                                    <!-- Header Title -->
+                                    <div class="grid-header text-center">
+                                        <h6 class="m-0 text-white">Please Add Inventory For This location</h6>
+                                    </div>
+                                </div>
+                            @endif
+                        </form>
+                    @endif
                 @else
                     <div class="border-box mb-4" id="search-results">
                         <!-- Header Title -->
                         <div class="grid-header text-center">
-                            <h6 class="m-0 text-white">Please Add Inventory For This location</h6>
+                            <h6 class="m-0 text-white">Please Select Location First</h6>
                         </div>
-                    </div>
-                @endif
-            </form>
-            @endif
-        @else
-            <div class="border-box mb-4" id="search-results">
-                <!-- Header Title -->
-                <div class="grid-header text-center">
-                    <h6 class="m-0 text-white">Please Select Location First</h6>
-                </div>
 
                 @endif
             </div>
@@ -294,86 +284,94 @@
 @extends('layouts.footer')
 
 <script>
-    // $(document).ready(function () {
-    //     $("#frm_register_add").on("submit", function (e) {
-    //         let isValid = true;
+  $(document).ready(function() {
+    $("#frm_register_add").on("submit", function(e) {
+        let isValid = true;
 
-    //         // Loop through each quantity[] field and validate
-    //         $(".qty-input-add").each(function () {
-    //             let quantity = $(this).val().trim();
-    //             let errorSpan = $(this).siblings(".error-message");
-    //             let masterQuantity = parseFloat($(this).closest("tr").find("td:nth-child(2)").text().trim()) || 0; // Getting masterQuantity
+        // Loop through each quantity[] field and validate
+        $(".qty-input-add").each(function() {
+            let quantity = $(this).val().trim();
+            let errorSpan = $(this).siblings(".error-message");
+            let masterQuantity = parseFloat($(this).closest("tr").find("td:nth-child(2)").text().trim()) || 0;
 
-    //             if (quantity === "" || isNaN(quantity) || parseFloat(quantity) < 0) {
-    //                 errorSpan.text("Please enter a valid quantity (greater than 0).");
-    //                 isValid = false;
-    //             } else if (quantity.length > 5) {
-    //                 errorSpan.text("Quantity cannot be more than 5 digits.");
-    //                 isValid = false;
-    //             } else if (parseFloat(quantity) > masterQuantity) {
-    //                 errorSpan.text("Entered quantity cannot exceed required quantity!");
-    //                 isValid = false;
-    //             } else {
-    //                 errorSpan.text(""); // Clear the error message
-    //             }
-    //         });
+            // Check if quantity is valid
+            if (quantity === "" || isNaN(quantity) || parseFloat(quantity) <= 0) {
+                errorSpan.text("Please enter a valid quantity (greater than 0).");
+                isValid = false;
+            } else {
+                errorSpan.text(""); // Clear the error message
+            }
+        });
 
-    //         if (!isValid) {
-    //             e.preventDefault(); // Prevent form submission if validation fails
-    //         }
-    //     });
+        // If validation fails, prevent form submission
+        if (!isValid) {
+            e.preventDefault();
+        }
+    });
 
-    //      // Clear error when user starts typing
-    //      $(".qty-input-add").on("input", function () {
-    //         let quantity = $(this).val().trim();
-    //         let errorSpan = $(this).siblings(".error-message");
+    // Clear error when user starts typing
+    $(".qty-input-add").on("input", function() {
+        let quantity = $(this).val().trim();
+        let errorSpan = $(this).siblings(".error-message");
 
-    //         if (quantity !== "" && !isNaN(quantity)) {
-    //             if (quantity.length > 5) {
-    //                 errorSpan.text("Quantity cannot be more than 5 digits.");
-    //             } else {
-    //                 errorSpan.text(""); // Clear the error message
-    //             }
-    //         }
-    //     });
-    // });
+        // If user starts typing, remove error message if any
+        if (quantity !== "" && !isNaN(quantity)) {
+            if (quantity.length > 5) {
+                errorSpan.text("Quantity cannot be more than 5 digits.");
+            } else {
+                errorSpan.text(""); // Clear error message
+            }
+        } else {
+            errorSpan.text(""); // Clear error message if input is empty
+        }
+    });
+});
+
 </script>
 
 <script>
-    // $(document).ready(function () {
-    //     $("#frm_register_edit").on("submit", function (e) {
-    //         let isValid = true;
 
-    //         // Loop through each quantity[] field and validate
-    //         $(".qty-input-edit").each(function () {
-    //             let quantity = $(this).val().trim();
-    //             let errorSpan = $(this).siblings(".error-message");
-    //             let masterQuantity = parseFloat($(this).closest("tr").find("td:nth-child(2)").text().trim()) || 0; // Getting masterQuantity
+$(document).ready(function() {
+    $("#frm_register_edit").on("submit", function(e) {
+        let isValid = true;
 
-    //             if (quantity === "" || isNaN(quantity) || parseFloat(quantity) < 0) {
-    //                 errorSpan.text("Please enter a valid quantity (greater than 0).");
-    //                 isValid = false;
-    //             } else if (quantity.length > 5) {
-    //                 errorSpan.text("Quantity cannot be more than 5 digits.");
-    //                 isValid = false;
-    //             } else if (parseFloat(quantity) > masterQuantity) {
-    //                 errorSpan.text("Entered quantity cannot exceed required quantity!");
-    //                 isValid = false;
-    //             } else {
-    //                 errorSpan.text(""); // Clear the error message
-    //             }
-    //         });
+        $(".qty-input-edit").each(function() {
+            let quantity = $(this).val().trim();
+            let errorSpan = $(this).siblings(".error-message");
+            let masterQuantity = parseFloat($(this).closest("tr").find("td:nth-child(2)").text().trim()) || 0;
 
-    //         if (!isValid) {
-    //             e.preventDefault(); // Prevent form submission if validation fails
-    //         }
-    //     });
+            if (quantity === "" || isNaN(quantity) || parseFloat(quantity) <= 0) {
+                errorSpan.text("Please enter a valid quantity (greater than 0).");
+                isValid = false;
+            } else {
+                errorSpan.text(""); 
+            }
+        });
 
-    //     // Clear error when user starts typing
-    //     $(".qty-input-edit").on("input", function () {
-    //         $(this).siblings(".error-message").text("");
-    //     });
-    // });
+        if (!isValid) {
+            e.preventDefault();
+        }
+    });
+
+    // Clear error when user starts typing
+    $(".qty-input-edit").on("input", function() {
+        let quantity = $(this).val().trim();
+        let errorSpan = $(this).siblings(".error-message");
+
+        // If user starts typing, remove error message if any
+        if (quantity !== "" && !isNaN(quantity)) {
+            if (quantity.length > 5) {
+                errorSpan.text("Quantity cannot be more than 5 digits.");
+            } else {
+                errorSpan.text(""); // Clear error message
+            }
+        } else {
+            errorSpan.text(""); // Clear error message if input is empty
+        }
+    });
+});
+
+ 
 </script>
 
 <script type="text/javascript">
