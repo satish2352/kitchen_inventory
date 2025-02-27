@@ -71,27 +71,21 @@
             }
             var pdfBlob = new Blob([byteNumbers], { type: 'application/pdf' });
             var url = URL.createObjectURL(pdfBlob);
-    
+
             var currentDate = new Date("{{ $pdfBase64['currentDate'] }}"); // Converts string to Date object
             var formattedDate = currentDate.toLocaleDateString('en-GB'); // Formats as DD-MM-YYYY
-    
+
             var link = document.createElement('a');
             link.href = url;
             link.download = "{{ $pdfBase64['location'] }}_" + formattedDate + "_inventory_history.pdf";
-    
-            // Ensure the link is visible in the DOM before triggering the click
             document.body.appendChild(link);
-    
-            // Use setTimeout to handle delayed download in Safari
-            setTimeout(function() {
-                link.click();
-                document.body.removeChild(link); // Clean up after download
-            }, 200); // Small delay to ensure download can start before redirect
-    
+            link.click();
+            document.body.removeChild(link);
+
             // Redirect after a short delay
             setTimeout(function () {
                 window.location.href = "{{ route('/dashboard') }}"; // Change this to your actual route
-            }, 3000); // Delay for redirection after download starts
+            }, 2000);
         });
     </script>
     
