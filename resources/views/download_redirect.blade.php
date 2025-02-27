@@ -63,7 +63,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             // Convert base64 PDF to a downloadable file
-            var pdfBase64 = "{{ $pdfBase64['pdfBase64'] }}";
+            var pdfBase64 = "{{ $pdfBase64['pdf'] }}";
             var byteCharacters = atob(pdfBase64);
             var byteNumbers = new Uint8Array(byteCharacters.length);
             for (var i = 0; i < byteCharacters.length; i++) {
