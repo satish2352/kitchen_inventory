@@ -40,6 +40,7 @@
 </head>
 <body>
 <script>
+   <script>
     document.addEventListener("DOMContentLoaded", function () {
         @if(session('alert_status') && session('alert_msg'))
             Swal.fire({
@@ -51,6 +52,8 @@
             });
         @endif
     });
+</script>
+
 </script>
     <!-- Loader -->
     <div class="loader"></div>
