@@ -354,7 +354,7 @@ class ShoppingListController extends Controller
                     $msg       = $add_role['msg'];
                     $status    = $add_role['status'];
                     $pdfBase64 = $add_role['pdfBase64'];
-
+                    dd($pdfBase64);
                     // Then order by item name
                     session()->flash('alert_status', $status);
                     session()->flash('alert_msg', $msg);
