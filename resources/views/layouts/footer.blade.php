@@ -1,5 +1,10 @@
 
-
+<script>
+  if (/iPhone|iPad|iPod/i.test(navigator.userAgent) && !window.matchMedia('(display-mode: standalone)').matches) {
+    // Show custom banner or prompt asking user to add to home screen
+    alert("To install this app, tap the Share button and select 'Add to Home Screen'");
+}
+</script>
 
 
 
