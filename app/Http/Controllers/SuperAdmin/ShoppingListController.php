@@ -353,8 +353,8 @@ class ShoppingListController extends Controller
                 if ($add_role) {
                     $msg       = $add_role['msg'];
                     $status    = $add_role['status'];
-                    $pdfBase64 = $add_role['pdf'];
-
+                    $pdfBase64 = $add_role['pdfBase64'];
+                    dd($pdfBase64);
                     // Then order by item name
                     session()->flash('alert_status', $status);
                     session()->flash('alert_msg', $msg);
@@ -394,7 +394,7 @@ class ShoppingListController extends Controller
                 if ($register_user) {
                     $msg       = $register_user['msg'];
                     $status    = $register_user['status'];
-                    $pdfBase64 = $register_user['pdf']; // return redirect('dashboard');
+                    $pdfBase64 = $register_user['pdfBase64']; // return redirect('dashboard');
 
                     session()->flash('alert_status', $status);
                     session()->flash('alert_msg', $msg);
