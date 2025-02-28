@@ -11,14 +11,14 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f4f4f4;
+            background-color: grey;
             margin: 0;
             flex-direction: column;
         }
 
         .loader {
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #3498db;
+            border: 5px solid grey;
+            border-top: 5px solid white;
             border-radius: 50%;
             width: 50px;
             height: 50px;
@@ -39,22 +39,7 @@
     </style>
 </head>
 <body>
-<script>
-   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        @if(session('alert_status') && session('alert_msg'))
-            Swal.fire({
-                title: "{{ session('alert_status') == 'success' ? 'Success' : 'Error' }}",
-                text: "{{ session('alert_msg') }}",
-                icon: "{{ session('alert_status') }}",
-                confirmButtonColor: "#3085d6",
-                confirmButtonText: "OK"
-            });
-        @endif
-    });
-</script>
 
-</script>
     <!-- Loader -->
     <div class="loader"></div>
     <div class="message">Downloading your file, please wait...</div>

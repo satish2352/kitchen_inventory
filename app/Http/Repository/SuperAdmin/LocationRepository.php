@@ -27,7 +27,6 @@ class LocationRepository
     {
         try {
             return Locations::where('location', '=', $request['location'])
-            // ->orWhere('u_uname','=',$request['u_uname'])
                 ->select('id')->get();
         } catch (\Exception $e) {
             info($e->getMessage());
@@ -37,8 +36,6 @@ class LocationRepository
     public function editLocation($reuest)
     {
         try {
-            // $data_district = [];
-
             $data_users_data = Locations::where('locations.id', '=', $reuest->locationId)
                 ->select(
                     'locations.location', 'id'
@@ -58,7 +55,6 @@ class LocationRepository
             $data                    = [];
             $location_data           = new Locations();
             $location_data->location = ucwords(strtolower($request['location']));
-            // $location_data->role = $request['role'];
             $location_data->save();
             $last_insert_id = $location_data->id;
 
@@ -106,23 +102,6 @@ class LocationRepository
         }
     }
 
-    // public function deleteLocation($id)
-    // {
-    //     try {
-    //         $user = Locations::find($id);
-    //         if ($user) {
-
-    //             $user->delete();
-
-    //             return $user;
-    //         } else {
-    //             return null;
-    //         }
-    //     } catch (\Exception $e) {
-    //         return $e;
-    //     }
-    // }
-
     public function deleteLocation($id)
     {
         try {
@@ -148,12 +127,6 @@ class LocationRepository
             $ActivityLogData->save();
 
             return $student_data;
-
-            // }
-            // return response()->json([
-            //     'status' => 'error',
-            //     'message' => 'Intern ID Card details not found.',
-            // ], 404);
         } catch (\Exception $e) {
             info($e->getMessage());
         }

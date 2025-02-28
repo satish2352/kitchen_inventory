@@ -6,7 +6,15 @@
 }
 </script>
 
+<script>
+  function showLoader() {
+      document.getElementById("custome_loader").style.display = "flex";
+  }
 
+  function hideLoader() {
+      document.getElementById("custome_loader").style.display = "none";
+  }
+</script>
 
 <script>
     const toggleDrawer = document.getElementById("toggleDrawer");

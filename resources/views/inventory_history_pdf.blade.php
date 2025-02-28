@@ -144,8 +144,12 @@
                 @endif
             @endforeach
             {{-- @if (session()->get('user_role') == '1') --}}
+                @if($finalPrice > 0)
                 <td colspan="5">Total Price: </td>
                 <td>$ {{ $finalPrice }}</td>
+                @else
+                <td colspan="6">No items were found for buy </td>
+                @endif
             {{-- @endif --}}
         </tbody>
     </table>

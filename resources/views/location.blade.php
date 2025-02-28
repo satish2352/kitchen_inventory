@@ -359,23 +359,9 @@
                         id="edit-location" style="text-transform: capitalize;" />
                     <input type="hidden" class="form-control" placeholder="Enter Location Name" name="edit_id"
                         id="edit-location-id" />
-                    <!-- <select class="form-select" id="edit-location">
-                  <option>New York</option>
-                  <option>Los Angeles</option>
-                  <option>Chicago</option>
-                  </select> -->
                 </div>
             </div>
             <div class="row mb-3">
-                <!-- <label class="form-label col-6">Select Role:</label>
-               <div class="col-6">
-                 <select class="form-select" name="role" id="edit-role">
-                   <option>Admin</option>
-                   <option>Editor</option>
-                   <option>Viewer</option>
-                 </select>
-               </div>
-               </div> -->
                 <hr />
                 <div class="d-flex justify-content-around">
                     <a class="btn btn-outline-danger btn-delete btn-lg w-100 me-2">
@@ -421,18 +407,14 @@
         const closePopUpButton = document.getElementById("closePopup");
 
 
-        // Open Popup
         addButton.addEventListener("click", () => {
             popupadd.style.display = "flex";
         });
 
-        // Perform Action on Confirm Delete
         confirmDeleteButton.addEventListener("click", () => {
             confirmPopup.style.display = "none";
             $("#delete_id").val($("#edit-location-id").val());
             $("#deleteform").submit();
-            // alert("Location deleted successfully!");
-            // Add delete logic here
         });
 
         // Open Popup
@@ -476,9 +458,8 @@
 </script>
 <script>
     $(document).ready(function() {
-        // Open the popup when Edit button is clicked
-        //    $('.edit-btn').on('click', function() {
         $(document).on('click', '.edit-btn', function() {
+            showLoader();
             var locationId = $(this).data('id'); // Get the location ID from the button
 
             // AJAX request to get location data
@@ -489,22 +470,18 @@
                     locationId: locationId
                 },
                 success: function(response) {
-                    // console.log('responseresponseresponseresponse',response.location_data);
-                    // alert('ppppppppppppppppppp');
-                    // Populate the popup with the fetched data
                     $('#edit-location').val(response.location_data
                         .location); // Set location value
-                    // $('#edit-role').val(response.location_data.role); // Set role value
                     $('#edit-location-id').val(response.location_data.id); // Set role value
 
-                    // Show the popup
                     $('#editPopupLocation').show();
 
-                    // Add the CSS property for flex display
                     document.getElementById('editPopupLocation').style.display = "flex";
+                    hideLoader();
                 },
                 error: function() {
                     alert('Failed to load location data.');
+                    hideLoader();
                 }
             });
         });
@@ -571,6 +548,7 @@
         var originalData = $('#search-results').html();
         // Bind keyup event to the search input
         $('#search-query').on('keyup', function() {
+            showLoader();
             var query = $(this).val().trim(); // Get the value entered in the search box
 
             if (query.length > 0) {
@@ -587,6 +565,7 @@
 
                             // Append the new search results
                             $('#search-results').html(response);
+                            hideLoader();
                         } else {
                             $('#search-results').html(`
                             <div class="border-box mb-4" id="search-results">
@@ -595,13 +574,13 @@
                                 </div>
                             </div>
                         `);
+                        hideLoader();
                         }
                     }
                 });
             } else {
-                // Clear the results if input is empty
-                // $('#search-results').html('');
                 $('#search-results').html(originalData);
+                hideLoader();
             }
         });
     });

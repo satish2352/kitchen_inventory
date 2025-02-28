@@ -287,61 +287,68 @@
   $(document).ready(function() {
     $("#frm_register_add").on("submit", function(e) {
         let isValid = true;
+        showLoader();
+        $("button[type='submit']").prop("disabled", true); 
 
         // Loop through each quantity[] field and validate
         $(".qty-input-add").each(function() {
             let quantity = $(this).val().trim();
             let errorSpan = $(this).siblings(".error-message");
-            let masterQuantity = parseFloat($(this).closest("tr").find("td:nth-child(2)").text().trim()) || 0;
 
             // Check if quantity is valid
             if (quantity === "" || isNaN(quantity) || parseFloat(quantity) <= 0) {
                 errorSpan.text("Please enter a valid quantity (greater than 0).");
                 isValid = false;
+                hideLoader();
             } else {
                 errorSpan.text(""); // Clear the error message
             }
         });
 
-        // If validation fails, prevent form submission
         if (!isValid) {
             e.preventDefault();
+            $("button[type='submit']").prop("disabled", false);
         }
+        
     });
 
-    // Clear error when user starts typing
     $(".qty-input-add").on("input", function() {
         let quantity = $(this).val().trim();
         let errorSpan = $(this).siblings(".error-message");
 
-        // If user starts typing, remove error message if any
-        if (quantity !== "" && !isNaN(quantity)) {
-            if (quantity.length > 5) {
+        if (quantity === "" || isNaN(quantity) || parseFloat(quantity) <= 0) {
+                hideLoader();
+                errorSpan.text("Please enter a valid quantity (greater than 0).");
+                isValid = false;
+            } else if (quantity.length > 5) {
+                hideLoader();
                 errorSpan.text("Quantity cannot be more than 5 digits.");
+                isValid = false;
             } else {
-                errorSpan.text(""); // Clear error message
+                errorSpan.text(""); 
             }
-        } else {
-            errorSpan.text(""); // Clear error message if input is empty
-        }
     });
 });
 
 </script>
 
 <script>
-
 $(document).ready(function() {
     $("#frm_register_edit").on("submit", function(e) {
         let isValid = true;
-
+        showLoader();
+        $("button[type='submit']").prop("disabled", true); // Disable button
+        
         $(".qty-input-edit").each(function() {
             let quantity = $(this).val().trim();
             let errorSpan = $(this).siblings(".error-message");
-            let masterQuantity = parseFloat($(this).closest("tr").find("td:nth-child(2)").text().trim()) || 0;
-
             if (quantity === "" || isNaN(quantity) || parseFloat(quantity) <= 0) {
+                hideLoader();
                 errorSpan.text("Please enter a valid quantity (greater than 0).");
+                isValid = false;
+            } else if (quantity.length > 5) {
+                hideLoader();
+                errorSpan.text("Quantity cannot be more than 5 digits.");
                 isValid = false;
             } else {
                 errorSpan.text(""); 
@@ -350,6 +357,7 @@ $(document).ready(function() {
 
         if (!isValid) {
             e.preventDefault();
+            $("button[type='submit']").prop("disabled", false); // Re-enable if validation fails
         }
     });
 
@@ -358,7 +366,6 @@ $(document).ready(function() {
         let quantity = $(this).val().trim();
         let errorSpan = $(this).siblings(".error-message");
 
-        // If user starts typing, remove error message if any
         if (quantity !== "" && !isNaN(quantity)) {
             if (quantity.length > 5) {
                 errorSpan.text("Quantity cannot be more than 5 digits.");
@@ -370,203 +377,15 @@ $(document).ready(function() {
         }
     });
 });
-
- 
-</script>
-
-<script type="text/javascript">
-    // $(document).ready(function () {
-    //     $("#frm_register").validate({
-    //         ignore: [], // Ensure jQuery Validate doesn't ignore hidden fields
-    //         rules: {
-    //             "quantity[]": {
-    //                 required: true,  // Each field is required
-    //                 number: true,    // Must be a valid number
-    //                 min: 1           // Minimum value should be 1
-    //             }
-    //         },
-    //         messages: {
-    //             "quantity[]": {
-    //                 required: "This field is required.",
-    //                 number: "Please enter a valid number.",
-    //                 min: "Quantity must be at least 1."
-    //             }
-    //         },
-    //         errorElement: "span",
-    //         errorClass: "error-text",
-    //         highlight: function (element) {
-    //             $(element).addClass("is-invalid").removeClass("is-valid");
-    //         },
-    //         unhighlight: function (element) {
-    //             $(element).addClass("is-valid").removeClass("is-invalid");
-    //         },
-    //         errorPlacement: function (error, element) {
-    //             error.insertAfter(element);
-    //         },
-    //         submitHandler: function (form) {
-    //             let allFilled = true;
-    //             var abc=1;
-    //             $("input[name='quantity[]']").each(function () {
-    //                 alert('ggggggggg',abc);
-    //                 console.log('hhhhhhhhhh',$(this).val());
-
-    //                 if ($(this).val().trim() === "" || $(this).val() <= 0) {
-    //                     allFilled = false;
-    //                     $(this).addClass("is-invalid").removeClass("is-valid");
-    //                     $(this).after('<span class="error-text">This field is required and must be at least 1.</span>');
-    //                 } else {
-    //                     $(this).removeClass("is-invalid").addClass("is-valid");
-    //                     $(this).next(".error-text").remove();
-    //                 }
-    //             });
-
-    //             if (allFilled) {
-    //                 form.submit(); // Submit only if all quantity fields are valid
-    //             }
-    //         }
-    //     });
-
-    //     // Trigger validation when a user types or changes the quantity fields
-    //     $(document).on("input", "input[name='quantity[]']", function () {
-    //         $(this).valid(); // Validate the specific field
-    //     });
-    // });
-
-
-
-
-
-
-    //   $(document).ready(function () {  
-    // Initialize validation for the add form
-    //     $("#frm_register").validate({
-    //         rules: {
-    //         "quantity[]": {
-    //             required: function(element) {
-    //                 let isValid = true;
-    //                 $("input[name='quantity[]']").each(function() {
-    //                     // alert('kkkkkkkkkkkkk');
-    //                     if ($(this).val() === "" || $(this).val() <= 0) {
-    //                         isValid = true;
-    //                     }
-    //                 });
-    //                 return isValid;
-    //             },
-    //             number: true,  // Must be a valid number
-    //             min: 1         // Minimum value should be 1
-    //         }
-    //     },
-    //         messages: {
-    //             "quantity[]": {
-    //                 required: "All quantity fields are required",
-    //                 number: "Please enter a valid number.",
-    //                 // min: "Quantity must be at least 1."
-    //             }
-    //         },
-    //         errorElement: "span",
-    //         errorClass: "error-text",
-    //         highlight: function (element) {
-    //             $(element).addClass("is-invalid").removeClass("is-valid");
-    //         },
-    //         unhighlight: function (element) {
-    //             $(element).addClass("is-valid").removeClass("is-invalid");
-    //         },
-    //         errorPlacement: function(error, element) {
-    //             error.insertAfter(element); // Places error message directly after the input
-    //         }
-    //     });
-
-    //     $(document).on('change', '.qty-input', function() {
-    //     // Trigger validation for all quantity[] fields
-    //     $("#frm_register").valid(); // Validates the entire form
-    // });
-
-    // Initialize validation for the edit form
-    // Initialize validation for the add form
-    // $("#editUserForm").validate({
-    //   rules: {
-    //     location: {
-    //       required: true
-    //       // minlength: 3
-    //     },
-    //     role: {
-    //       required: true
-    //       // minlength: 3
-    //     },
-    //     name: {
-    //       required: true
-    //       // minlength: 3
-    //     },
-    //     phone: {
-    //       required: true,
-    //       // number:true,
-    //       minlength: 10,
-    //       maxlength: 10,
-    //       validPhone: true
-    //       // pattern: /^[6-9]\d{9}$/
-    //       // minlength: 3
-    //     },
-    //     email: {
-    //       required: true,
-    //       email:true,
-    //       // minlength: 3
-    //     },
-    //     password: {
-    //       required: true
-    //       // minlength: 3
-    //     }
-
-    //   },
-    //   messages: {
-    //     location: {
-    //       required: "Please select the location name"
-    //       // minlength: "Category name must be at least 3 characters long"
-    //     },
-    //     role: {
-    //       required: "Please select the role name"
-    //       // minlength: "Category name must be at least 3 characters long"
-    //     },
-    //     name: {
-    //       required: "Please enter user name"
-    //       // minlength: "Category name must be at least 3 characters long"
-    //     },
-    //     phone: {
-    //       required: "Please enter mobbile number",
-    //       // number:"Please enter valid mobile number",
-    //       minlength: "Mobile number min length must be exactly 10 digits.",
-    //       maxlength: "Mobile number max length must be exactly 10 digits.",
-    //       pattern: "Please enter a valid 10-digit mobile number starting with 6-9."
-    //       // minlength: "Category name must be at least 3 characters long"
-    //     },
-    //     email: {
-    //       required: "Please enter email ID",
-    //       required: "Please Enter valid email Id"
-    //       // minlength: "Category name must be at least 3 characters long"
-    //     },
-    //     password: {
-    //       required: "Please enter password"
-    //       // minlength: "Category name must be at least 3 characters long"
-    //     }
-    //   },
-    //   errorElement: "span",
-    //   errorClass: "error-text",
-    //   highlight: function (element) {
-    //     $(element).addClass("is-invalid").removeClass("is-valid");
-    //   },
-    //   unhighlight: function (element) {
-    //     $(element).addClass("is-valid").removeClass("is-invalid");
-    //   }
-    // });
-
-
-    //   });
 </script>
 
 <script>
     $(document).ready(function() {
+        
         var originalData = $('#search-results').html();
         // Bind keyup event to the search input
         $('#search-query').on('keyup', function() {
+            showLoader();
             var query = $(this).val().trim(); // Get the value entered in the search box
 
             if (query.length > 0) {
@@ -578,20 +397,18 @@ $(document).ready(function() {
                     },
                     success: function(response) {
                         if (response.length > 0) {
-                            // Clear the previous results
                             $('#search-results').html('');
-
-                            // Append the new search results
                             $('#search-results').html(response);
+                            hideLoader();
                         } else {
                             $('#search-results').html('No Data Found');
+                            hideLoader();
                         }
                     }
                 });
             } else {
-                // Clear the results if input is empty
-                // $('#search-results').html('');
                 $('#search-results').html(originalData);
+                hideLoader();
             }
         });
     });
