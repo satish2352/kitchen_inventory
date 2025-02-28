@@ -247,18 +247,22 @@ class ShoppingListController extends Controller
                         'location_wise_inventory.id as locationWiseId',
                         'location_wise_inventory.inventory_id as masterInventoryId',
                         'category.category_name',
+                        'category.priority',
                         'units.unit_name',
                         'locations.location'
                     )
                     ->where('master_kitchen_inventory.location_id', $location_selected_id)
                     ->where('master_kitchen_inventory.is_deleted', '0')
+                    ->where('units.is_deleted', '0')
+                    ->where('category.is_deleted', '0')
+                    ->where('locations.is_deleted', '0')
                     ->whereDate('location_wise_inventory.created_at', now()->toDateString())
-                    ->orderBy('category.category_name', 'asc')
-                    ->orderBy('master_kitchen_inventory.item_name', 'asc')
+                    ->orderBy('category.priority', 'asc')
+                    ->orderBy('master_kitchen_inventory.priority', 'asc')
                     ->get()
                     ->groupBy('category_name');
 
-                // If there's an exception, redirect to the feedback page with the error message
+                
                 $new_master_inventory_items = MasterKitchenInventory::leftJoin('category', 'master_kitchen_inventory.category', '=', 'category.id')
                     ->leftJoin('units', 'master_kitchen_inventory.unit', '=', 'units.id')
                     ->leftJoin('locations', 'master_kitchen_inventory.location_id', '=', 'locations.id')
@@ -271,18 +275,22 @@ class ShoppingListController extends Controller
                         'master_kitchen_inventory.quantity as masterQuantity',
                         DB::raw('NULL as quantity'), // Fetch newly added items from master_kitchen_inventory that are NOT in location_wise_inventory
                         'category.category_name',
+                        'category.priority',
                         'units.unit_name',
                         'locations.location'
                     )
                     ->where('master_kitchen_inventory.location_id', $location_selected_id)
                     ->where('master_kitchen_inventory.is_deleted', '0')
+                    ->where('units.is_deleted', '0')
+                    ->where('category.is_deleted', '0')
+                    ->where('locations.is_deleted', '0')
                     ->whereNotIn('master_kitchen_inventory.id', function ($query) use ($location_selected_id) {
                         $query->select('inventory_id')
                             ->from('location_wise_inventory')
                             ->where('location_id', $location_selected_id);
                     })
-                    ->orderBy('category.category_name', 'asc')
-                    ->orderBy('master_kitchen_inventory.item_name', 'asc')
+                    ->orderBy('category.priority', 'asc')
+                    ->orderBy('master_kitchen_inventory.priority', 'asc')
                     ->get()
                     ->groupBy('category_name');
 
@@ -311,13 +319,17 @@ class ShoppingListController extends Controller
                             'master_kitchen_inventory.quantity as masterQuantity',
                             'master_kitchen_inventory.created_at',
                             'category.category_name',
+                            'category.priority',
                             'units.unit_name',
                             'locations.location'
                         )
                         ->where('master_kitchen_inventory.location_id', $location_selected_id)
                         ->where('master_kitchen_inventory.is_deleted', '0')
-                        ->orderBy('category.category_name', 'asc')             // New items won't have quantity yet
-                        ->orderBy('master_kitchen_inventory.item_name', 'asc') // Order by category name first
+                        ->where('units.is_deleted', '0')
+                        ->where('category.is_deleted', '0')
+                        ->where('locations.is_deleted', '0')
+                        ->orderBy('category.priority', 'asc')             // New items won't have quantity yet
+                        ->orderBy('master_kitchen_inventory.priority', 'asc') // Order by category name first
                         ->get()
                         ->groupBy('category_name');
                     $InventoryData['data_location_wise_inventory'] = $data_location_wise_inventory;
