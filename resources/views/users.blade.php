@@ -677,6 +677,7 @@
                 }
             },
             submitHandler: function(form) {
+                showLoader();
                 // AJAX submission only if frontend validation passes
                 let formData = new FormData(form);
 
@@ -687,12 +688,14 @@
                     processData: false,
                     contentType: false,
                     success: function(response) {
+                        hideLoader();
                         if (response.status == 'success') {
                             location
                         .reload(); // Refresh the page or handle success response
                         }
                     },
                     error: function(xhr) {
+                        hideLoader();
                         var errors = xhr.responseJSON.errors;
                         $('.error-text').remove(); // Remove old errors
 
@@ -813,6 +816,7 @@
                     locationId: locationId
                 },
                 success: function(response) {
+                    hideLoader();
                     console.log('Response:', response.user_data);
 
                     // Populate the edit form
