@@ -500,8 +500,9 @@
     <script>
         $(document).ready(function() {
             $(document).on('click', '.edit-btn-category', function() {
+                showLoader();
                 var edit_id = $(this).data('id'); // Get the location ID from the button
-
+                
                 $.ajax({
                     url: '{{ route('edit-category') }}', // Your route to fetch the location data
                     type: 'GET',
@@ -518,9 +519,11 @@
                         $('#editPopupCategory').show();
 
                         document.getElementById('editPopupCategory').style.display = "flex";
+                        hideLoader();
                     },
                     error: function() {
                         alert('Failed to load location data.');
+                        hideLoader();
                     }
                 });
             });
@@ -589,6 +592,7 @@
             var originalData = $('#search-results').html();
             // Bind keyup event to the search input
             $('#search-query').on('keyup', function() {
+                showLoader();
                 var query = $(this).val().trim(); // Get the value entered in the search box
 
                 if (query.length > 0) {
@@ -605,8 +609,10 @@
 
                                 // Append the new search results
                                 $('#search-results').html(response);
+                                hideLoader();
                             } else {
                                 $('#search-results').html('No Data Found');
+                                hideLoader();
                             }
                         }
                     });
@@ -614,6 +620,7 @@
                     // Clear the results if input is empty
                     // $('#search-results').html('');
                     $('#search-results').html(originalData);
+                    hideLoader();
                 }
             });
         });

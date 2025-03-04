@@ -414,7 +414,7 @@
     $(document).ready(function() {
        
         $(document).on('click', '.edit-btn-unit', function() {
-
+            showLoader();
             var locationId = $(this).data('id'); // Get the location ID from the button
 
             // AJAX request to get location data
@@ -435,9 +435,11 @@
 
                     // Add the CSS property for flex display
                     document.getElementById('editPopupUnit').style.display = "flex";
+                    hideLoader();
                 },
                 error: function() {
                     alert('Failed to load location data.');
+                    hideLoader();
                 }
             });
         });
@@ -539,6 +541,7 @@
         var originalData = $('#search-results').html();
         // Bind keyup event to the search input
         $('#search-query').on('keyup', function() {
+            showLoader();
             var query = $(this).val().trim(); // Get the value entered in the search box
 
             if (query.length > 0) {
@@ -556,6 +559,7 @@
 
                             // Append the new search results
                             $('#search-results').html(response);
+                            hideLoader();
                         } else {
                             // Clear the previous results
                             $('#search-results').html(`
@@ -565,12 +569,14 @@
                                 </div>
                             </div>
                         `);
+                        hideLoader();
                         }
 
                     }
                 });
             } else {
                 $('#search-results').html(originalData);
+                hideLoader();
             }
         });
     });

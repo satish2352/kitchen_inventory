@@ -801,6 +801,7 @@
 
         // Bind event using event delegation
         $(document).on('click', '.edit-btn-user', function() {
+            showLoader();
             //   alert('Edit button clicked');
             var locationId = $(this).data('id'); // Get the location ID from the button
 
@@ -829,15 +830,18 @@
                     // Show the popup
                     $('#editPopupUser').show();
                     document.getElementById('editPopupUser').style.display = "flex";
+                    hideLoader();
                 },
                 error: function() {
                     alert('Failed to load user data.');
+                    hideLoader();
                 }
             });
         });
 
         // Bind keyup event to the search input
         $('#search-query').on('keyup', function() {
+            showLoader();
             var query = $(this).val().trim();
 
             if (query.length > 0) {
@@ -850,6 +854,7 @@
                     success: function(response) {
                         if (response.length > 0) {
                             $('#search-results').html(response);
+                            hideLoader();
                         } else {
                             $('#search-results').html(`
                             <div class="border-box mb-4" id="search-results">
@@ -858,11 +863,13 @@
                                 </div>
                             </div>
                         `);
+                        hideLoader();
                         }
                     }
                 });
             } else {
                 $('#search-results').html(originalData);
+                hideLoader();
             }
         });
     });
