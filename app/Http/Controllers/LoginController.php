@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\ {
     Locations,
 };
+use Illuminate\Support\Facades\Mail;
 
 class LoginController extends Controller
 {
@@ -161,5 +162,116 @@ class LoginController extends Controller
         } catch (\Exception $e) {
             info($e->getMessage());
         }
+    }
+
+    // Forget Password
+    public function forget_password(Request $request)
+    {
+        try {
+            return view('forgot_password_login');
+        } catch (\Exception $e) {
+            info($e->getMessage());
+        }
+    }
+
+    public function send_otp(Request $request)
+    {
+        try {
+
+            $rules = [
+                'forgot_email'    => 'required|exists:users_data,email|email', // Check if the user_name exists in the users_data table
+            ];
+
+            // Define custom validation messages
+            $messages = [
+                'forgot_email.required'    => 'Please Enter email id.',
+                'forgot_email.email'       => 'Please provide a valid email address.',
+            ];
+
+            $validation = Validator::make($request->all(), $rules, $messages);
+
+
+            $email = $request['forgot_email'];
+            $get_user = UsersData::where('email', $email)->first();
+            if ($get_user) {
+                $otp_password_reset = rand(10,100000); 
+                UsersData::where('email', $email)->update([
+                    "otp_password_reset"=> $otp_password_reset
+                ]);
+
+                $email_data = [
+					'email' => $request['forgot_email'],				
+					'otp_password_reset' => $otp_password_reset,
+	
+				];
+				$toEmail = $request['forgot_email'];
+				$senderSubject = 'Buffalo Boss OTP Details' . date('d-m-Y H:i:s');
+				$fromEmail = env('MAIL_USERNAME');
+				Mail::send('forget_password_otp_mail', ['email_data' => $email_data], function ($message) use ($toEmail, $fromEmail, $senderSubject) {
+					$message->to($toEmail)->subject($senderSubject);
+					$message->from($fromEmail, ' Buffalo Boss');
+				});
+                return view('send_otp_login',compact('otp_password_reset', 'email'))->with(['success' => 'Password sent on registred mail']);
+            } else {
+                return redirect('/')->with(['success' => 'Email address not found for password reset']);
+            }
+            return view('send_otp_login',compact('otp_password_reset', 'email'));
+        } catch (\Exception $e) {
+            info($e->getMessage());
+        }
+    }
+
+    public function reset_password(Request $request)
+    {
+        try {
+            // dd($request); otp_genrated
+            $rules = [
+                'email'    => 'required|exists:users_data,email|email', // Check if the user_name exists in the users_data table
+            ];
+
+            $messages = [
+                'email.required'    => 'Please Enter email id.',
+                'email.email'       => 'Please provide a valid email address.',
+            ];
+
+            $validation = Validator::make($request->all(), $rules, $messages);
+
+            $get_user = UsersData::where('email', $request['email'])->first();
+            if ($get_user) {
+                $password_reset = $this->generatePassword(); 
+                UsersData::where('email', $request['email'])->update([
+                    "password"=> $password_reset
+                ]);
+
+                $email_data = [
+					'email' => $request['email'],				
+					'password' => $password_reset,
+	
+				];
+				$toEmail = $request['email'];
+				$senderSubject = 'Credentials for the Buffalo Boss login' . date('d-m-Y H:i:s');
+				$fromEmail = env('MAIL_USERNAME');
+				Mail::send('user_added_mail', ['email_data' => $email_data], function ($message) use ($toEmail, $fromEmail, $senderSubject) {
+					$message->to($toEmail)->subject($senderSubject);
+					$message->from($fromEmail, ' Buffalo Boss');
+				});
+
+                return redirect('/')->with(['success' => 'Password change successfully please check email for password !!']);
+            } else {
+                return redirect('/')->with(['success' => 'Something went wrong']);
+            }
+            return view('send_otp_login',compact('otp_password_reset'));
+        } catch (\Exception $e) {
+            info($e->getMessage());
+        }
+    }
+
+    function generatePassword($length = 6) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $password = '';
+        for ($i = 0; $i < $length; $i++) {
+            $password .= $characters[rand(0, strlen($characters) - 1)];
+        }
+        return $password;
     }
 }

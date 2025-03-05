@@ -62,7 +62,7 @@
 
             var link = document.createElement('a');
             link.href = url;
-            link.download = "{{ $pdfBase64['location'] }}_" + formattedDate + "_inventory_history.pdf";
+            link.download = "{{ $pdfBase64['location'] }}_" + formattedDate + ".pdf";
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);

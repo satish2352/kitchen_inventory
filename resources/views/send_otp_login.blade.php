@@ -242,6 +242,23 @@
             padding: 10px 15px;
         }
     }
+
+
+    .alert {
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        text-align: center;
+        font-size: 14px;
+        font-weight: bold;
+        width: 100%;
+    }
+
+    .alert-danger {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
 </style>
 
 @if (isset($return_data['msg_alert']) && $return_data['msg_alert'] == 'green')
@@ -267,40 +284,34 @@
     <button id="installPWA">Install This App</button>
 </div>
 
-
+{{ "OTP ".$otp_password_reset}}
+{{ "email ".$email}}
+{{ " Route reset_password"}}
 <div class="container d-flex justify-content-center align-items-center min-vh-100 position-relative">
     <div class="form-container">
-        <form class="modal-content animate" id="frm_register" method="post" action="{{ route('submitLogin') }}">
+        <div id="message-container"></div>
+        <form class="modal-content animate" id="frm_register" method="post" action="{{ route('reset_password') }}">
             @csrf
             <header>
                 <img src="{{ asset('/img/main_logo.png') }}" width="100%;" />
-                <h2>Log In</h2>
+                <h3> OTP </h3>
             </header>
             <div class="wrapper">
-                <i class="material-icons">alternate_email</i>
-                <input type="text" name="email" value="{{ old('email') }}" aria-describedby="usernameHelp"
-                    placeholder="Enter Email ID">
-            </div>
-            <div class="error-message">
-                @if ($errors->has('email'))
-                    {{ $errors->first('email') }}
-                @endif
-            </div>
-            <div class="wrapper">
-                <i class="material-icons">lock</i>
-                <input id="password" type="password" name="password" placeholder="Enter Password">
+                <i class="material-icons mt-1">lock</i>
+                <input type="password" id="otp" name="otp" value="{{ old('otp') }}" aria-describedby="usernameHelp"
+                    placeholder="Enter OTP">
+
+                    <input type="hidden" id="otp_genrated" name="otp_genrated" value="{{$otp_password_reset}}" >
+                    <input type="hidden" id="email" name="email" value="{{$email}}" >
                 <i class="fas fa-eye position-absolute top-50 end-0 translate-middle-y eye_css" id="togglePassword"
-                    style="cursor: pointer;"></i>
+                style="cursor: pointer;"></i>
             </div>
             <div class="error-message">
-                @if ($errors->has('password'))
-                    {{ $errors->first('password') }}
+                @if ($errors->has('otp'))
+                    {{ $errors->first('otp') }}
                 @endif
             </div>
-            <button type="submit" class="rounded-3 btn-submit mt-4">Submit</button>
-            <a href="{{ route('forgotpassword') }}">
-                <h6>Forgot Password</h6>
-            </a>
+            <button type="submit" class="rounded-3 btn-submit">Submit</button>
         </form>
     </div>
 </div>
@@ -331,12 +342,11 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         document.getElementById('togglePassword').addEventListener('click', function() {
-            let passwordField = document.getElementById('password');
+            let passwordField = document.getElementById('otp');
             if (passwordField.type === 'password') {
                 passwordField.type = 'text';
                 this.classList.remove('fa-eye');
                 this.classList.add('fa-eye-slash');
-                // Cross-line effect 
             } else {
                 passwordField.type = 'password';
                 this.classList.remove('fa-eye-slash');
@@ -393,6 +403,30 @@
         document.getElementById("installPWA").click();
     });
 </script>
+
+
+<script>
+document.getElementById("frm_register").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    let enteredOtp = document.getElementById("otp").value;
+    let generatedOtp = document.getElementById("otp_genrated").value;
+    let messageContainer = document.getElementById("message-container");
+
+    // Remove existing message
+    messageContainer.innerHTML = "";
+
+    if (enteredOtp !== generatedOtp) {
+        let errorMessage = document.createElement("div");
+        errorMessage.className = "alert alert-danger";
+        errorMessage.textContent = "OTP is incorrect. Please enter the correct OTP.";
+        messageContainer.appendChild(errorMessage);
+    } else {
+        this.submit();
+    }
+});
+</script>
+
 
 <!-- <script>
     let deferredPrompt;

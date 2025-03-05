@@ -91,13 +91,13 @@
                                             <!-- Table Head -->
                                             <thead class="table-header">
                                                 <tr>
-                                                    <th onclick="sortTable('sortableTable_{{ $loop->index }}', 0)">
+                                                    <!-- <th onclick="sortTable('sortableTable_{{ $loop->index }}', 0)">
                                                         <b>Sr. No. <i class="bi bi-arrow-up"
                                                                 id="arrow-0-{{ $loop->index }}"></i></b>
                                                     </th>
                                                     <th onclick="sortTable('sortableTable_{{ $loop->index }}', 1)">
                                                         <b>Req. Qty For This Location <i class="bi bi-arrow-up"
-                                                                id="arrow-1-{{ $loop->index }}"></i></b>
+                                                                id="arrow-1-{{ $loop->index }}"></i></b> -->
                                                     </th>
                                                     <th onclick="sortTable('sortableTable_{{ $loop->index }}', 2)">
                                                         <b>Item <i class="bi bi-arrow-up"
@@ -122,8 +122,8 @@
                                                         value="{{ $item['id'] }}" />
 
                                                     <tr>
-                                                        <td> {{ $srNo++ }} </td>
-                                                        <td>{{ $item['masterQuantity'] }}</td>
+                                                        <!-- <td> {{ $srNo++ }} </td>
+                                                        <td>{{ $item['masterQuantity'] }}</td> -->
                                                         <td>{{ $item['item_name'] }}</td>
                                                         <td>
                                                             <input type="text" name="quantity[]"
@@ -175,7 +175,7 @@
                                                 <!-- Table Head -->
                                                 <thead class="table-header">
                                                     <tr>
-                                                        <th
+                                                        <!-- <th
                                                             onclick="sortTable('sortableTable_{{ $loop->index }}', 0)">
                                                             <b>Sr. No.
                                                                 <i class="bi bi-arrow-up"
@@ -184,7 +184,7 @@
                                                             onclick="sortTable('sortableTable_{{ $loop->index }}', 1)">
                                                             <b>Req.
                                                                 Qty For This Location <i class="bi bi-arrow-up"
-                                                                    id="arrow-1-{{ $loop->index }}"></i></b></th>
+                                                                    id="arrow-1-{{ $loop->index }}"></i></b></th> -->
                                                         <th
                                                             onclick="sortTable('sortableTable_{{ $loop->index }}', 2)">
                                                             <b>Item <i class="bi bi-arrow-up"
@@ -214,8 +214,8 @@
                                                             value="{{ $item['masterInventoryId'] }}" />
 
                                                         <tr>
-                                                            <td> {{ $srNo++ }} </td>
-                                                            <td>{{ $item['masterQuantity'] }}</td>
+                                                            <!-- <td> {{ $srNo++ }} </td>
+                                                            <td>{{ $item['masterQuantity'] }}</td> -->
                                                             <td>{{ $item['item_name'] }}</td>
                                                             <td>
                                                                 <!-- <input type="text" name="quantity[]" class="form-control qty-input-edit" style="text-align: center;" value="{{ $item['quantity'] }}"  placeholder="QTY" min="1" max="5"/> -->

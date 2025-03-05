@@ -114,7 +114,7 @@ class ShoppingListController extends Controller
                     ->where('master_kitchen_inventory.location_id', $location_selected_id)
                     ->where('master_kitchen_inventory.is_deleted', '0')
                     ->whereDate('location_wise_inventory.created_at', now()->toDateString())
-                    ->orderBy('category.category_name', 'asc')
+                    ->orderBy('category.priority', 'asc')
                     ->orderBy('master_kitchen_inventory.priority', 'asc')
                     ->get()
                     ->groupBy('category_name');

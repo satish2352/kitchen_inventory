@@ -23,6 +23,10 @@ Route::get('/submit-shopping-list', function () {
 })->name('submit-shopping-list');
 
 Route::post('/submitLogin', ['as' => 'submitLogin', 'uses' => 'App\Http\Controllers\LoginController@submitLogin']);
+Route::get('/forgotpassword', ['as' => 'forgotpassword', 'uses' => 'App\Http\Controllers\LoginController@forget_password']);
+Route::post('/sendotplogin', ['as' => 'sendotplogin', 'uses' => 'App\Http\Controllers\LoginController@send_otp']);
+Route::post('/reset_password', ['as' => 'reset_password', 'uses' => 'App\Http\Controllers\LoginController@reset_password']);
+
 Route::group(['middleware' => ['admin']], function () {
     Route::get('/logout', ['as' => 'logout', 'uses' => 'App\Http\Controllers\LoginController@logout']);
     Route::get('/change-password', ['as' => 'change-password', 'uses' => 'App\Http\Controllers\LoginController@change_password_get']);

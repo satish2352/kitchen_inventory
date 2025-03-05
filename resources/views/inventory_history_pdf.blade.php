@@ -107,7 +107,7 @@
     <table>
         <thead>
             <tr>
-                <th>Sr. No.</th>
+                <!-- <th>Sr. No.</th> -->
                 <th>Master Qty</th>
                 <th>Item Name</th>
                 <th>Present Qty</th>
@@ -128,7 +128,7 @@
                 @endphp
                 @if ($buyQty > 0)
                     <tr>
-                        <td>{{ $srNo++ }}</td>
+                        <!-- <td>{{ $srNo++ }}</td> -->
                         <td>{{ $data['master_qty'] }}</td>
                         <td>{{ $data['inventory_id'] }}</td>
                         <td>{{ $data['quantity'] }}</td>
@@ -145,10 +145,10 @@
             @endforeach
             {{-- @if (session()->get('user_role') == '1') --}}
                 @if($finalPrice > 0)
-                <td colspan="5">Total Price: </td>
+                <td colspan="4">Total Price: </td>
                 <td>$ {{ $finalPrice }}</td>
                 @else
-                <td colspan="6">No items were found for buy </td>
+                <td colspan="5">No items were found for buy </td>
                 @endif
             {{-- @endif --}}
         </tbody>

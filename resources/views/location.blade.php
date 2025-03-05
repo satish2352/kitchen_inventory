@@ -244,7 +244,7 @@
                 <label class="col-md-6 col-sm-12 col-lg-6 form-label">Location Name:</label>
                 <div class="col-md-6 col-sm-12 col-lg-6">
                     <input type="text" class="form-control" placeholder="Enter Location Name" name="location"
-                        value="{{ old('location') }}" style="text-transform: capitalize;" />
+                        value="{{ old('location') }}"/>
                     @error('location')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -284,7 +284,7 @@
                 <label class="col-6 form-label">Select Location:</label>
                 <div class="col-6">
                     <input type="text" class="form-control" placeholder="Enter Location Name" name="location"
-                        id="edit-location" style="text-transform: capitalize;" />
+                        id="edit-location" />
                     <input type="hidden" class="form-control" placeholder="Enter Location Name" name="edit_id"
                         id="edit-location-id" />
                 </div>
@@ -320,7 +320,7 @@
                 <label class="col-6 form-label">Location Name:</label>
                 <div class="col-6">
                     <input type="text" class="form-control" placeholder="Enter Location Name" name="location"
-                        value="{{ old('location') }}" style="text-transform: capitalize;" />
+                        value="{{ old('location') }}"/>
                     @error('location')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -356,7 +356,7 @@
                 <label class="col-6 form-label">Select Location:</label>
                 <div class="col-6">
                     <input type="text" class="form-control" placeholder="Enter Location Name" name="location"
-                        id="edit-location" style="text-transform: capitalize;" />
+                        id="edit-location" />
                     <input type="hidden" class="form-control" placeholder="Enter Location Name" name="edit_id"
                         id="edit-location-id" />
                 </div>

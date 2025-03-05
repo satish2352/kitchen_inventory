@@ -12,7 +12,7 @@ class LocationRepository
         try {
             $data_location = Locations::select('id', 'location')
                 ->where('is_deleted', '0')
-                ->orderBy('location', 'asc')
+                ->orderBy('id', 'desc')
                 ->paginate(10);
             // ->get();
 
@@ -54,7 +54,7 @@ class LocationRepository
         try {
             $data                    = [];
             $location_data           = new Locations();
-            $location_data->location = ucwords(strtolower($request['location']));
+            $location_data->location = $request['location'];
             $location_data->save();
             $last_insert_id = $location_data->id;
 
@@ -81,7 +81,7 @@ class LocationRepository
         try {
             $user_data = Locations::where('id', $request['edit_id'])
                 ->update([
-                    'location' => ucwords(strtolower($request['location'])),
+                    'location' => $request['location'],
                 ]);
 
             $sess_user_id     = session()->get('login_id');

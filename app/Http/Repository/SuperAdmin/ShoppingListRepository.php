@@ -38,7 +38,7 @@ class ShoppingListRepository
             $sess_location_id = session()->get('location_selected_id');
             $inventoryIds     = $request->input('master_inventory_id');
             $quantities       = $request->input('quantity');
-
+            
             $data = [];
             foreach ($inventoryIds as $index => $inventoryId) {
                 $MasterInventoryData                     = MasterKitchenInventory::find($inventoryIds[$index]);

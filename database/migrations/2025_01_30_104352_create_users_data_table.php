@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('password');   
             $table->string('added_by');
             $table->string('added_byId');
+            $table->string('otp_password_reset');
             $table->boolean('is_approved')->default(false);
             $table->boolean('is_active')->default(true);
             $table->integer('is_deleted')->default(false);
