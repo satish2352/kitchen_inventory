@@ -284,9 +284,9 @@
     <button id="installPWA">Install This App</button>
 </div>
 
-{{ "OTP ".$otp_password_reset}}
+<!-- {{ "OTP ".$otp_password_reset}}
 {{ "email ".$email}}
-{{ " Route reset_password"}}
+{{ " Route reset_password"}} -->
 <div class="container d-flex justify-content-center align-items-center min-vh-100 position-relative">
     <div class="form-container">
         <div id="message-container"></div>
