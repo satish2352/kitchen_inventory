@@ -7,7 +7,8 @@ use App\Models\ {
     Category,
     Locations,
     MasterKitchenInventory,
-    Unit
+    Unit,
+    UsersData
 };
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -37,12 +38,37 @@ class MasterKitchenInventoryController extends Controller
                 ->get()
                 ->toArray();
 
-            $locationsData = Locations::where('is_active', '1')
-                ->where('is_deleted', '0')
-                ->select('id', 'location')
-                ->orderBy('location', 'asc')
-                ->get()
-                ->toArray();
+            $role = session()->get('user_role');
+            if($role == 2) {
+                $login_id = session()->get('login_id');
+                $usersData = UsersData::where('is_deleted', '0')->where('is_approved', '1')->where('id', '=', $login_id)->first();
+                $location_ids = $usersData->location;
+                $all_locations = explode(',', $location_ids);
+                $locationsData = Locations::where('is_active', '1');
+                if (count($all_locations) > 1) {
+                    
+                    $location_ids = $all_locations;
+                    $locationsData =  $locationsData->whereIn('id', $location_ids);
+                } else {
+                    $location_ids = rtrim($usersData->location, ',');
+                    $locationsData =  $locationsData->whereIn('id', $location_ids);
+                }
+                $locationsData =  $locationsData->where('is_deleted', '0')
+                                        ->select('id', 'location')
+                                        ->orderBy('location', 'asc')
+                                        ->get()
+                                        ->toArray();
+
+            } else {
+                $locationsData = Locations::where('is_active', '1')
+                                ->where('is_deleted', '0')
+                                ->select('id', 'location')
+                                ->orderBy('location', 'asc')
+                                ->get()
+                                ->toArray();
+
+            }
+          
 
             return view('master-inventory', compact('user_data', 'unitData', 'categoryData', 'locationsData'));
         } catch (\Exception $e) {

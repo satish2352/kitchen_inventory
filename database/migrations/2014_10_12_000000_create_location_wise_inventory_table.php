@@ -18,6 +18,11 @@ return new class extends Migration {
             $table->float('master_quantity')->default(0);            
             $table->float('master_price')->default(0);  
             $table->float('quantity');
+
+            $table->string('category_name')->default(null);
+            $table->string('unit_name')->default(null);
+            $table->string('item_name')->default(null);
+
             $table->integer('is_active')->default(true);
             $table->integer('is_deleted')->default(false);
             $table->tinyInteger('approved_by')->default(0)->comment('0 = Pending, 1 = Sended From manager, 2 = Approved by Admin, 3 = Approved by Super Admin');

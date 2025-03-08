@@ -121,6 +121,26 @@
                                                         name="master_inventory_id[]" id="master_inventory_id"
                                                         value="{{ $item['id'] }}" />
 
+                                                    <input type="hidden" class="form-control"
+                                                        name="master_quantity[]" id="master_quantity"
+                                                        value="{{ $item['masterQuantity'] }}" />
+
+                                                    <input type="hidden" class="form-control"
+                                                        name="master_price[]" id="master_price"
+                                                        value="{{ $item['price'] }}" />
+
+                                                    <input type="hidden" class="form-control"
+                                                        name="category_name[]" id="category_name"
+                                                        value="{{ $item['category_name'] }}" />
+
+                                                    <input type="hidden" class="form-control"
+                                                        name="unit_name[]" id="unit_name"
+                                                        value="{{ $item['unit_name'] }}" />
+
+                                                    <input type="hidden" class="form-control"
+                                                        name="item_name[]" id="item_name"
+                                                        value="{{ $item['item_name'] }}" />
+
                                                     <tr>
                                                         <!-- <td> {{ $srNo++ }} </td>
                                                         <td>{{ $item['masterQuantity'] }}</td> -->
@@ -205,6 +225,7 @@
                                                 <tbody>
                                                     @php $srNo = 1; @endphp
                                                     @foreach ($items as $item)
+                                                    
                                                         <input type="hidden" class="form-control"
                                                             name="location_wise_inventory_id[]"
                                                             id="location_wise_inventory_id"
@@ -212,6 +233,27 @@
                                                         <input type="hidden" class="form-control"
                                                             name="master_inventory_id[]" id="master_inventory_id"
                                                             value="{{ $item['masterInventoryId'] }}" />
+
+
+                                                        <input type="hidden" class="form-control"
+                                                            name="master_quantity[]" id="master_quantity"
+                                                            value="{{ $item['masterQuantity'] }}" />
+
+                                                        <input type="hidden" class="form-control"
+                                                            name="master_price[]" id="master_price"
+                                                            value="{{ $item['price'] }}" />
+
+                                                        <input type="hidden" class="form-control"
+                                                            name="category_name[]" id="category_name"
+                                                            value="{{ $item['category_name'] }}" />
+
+                                                        <input type="hidden" class="form-control"
+                                                            name="unit_name[]" id="unit_name"
+                                                            value="{{ $item['unit_name'] }}" />
+
+                                                        <input type="hidden" class="form-control"
+                                                            name="item_name[]" id="item_name"
+                                                            value="{{ $item['item_name'] }}" />
 
                                                         <tr>
                                                             <!-- <td> {{ $srNo++ }} </td>

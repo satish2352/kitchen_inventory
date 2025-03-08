@@ -69,7 +69,7 @@
 
 <body>
     <!-- Logo Section -->
-    <center><img src="data:image/png;base64,{{ $historyData[0]['logimg'] }}" width="50%" /></center>
+    <center><img src="data:image/png;base64,{{ $logo }}" width="50%" /></center>
     <div class="horizontal-line"></div>
     <!-- Horizontal line -->
     <div class="header-section">
@@ -122,25 +122,43 @@
                 $srNo = 1;
                 $finalPrice = 0;
             @endphp
-            @foreach ($historyData as $data)
+            @foreach ($historyData as $category => $item_data)
                 @php
-                    $buyQty = $data['master_qty'] - $data['quantity'];
+                    $item_to_buy_available = 0;
                 @endphp
-                @if ($buyQty > 0)
-                    <tr>
-                        <!-- <td>{{ $srNo++ }}</td> -->
-                        <td>{{ $data['master_qty'] }}</td>
-                        <td>{{ $data['inventory_id'] }}</td>
-                        <td>{{ $data['quantity'] }}</td>
-                        <td>{{ $buyQty }}</td>
-                        {{-- @if (session()->get('user_role') == '1') --}}
-                            <td>
-                                @php
-                                    $finalPrice = $finalPrice + $buyQty * $data['price'];
-                                @endphp
-                                $ {{ $buyQty * $data['price'] }}</td>
-                        {{-- @endif --}}
-                    </tr>
+                <tr>
+                    
+                    <td colspan="5"><span style="font-size: 1rem;">{{$category}}</span></td>
+                </tr>
+                
+                @foreach ($item_data as $category => $data)
+                    @php
+                        $buyQty = $data['master_qty'] - $data['quantity'];
+                    @endphp
+                    @if ($buyQty > 0)
+                        <tr>
+                            @php
+                                $item_to_buy_available = $item_to_buy_available + 1; 
+                            @endphp
+                            <!-- <td>{{ $srNo++ }}</td> -->
+                            <td>{{ $data['master_qty'] }} {{ $data['unit'] }}</td>
+                            <td>{{ $data['item_name'] }}</td>
+                            <td>{{ $data['quantity'] }} {{ $data['unit'] }}</td>
+                            <td>{{ $buyQty }} {{ $data['unit'] }}</td>
+                            {{-- @if (session()->get('user_role') == '1') --}}
+                                <td>
+                                    @php
+                                        $finalPrice = $finalPrice + $buyQty * $data['price'];
+                                    @endphp
+                                    $ {{ $buyQty * $data['price'] }}</td>
+                            {{-- @endif --}}
+                        </tr>
+                    @endif
+                @endforeach
+                @if($item_to_buy_available == 0)
+                <tr>
+                    <td colspan="5"><span style="font-size: 0.85rem;">No items were found for this category </span></td>
+                </tr>
                 @endif
             @endforeach
             {{-- @if (session()->get('user_role') == '1') --}}
@@ -151,6 +169,7 @@
                 <td colspan="5">No items were found for buy </td>
                 @endif
             {{-- @endif --}}
+            
         </tbody>
     </table>
 </body>

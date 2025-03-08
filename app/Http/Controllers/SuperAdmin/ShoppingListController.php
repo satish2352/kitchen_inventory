@@ -12,6 +12,7 @@ use App\Models\
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Carbon;
 
 class ShoppingListController extends Controller
 {
@@ -256,7 +257,7 @@ class ShoppingListController extends Controller
                     ->where('units.is_deleted', '0')
                     ->where('category.is_deleted', '0')
                     ->where('locations.is_deleted', '0')
-                    ->whereDate('location_wise_inventory.created_at', now()->toDateString())
+                    ->whereDate('location_wise_inventory.created_at', Carbon::now('America/New_York')->toDateString())
                     ->orderBy('category.priority', 'asc')
                     ->orderBy('master_kitchen_inventory.priority', 'asc')
                     ->get()

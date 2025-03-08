@@ -30,32 +30,272 @@ class ShoppingListRepository
         }
     }
 
+    // public function addKitchenInventoryBySuperAdmin($request)
+    // {
+    //     try {
+    //         $sess_user_id     = session()->get('login_id');
+    //         $sess_user_name   = session()->get('user_name');
+    //         $sess_location_id = session()->get('location_selected_id');
+    //         $inventoryIds     = $request->input('master_inventory_id');
+    //         $quantities       = $request->input('quantity');
+            
+    //         $data = [];
+    //         foreach ($inventoryIds as $index => $inventoryId) {
+    //             $MasterInventoryData                     = MasterKitchenInventory::find($inventoryIds[$index]);
+    //             $LocationWiseInventoryData               = new LocationWiseInventory();
+    //             $LocationWiseInventoryData->user_id      = $sess_user_id;
+    //             $LocationWiseInventoryData->inventory_id = $inventoryIds[$index];
+    //             $LocationWiseInventoryData->location_id  = $sess_location_id;
+    //             $LocationWiseInventoryData->quantity     = $quantities[$index];
+
+    //             $LocationWiseInventoryData->master_quantity = $MasterInventoryData->quantity;
+    //             $LocationWiseInventoryData->master_price    = $MasterInventoryData->price;
+
+    //             $LocationWiseInventoryData->approved_by = 1;
+    //             $LocationWiseInventoryData->created_at  = Carbon::now('America/New_York');
+    //             $LocationWiseInventoryData->save();
+    //             $last_insert_id = $LocationWiseInventoryData->id;
+    //         }
+
+    //         if ($last_insert_id) {
+    //             $LogMsg = config('constants.MANAGER.1111');
+
+    //             $FinalLogMessage                   = $sess_user_name . ' ' . $LogMsg;
+    //             $ActivityLogData                   = new ActivityLog();
+    //             $ActivityLogData->user_id          = $sess_user_id;
+    //             $ActivityLogData->activity_message = $FinalLogMessage;
+    //             $ActivityLogData->created_at       = Carbon::now('America/New_York');
+    //             $ActivityLogData->save();
+    //         }
+
+    //         $data = [];
+    //         foreach ($inventoryIds as $index => $inventoryId) {
+    //             $InventoryHistoryData               = new InventoryHistory();
+    //             $InventoryHistoryData->user_id      = $sess_user_id;
+    //             $InventoryHistoryData->inventory_id = $inventoryIds[$index];
+    //             $InventoryHistoryData->location_id  = $sess_location_id;
+    //             $InventoryHistoryData->quantity     = $quantities[$index];
+    //             $InventoryHistoryData->approved_by  = 1;
+    //             $InventoryHistoryData->created_at   = Carbon::now('America/New_York');
+    //             $InventoryHistoryData->save();
+
+    //             $LocationsData       = Locations::find($sess_location_id);
+    //             $MasterInventoryData = MasterKitchenInventory::find($inventoryIds[$index]);
+
+    //             $logoPath   = asset('/img/main_logo.png');
+    //             $logoBase64 = base64_encode(file_get_contents($logoPath));
+
+    //             // Store data for PDF
+    //             $historyData[] = [
+    //                 'master_qty'   => $MasterInventoryData->quantity,
+    //                 'inventory_id' => $MasterInventoryData->item_name,
+    //                 'quantity'     => $quantities[$index],
+    //                 'location_id'  => $LocationsData->location,
+    //                 'price'        => $MasterInventoryData->price,
+    //                 'logimg'       => $logoBase64,
+    //                 // 'approved_by' => 1,
+    //             ];
+    //         }
+
+    //         // Generate PDF
+    //         $htmlContent = view('inventory_history_pdf', ['historyData' => $historyData,
+    //             'location'                                                  => $LocationsData->location,
+    //             'currentDate'                                               => now()->toDateString()])->render();
+    //         $pdf     = PDF::loadHTML($htmlContent);
+    //         $pdfData = $pdf->output(); // Get raw PDF data
+
+    //         // Encode PDF data to Base64
+    //         $pdfBase64 = base64_encode($pdfData);
+
+    //         // Prepare the response data
+    //         $responseData = [
+    //             'pdf'         => $pdfBase64,
+    //             'location'    => $LocationsData->location,
+    //             'currentDate' => now()->toDateString(),
+    //         ];
+
+    //         // Return the response with the PDF and additional data
+    //         return $responseData;
+    //     } catch (\Exception $e) {
+    //         info($e->getMessage());
+    //     }
+    // }
+
+    // public function updateKitchenInventoryBySuperAdmin($request)
+    // {
+    //     try {
+    //         $sess_user_id       = session()->get('login_id');
+    //         $sess_user_name     = session()->get('user_name');
+    //         $sess_location_id   = session()->get('location_selected_id');
+    //         $inventoryIds       = $request->input('location_wise_inventory_id');
+    //         $quantities         = $request->input('quantity');
+    //         $MasterInventoryIds = $request->input('master_inventory_id');
+
+    //         foreach ($inventoryIds as $index => $inventoryId) {
+    //             $existingInventory = LocationWiseInventory::where('id', $inventoryId)
+    //                 ->first();
+    //             $MasterInventoryData = MasterKitchenInventory::find((int) $MasterInventoryIds[$index]);
+    //             if ($existingInventory) {
+    //                 LocationWiseInventory::where('id', $inventoryId)
+    //                     ->update([
+    //                         'quantity'        => $quantities[$index],
+    //                         'master_quantity' => $MasterInventoryData->quantity,
+    //                         'master_price'    => $MasterInventoryData->price,
+    //                         'approved_by'     => '1',
+    //                         'updated_at'      => Carbon::now('America/New_York'),
+    //                     ]);
+    //             } else {
+    //                 $LocationWiseInventoryData                  = new LocationWiseInventory();
+    //                 $LocationWiseInventoryData->user_id         = $sess_user_id;
+    //                 $LocationWiseInventoryData->inventory_id    = (int) $MasterInventoryIds[$index];
+    //                 $LocationWiseInventoryData->location_id     = $sess_location_id;
+    //                 $LocationWiseInventoryData->master_quantity = $MasterInventoryData->quantity;
+    //                 $LocationWiseInventoryData->master_price    = $MasterInventoryData->price;
+    //                 $LocationWiseInventoryData->quantity        = $quantities[$index];
+    //                 $LocationWiseInventoryData->approved_by     = 2;
+    //                 $LocationWiseInventoryData->created_at      = Carbon::now('America/New_York');
+    //                 $LocationWiseInventoryData->save();
+    //                 $last_insert_id = $LocationWiseInventoryData->id;
+    //             }
+
+    //             $LocationsData       = Locations::find($sess_location_id);
+    //             $MasterInventoryData = MasterKitchenInventory::find((int) $MasterInventoryIds[$index]);
+
+    //             $logoPath   = asset('/img/main_logo.png');
+    //             $logoBase64 = base64_encode(file_get_contents($logoPath));
+
+    //             $historyData[] = [
+    //                 'master_qty'   => $MasterInventoryData->quantity,
+    //                 'inventory_id' => $MasterInventoryData->item_name,
+    //                 'quantity'     => $quantities[$index],
+    //                 'location_id'  => $LocationsData->location,
+    //                 'price'        => $MasterInventoryData->price,
+    //                 'logimg'       => $logoBase64,
+    //                 // 'approved_by' => 1,
+    //             ];
+    //         }
+
+    //         $LogMsg                            = config('constants.SUPER_ADMIN.1112');
+    //         $FinalLogMessage                   = $sess_user_name . ' ' . $LogMsg;
+    //         $ActivityLogData                   = new ActivityLog();
+    //         $ActivityLogData->user_id          = $sess_user_id;
+    //         $ActivityLogData->activity_message = $FinalLogMessage;
+    //         $ActivityLogData->created_at       = Carbon::now('America/New_York');
+    //         $ActivityLogData->save();
+
+    //         $data = [];
+    //         foreach ($inventoryIds as $index => $inventoryId) {
+    //             $InventoryHistoryData               = new InventoryHistory();
+    //             $InventoryHistoryData->user_id      = $sess_user_id;
+    //             $InventoryHistoryData->inventory_id = (int) $MasterInventoryIds[$index];
+    //             $InventoryHistoryData->location_id  = $sess_location_id;
+    //             $InventoryHistoryData->quantity     = $quantities[$index];
+    //             $InventoryHistoryData->approved_by  = 1;
+    //             $InventoryHistoryData->created_at   = Carbon::now('America/New_York');
+    //             $InventoryHistoryData->save();
+
+    //             $LocationsData       = Locations::find($sess_location_id);
+    //             $MasterInventoryData = MasterKitchenInventory::find((int) $MasterInventoryIds[$index]);
+    //         }
+
+    //         // Generate PDF
+    //         $htmlContent = view('inventory_history_pdf', ['historyData' => $historyData,
+    //             'location'                                                  => $LocationsData->location,
+    //             'currentDate'                                               => now()->toDateString()])->render();
+    //         $pdf     = PDF::loadHTML($htmlContent);
+    //         $pdfData = $pdf->output(); // Get raw PDF data
+
+    //         // Encode PDF data to Base64
+    //         $pdfBase64 = base64_encode($pdfData);
+
+    //         // Prepare the response data
+    //         $responseData = [
+    //             'pdf'         => $pdfBase64,
+    //             'location'    => $LocationsData->location,
+    //             'currentDate' => now()->toDateString(),
+    //         ];
+
+    //         // Return the response with the PDF and additional data
+    //         return $responseData;
+    //     } catch (\Exception $e) {
+    //         info($e->getMessage());
+    //     }
+    // }
+
     public function addKitchenInventoryBySuperAdmin($request)
     {
+        // dd($request);
         try {
             $sess_user_id     = session()->get('login_id');
             $sess_user_name   = session()->get('user_name');
             $sess_location_id = session()->get('location_selected_id');
+            $location_selected_name = session()->get('location_selected_name');
             $inventoryIds     = $request->input('master_inventory_id');
             $quantities       = $request->input('quantity');
-            
+            $master_price         = $request->input('master_price');
+            $master_quantity      = $request->input('master_quantity');
+            $category_name        = $request->input('category_name');
+            $unit_name            = $request->input('unit_name');
+            $item_name            = $request->input('item_name');
+           
             $data = [];
             foreach ($inventoryIds as $index => $inventoryId) {
-                $MasterInventoryData                     = MasterKitchenInventory::find($inventoryIds[$index]);
-                $LocationWiseInventoryData               = new LocationWiseInventory();
-                $LocationWiseInventoryData->user_id      = $sess_user_id;
-                $LocationWiseInventoryData->inventory_id = $inventoryIds[$index];
-                $LocationWiseInventoryData->location_id  = $sess_location_id;
-                $LocationWiseInventoryData->quantity     = $quantities[$index];
+                try {
+                    $LocationWiseInventoryData               = new LocationWiseInventory();
+                    $LocationWiseInventoryData->user_id      = $sess_user_id;
+                    $LocationWiseInventoryData->inventory_id = $inventoryIds[$index];
+                    $LocationWiseInventoryData->location_id  = $sess_location_id;
+                    $LocationWiseInventoryData->quantity     = $quantities[$index];
 
-                $LocationWiseInventoryData->master_quantity = $MasterInventoryData->quantity;
-                $LocationWiseInventoryData->master_price    = $MasterInventoryData->price;
+                    $LocationWiseInventoryData->master_quantity = $master_quantity[$index];
+                    $LocationWiseInventoryData->master_price    = $master_price[$index];
+                    $LocationWiseInventoryData->unit_name       = $unit_name[$index];
+                    $LocationWiseInventoryData->category_name   = $category_name[$index];
 
-                $LocationWiseInventoryData->approved_by = 1;
-                $LocationWiseInventoryData->created_at  = Carbon::now('America/New_York');
-                $LocationWiseInventoryData->save();
-                $last_insert_id = $LocationWiseInventoryData->id;
+                    $LocationWiseInventoryData->approved_by = 1;
+                    $LocationWiseInventoryData->created_at  = Carbon::now('America/New_York');
+                    $LocationWiseInventoryData->save();
+                    $last_insert_id = $LocationWiseInventoryData->id;
+                } catch (\Exception $e) {
+                    info("Locationwise Inventory ".$e->getMessage());
+                }
+
+
+                try {
+                    $InventoryHistoryData               = new InventoryHistory();
+                    $InventoryHistoryData->user_id      = $sess_user_id;
+                    $InventoryHistoryData->inventory_id = $inventoryIds[$index];
+                    $InventoryHistoryData->location_id  = $sess_location_id;
+                    $InventoryHistoryData->quantity     = $quantities[$index];
+                    $InventoryHistoryData->approved_by  = 1;
+                    $InventoryHistoryData->created_at   = Carbon::now('America/New_York');
+                    $InventoryHistoryData->save();
+                    
+                    // Store data for PDF
+                    $historyData[] = [  
+                        'master_qty'   => $master_quantity[$index],
+                        'item_name' => $item_name[$index],
+                        'quantity'     => $quantities[$index],
+                        'price'        => $master_price[$index],
+                        'category_name' => $category_name[$index],
+                        'unit'          => $unit_name[$index]
+                    ];
+                } catch (\Exception $e) {
+                    info("Inventory History ".$e->getMessage());
+                }
+
             }
+
+            $groupedByCategory = [];
+            foreach ($historyData as $item) {
+                $category = $item['category_name'];
+                if (!isset($groupedByCategory[$category])) {
+                    $groupedByCategory[$category] = [];
+                }
+                $groupedByCategory[$category][] = $item;
+            }
+
+            
 
             if ($last_insert_id) {
                 $LogMsg = config('constants.MANAGER.1111');
@@ -68,53 +308,27 @@ class ShoppingListRepository
                 $ActivityLogData->save();
             }
 
-            $data = [];
-            foreach ($inventoryIds as $index => $inventoryId) {
-                $InventoryHistoryData               = new InventoryHistory();
-                $InventoryHistoryData->user_id      = $sess_user_id;
-                $InventoryHistoryData->inventory_id = $inventoryIds[$index];
-                $InventoryHistoryData->location_id  = $sess_location_id;
-                $InventoryHistoryData->quantity     = $quantities[$index];
-                $InventoryHistoryData->approved_by  = 1;
-                $InventoryHistoryData->created_at   = Carbon::now('America/New_York');
-                $InventoryHistoryData->save();
-
-                $LocationsData       = Locations::find($sess_location_id);
-                $MasterInventoryData = MasterKitchenInventory::find($inventoryIds[$index]);
-
+            try {
                 $logoPath   = asset('/img/main_logo.png');
                 $logoBase64 = base64_encode(file_get_contents($logoPath));
-
-                // Store data for PDF
-                $historyData[] = [
-                    'master_qty'   => $MasterInventoryData->quantity,
-                    'inventory_id' => $MasterInventoryData->item_name,
-                    'quantity'     => $quantities[$index],
-                    'location_id'  => $LocationsData->location,
-                    'price'        => $MasterInventoryData->price,
-                    'logimg'       => $logoBase64,
-                    // 'approved_by' => 1,
-                ];
+                $htmlContent = view('inventory_history_pdf', ['historyData' => $groupedByCategory,
+                                            'location'            => $location_selected_name,
+                                            'currentDate'         => now()->toDateString(),
+                                            'logo'                => $logoBase64])->render();
+                $pdf     = PDF::loadHTML($htmlContent);
+                $pdfData = $pdf->output();
+            
+                $pdfBase64 = base64_encode($pdfData);
+            } catch (\Exception $e) {
+                info("PDF Genration Error ".$e->getMessage());
             }
 
-            // Generate PDF
-            $htmlContent = view('inventory_history_pdf', ['historyData' => $historyData,
-                'location'                                                  => $LocationsData->location,
-                'currentDate'                                               => now()->toDateString()])->render();
-            $pdf     = PDF::loadHTML($htmlContent);
-            $pdfData = $pdf->output(); // Get raw PDF data
-
-            // Encode PDF data to Base64
-            $pdfBase64 = base64_encode($pdfData);
-
-            // Prepare the response data
             $responseData = [
                 'pdf'         => $pdfBase64,
-                'location'    => $LocationsData->location,
+                'location'    => $location_selected_name,
                 'currentDate' => now()->toDateString(),
             ];
 
-            // Return the response with the PDF and additional data
             return $responseData;
         } catch (\Exception $e) {
             info($e->getMessage());
@@ -127,51 +341,65 @@ class ShoppingListRepository
             $sess_user_id       = session()->get('login_id');
             $sess_user_name     = session()->get('user_name');
             $sess_location_id   = session()->get('location_selected_id');
+            $location_selected_name = session()->get('location_selected_name');
             $inventoryIds       = $request->input('location_wise_inventory_id');
             $quantities         = $request->input('quantity');
             $MasterInventoryIds = $request->input('master_inventory_id');
+            
+            $master_price         = $request->input('master_price');
+            $master_quantity      = $request->input('master_quantity');
+            $category_name        = $request->input('category_name');
+            $unit_name            = $request->input('unit_name');
+            $item_name            = $request->input('item_name');
+           
 
             foreach ($inventoryIds as $index => $inventoryId) {
                 $existingInventory = LocationWiseInventory::where('id', $inventoryId)
                     ->first();
-                $MasterInventoryData = MasterKitchenInventory::find((int) $MasterInventoryIds[$index]);
                 if ($existingInventory) {
                     LocationWiseInventory::where('id', $inventoryId)
                         ->update([
                             'quantity'        => $quantities[$index],
-                            'master_quantity' => $MasterInventoryData->quantity,
-                            'master_price'    => $MasterInventoryData->price,
+                            'master_quantity' => $master_quantity[$index],
+                            'master_price'    => $master_price[$index],
                             'approved_by'     => '1',
                             'updated_at'      => Carbon::now('America/New_York'),
                         ]);
                 } else {
-                    $LocationWiseInventoryData                  = new LocationWiseInventory();
-                    $LocationWiseInventoryData->user_id         = $sess_user_id;
-                    $LocationWiseInventoryData->inventory_id    = (int) $MasterInventoryIds[$index];
-                    $LocationWiseInventoryData->location_id     = $sess_location_id;
-                    $LocationWiseInventoryData->master_quantity = $MasterInventoryData->quantity;
-                    $LocationWiseInventoryData->master_price    = $MasterInventoryData->price;
-                    $LocationWiseInventoryData->quantity        = $quantities[$index];
-                    $LocationWiseInventoryData->approved_by     = 2;
-                    $LocationWiseInventoryData->created_at      = Carbon::now('America/New_York');
+                    $LocationWiseInventoryData               = new LocationWiseInventory();
+                    $LocationWiseInventoryData->user_id      = $sess_user_id;
+                    $LocationWiseInventoryData->inventory_id = $inventoryIds[$index];
+                    $LocationWiseInventoryData->location_id  = $sess_location_id;
+                    $LocationWiseInventoryData->quantity     = $quantities[$index];
+
+                    $LocationWiseInventoryData->master_quantity = $master_quantity[$index];
+                    $LocationWiseInventoryData->master_price    = $master_price[$index];
+                    $LocationWiseInventoryData->unit_name       = $unit_name[$index];
+                    $LocationWiseInventoryData->category_name   = $category_name[$index];
+
+                    $LocationWiseInventoryData->approved_by = 1;
+                    $LocationWiseInventoryData->created_at  = Carbon::now('America/New_York');
                     $LocationWiseInventoryData->save();
                     $last_insert_id = $LocationWiseInventoryData->id;
                 }
 
-                $LocationsData       = Locations::find($sess_location_id);
-                $MasterInventoryData = MasterKitchenInventory::find((int) $MasterInventoryIds[$index]);
+                $InventoryHistoryData               = new InventoryHistory();
+                $InventoryHistoryData->user_id      = $sess_user_id;
+                $InventoryHistoryData->inventory_id = (int) $MasterInventoryIds[$index];
+                $InventoryHistoryData->location_id  = $sess_location_id;
+                $InventoryHistoryData->quantity     = $quantities[$index];
+                $InventoryHistoryData->approved_by  = 1;
+                $InventoryHistoryData->created_at   = Carbon::now('America/New_York');
+                $InventoryHistoryData->save();
 
-                $logoPath   = asset('/img/main_logo.png');
-                $logoBase64 = base64_encode(file_get_contents($logoPath));
 
-                $historyData[] = [
-                    'master_qty'   => $MasterInventoryData->quantity,
-                    'inventory_id' => $MasterInventoryData->item_name,
+                $historyData[] = [  
+                    'master_qty'   => $master_quantity[$index],
+                    'item_name' => $item_name[$index],
                     'quantity'     => $quantities[$index],
-                    'location_id'  => $LocationsData->location,
-                    'price'        => $MasterInventoryData->price,
-                    'logimg'       => $logoBase64,
-                    // 'approved_by' => 1,
+                    'price'        => $master_price[$index],
+                    'category_name' => $category_name[$index],
+                    'unit'          => $unit_name[$index]
                 ];
             }
 
@@ -183,39 +411,36 @@ class ShoppingListRepository
             $ActivityLogData->created_at       = Carbon::now('America/New_York');
             $ActivityLogData->save();
 
-            $data = [];
-            foreach ($inventoryIds as $index => $inventoryId) {
-                $InventoryHistoryData               = new InventoryHistory();
-                $InventoryHistoryData->user_id      = $sess_user_id;
-                $InventoryHistoryData->inventory_id = (int) $MasterInventoryIds[$index];
-                $InventoryHistoryData->location_id  = $sess_location_id;
-                $InventoryHistoryData->quantity     = $quantities[$index];
-                $InventoryHistoryData->approved_by  = 1;
-                $InventoryHistoryData->created_at   = Carbon::now('America/New_York');
-                $InventoryHistoryData->save();
 
-                $LocationsData       = Locations::find($sess_location_id);
-                $MasterInventoryData = MasterKitchenInventory::find((int) $MasterInventoryIds[$index]);
+            $groupedByCategory = [];
+            foreach ($historyData as $item) {
+                $category = $item['category_name'];
+                if (!isset($groupedByCategory[$category])) {
+                    $groupedByCategory[$category] = [];
+                }
+                $groupedByCategory[$category][] = $item;
             }
 
-            // Generate PDF
-            $htmlContent = view('inventory_history_pdf', ['historyData' => $historyData,
-                'location'                                                  => $LocationsData->location,
-                'currentDate'                                               => now()->toDateString()])->render();
-            $pdf     = PDF::loadHTML($htmlContent);
-            $pdfData = $pdf->output(); // Get raw PDF data
+            try {
+                $logoPath   = asset('/img/main_logo.png');
+                $logoBase64 = base64_encode(file_get_contents($logoPath));
+                $htmlContent = view('inventory_history_pdf', ['historyData' => $groupedByCategory,
+                                            'location'            => $location_selected_name,
+                                            'currentDate'         => now()->toDateString(),
+                                            'logo'                => $logoBase64])->render();
+                $pdf     = PDF::loadHTML($htmlContent);
+                $pdfData = $pdf->output();
+                $pdfBase64 = base64_encode($pdfData);
+            } catch (\Exception $e) {
+                info("PDF Genration Error ".$e->getMessage());
+            }
 
-            // Encode PDF data to Base64
-            $pdfBase64 = base64_encode($pdfData);
-
-            // Prepare the response data
             $responseData = [
                 'pdf'         => $pdfBase64,
-                'location'    => $LocationsData->location,
+                'location'    => $location_selected_name,
                 'currentDate' => now()->toDateString(),
             ];
 
-            // Return the response with the PDF and additional data
             return $responseData;
         } catch (\Exception $e) {
             info($e->getMessage());

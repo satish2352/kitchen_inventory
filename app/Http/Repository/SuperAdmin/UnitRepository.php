@@ -57,7 +57,7 @@ class UnitRepository
         try {
             $data                     = [];
             $location_data            = new Unit();
-            $location_data->unit_name = ucwords(strtolower($request['unit_name']));
+            $location_data->unit_name = $request['unit_name'];
             $location_data->save();
             $last_insert_id = $location_data->id;
 
@@ -85,7 +85,7 @@ class UnitRepository
         try {
             $user_data = Unit::where('id', $request['edit_id'])
                 ->update([
-                    'unit_name' => ucwords(strtolower($request['unit_name'])),
+                    'unit_name' => $request['unit_name'],
                 ]);
 
             $sess_user_id     = session()->get('login_id');

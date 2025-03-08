@@ -378,7 +378,7 @@
                     <label class="form-label col-md-6 col-sm-12 col-lg-6">Enter User Name</label>
                     <div class="col-md-6 col-sm-12 col-lg-6">
                         <input type="text" class="form-control" placeholder="Enter User Name" name="name"
-                            style="text-transform: capitalize;" />
+                            />
                     </div>
                 </div>
                 {{-- <div class="row mb-3">
@@ -456,7 +456,7 @@
                     <label class="form-label col-md-6 col-sm-12 col-lg-6">Enter User Name</label>
                     <div class="col-md-6 col-sm-12 col-lg-6">
                         <input type="text" class="form-control" placeholder="Enter User Name" name="name"
-                            id="name" style="text-transform: capitalize;" />
+                            id="name" />
                     </div>
                 </div>
                 {{-- <div class="row mb-3">

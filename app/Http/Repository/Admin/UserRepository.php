@@ -78,7 +78,7 @@ class UserRepository
 
 			$data =array();
 			$user_data = new UsersData();
-			$user_data->name = ucwords(strtolower($request['name']));
+			$user_data->name = $request['name'];
 			$user_data->user_role = $request['role'];
 			$user_data->phone = isset($request['phone']) ? $request['phone'] :'1234567890';
 			$user_data->email = $request['email'];
@@ -139,7 +139,7 @@ class UserRepository
 			$locations = implode(',', $request['location']); // Implode the array into a string (e.g., "1,2,3")
 			$user_data = UsersData::where('id',$request['edit_id']) 
 							->update([
-								'name' => ucwords(strtolower($request['name'])),
+								'name' => $request['name'],
 								'location' => $locations,
 								'user_role' => $request['role'],
 								'phone' => isset($request['phone']) ? $request['phone'] :'1234567890',
