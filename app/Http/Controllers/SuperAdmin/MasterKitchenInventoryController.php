@@ -40,19 +40,9 @@ class MasterKitchenInventoryController extends Controller
 
             $role = session()->get('user_role');
             if($role == 2) {
-                $login_id = session()->get('login_id');
-                $usersData = UsersData::where('is_deleted', '0')->where('is_approved', '1')->where('id', '=', $login_id)->first();
-                $location_ids = $usersData->location;
-                $all_locations = explode(',', $location_ids);
+                $all_locations = explode(',', session()->get('locations_all'));
                 $locationsData = Locations::where('is_active', '1');
-                if (count($all_locations) > 1) {
-                    
-                    $location_ids = $all_locations;
-                    $locationsData =  $locationsData->whereIn('id', $location_ids);
-                } else {
-                    $location_ids = rtrim($usersData->location, ',');
-                    $locationsData =  $locationsData->whereIn('id', $location_ids);
-                }
+                $locationsData =  $locationsData->whereIn('id', $all_locations);
                 $locationsData =  $locationsData->where('is_deleted', '0')
                                         ->select('id', 'location')
                                         ->orderBy('location', 'asc')
@@ -226,11 +216,6 @@ class MasterKitchenInventoryController extends Controller
         try {
             $query = $request->input('query');
 
-            // Modify the query to search users based on name, email, or phone
-            // $unit_data = Unit::where('unit_name', 'like', "%$query%")
-            //                     ->where('is_deleted', '0')
-            //                 ->get();
-
             $user_data = MasterKitchenInventory::leftJoin('category', 'master_kitchen_inventory.category', '=', 'category.id')
                 ->leftJoin('units', 'master_kitchen_inventory.unit', '=', 'units.id')
                 ->select(
@@ -244,6 +229,7 @@ class MasterKitchenInventoryController extends Controller
                     'category.category_name',
                     'units.unit_name'
                 )
+                ->where('master_kitchen_inventory.location_id', session()->get('location_selected_id'))
                 ->where('master_kitchen_inventory.is_deleted', '0')
                 ->when($query, function ($q) use ($query) {
                     $q->where(function ($subQuery) use ($query) {

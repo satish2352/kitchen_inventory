@@ -48,7 +48,6 @@
        
         </div>
         <div class="container-fluid px-3">
-            @if(session()->get( 'user_role') == 1)
             <form id="locationForm" method="post" action="{{ route('location-selected-admin') }}">
                 @csrf
                 <div class="row mb-3">
@@ -65,7 +64,6 @@
                     </div>
                 </div>
             </form>
-            @endif
 
 
             @if (session()->get('location_selected_id') != '')

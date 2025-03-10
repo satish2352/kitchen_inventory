@@ -13,7 +13,7 @@ class CategoryRepository
         try {
             $data_location = Category::select('id', 'category_name', 'created_at', 'priority')
                 ->where('is_deleted', '0')
-                ->orderBy('category_name', 'asc')
+                ->orderBy('priority', 'asc')
                 ->paginate(10);
             return $data_location;
         } catch (\Exception $e) {

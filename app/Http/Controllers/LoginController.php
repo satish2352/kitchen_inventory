@@ -58,7 +58,7 @@ class LoginController extends Controller
                     $isApproved        = $get_user['is_approved'];
                     $decryptedPassword = $get_user['password'];
                     $added_by          = $get_user['added_by'];
-
+                    
                     if ($password == $decryptedPassword) {
                         $request->session()->put('email', $get_user['email']);
                         $request->session()->put('login_id', $get_user['id']);

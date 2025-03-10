@@ -71,6 +71,7 @@ class ShoppingListController extends Controller
                     ->groupBy('category_name');
 
             }
+            dd($locationsData);
             return view('shopping-list', compact('locationsData', 'data_location_wise_inventory'));
         } catch (\Exception $e) {
             info($e->getMessage());
@@ -84,12 +85,34 @@ class ShoppingListController extends Controller
             $location_selected_name       = session()->get('location_selected_name');
             $location_selected_id         = session()->get('location_selected_id');
             $data_location_wise_inventory = [];
-            $locationsData                = Locations::where('is_active', '1')
-                ->where('is_deleted', '0')
-                ->select('id', 'location')
-                ->orderBy('location', 'asc')
-                ->get()
-                ->toArray();
+
+            // $locationsData                = Locations::where('is_active', '1')
+            //     ->where('is_deleted', '0')
+            //     ->select('id', 'location')
+            //     ->orderBy('location', 'asc')
+            //     ->get()
+            //     ->toArray();
+            
+            $role = session()->get('user_role');
+            if($role == 2) {
+                $all_locations = explode(',', session()->get('locations_all'));
+                $locationsData = Locations::where('is_active', '1');
+                $locationsData =  $locationsData->whereIn('id', $all_locations);
+                $locationsData =  $locationsData->where('is_deleted', '0')
+                                        ->select('id', 'location')
+                                        ->orderBy('location', 'asc')
+                                        ->get()
+                                        ->toArray();
+
+            } else {
+                $locationsData = Locations::where('is_active', '1')
+                                ->where('is_deleted', '0')
+                                ->select('id', 'location')
+                                ->orderBy('location', 'asc')
+                                ->get()
+                                ->toArray();
+
+            }
 
             if ($location_selected_name != '') {
 
@@ -126,93 +149,93 @@ class ShoppingListController extends Controller
             info($e->getMessage());
         }
     }
-    public function updateShoppingListManager(Request $request)
-    {
-        try {
-            // Then order by item name
-            $rules = [
-                'user_name' => 'required|exists:users_data,user_name', // Define the validation rules
-                'password'  => 'required',                             // Check if the user_name exists in the users_data table
-            ];
+    // public function updateShoppingListManager(Request $request)
+    // {
+    //     try {
+    //         // Then order by item name
+    //         $rules = [
+    //             'user_name' => 'required|exists:users_data,user_name', // Define the validation rules
+    //             'password'  => 'required',                             // Check if the user_name exists in the users_data table
+    //         ];
 
-            // Make sure the password field is required
-            $messages = [
-                'user_name.required' => 'Please Enter user_name.',
-                'user_name.exists'   => 'The provided user_name does not exist.',
-                'password.required'  => 'Please Enter Password.',
-            ];
+    //         // Make sure the password field is required
+    //         $messages = [
+    //             'user_name.required' => 'Please Enter user_name.',
+    //             'user_name.exists'   => 'The provided user_name does not exist.',
+    //             'password.required'  => 'Please Enter Password.',
+    //         ];
 
-            // Define custom validation messages
-            $validation = Validator::make($request->all(), $rules, $messages);
+    //         // Define custom validation messages
+    //         $validation = Validator::make($request->all(), $rules, $messages);
 
-            // Start validation process
-            if ($validation->fails()) {
-                return redirect('/')
-                    ->withInput()
-                    ->withErrors($validation);
-            }
+    //         // Start validation process
+    //         if ($validation->fails()) {
+    //             return redirect('/')
+    //                 ->withInput()
+    //                 ->withErrors($validation);
+    //         }
 
-            try {
-                // If validation fails, return back with errors
-                $get_user = UsersData::where('user_name', $request['user_name'])->first();
-                // Fetch user details from the database
-                if ($get_user) {
-                    // dd($get_user['password']);
-                    $password = $request->password;
+    //         try {
+    //             // If validation fails, return back with errors
+    //             $get_user = UsersData::where('user_name', $request['user_name'])->first();
+    //             // Fetch user details from the database
+    //             if ($get_user) {
+    //                 // dd($get_user['password']);
+    //                 $password = $request->password;
 
-                    // The username exists, now verify the password
-                    // Decrypt the password stored in the database
-                    $decryptedPassword = $get_user['password'];
+    //                 // The username exists, now verify the password
+    //                 // Decrypt the password stored in the database
+    //                 $decryptedPassword = $get_user['password'];
 
-                    // $decryptedPassword = Crypt::decryptString($get_user->password);
-                    if ($password == $decryptedPassword) {
-                        // Compare the decrypted password with the input password
-                        $request->session()->put('user_name', $get_user['user_name']);
-                        $request->session()->put('login_id', $get_user['id']);
-                        $request->session()->put('user_role', $get_user['user_role']);
-                        $request->session()->put('location_for_user', $get_user['location']);
-                        // Store the user data in session
-                        // dd($request->session()->get('login_id'));
-                        // Return a successful login redirect
-                        $request->session()->regenerate();
-                        return redirect(route('/dashboard')); // dd("dsdfasfsafgsa");
+    //                 // $decryptedPassword = Crypt::decryptString($get_user->password);
+    //                 if ($password == $decryptedPassword) {
+    //                     // Compare the decrypted password with the input password
+    //                     $request->session()->put('user_name', $get_user['user_name']);
+    //                     $request->session()->put('login_id', $get_user['id']);
+    //                     $request->session()->put('user_role', $get_user['user_role']);
+    //                     $request->session()->put('location_for_user', $get_user['location']);
+    //                     // Store the user data in session
+    //                     // dd($request->session()->get('login_id'));
+    //                     // Return a successful login redirect
+    //                     $request->session()->regenerate();
+    //                     return redirect(route('/dashboard')); // dd("dsdfasfsafgsa");
 
-                    } else {
-                        // Change to your dashboard route
+    //                 } else {
+    //                     // Change to your dashboard route
 
-                        return redirect('/')
-                            ->withInput()
-                            ->withErrors(['password' => 'These credentials do not match our records.']);
-                    }
-                } else {
-                    // Invalid password
-                    return redirect('/')
-                        ->withInput()
-                        ->withErrors(['user_name' => 'These credentials do not match our records.']);
-                }
+    //                     return redirect('/')
+    //                         ->withInput()
+    //                         ->withErrors(['password' => 'These credentials do not match our records.']);
+    //                 }
+    //             } else {
+    //                 // Invalid password
+    //                 return redirect('/')
+    //                     ->withInput()
+    //                     ->withErrors(['user_name' => 'These credentials do not match our records.']);
+    //             }
 
-            } catch (Exception $e) {
-                // Invalid username
-                return redirect('feedback-suggestions')->withInput()->with(['msg' => $e->getMessage(), 'status' => 'error']);
-            }
-        } catch (\Exception $e) {
-            info($e->getMessage());
-        }
-    }
+    //         } catch (Exception $e) {
+    //             // Invalid username
+    //             return redirect('feedback-suggestions')->withInput()->with(['msg' => $e->getMessage(), 'status' => 'error']);
+    //         }
+    //     } catch (\Exception $e) {
+    //         info($e->getMessage());
+    //     }
+    // }
 
-    public function getLocationSelectedAdmin(Request $request)
-    {
-        try {
-            $request->session()->put('location_selected', $request->location_selected);
-            $final_location = Locations::where('id', session('location_selected'))->first();
-            $request->session()->put('location_selected_name', $final_location->location);
-            $request->session()->put('location_selected_id', $final_location->id);
-            return \Redirect::back();
-        } catch (\Exception $e) {
-            info($e->getMessage());
-        }
+    // public function getLocationSelectedAdmin(Request $request)
+    // {
+    //     try {
+    //         $request->session()->put('location_selected', $request->location_selected);
+    //         $final_location = Locations::where('id', session('location_selected'))->first();
+    //         $request->session()->put('location_selected_name', $final_location->location);
+    //         $request->session()->put('location_selected_id', $final_location->id);
+    //         return \Redirect::back();
+    //     } catch (\Exception $e) {
+    //         info($e->getMessage());
+    //     }
 
-    }
+    // }
 
     public function getLocationWiseInventorySA(Request $request)
     {
@@ -223,12 +246,35 @@ class ShoppingListController extends Controller
 
             $InventoryData = [];
 
-            $locationsData = Locations::where('is_active', '1')
-                ->where('is_deleted', '0')
-                ->select('id', 'location')
-                ->orderBy('location', 'asc')
-                ->get()
-                ->toArray();
+            // $locationsData = Locations::where('is_active', '1')
+            //     ->where('is_deleted', '0')
+            //     ->select('id', 'location')
+            //     ->orderBy('location', 'asc')
+            //     ->get()
+            //     ->toArray();
+
+            $role = session()->get('user_role');
+            if($role == 2) {
+                $all_locations = explode(',', session()->get('locations_all'));
+
+                $locationsData = Locations::where('is_active', '1');
+                $locationsData =  $locationsData->whereIn('id', $all_locations);
+                $locationsData =  $locationsData->where('is_deleted', '0')
+                                        ->select('id', 'location')
+                                        ->orderBy('location', 'asc')
+                                        ->get()
+                                        ->toArray();
+
+            } else {
+                $locationsData = Locations::where('is_active', '1')
+                                ->where('is_deleted', '0')
+                                ->select('id', 'location')
+                                ->orderBy('location', 'asc')
+                                ->get()
+                                ->toArray();
+
+            }
+              
 
             if ($location_selected_name != '') {
 
@@ -338,6 +384,7 @@ class ShoppingListController extends Controller
 
                 }
             }
+            
             return view('kitchen-inventory', compact('InventoryData', 'locationsData'));
 
         } catch (\Exception $e) {
@@ -529,12 +576,6 @@ class ShoppingListController extends Controller
                 ->get()
                 ->groupBy('category_name');
 
-// Then order by item name
-            // dd($user_data);
-// Get raw SQL query
-// $sql = $query->toSql();
-// $bindings = $query->getBindings();
-            // dd($query);
             return view('kitchen-inventory-history', compact('locationsData', 'user_data', 'LocationName', 'DateValData'));
         } catch (\Exception $e) {
             info($e->getMessage());

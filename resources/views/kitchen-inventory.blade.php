@@ -54,24 +54,22 @@
 
         </div>
         <div class="container-fluid px-3">
-            @if (session()->get('user_role') == 1)
-                <form id="locationForm" method="post" action="{{ route('location-selected-admin') }}">
-                    @csrf
-                    <div class="row mb-3">
-                        <label class="form-label col-md-6 col-sm-12 col-lg-6">Select Location</label>
-                        <div class="col-md-6 col-sm-12 col-lg-6">
-                            <select class="form-select" name="location_selected" id="location_selected">
-                                <option value="">Select Location</option>
-                                @foreach ($locationsData as $locations)
-                                    <option value="{{ $locations['id'] }}"
-                                        @if (session('location_selected') == $locations['id']) selected @endif>{{ $locations['location'] }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+            <form id="locationForm" method="post" action="{{ route('location-selected-admin') }}">
+                @csrf
+                <div class="row mb-3">
+                    <label class="form-label col-md-6 col-sm-12 col-lg-6">Select Location</label>
+                    <div class="col-md-6 col-sm-12 col-lg-6">
+                        <select class="form-select" name="location_selected" id="location_selected">
+                            <option value="">Select Location</option>
+                            @foreach ($locationsData as $locations)
+                                <option value="{{ $locations['id'] }}"
+                                    @if (session('location_selected') == $locations['id']) selected @endif>{{ $locations['location'] }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
-                </form>
-            @endif
+                </div>
+            </form>
             <!-- first if start -->
             <div class="border-box mb-4" id="search-results">
                 @if (session()->get('location_selected_id') != '')

@@ -13,7 +13,7 @@
                   @endif
                   </span>
 
-                  @if($item->is_approved == 0)
+                  {{-- @if($item->is_approved == 0)
                   <div class="status-badge ms-2 d-flex align-items-center" style="background-color:red">
                     <i class="bi bi-check-circle-fill text-success me-1"></i>
                     <span style="color:white">Unapproved</span>
@@ -23,11 +23,17 @@
                     <i class="bi bi-check-circle-fill text-success me-1"></i>
                     <span style="color:white">Approved</span>
                   </div>
-                @endif 
+                @endif  --}}
 
                 </div>
-                <p class="mb-1 fw-light">{{ $item->email }}</p>
-                <p class="mb-1 fw-light">{{ $item->phone }}</p>
+                <p class="mb-1 fw-light"><b>Email ID :</b> {{ $item->email }}</p>
+                {{-- <p class="mb-1 fw-light"><b>Locations :</b>
+                  @if (!empty($item->locations))
+                      {{ implode(', ', $item->locations) }}
+                  @else
+                      N/A
+                  @endif
+              </p> --}}
             </div>
             <div>
                 <button class="btn btn-edit text-center shadow-sm edit-btn-user" data-id="{{ $item->id }}">
