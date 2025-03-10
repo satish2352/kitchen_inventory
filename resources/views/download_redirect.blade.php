@@ -70,7 +70,7 @@
             // Redirect after a short delay
             setTimeout(function () {
                 window.location.href = "{{ route('/dashboard') }}"; // Change this to your actual route
-            }, 2000);
+            }, 1200);
         });
     </script>
     
