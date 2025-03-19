@@ -37,7 +37,7 @@ class SendUserEmail implements ShouldQueue
             ];
             $toEmail = $this->email;
             $senderSubject = 'Credentials for the Buffalo Boss login ' . date('d-m-Y H:i:s');
-            $fromEmail = env('MAIL_USERNAME');
+            $fromEmail = env('MAIL_FROM_ADDRESS');
 
             Mail::send('user_added_mail', ['email_data' => $email_data], function ($message) use ($toEmail, $fromEmail, $senderSubject) {
                 $message->to($toEmail)->subject($senderSubject);

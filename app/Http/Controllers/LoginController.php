@@ -5,9 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Models\UsersData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Models\ {
-    Locations,
-};
+use App\Models\Locations;
 use Illuminate\Support\Facades\Mail;
 
 class LoginController extends Controller
@@ -206,7 +204,7 @@ class LoginController extends Controller
 				];
 				$toEmail = $request['forgot_email'];
 				$senderSubject = 'Buffalo Boss OTP Details' . date('d-m-Y H:i:s');
-				$fromEmail = env('MAIL_USERNAME');
+				$fromEmail = env('MAIL_FROM_ADDRESS');
 				Mail::send('forget_password_otp_mail', ['email_data' => $email_data], function ($message) use ($toEmail, $fromEmail, $senderSubject) {
 					$message->to($toEmail)->subject($senderSubject);
 					$message->from($fromEmail, ' Buffalo Boss');
@@ -224,7 +222,6 @@ class LoginController extends Controller
     public function reset_password(Request $request)
     {
         try {
-            // dd($request); otp_genrated
             $rules = [
                 'email'    => 'required|exists:users_data,email|email', // Check if the user_name exists in the users_data table
             ];
@@ -248,13 +245,17 @@ class LoginController extends Controller
 					'password' => $password_reset,
 	
 				];
-				$toEmail = $request['email'];
-				$senderSubject = 'Credentials for the Buffalo Boss login' . date('d-m-Y H:i:s');
-				$fromEmail = env('MAIL_USERNAME');
-				Mail::send('user_added_mail', ['email_data' => $email_data], function ($message) use ($toEmail, $fromEmail, $senderSubject) {
-					$message->to($toEmail)->subject($senderSubject);
-					$message->from($fromEmail, ' Buffalo Boss');
-				});
+				try {
+    				$toEmail = $request['email'];
+    				$senderSubject = 'Credentials for the Buffalo Boss login' . date('d-m-Y H:i:s');
+    				$fromEmail = env('MAIL_FROM_ADDRESS');
+    				Mail::send('user_added_mail', ['email_data' => $email_data], function ($message) use ($toEmail, $fromEmail, $senderSubject) {
+    					$message->to($toEmail)->subject($senderSubject);
+    					$message->from($fromEmail, ' Buffalo Boss');
+    				});
+                } catch (\Exception $e) {
+                    info($e->getMessage());
+                }
 
                 return redirect('/')->with(['success' => 'Password change successfully please check email for password !!']);
             } else {

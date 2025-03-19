@@ -315,6 +315,7 @@ class ShoppingListController extends Controller
                     ->leftJoin('locations', 'master_kitchen_inventory.location_id', '=', 'locations.id')
                     ->select(
                         'master_kitchen_inventory.id as masterInventoryId',
+                        'master_kitchen_inventory.id as locationWiseId',
                         'master_kitchen_inventory.category',
                         'master_kitchen_inventory.item_name',
                         'master_kitchen_inventory.unit',
