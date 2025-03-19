@@ -43,13 +43,13 @@
     <div class="filter">
         <div class="shopping-list-row d-flex align-items-center p-3">
             <!-- Search Input -->
-            <div class="input-group search-input">
+            {{-- <div class="input-group search-input">
                 <input type="text" class="form-control" placeholder="Search..." aria-label="Search"
                     id="search-query" />
                 <button class="btn btn-srh" type="button">
                     <i class="bi bi-search"></i>
                 </button>
-            </div>
+            </div> --}}
 
 
         </div>
