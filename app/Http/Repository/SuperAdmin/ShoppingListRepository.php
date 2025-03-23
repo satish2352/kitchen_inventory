@@ -108,10 +108,23 @@ class ShoppingListRepository
             
 
             if ($last_insert_id) {
+
+                if(session()->get('user_role') == 1) {
+                    $role_name = " (Super Admin)";
+                } else if(session()->get('user_role') == 2) {
+                    $role_name = " (Admin)";
+                } else {
+                    $role_name = " (Night Manager)";
+                }
+
+                
                 $LogMsg = config('constants.MANAGER.1111');
 
-                $FinalLogMessage                   = $sess_user_name . ' ' . $LogMsg;
+
+                $FinalLogMessage                   = $sess_user_name. $role_name . ' ' . $LogMsg . ' ' ."for location ".session()->get('location_selected_name') ;
                 $ActivityLogData                   = new ActivityLog();
+                $ActivityLogData->user_role          = session()->get('user_role');
+                $ActivityLogData->location          = session()->get('location_selected_id');
                 $ActivityLogData->user_id          = $sess_user_id;
                 $ActivityLogData->activity_message = $FinalLogMessage;
                 $ActivityLogData->created_at       = Carbon::now('America/New_York');
@@ -213,15 +226,25 @@ class ShoppingListRepository
                 ];
             }
 
+            if(session()->get('user_role') == 1) {
+                $role_name = " (Super Admin)";
+            } else if(session()->get('user_role') == 2) {
+                $role_name = " (Admin)";
+            } else {
+                $role_name = " (Night Manager)";
+            }
+
             $LogMsg                            = config('constants.SUPER_ADMIN.1112');
-            $FinalLogMessage                   = $sess_user_name . ' ' . $LogMsg;
+            $FinalLogMessage                   = $sess_user_name.$role_name . ' ' . $LogMsg . ' ' ."for location ".session()->get('location_selected_name') ;
             $ActivityLogData                   = new ActivityLog();
+            $ActivityLogData->user_role        = session()->get('user_role');
+            $ActivityLogData->location         = session()->get('location_selected_id');
             $ActivityLogData->user_id          = $sess_user_id;
             $ActivityLogData->activity_message = $FinalLogMessage;
             $ActivityLogData->created_at       = Carbon::now('America/New_York');
             $ActivityLogData->save();
 
-
+            
             $groupedByCategory = [];
             foreach ($historyData as $item) {
                 $category = $item['category_name'];
