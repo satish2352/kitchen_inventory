@@ -336,8 +336,8 @@
             let errorSpan = $(this).siblings(".error-message");
 
             // Check if quantity is valid
-            if (quantity === "" || isNaN(quantity) || parseFloat(quantity) <= 0) {
-                errorSpan.text("Please enter a valid quantity (greater than 0).");
+            if (quantity === "" || isNaN(quantity)) {
+                errorSpan.text("Please enter a valid quantity.");
                 isValid = false;
                 hideLoader();
             } else {
@@ -356,9 +356,9 @@
         let quantity = $(this).val().trim();
         let errorSpan = $(this).siblings(".error-message");
 
-        if (quantity === "" || isNaN(quantity) || parseFloat(quantity) <= 0) {
+        if (quantity === "" || isNaN(quantity)) {
                 hideLoader();
-                errorSpan.text("Please enter a valid quantity (greater than 0).");
+                errorSpan.text("Please enter a valid quantity.");
                 isValid = false;
             } else if (quantity.length > 5) {
                 hideLoader();
@@ -382,9 +382,9 @@ $(document).ready(function() {
         $(".qty-input-edit").each(function() {
             let quantity = $(this).val().trim();
             let errorSpan = $(this).siblings(".error-message");
-            if (quantity === "" || isNaN(quantity) || parseFloat(quantity) <= 0) {
+            if (quantity === "" || isNaN(quantity)) {
                 hideLoader();
-                errorSpan.text("Please enter a valid quantity (greater than 0).");
+                errorSpan.text("Please enter a valid quantity");
                 isValid = false;
             } else if (quantity.length > 5) {
                 hideLoader();

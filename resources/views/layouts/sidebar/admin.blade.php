@@ -66,6 +66,7 @@
             <a href="{{ route('get-submited-shopping-list-super-admin') }}"><i
                     class="bi bi-house-door-fill"></i>Submitted Shopping List</a>
             <a href="{{ route('list-items') }}"><i class="bi bi-card-checklist"></i> Master Inventory</a>
+            <a href="{{ route('get-activity-log') }}"><i class="bi bi-book"></i> Activity</a>
             <a href="{{ route('change-password') }}"><i class="bi bi-bag-plus-fill"></i>Change Password</a>
 
             <a href="javascript:void(0);" id="logoutbtn">

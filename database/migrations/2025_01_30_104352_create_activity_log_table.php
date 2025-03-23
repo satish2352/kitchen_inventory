@@ -9,12 +9,11 @@ return new class extends Migration {
     {
         Schema::create('activity_log', function (Blueprint $table) {
             $table->id();
+            $table->string('user_role')->nullable();
+            $table->string('location')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->text('activity_message');
             $table->timestamps();
-
-            // Foreign key constraint
-            // $table->foreign('user_id')->references('id')->on('users_data')->onDelete('cascade');
         });
     }
 
