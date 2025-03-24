@@ -22,8 +22,11 @@ class ActivityLogController extends Controller
             $location_selected_name = session()->get('location_selected_name');
             $location_selected_id = session()->get('location_selected_id');
 
-            $ActiviyLogData = ActivityLog::select('id', 'activity_message', 'created_at')
-                ->orderBy('created_at', 'desc') // Optional: Sort by latest first
+            $ActiviyLogData = ActivityLog::select('id', 'activity_message', 'created_at');
+            if(session()->get('user_role') == 2) {
+                $ActiviyLogData = $ActiviyLogData->whereIn("location",explode(',',session()->get('locations_all')));
+            }
+            $ActiviyLogData = $ActiviyLogData->orderBy('created_at', 'desc') // Optional: Sort by latest first
                 ->paginate(10); // Change 10 to the number of items per page
             return view('activity', compact('ActiviyLogData'));
         } catch (\Exception $e) {

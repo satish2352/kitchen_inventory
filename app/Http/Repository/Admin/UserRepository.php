@@ -93,19 +93,6 @@ class UserRepository
 			$user_data->save();
 
 			try {
-				// $email_data = [
-				// 	'email' => $request['email'],				
-				// 	'password' => $request['password'],
-	
-				// ];
-				// $toEmail = $request['email'];
-				// $senderSubject = 'Credentials for the Buffalo Boss login' . date('d-m-Y H:i:s');
-				// $fromEmail = env('MAIL_USERNAME');
-				// Mail::send('user_added_mail', ['email_data' => $email_data], function ($message) use ($toEmail, $fromEmail, $senderSubject) {
-				// 	$message->to($toEmail)->subject($senderSubject);
-				// 	$message->from($fromEmail, ' Buffalo Boss');
-				// });
-
 				dispatch(new SendUserEmail($request['email'], $request['password']));
 			} catch (\Exception $e) {
 				Log::error('Mail sending error: '.$e->getMessage());
@@ -115,8 +102,23 @@ class UserRepository
 			$sess_user_name = session()->get('user_name');
 			$sess_location_id = session()->get('location_selected_id');
 			$LogMsg= config('constants.ADMIN.1113');
-			$FinalLogMessage = $sess_user_name.' '.$LogMsg;
-			$ActivityLogData = new ActivityLog();
+			// $FinalLogMessage = $sess_user_name.' '.$LogMsg;
+			// $ActivityLogData = new ActivityLog();
+
+
+			if(session()->get('user_role') == 1) {
+				$role_name = " (Super Admin)";
+			} else if(session()->get('user_role') == 2) {
+				$role_name = " (Admin)";
+			} else {
+				$role_name = " (Night Manager)";
+			}
+
+			$FinalLogMessage                   = $sess_user_name.$role_name . ' ' . $LogMsg. ' ' . $request['email'];
+			$ActivityLogData                   = new ActivityLog();
+			$ActivityLogData->user_role        = session()->get('user_role');
+			$ActivityLogData->location         = implode(',', $request['location']);
+
 			$ActivityLogData->user_id = $sess_user_id;
 			$ActivityLogData->activity_message = $FinalLogMessage;
 			$ActivityLogData->save();
@@ -146,6 +148,30 @@ class UserRepository
 								'email' => $request['email'],
 								'password' => $request['password'],
 							]);
+
+			
+			
+			$sess_user_name = session()->get('user_name');
+			$sess_location_id = session()->get('location_selected_id');
+			$LogMsg= config('constants.SUPER_ADMIN.1114');
+
+			if(session()->get('user_role') == 1) {
+				$role_name = " (Super Admin)";
+			} else if(session()->get('user_role') == 2) {
+				$role_name = " (Admin)";
+			} else {
+				$role_name = " (Night Manager)";
+			}
+
+			$FinalLogMessage                   = $sess_user_name.$role_name . ' ' . $LogMsg. ' ' . $request['email'];
+			$ActivityLogData                   = new ActivityLog();
+			$ActivityLogData->user_role        = session()->get('user_role');
+			$ActivityLogData->location         = implode(',', $request['location']);
+
+			$ActivityLogData->user_id = $sess_user_id;
+			$ActivityLogData->activity_message = $FinalLogMessage;
+			$ActivityLogData->save();
+
 			return $request->edit_id;
 		} catch (\Exception $e) {
 			
@@ -161,6 +187,28 @@ class UserRepository
 			$is_deleted = $student_data->is_deleted == 1 ? 0 : 1;
 			$student_data->is_deleted = $is_deleted;
 			$student_data->save();
+
+
+			$sess_user_name = session()->get('user_name');
+			$sess_location_id = session()->get('location_selected_id');
+			$LogMsg= config('constants.SUPER_ADMIN.1115');
+
+			if(session()->get('user_role') == 1) {
+				$role_name = " (Super Admin)";
+			} else if(session()->get('user_role') == 2) {
+				$role_name = " (Admin)";
+			} else {
+				$role_name = " (Night Manager)";
+			}
+
+			$FinalLogMessage                   = $sess_user_name.$role_name . ' ' . $LogMsg. ' ' . $student_data->email;
+			$ActivityLogData                   = new ActivityLog();
+			$ActivityLogData->user_role        = session()->get('user_role');
+			$ActivityLogData->location         = implode(',', $request['location']);
+
+			$ActivityLogData->user_id = $sess_user_id;
+			$ActivityLogData->activity_message = $FinalLogMessage;
+			$ActivityLogData->save();
 			return $student_data;
 		} catch (\Exception $e) {
 			

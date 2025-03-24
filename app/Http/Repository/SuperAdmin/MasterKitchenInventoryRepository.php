@@ -82,8 +82,18 @@ class MasterKitchenInventoryRepository
 
             $LogMsg = config('constants.SUPER_ADMIN.1111');
 
-            $FinalLogMessage                   = $sess_user_name . ' ' . $LogMsg;
+            if(session()->get('user_role') == 1) {
+                $role_name = " (Super Admin)";
+            } else if(session()->get('user_role') == 2) {
+                $role_name = " (Admin)";
+            } else {
+                $role_name = " (Night Manager)";
+            }
+
+            $FinalLogMessage                   = $sess_user_name.$role_name . ' ' . $LogMsg . ' ' ."for location ".session()->get('location_selected_name') ;
             $ActivityLogData                   = new ActivityLog();
+            $ActivityLogData->user_role        = session()->get('user_role');
+            $ActivityLogData->location         = session()->get('location_selected_id');
             $ActivityLogData->user_id          = $sess_user_id;
             $ActivityLogData->activity_message = $FinalLogMessage;
             $ActivityLogData->save();
@@ -114,8 +124,22 @@ class MasterKitchenInventoryRepository
 
             $LogMsg = config('constants.SUPER_ADMIN.1122');
 
-            $FinalLogMessage                   = $sess_user_name . ' ' . $LogMsg;
+            // $FinalLogMessage                   = $sess_user_name . ' ' . $LogMsg;
+            // $ActivityLogData                   = new ActivityLog();
+
+            if(session()->get('user_role') == 1) {
+                $role_name = " (Super Admin)";
+            } else if(session()->get('user_role') == 2) {
+                $role_name = " (Admin)";
+            } else {
+                $role_name = " (Night Manager)";
+            }
+
+            $FinalLogMessage                   = $sess_user_name.$role_name . ' ' . $LogMsg . ' ' ."for location ".session()->get('location_selected_name') ;
             $ActivityLogData                   = new ActivityLog();
+            $ActivityLogData->user_role        = session()->get('user_role');
+            $ActivityLogData->location         = session()->get('location_selected_id');
+
             $ActivityLogData->user_id          = $sess_user_id;
             $ActivityLogData->activity_message = $FinalLogMessage;
             $ActivityLogData->save();
@@ -141,8 +165,22 @@ class MasterKitchenInventoryRepository
 
             $LogMsg = config('constants.SUPER_ADMIN.1123');
 
-            $FinalLogMessage                   = $sess_user_name . ' ' . $LogMsg;
+            // $FinalLogMessage                   = $sess_user_name . ' ' . $LogMsg;
+            // $ActivityLogData                   = new ActivityLog();
+
+            if(session()->get('user_role') == 1) {
+                $role_name = " (Super Admin)";
+            } else if(session()->get('user_role') == 2) {
+                $role_name = " (Admin)";
+            } else {
+                $role_name = " (Night Manager)";
+            }
+
+            $FinalLogMessage                   = $sess_user_name.$role_name . ' ' . $LogMsg . ' ' ."for location ".session()->get('location_selected_name') ;
             $ActivityLogData                   = new ActivityLog();
+            $ActivityLogData->user_role        = session()->get('user_role');
+            $ActivityLogData->location         = session()->get('location_selected_id');
+
             $ActivityLogData->user_id          = $sess_user_id;
             $ActivityLogData->activity_message = $FinalLogMessage;
             $ActivityLogData->save();
@@ -202,9 +240,23 @@ class MasterKitchenInventoryRepository
                     $sess_user_name = session()->get('user_name');
 
                     $LogMsg          = config('constants.SUPER_ADMIN.1128');
-                    $FinalLogMessage = $sess_user_name . ' ' . $LogMsg;
+                    // $FinalLogMessage = $sess_user_name . ' ' . $LogMsg;
 
+                    // $ActivityLogData                   = new ActivityLog();
+
+                    if(session()->get('user_role') == 1) {
+                        $role_name = " (Super Admin)";
+                    } else if(session()->get('user_role') == 2) {
+                        $role_name = " (Admin)";
+                    } else {
+                        $role_name = " (Night Manager)";
+                    }
+        
+                    $FinalLogMessage                   = $sess_user_name.$role_name . ' ' . $LogMsg . ' ' ."for location ".session()->get('location_selected_name') ;
                     $ActivityLogData                   = new ActivityLog();
+                    $ActivityLogData->user_role        = session()->get('user_role');
+                    $ActivityLogData->location         = session()->get('location_selected_id');
+                    
                     $ActivityLogData->user_id          = $sess_user_id;
                     $ActivityLogData->activity_message = $FinalLogMessage;
                     $ActivityLogData->save();
